@@ -2,223 +2,224 @@
 
 /* 관리자 페이지 adminMain.jsp ====================>*/
 .admin-main-menu {
-	margin: 5rem 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+    margin: 5rem 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .admin-main-menu li {
-	border: 2px solid gray;
-	width: 20%;
-	height: 5rem;
-	text-align: center;
-	margin: 0.5rem;
-	box-shadow: 1px 1px 2px gray;
-	font-size: 2rem;
+    border: 2px solid gray;
+    width: 20%;
+    height: 5rem;
+    text-align: center;
+    margin: 0.5rem;
+    box-shadow: 1px 1px 2px gray;
+    font-size: 2rem;
 }
 
 .admin-main-menu li:hover {
-	translate: -3px -3px;
-	background: gray;
-	color: white;
-	box-shadow: 4px 4px 2px #373737;
+    translate: -3px -3px;
+    background: gray;
+    color: white;
+    box-shadow: 4px 4px 2px #373737;
 }
 
 .admin-main-menu a {
-	display: block;
-	color: inherit;
-	height: 100%;
-	align-content: center;
+    display: block;
+    color: inherit;
+    height: 100%;
+    align-content: center;
 }
+
 /* <======================================== */
 
 /* 관리자 페이지 사이드 메뉴바 admin/sub_menu.jsp =============>*/
 .admin-sub-menu {
-	margin: 0;
-	width: 10rem;
-	height: 30%;
-	background: #faedcd;
-	border-radius: 0 20px 20px 0;
-	text-align: right;
-	position: absolute;
-	left: 0px;
-	top: 30%;
-	transition: 0.5s;
+    margin: 0;
+    width: 10rem;
+    height: 30%;
+    background: #faedcd;
+    border-radius: 0 20px 20px 0;
+    text-align: right;
+    position: absolute;
+    left: 0;
+    top: 30%;
+    transition: 0.5s;
 }
 
 .admin-sub-menu:hover {
-	width: 11rem;
+    width: 11rem;
 }
 
 .admin-sub-menu li {
-	width: 100%;
-	height: 2rem;
-	margin: 1rem 0;
+    width: 100%;
+    height: 2rem;
+    margin: 1rem 0;
 }
 
 .admin-sub-menu a {
-	display: block;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	align-content: center;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    align-content: center;
 }
 
 .admin-sub-menu a:hover {
-	background: #dad7cd;
-	border-radius: 5px;
+    background: #dad7cd;
+    border-radius: 5px;
 }
+
 /* <======================================== */
 
 /* 관리자 페이지의 리스트 스타일 =========================>*/
 .admin-list {
-	margin: 0 0 2rem 12rem;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
+    margin: 0 0 2rem 12rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .admin-list ul {
-	width: 80%;
-	display: flex;
-	border: 1px solid gray;
+    width: 80%;
+    display: flex;
+    border: 1px solid gray;
 }
 
 .admin-list li {
-	height: 4rem;
-	font-size: 1rem;
-	align-content: center;
-	text-align: center;
+    height: 4rem;
+    font-size: 1rem;
+    align-content: center;
+    text-align: center;
 }
 
 .admin-list img {
-	display: inline-block;
-	height: 100%;
-	max-width: 10rem;
+    display: inline-block;
+    height: 100%;
+    max-width: 10rem;
 }
 
 .admin-list-main input[type=checkbox] {
-	width: 100%;
+    width: 100%;
 }
 
 /* adminArtworkList.jsp 테이블 스타일 ============>*/
-.admin-list-main>li:nth-of-type(1), .admin-list-header>li:nth-of-type(1)
-	{
-	flex: 0.2;
+.admin-list-main > li:nth-of-type(1), .admin-list-header > li:nth-of-type(1) {
+    flex: 0.2;
 }
 
-.admin-artwork-list>li:nth-of-type(2), .admin-artwork-list>li:nth-of-type(3),
-	.admin-artwork-list>li:nth-of-type(4), .admin-artwork-list>li:nth-of-type(7),
-	.admin-artwork-list>li:nth-of-type(9), .admin-artwork-list>li:nth-of-type(10)
-	{
-	flex: 0.5;
+.admin-artwork-list > li:nth-of-type(2), .admin-artwork-list > li:nth-of-type(3),
+.admin-artwork-list > li:nth-of-type(4), .admin-artwork-list > li:nth-of-type(7),
+.admin-artwork-list > li:nth-of-type(9), .admin-artwork-list > li:nth-of-type(10) {
+    flex: 0.5;
 }
 
-.admin-artwork-list>li:nth-of-type(5), .admin-artwork-list>li:nth-of-type(6),
-	.admin-artwork-list>li:nth-of-type(8), .admin-artwork-list>li:nth-of-type(11)
-	{
-	flex: 1;
+.admin-artwork-list > li:nth-of-type(5), .admin-artwork-list > li:nth-of-type(6),
+.admin-artwork-list > li:nth-of-type(8), .admin-artwork-list > li:nth-of-type(11) {
+    flex: 1;
 }
+
 /* adminMemberList.jsp 테이블 스타일 ============>*/
-.admin-member-list>li:nth-of-type(2), .admin-member-list>li:nth-of-type(3)
-	{
-	flex: 1;
+.admin-member-list > li:nth-of-type(2), .admin-member-list > li:nth-of-type(3) {
+    flex: 1;
 }
 
-.admin-member-list>li:nth-of-type(4), .admin-member-list>li:nth-of-type(5),
-	.admin-member-list>li:nth-of-type(6) {
-	flex: 2;
+.admin-member-list > li:nth-of-type(4), .admin-member-list > li:nth-of-type(5),
+.admin-member-list > li:nth-of-type(6) {
+    flex: 2;
 }
+
 /* adminQnaList.jsp 테이블 스타일 ==============> */
-.admin-qna-list>li:nth-of-type(2), .admin-qna-list>li:nth-of-type(3) {
-	flex: 0.5;
+.admin-qna-list > li:nth-of-type(2), .admin-qna-list > li:nth-of-type(3) {
+    flex: 0.5;
 }
 
-.admin-qna-list>li:nth-of-type(4) {
-	flex: 2;
+.admin-qna-list > li:nth-of-type(4) {
+    flex: 2;
 }
 
-.admin-qna-list>li:nth-of-type(5) {
-	flex: 3;
+.admin-qna-list > li:nth-of-type(5) {
+    flex: 3;
 }
 
-.admin-qna-list>li:nth-of-type(6) {
-	flex: 1;
+.admin-qna-list > li:nth-of-type(6) {
+    flex: 1;
 }
+
 /* adminNoticeList.jsp 테이블 스타일 =============> */
-.admin-notice-list>li:nth-of-type(2), .admin-notice-list>li:nth-of-type(3),
-	.admin-notice-list>li:nth-of-type(6), .admin-notice-list>li:nth-of-type(7),
-	.admin-notice-list>li:nth-of-type(8) {
-	flex: 0.5;
+.admin-notice-list > li:nth-of-type(2), .admin-notice-list > li:nth-of-type(3),
+.admin-notice-list > li:nth-of-type(6), .admin-notice-list > li:nth-of-type(7),
+.admin-notice-list > li:nth-of-type(8) {
+    flex: 0.5;
 }
 
-.admin-notice-list>li:nth-of-type(4) {
-	flex: 1.5;
+.admin-notice-list > li:nth-of-type(4) {
+    flex: 1.5;
 }
 
-.admin-notice-list>li:nth-of-type(5) {
-	flex: 3;
+.admin-notice-list > li:nth-of-type(5) {
+    flex: 3;
 }
 
 .admin-list-btn {
-	display: flex;
-	margin: 1rem 0;
-	flex-direction: row;
+    display: flex;
+    margin: 1rem 0;
+    flex-direction: row;
 }
 
 .admin-list-btn input[type=button] {
-	width: 8rem;
-	height: 2rem;
-	padding: 0;
-	margin: 0 0.5rem;
-	background-color: white;
-	color: black;
-	font-weight: bold;
-	border: 2px solid black;
-	border-radius: 50px;
-	box-shadow: 1px 1px 2px gray;
-	transition: 0.3s;
-	cursor: pointer;
+    width: 8rem;
+    height: 2rem;
+    padding: 0;
+    margin: 0 0.5rem;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    border: 2px solid black;
+    border-radius: 50px;
+    box-shadow: 1px 1px 2px gray;
+    transition: 0.3s;
+    cursor: pointer;
 }
 
 .admin-list-btn input[type=button]:hover {
-	background-color: black;
-	color: white;
+    background-color: black;
+    color: white;
 }
 
 .admin-list-main {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .admin-list-main:hover, .admin-list-main.checked {
-	background-color: #faedcd;
+    background-color: #faedcd;
 }
 
 .view-link:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .admin-select {
-	padding: 0.5rem 0.3rem;
-	text-align: center;
-	border: 1px solid #888;
-	border-radius: 5px;
-	cursor: pointer;
-	outline: none;
+    padding: 0.5rem 0.3rem;
+    text-align: center;
+    border: 1px solid #888;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
 }
 
 .hidden {
-	display: none;
+    display: none;
 }
 
 .preview {
-	width: 80%;
-	text-align: center;
+    width: 80%;
+    text-align: center;
 }
 
 .preview img {
-	max-width: 100%;
+    max-width: 100%;
 }

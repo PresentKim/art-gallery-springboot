@@ -4,483 +4,478 @@
 
 /* 옆으로 넘어가는 슬라이드 */
 .main-swiper {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	min-width: 18rem;
-	height: auto;
-	max-height: 600px;
-	min-height: 18rem;
-	margin: 0 auto;
-	overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-width: 18rem;
+    height: auto;
+    max-height: 600px;
+    min-height: 18rem;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .main-swiper_image-container {
-	position: relative;
-	display: flex;
-	max-width: 100%;
-	max-height: 100%;
-	transition: left 1s;
-	aspect-ratio: 16/9;
+    position: relative;
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+    transition: left 1s;
+    aspect-ratio: 16/9;
 }
 
 .main-swiper_image-container img {
-	margin: 0 auto;
-	object-fit: fill;
-	aspect-ratio: 16/9;
+    margin: 0 auto;
+    object-fit: fill;
+    aspect-ratio: 16/9;
 }
 
 .main-swiper_remote-container {
-	position: absolute;
-	display: flex;
-	justify-content: right;
-	bottom: 5%;
-	right: 5%;
-	gap: 1rem;
+    position: absolute;
+    display: flex;
+    justify-content: right;
+    bottom: 5%;
+    right: 5%;
+    gap: 1rem;
 }
 
 .main-swiper_remote-container div {
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	text-align: right;
-	line-height: 20px;
-	font-weight: bold;
-	border: 1px solid #4D4D4D;
-	background: #F1F1F1;
-	user-select: none;
-	cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: right;
+    line-height: 20px;
+    font-weight: bold;
+    border: 1px solid #4D4D4D;
+    background: #F1F1F1;
+    user-select: none;
+    cursor: pointer;
 }
 
 .main-swiper_remote-container .selected {
-	background: #3D3D3D;
-	border: 1px solid #6D6D6D;
+    background: #3D3D3D;
+    border: 1px solid #6D6D6D;
 }
 
 .main-swiper_remote-container .pause-button {
-	background: none;
-	border: none;
-	font-size: 1.25rem;
-	font-weight: bold;
-	color: #1D1D1D;
-	text-shadow: 0 0 1px #F1F1F1;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1D1D1D;
+    text-shadow: 0 0 1px #F1F1F1;
 }
 
 /* 상단 슬라이드 */
 #main-top-swiper {
-	width: 100%;
-	transition: width 0.3s;
+    width: 100%;
+    transition: width 0.3s;
 }
 
 @media only screen and (min-width: 768px) {
-	#main-top-swiper {
-		width: 70%;
-	}
+    #main-top-swiper {
+        width: 70%;
+    }
 }
 
 #main-notice-swiper {
-	width: 35%;
+    width: 35%;
 }
 
 /* 관람시간 관람료 오시는길 예약하기 */
 /* Main Section Text */
 .main-section_text {
-	display: flex;
-	flex-wrap: wrap;
-	width: 70%;
-	margin: 0 auto;
-	margin-bottom: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 150px;
 }
 
 /* Main Info Area */
 .main-info-area {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	margin-right: 20px;
-	position: relative;
-	bottom: -80px;
-	left: 50px;
-	margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 20px;
+    position: relative;
+    bottom: -80px;
+    left: 50px;
+    margin-bottom: 40px;
 }
 
 .main_info {
-	display: flex;
+    display: flex;
 }
 
 /* Main Info */
 .main_info, .main_admission {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .main_admission {
-	display: flex;
+    display: flex;
 }
 
 .main_info-tit {
-	font-weight: bold;
-	color: #333;
-	margin-bottom: 10px;
-	display: flex;
-	align-items: center;
-	display: inline-block;
-	vertical-align: middle;
-	font-size: 24px;
-	color: #000;
-	margin-right: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    align-items: center;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 24px;
+    color: #000;
+    margin-right: 20px;
 }
 
 .main_info-tit01 {
-	font-weight: bold;
-	color: #333;
-	margin-bottom: 10px;
-	display: flex;
-	align-items: center;
-	display: inline-block;
-	vertical-align: middle;
-	font-size: 24px;
-	color: #000;
-	margin-right: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    align-items: center;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 24px;
+    color: #000;
+    margin-right: 48px;
 }
 
 .main_info-tit i {
-	display: inline-block;
-	width: 26px;
-	height: 26px;
-	margin-right: 8px;
-	vertical-align: sub;
-	background: url(../image/ico_main_cont_img_1.png) no-repeat left center;
-	background-size: 26px;
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    margin-right: 8px;
+    vertical-align: sub;
+    background: url(../image/ico_main_cont_img_1.png) no-repeat left center;
+    background-size: 26px;
 }
 
 .main_info-txt ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
 }
 
 .main_info-txt ul li {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .main_info-txt ul li strong {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .main_info-txt ul li span {
-	color: #666;
+    color: #666;
 }
 
 /* Info Link */
 .info-link {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .info-link ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	display: flex;
-	position: relative;
-	bottom: -103px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    position: relative;
+    bottom: -103px;
 }
 
 .info-link ul li {
-	margin-bottom: 10px;
-	margin-right: 20px;
+    margin-bottom: 10px;
+    margin-right: 20px;
 }
 
 .info-link .main_btn {
-	display: inline-block;
-	padding: 10px 20px;
-	background-color: #333;
-	color: #fff;
-	text-decoration: none;
-	font-size: 16px;
-	border-radius: 5px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
 }
 
 .info-link .main_btn:hover {
-	background-color: #555;
+    background-color: #555;
 }
 
 /* 좌우로 넘어가는 슬라이드 */
 .imagelist {
-	width: 200px;
-	height: 200px;
-	cursor: pointer;
-	transition: 0.5s;
-	margin: 0 1rem;
-	text-align: center;
-	border-radius: 10px;
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+    transition: 0.5s;
+    margin: 0 1rem;
+    text-align: center;
+    border-radius: 10px;
 }
 
 .imagelist:hover {
-	background-color: #80808024;
-	box-shadow: 5px 15px 10px gray;
-	translate: 0 -25px;
+    background-color: #80808024;
+    box-shadow: 5px 15px 10px gray;
+    translate: 0 -25px;
 }
 
-.imagelist>img {
-	width: 80%;
-	height: 100%;
-	object-fit: contain;
+.imagelist > img {
+    width: 80%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .main-middle-container {
-	width: 70%;
-	height: 600px;
-	overflow: hidden;
-	margin: 0 auto;
+    width: 70%;
+    height: 600px;
+    overflow: hidden;
+    margin: 0 auto;
 }
 
 .container-box {
-	display: flex;
-	width: 100%;
-	transform: translate(-60px);
-	margin: 3rem 0;
+    display: flex;
+    width: 100%;
+    transform: translate(-60px);
+    margin: 3rem 0;
 }
 
 .image-list {
-	display: flex;
-	flex-shrink: 0;
+    display: flex;
+    flex-shrink: 0;
 }
 
 .list {
-	margin: 0 6px;
+    margin: 0 6px;
 }
 
 /* 알립니다 플러스 슬라이더 */
 .main_notice_wrap_alarm {
-	width: 70%;
-	padding: 0 15px;
-	position: relative;
-	margin: 70px auto;
-	margin-bottom: 150px;
+    width: 70%;
+    padding: 0 15px;
+    position: relative;
+    margin: 70px auto;
+    margin-bottom: 150px;
 }
 
 .main_notice_inner {
-	display: flex;
+    display: flex;
 }
 
 .notice_inner .main_notice_inner_row {
-	display: flex;
-	position: relative;
-	padding-left: 15px;
-	/* adjust as needed to provide space for the circle */
-	line-height: 1rem;
+    display: flex;
+    position: relative;
+    padding-left: 15px;
+    /* adjust as needed to provide space for the circle */
+    line-height: 1rem;
 }
 
 .notice_inner .col_col_title a::before {
-	content: '';
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	background-color: #222;
-	position: absolute;
-	left: 0;
-	top: 50%;
-	transform: translateY(-50%);
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #222;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .notice_inner .col_col_title a {
-	text-decoration: none; /* 기본적으로 밑줄 제거 */
-	line-height: 2.25rem;
+    text-decoration: none; /* 기본적으로 밑줄 제거 */
+    line-height: 2.25rem;
 }
 
 .notice_inner .col_col_title a:hover {
-	text-decoration: underline; /* 마우스 올렸을 때 밑줄 추가 */
+    text-decoration: underline; /* 마우스 올렸을 때 밑줄 추가 */
 }
 
 .notice_inner .col_col_title a::before {
-	content: '';
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	background-color: #222;
-	position: absolute;
-	left: 0;
-	top: 50%;
-	transform: translateY(-50%);
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #222;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .col_col_title {
-	width: 70%;
-	display: -webkit-box;
-	padding-left: 1rem;
-	word-break: break-all;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
+    width: 70%;
+    display: -webkit-box;
+    padding-left: 1rem;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .col_col_date {
-	width: 20%;
-	margin-bottom: 20px;
-	margin-left: 40px;
-	text-align: right;
+    width: 20%;
+    margin-bottom: 20px;
+    margin-left: 40px;
+    text-align: right;
 }
 
 .main_notice_wrap_alarm .notice-tit {
-	display: block;
-	font-size: 46px;
-	margin-bottom: 42px;
+    display: block;
+    font-size: 46px;
+    margin-bottom: 42px;
 }
 
 .main_notice_wrap_alarm .notice-tit i {
-	width: 27px;
-	height: 42px;
-	padding-right: 20px;
-	display: inline-block;
-	vertical-align: middle;
-	content: "";
-	background: url(../image/ico_main_notice.png) no-repeat left center;
-	background-size: 27px 42px;
-	margin-right: 10px;
+    width: 27px;
+    height: 42px;
+    padding-right: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    content: "";
+    background: url(../image/ico_main_notice.png) no-repeat left center;
+    background-size: 27px 42px;
+    margin-right: 10px;
 }
 
 .main_notice_wrap_alarm .notice-tit a {
-	color: #000;
+    color: #000;
 }
 
 .notice-area {
-	width: 65%;
+    width: 65%;
 }
 
 .notice_tabBtn {
-	width: 100%;
-	display: flex;
-	justify-content: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .main_notice_wrap_alarm .notice_content .notice_tabBtn {
-	font-size: 0;
-	display: block;
-	border-bottom: 1px solid #c2c2c2;
-	margin-bottom: 10px;
-	border-bottom: 1px solid #ccc;
+    font-size: 0;
+    display: block;
+    border-bottom: 1px solid #c2c2c2;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
 }
 
 .main_notice_wrap_alarm .notice_content .notice_tabBtn .btn:hover {
-	color: #222;
-	border-bottom: 4px solid #222;
-	margin-right: 20px;
+    color: #222;
+    border-bottom: 4px solid #222;
+    margin-right: 20px;
 }
 
 .main_notice_wrap_alarm .notice_content .notice_tabBtn .btn {
-	vertical-align: top;
-	width: 21.04%;
-	line-height: 1.2;
-	font-size: 24px;
-	font-family: 'notokr-regular';
-	cursor: pointer;
-	background-color: #fff;
-	color: #666;
-	padding-bottom: 15px;
-	border: none;
-	margin-right: 20px;
+    vertical-align: top;
+    width: 21.04%;
+    line-height: 1.2;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: #fff;
+    color: #666;
+    padding-bottom: 15px;
+    border: none;
+    margin-right: 20px;
 }
 
 .main_notice_wrap_alarm .notice_content .notice_tabBtn .btn:last-child {
-	margin-right: 0px;
+    margin-right: 0px;
 }
 
 .main_notice_wrap_alarm .notice_content .notice_tabBtn:after {
-	content: '';
-	clear: both;
-	display: block;
+    content: '';
+    clear: both;
+    display: block;
 }
 
 .notice_inner {
-	width: 100%;
-	height: auto;
-	font-size: 1rem;
+    width: 100%;
+    height: auto;
+    font-size: 1rem;
 }
 
 .notice_inner ul {
-	width: 100%;
-	height: 100%;
-	border-bottom: 1px solid #ccc;
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid #ccc;
 }
 
 /* side slide */
 #main-center_slide02 {
-	position: relative;
-	width: 45%;
-	margin: 0 auto;
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    position: relative;
+    width: 45%;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #main-center-imgs02 {
-	position: relative;
-	width: 100%;
-	/* Adjusted to fit the container width */
-	height: 100%;
-	/* Adjusted to fit the container height */
-	display: flex;
-	transition: left 1s;
-	/* Smooth transition */
+    position: relative;
+    width: 100%;
+    /* Adjusted to fit the container width */
+    height: 100%;
+    /* Adjusted to fit the container height */
+    display: flex;
+    transition: left 1s;
+    /* Smooth transition */
 }
 
 #main-center-imgs02 img {
-	width: 100%;
-	/* Ensure each image takes up 70% of the container */
-	height: auto;
-	/* Maintain aspect ratio */
-	margin: 0 auto;
-	/* Center the images horizontally */
+    width: 100%;
+    /* Ensure each image takes up 70% of the container */
+    height: auto;
+    /* Maintain aspect ratio */
+    margin: 0 auto;
+    /* Center the images horizontally */
 }
 
 #main-center-remote02 {
-	position: absolute;
-	width: 100%;
-	height: 50px;
-	bottom: 11px;
-	left: 38%;
-	display: flex;
-	justify-content: center;
-	/* Center the navigation dots */
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    bottom: 11px;
+    left: 38%;
+    display: flex;
+    justify-content: center;
+    /* Center the navigation dots */
 }
 
 #main-center-remote02 div {
-	width: 20px;
-	height: 20px;
-	background: white;
-	border-radius: 50%;
-	margin: 15px 7px;
-	text-align: center;
-	line-height: 17px;
-	font-weight: bold;
-	cursor: pointer;
-	border: 1px solid #ccc;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    margin: 15px 7px;
+    text-align: center;
+    line-height: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #ccc;
 }
 
 #main-center-remote02 .selected {
-	background: #ccc;
-	border: 1px solid #ccc;
+    background: #ccc;
+    border: 1px solid #ccc;
 }
 
 #container1 {
-	animation: container1 100s linear infinite;
+    animation: container1 100s linear infinite;
 }
 
 #container2 {
-	animation: container2 100s linear infinite;
+    animation: container2 100s linear infinite;
 }
 
 #container3 {
-	animation: container3 100s linear infinite;
+    animation: container3 100s linear infinite;
 }
 
 #container4 {
-	animation: container4 100s linear infinite;
+    animation: container4 100s linear infinite;
 }

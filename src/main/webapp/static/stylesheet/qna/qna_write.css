@@ -1,277 +1,281 @@
 @charset "UTF-8";
 
 .qna-write {
-	--color-success: #1D1D1D;
-	--color-failure: #1D1D1D;
-	--color-primary: #1D1D1D;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 0 auto;
-	padding: 0 1rem;
-	max-width: 768px;
-	font-size: 1rem;
+    --color-success: #1D1D1D;
+    --color-failure: #1D1D1D;
+    --color-primary: #1D1D1D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 1rem;
+    max-width: 768px;
+    font-size: 1rem;
 }
 
 /* -- .qna-write_header  -------------- */
 .qna-write_header, .qna-write_header_title {
-	display: flex;
-	flex-direction: column;
-	align-items: end;
-	margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-bottom: 1rem;
 }
 
 .qna-write_header h1 {
-	font-size: 2rem;
+    font-size: 2rem;
 }
 
 @media only screen and (min-width: 768px) {
-	.qna-write {
-		padding: 2rem;
-		border-radius: 0.5rem;
-		border: 1px solid #C1C1C1;
-		margin-bottom: 2rem;
-	}
-	.qna-write_header {
-		align-items: center;
-		padding-left: 2rem;
-		padding-bottom: 1rem;
-		border-bottom: 1px solid #C1C1C1;
-	}
+    .qna-write {
+        padding: 2rem;
+        border-radius: 0.5rem;
+        border: 1px solid #C1C1C1;
+        margin-bottom: 2rem;
+    }
+
+    .qna-write_header {
+        align-items: center;
+        padding-left: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #C1C1C1;
+    }
 }
 
 /* -- .qna-write_body  -------------- */
 .qna-write_body {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
 }
 
 @media only screen and (min-width: 768px) {
-	.qna-write_body .pagination {
-		padding: 0.5rem;
-		border-top: 1px solid #D1D1D1;
-	}
+    .qna-write_body .pagination {
+        padding: 0.5rem;
+        border-top: 1px solid #D1D1D1;
+    }
 }
 
 /* -- .qna-write_input-wrapper  -------------- */
 .qna-write_input-wrapper {
-	display: grid;
-	position: relative;
-	width: 100%;
-	border-color: #D1D1D1;
-	border-style: solid;
-	border-width: 0;
-	border-bottom-width: 1px;
-	transition: all 0.5s;
+    display: grid;
+    position: relative;
+    width: 100%;
+    border-color: #D1D1D1;
+    border-style: solid;
+    border-width: 0;
+    border-bottom-width: 1px;
+    transition: all 0.5s;
 }
 
 .qna-write_input-wrapper:has(:focus) {
-	border-color: var(--color-success);
-	box-shadow: 0 2px 0 0 var(--color-success);
+    border-color: var(--color-success);
+    box-shadow: 0 2px 0 0 var(--color-success);
 }
 
 .qna-write_input-wrapper:has(:invalid) {
-	border-color: var(--color-failure);
-	box-shadow: 0 1px 0 0 var(--color-failure);
+    border-color: var(--color-failure);
+    box-shadow: 0 1px 0 0 var(--color-failure);
 }
 
 .qna-write_input-wrapper input, .qna-write_input-wrapper textarea {
-	width: 100%;
-	min-height: 3rem;
-	margin-top: 1.5rem;
-	padding-top: 1.25rem;
-	padding-left: 0.5rem;
-	font-size: 1.125rem;
-	line-height: 1rem;
-	outline: none;
-	border: none;
-	overflow: hidden;
-	resize: none;
+    width: 100%;
+    min-height: 3rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    padding-left: 0.5rem;
+    font-size: 1.125rem;
+    line-height: 1rem;
+    outline: none;
+    border: none;
+    overflow: hidden;
+    resize: none;
 }
 
-.qna-write_input-wrapper:has(textarea)::after, .qna-write_input-wrapper textarea
-	{
-	grid-column-start: 1;
-	grid-row-start: 1;
-	width: 100%;
-	padding-left: 0.5rem;
-	font-size: 1.125rem;
-	line-height: 1.25rem;
-	white-space: pre-wrap;
-	word-break: break-all;
-	transition: all .3s;
+.qna-write_input-wrapper:has(textarea)::after, .qna-write_input-wrapper textarea {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    width: 100%;
+    padding-left: 0.5rem;
+    font-size: 1.125rem;
+    line-height: 1.25rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+    transition: all .3s;
 }
 
 .qna-write_input-wrapper:has(textarea)::after {
-	display: block;
-	content: attr(data-textarea-input) " ";
-	margin-top: 1.5rem;
-	padding-top: 1.25rem;
-	padding-bottom: 0.5rem;
-	z-index: -1;
-	opacity: 0;
+    display: block;
+    content: attr(data-textarea-input) " ";
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 0.5rem;
+    z-index: -1;
+    opacity: 0;
 }
 
 .qna-write_input-wrapper textarea {
-	resize: none;
+    resize: none;
 }
 
 .qna-write_input-wrapper textarea:focus {
-	border: none;
+    border: none;
 }
 
 .qna-write_input-wrapper input[type="checkbox"] {
-	width: 7rem;
-	height: 2rem;
-	min-height: 0;
-	margin: 3rem auto 0.5rem 0.5rem;
+    width: 7rem;
+    height: 2rem;
+    min-height: 0;
+    margin: 3rem auto 0.5rem 0.5rem;
 }
 
 .qna-write_input-wrapper input[type="checkbox"]::after {
-	display: block;
-	content: '[비공개]';
-	height: 2rem;
-	font-size: 1.2rem;
-	align-content: center;
-	text-align: center;
-	font-weight: bold;
-	padding: 0.5rem;
-	color: white;
-	background: var(--color-failure);
-	cursor: pointer;
+    display: block;
+    content: '[비공개]';
+    height: 2rem;
+    font-size: 1.2rem;
+    align-content: center;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.5rem;
+    color: white;
+    background: var(--color-failure);
+    cursor: pointer;
 }
 
 .qna-write_input-wrapper input[type="checkbox"]:checked::after {
-	content: '[공개]';
-	color: white;
-	background: var(--color-success);
+    content: '[공개]';
+    color: white;
+    background: var(--color-success);
 }
 
 .qna-write_input-wrapper ::selection {
-	color: #F1F1F1;
-	background-color: var(--color-success);
+    color: #F1F1F1;
+    background-color: var(--color-success);
 }
 
 .qna-write_input-wrapper label {
-	position: absolute;
-	left: 0.5rem;
-	top: 2.75rem;
-	font-size: 1.2rem;
-	font-weight: bold;
-	color: #6D6D6D !important;
-	cursor: text;
-	transition: all .2s ease-out;
-	transform: translateY(-120%);
+    position: absolute;
+    left: 0.5rem;
+    top: 2.75rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #6D6D6D !important;
+    cursor: text;
+    transition: all .2s ease-out;
+    transform: translateY(-120%);
 }
 
-.qna-write_input-wrapper textarea+label {
-	top: 2.5rem;
+.qna-write_input-wrapper textarea + label {
+    top: 2.5rem;
 }
 
-.qna-write_input-wrapper :placeholder-shown:not(:focus)+label {
-	transform: translateY(0%);
+.qna-write_input-wrapper :placeholder-shown:not(:focus) + label {
+    transform: translateY(0%);
 }
 
-.qna-write_input-wrapper :focus+label, .qna-write_input-wrapper :valid+label
-	{
-	color: var(--color-success) !important;
+.qna-write_input-wrapper :focus + label, .qna-write_input-wrapper :valid + label {
+    color: var(--color-success) !important;
 }
 
-.qna-write_input-wrapper :invalid:not(:placeholder-shown)+label {
-	color: var(--color-failure) !important;
+.qna-write_input-wrapper :invalid:not(:placeholder-shown) + label {
+    color: var(--color-failure) !important;
 }
 
 @media only screen and (min-width: 768px) {
-	.qna-write_input-wrapper {
-		border-width: 0 !important;
-		box-shadow: none !important;
-		margin-top: 1rem;
-	}
-	.qna-write_input-wrapper input, .qna-write_input-wrapper textarea {
-		border-radius: 0.5rem;
-		border-style: solid !important;
-		border-color: inherit !important;
-		border-width: 1px !important;
-	}
-	.qna-write_input-wrapper input {
-		padding-top: 0 !important;
-	}
-	.qna-write_input-wrapper::after, .qna-write_input-wrapper textarea {
-		padding-top: 1rem !important;
-		padding-bottom: 1rem !important;
-	}
-	.qna-write_input-wrapper input[type="checkbox"] {
-		margin-top: 1.5rem;
-	}
-	.qna-write_input-wrapper label {
-		font-size: 1.3rem;
-		top: 0 !important;
-		transform: translateY(0%) !important;
-	}
+    .qna-write_input-wrapper {
+        border-width: 0 !important;
+        box-shadow: none !important;
+        margin-top: 1rem;
+    }
+
+    .qna-write_input-wrapper input, .qna-write_input-wrapper textarea {
+        border-radius: 0.5rem;
+        border-style: solid !important;
+        border-color: inherit !important;
+        border-width: 1px !important;
+    }
+
+    .qna-write_input-wrapper input {
+        padding-top: 0 !important;
+    }
+
+    .qna-write_input-wrapper::after, .qna-write_input-wrapper textarea {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+
+    .qna-write_input-wrapper input[type="checkbox"] {
+        margin-top: 1.5rem;
+    }
+
+    .qna-write_input-wrapper label {
+        font-size: 1.3rem;
+        top: 0 !important;
+        transform: translateY(0%) !important;
+    }
 }
 
 /* -- .qna-write_button-wrapper -------------- */
 .qna-write_button-wrapper {
-	display: flex;
-	flex-direction: row-reverse;
-	justify-content: center;
-	width: 50%;
-	margin: 1rem auto;
-	text-align: center;
-	overflow: hidden;
-	border-radius: 3px;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-	transition: all .3s ease-in-out;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    width: 50%;
+    margin: 1rem auto;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    transition: all .3s ease-in-out;
 }
 
 .qna-write_button-wrapper:active {
-	box-shadow: 0 5px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.3);
 }
 
 .qna-write_button {
-	flex: 1;
-	padding: 0.5rem 2em;
-	font-size: 1.25rem;
-	background-color: #1D1D1D;
-	color: #F1F1F1;
+    flex: 1;
+    padding: 0.5rem 2em;
+    font-size: 1.25rem;
+    background-color: #1D1D1D;
+    color: #F1F1F1;
 }
 
-.qna-write_button+label {
-	align-content: center;
-	transition: width .3s;
-	width: 0;
+.qna-write_button + label {
+    align-content: center;
+    transition: width .3s;
+    width: 0;
 }
 
-.qna-write_button+label:has(.upload) {
-	background: #A1F1A1;
+.qna-write_button + label:has(.upload) {
+    background: #A1F1A1;
 }
 
-.qna-write_button+label:has(.cancel) {
-	background: #A1A1F1;
+.qna-write_button + label:has(.cancel) {
+    background: #A1A1F1;
 }
 
-.qna-write_button-wrapper:hover .qna-write_button+label {
-	width: 3rem;
+.qna-write_button-wrapper:hover .qna-write_button + label {
+    width: 3rem;
 }
 
 @media only screen and (max-width: 486px) {
-	.qna-write_button-wrapper {
-		width: 100%;
-	}
+    .qna-write_button-wrapper {
+        width: 100%;
+    }
 }
 
 /* -- i.qna-icon -------------- */
 .qna-write_input-wrapper i.qna-icon {
-	position: absolute;
-	width: 2rem;
-	height: 2rem;
-	transition: color .2s;
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    transition: color .2s;
 }
 
 .qna-write_button-wrapper i.qna-icon {
-	width: 2rem;
-	height: 2rem;
-	transition: color .2s;
+    width: 2rem;
+    height: 2rem;
+    transition: color .2s;
 }

@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-	<jsp:param name="stylesheet" value="static/stylesheet/member/contract.css" />
-	<jsp:param name="script" value="static/script/member.js" />
+    <jsp:param name="stylesheet" value="static/stylesheet/member/contract.css"/>
+    <jsp:param name="script" value="static/script/member.js"/>
 </jsp:include>
 <main class="contract-form-wrapper">
-    <form class="contract-form" method="post" action="museum.do?command=joinForm&returnUrl=${returnUrl}" onsubmit="ajaxSubmit(event)" name="contractForm">
+    <form class="contract-form" method="post" action="museum.do?command=joinForm&returnUrl=${returnUrl}"
+          onsubmit="ajaxSubmit(event)" name="contractForm">
         <h2>가입 약관</h2>
         <div class="contract-field">
             <textarea readonly>약관 총칙
@@ -31,13 +32,13 @@
             </textarea>
         </div>
         <div class="contract-agree">
-            <input type="radio" name="agree" > 동의함 &nbsp; &nbsp; &nbsp;
-			<input type="radio" name="agree" checked> 동의안함
-            </div>
-      	<div class="contract-btn">
-			<input class="cbtn"  type="button" value="다음"  onClick="go_next(); ">
-		</div>
+            <input type="radio" name="agree"> 동의함 &nbsp; &nbsp; &nbsp;
+            <input type="radio" name="agree" checked> 동의안함
+        </div>
+        <div class="contract-btn">
+            <input class="cbtn" type="button" value="다음" onClick="go_next(); ">
+        </div>
     </form>
 </main>
 
-<jsp:include page="/WEB-INF/views/footer.jsp" />
+<jsp:include page="/WEB-INF/views/footer.jsp"/>

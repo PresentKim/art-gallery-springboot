@@ -1,15 +1,16 @@
 .join-form-wrapper {
     width: 50%;
-    margin: 0 auto;
-    margin-bottom: 150px;
+    margin: 0 auto 150px;
     padding: 40px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 .join-form > h2 {
     margin-bottom: 30px;
 }
+
 .joinForm {
     width: 400px;
     margin: 0 auto;

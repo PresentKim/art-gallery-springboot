@@ -1,37 +1,37 @@
 @charset "UTF-8";
 
 i.qna-icon {
-	display: inline-block;
-	background-size: contain;
-	background-repeat: no-repeat;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 /* -- list icon -------------- */
 i.qna-icon.public {
-	display: none;
+    display: none;
 }
 
 i.qna-icon.private {
-	background-image: url(../../image/qna/ico_qna_private.svg);
+    background-image: url(../../image/qna/ico_qna_private.svg);
 }
 
 i.qna-icon.admin {
-	background-image: url(../../image/qna/ico_qna_admin.svg);
+    background-image: url(../../image/qna/ico_qna_admin.svg);
 }
 
 i.qna-icon.owner {
-	background-image: url(../../image/qna/ico_qna_owner.svg);
+    background-image: url(../../image/qna/ico_qna_owner.svg);
 }
 
 /* -- write icon -------------- */
 i.qna-icon.upload {
-	background-image: url(../../image/qna/ico_qna_upload.svg);
+    background-image: url(../../image/qna/ico_qna_upload.svg);
 }
 
 i.qna-icon.delete {
-	background-image: url(../../image/qna/ico_qna_delete.svg);
+    background-image: url(../../image/qna/ico_qna_delete.svg);
 }
 
 i.qna-icon.cancel {
-	background-image: url(../../image/qna/ico_qna_cancel.svg);
+    background-image: url(../../image/qna/ico_qna_cancel.svg);
 }

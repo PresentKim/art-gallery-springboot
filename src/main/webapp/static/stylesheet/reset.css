@@ -1,86 +1,86 @@
 @charset "UTF-8";
 
 *, *:after, *:before {
-	margin: 0;
-	padding: 0;
-	font-family: "Pretendard GOV Variable", "Pretendard GOV", -apple-system,
-		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
-		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility;
+    margin: 0;
+    padding: 0;
+    font-family: "Pretendard GOV Variable", "Pretendard GOV", -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 html {
-	overflow-x: hidden;
+    overflow-x: hidden;
 }
 
 html, body {
-	height: 100%;
+    height: 100%;
 }
 
 body {
-	line-height: 1;
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-body>*:nth-child(2) {
-	flex: 1;
+body > *:nth-child(2) {
+    flex: 1;
 }
 
 button {
-	border: none;
-	background: none;
-	cursor: pointer;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
 a {
-	text-decoration: none;
-	color: #000;
+    text-decoration: none;
+    color: #000;
 }
 
 li {
-	list-style: none;
+    list-style: none;
 }
 
 ul, ol {
-	list-style-type: none;
+    list-style-type: none;
 }
 
 fieldset {
-	border: none;
+    border: none;
 }
 
 input {
-	position: relative;
-	color: #1D1D1D;
-	border: none;
-	border-bottom: solid #aaaaaa 1px;
-	padding-left: 10px;
-	background: none;
-	z-index: 5;
-	align-content: center;
+    position: relative;
+    color: #1D1D1D;
+    border: none;
+    border-bottom: solid #aaaaaa 1px;
+    padding-left: 10px;
+    background: none;
+    z-index: 5;
+    align-content: center;
 }
 
 input::placeholder {
-	color: #AAAAAA;
+    color: #AAAAAA;
 }
 
 input:focus {
-	outline: none;
+    outline: none;
 }
 
 input:focus ~ label, input:valid ~ label {
-	color: #666;
-	font-weight: bold;
+    color: #666;
+    font-weight: bold;
 }
 
 input:focus ~ span, input:valid ~ span {
-	width: 100%;
+    width: 100%;
 }
