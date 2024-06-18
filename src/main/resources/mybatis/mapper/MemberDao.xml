@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team4.artgallery.dao.IMemberDao">
+
+    <insert id="insertMember" parameterType="com.team4.artgallery.dto.MemberDto">
+        INSERT INTO member (id, pwd, name, email, phone)
+        VALUES (#{id}, #{pwd}, #{name}, #{email}, #{phone})
+    </insert>
+
+    <select id="findMember" parameterType="String" resultType="com.team4.artgallery.dto.MemberDto">
+        SELECT *
+        FROM member
+        WHERE id = #{id}
+    </select>
+
+    <select id="getMembers" parameterType="com.team4.artgallery.util.Pagination"
+            resultType="com.team4.artgallery.dto.MemberDto">
+        SELECT *
+        FROM member
+        ORDER BY id DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="searchMembers" resultType="com.team4.artgallery.dto.MemberDto">
+        SELECT *
+        FROM member
+        WHERE id LIKE CONCAT('%', #{search}, '%')
+           OR name LIKE CONCAT('%', #{search}, '%')
+           OR email LIKE CONCAT('%', #{search}, '%')
+        ORDER BY id DESC
+        LIMIT #{pagination.limit} OFFSET #{pagination.offset}
+    </select>
+
+    <select id="getAllCount" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+    </select>
+
+    <select id="getSearchCount" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE id LIKE CONCAT('%', #{search}, '%')
+           OR name LIKE CONCAT('%', #{search}, '%')
+           OR email LIKE CONCAT('%', #{search}, '%')
+    </select>
+
+    <update id="updateMember" parameterType="com.team4.artgallery.dto.MemberDto">
+        UPDATE member
+        SET pwd   = #{pwd},
+            name  = #{name},
+            email = #{email},
+            phone = #{phone}
+        WHERE id = #{id}
+    </update>
+
+    <update id="grantAdmin" parameterType="String">
+        UPDATE member
+        SET adminyn = 'Y'
+        WHERE id = #{id}
+    </update>
+
+    <update id="revokeAdmin" parameterType="String">
+        UPDATE member
+        SET adminyn = 'N'
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteMember" parameterType="String">
+        DELETE
+        FROM member
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

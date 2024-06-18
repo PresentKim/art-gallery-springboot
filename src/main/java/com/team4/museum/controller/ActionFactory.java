@@ -5,8 +5,6 @@ import com.team4.museum.controller.action.IndexAction;
 import com.team4.museum.controller.action.admin.*;
 import com.team4.museum.controller.action.artwork.*;
 import com.team4.museum.controller.action.gallery.*;
-import com.team4.museum.controller.action.member.*;
-import com.team4.museum.controller.action.member.mypage.*;
 import com.team4.museum.controller.action.notice.*;
 import com.team4.museum.controller.action.qna.*;
 
@@ -26,22 +24,6 @@ public class ActionFactory {
 
             // index action
             case "", "index" -> new IndexAction();
-
-            // member actions
-            case "loginForm" -> new LoginFormAction();
-            case "login" -> new LoginAjaxAction();
-            case "logout" -> new LogoutAjaxAction();
-            case "join" -> new JoinAjaxAction();
-            case "joinForm" -> new JoinFormAction();
-            case "idCheck" -> new IdCheckAjaxAction();
-            case "mypage" -> new MyPageAction();
-            case "mypageEditForm" -> new MyPageEditFormAction();
-            case "mypageEdit" -> new MyPageEditAjaxAction();
-            case "mypageFavorite" -> new MyPageFavoriteAjaxAction();
-            case "mypageFavoriteList" -> new MyPageFavoriteListAction();
-            case "contract" -> new ContractAcion();
-            case "withdrawForm" -> new WithdrawFormAction();
-            case "withdraw" -> new WithdrawAjaxAction();
 
             // artwork actions
             case "artworkList" -> new ArtworkListAction();

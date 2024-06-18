@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.team4.museum.util.NoticeCategory" %>
-<%@ page import="com.team4.museum.util.ArtworkCategory" %>
+<%@ page import="com.team4.artgallery.util.NoticeCategory" %>
+<%@ page import="com.team4.artgallery.util.ArtworkCategory" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +40,7 @@
             <li><a href="https://www.museum.go.kr/site/child/home" target="_blank">어린이박물관</a></li>
             <li><a href="https://www.museum.go.kr/curator" target="_blank">학예사자격증</a></li>
             <li><a href="http://webzine.museum.go.kr" target="_blank">박물관신문</a></li>
-            <li><a class="lang-select" href="javascript:;"> Language </a></li>
+            <li><a class="lang-select" href="javascript:"> Language </a></li>
             <li><a href="https://blog.naver.com/100museum" target="_blank" title="국립중앙박물관 네이버 블로그 새 창으로 열림"
                    class="naver">
                 <img src="<c:url value="/static/image/header/ico_header_item1.png"/>" alt="블로그">
@@ -69,9 +69,8 @@
     <nav>
         <h1 data-aos="fade-in" data-aos-offset="200" data-aos-easing="ease-in">
             <svg id="header_logo_v" width="300" height="50" viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg"
-                 onclick="location.href='museum.do?command=index'">
-                <g stroke-linecap="round" fill-rule="evenodd" font-size="9pt" stroke="#737373" stroke-width="0.2mm"
-                   fill="#000" style="stroke:#000;stroke-width:0.2mm;fill:#000">
+                 onclick="location.href='/'">
+                <g stroke-linecap="round" fill-rule="evenodd" font-size="9pt" stroke="#737373" stroke-width="0.2mm">
 
                     <!-- 태극기 배경 -->
                     <circle cx="20" cy="20" r="20" fill="#023859"></circle>
@@ -112,24 +111,25 @@
         </h1>
         <div class="header_gnb">
             <div>
-                <a href="museum.do?command=artworkList">예술품</a>
-                <a href="museum.do?command=noticeList">소식지</a>
-                <a href="museum.do?command=galleryList">이용자 갤러리</a>
-                <a href="museum.do?command=qnaList">고객센터</a>
+                <a href="<c:url value="/artwork"/>">예술품</a>
+                <a href="<c:url value="/notice"/>">소식지</a>
+                <a href="<c:url value="/gallery"/>">이용자 갤러리</a>
+                <a href="<c:url value="/qna"/>">고객센터</a>
             </div>
         </div>
         <div class="login_join_box">
             <c:choose>
-                <c:when test="${empty loginUser}">
-                    <c:if test="${not empty returnUrl}">
-                        <c:set var="urlPath" value="${returnUrl}"/>
-                    </c:if>
-                    <a href="museum.do?command=loginForm&returnUrl=${urlPath}" class="login-join-box_btn">로그인</a>
-                    <a href="museum.do?command=contract&returnUrl=${urlPath}">회원가입</a>
+                <c:when test="${empty account}">
+                    <a href="<c:url value="/member/login?returnUrl={RETURN_URL}"/>" class="login-join-box_btn">로그인</a>
+                    <a href="<c:url value="/member/contract?returnUrl={RETURN_URL}"/>">회원가입</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="museum.do?command=mypage" class="login-join-box_btn">${loginUser.name}(${loginUser.id})</a>
-                    <span onclick="ajax({command:'logout',returnUrl:'${urlPath}'})">로그아웃</span>
+                    <a href="<c:url value="/member/mypage"/>" class="login-join-box_btn">
+                            ${account.name}(${account.id})
+                    </a>
+                    <a href="#" onclick="ajax('/member/logout')" class="login-join-box_btn">
+                        로그아웃
+                    </a>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -138,14 +138,14 @@
 <div class="header_gnb_list_containner">
     <div>
         <c:forEach items="${ArtworkCategory.values()}" var="c">
-            <a href="museum.do?command=artworkList&category=${c.name()}">${c.name()}</a>
+            <a href="<c:url value="/artwork?category=${c.name()}"/>">${c.name()}</a>
         </c:forEach>
     </div>
 </div>
 <div class="header_gnb_list_containner01">
     <div>
         <c:forEach items="${NoticeCategory.values()}" var="c">
-            <a href="museum.do?command=noticeList&category=${c.name()}">${c.name()}</a>
+            <a href="<c:url value="/notice?category=${c.name()}"/>">${c.name()}</a>
         </c:forEach>
     </div>
 </div>

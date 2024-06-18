@@ -77,7 +77,7 @@ function ajaxSubmit(event) {
 
     // form 요소 유효성 검사
     for (var input of form.elements) {
-        if (input.required && input.value.trim() == "") {
+        if (input.required && input.value.trim() === "") {
             alert(getInputName(input) + "을(를) 입력해 주세요.");
             input.focus();
             return;
@@ -86,7 +86,7 @@ function ajaxSubmit(event) {
         var requireEquals = input.dataset.requireEquals;
         if (requireEquals) {
             var target = form.elements[requireEquals];
-            if (target && input.value != target.value) {
+            if (target && input.value !== target.value) {
                 alert(getInputName(target) + "와(과) " + getInputName(input) + "이(가) 일치하지 않습니다.");
                 input.focus();
                 return;
@@ -114,14 +114,6 @@ var defaultAjaxHandler = function (status, response) {
     var message = response.message;
     switch (status) {
         case 200: // OK
-            // 200 상태 코드는 url 값이 존재하면 메시지를 생략
-            if (url) {
-                location.href = url;
-            } else if (message) {
-                alert(message);
-            }
-            return;
-
         case 201: // Created
         case 202: // Accepted
             break;

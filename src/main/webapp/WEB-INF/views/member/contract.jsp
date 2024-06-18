@@ -2,16 +2,16 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="static/stylesheet/member/contract.css"/>
-    <jsp:param name="script" value="static/script/member.js"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/member/contract.css"/>
+    <jsp:param name="script" value="/static/script/member.js"/>
 </jsp:include>
 <main class="contract-form-wrapper">
-    <form class="contract-form" method="post" action="museum.do?command=joinForm&returnUrl=${returnUrl}"
-          onsubmit="ajaxSubmit(event)" name="contractForm">
+    <form class="contract-form" method="get" action="<c:url value="/member/join"/>">
+        <input type="hidden" name="returnUrl" value="${returnUrl}"/>
         <h2>가입 약관</h2>
         <div class="contract-field">
-            <textarea readonly>약관 총칙
-         제 1장 총칙
+            <label> <textarea readonly>약관 총칙
+제 1장 총칙
 제 1 조 (목적)
 본 약관은 국립중앙박물관 사이트가 제공하는 모든 서비스(이하 "서비스")의 이용조건 및 절차, 이용자와 국립중앙박물관 사이트의 권리, 의무, 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.
 
@@ -29,14 +29,13 @@
 비밀번호 : 이용자와 회원ID가 일치하는지를 확인하고 통신상의 자신의 비밀보호를 위하여 이용자 자신이 선정한 문자와 숫자의 조합.
 탈퇴 : 회원이 이용계약을 종료시키는 행위.
 제 2장 서비스 제공 및 이용
-            </textarea>
+</textarea> </label>
         </div>
         <div class="contract-agree">
-            <input type="radio" name="agree"> 동의함 &nbsp; &nbsp; &nbsp;
-            <input type="radio" name="agree" checked> 동의안함
+            <input type="checkbox" name="agree" id="agree" required> <label for="agree">약관에 동의합니다.</label>
         </div>
         <div class="contract-btn">
-            <input class="cbtn" type="button" value="다음" onClick="go_next(); ">
+            <input class="cbtn" type="submit" value="다음">
         </div>
     </form>
 </main>

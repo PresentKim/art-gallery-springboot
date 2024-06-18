@@ -15,7 +15,7 @@
             <li><a href="#">개인정보처리방침</a></li>
             <li><a href="#">저작권정책</a></li>
             <li><a href="#">웹 접근성 품질인증</a></li>
-            <c:if test="${isAdmin}">
+            <c:if test="${account.isAdmin}">
                 <li>
                     <a href="/admin">관리자 페이지</a>
                 </li>

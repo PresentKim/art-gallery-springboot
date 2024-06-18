@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+$(document).ready(function ($) {
 
     var run_delayed = {
         playing: false,
@@ -73,7 +73,13 @@ jQuery(document).ready(function ($) {
         $('.header_gnb_list_containner01').stop().slideUp()
     })
 
+    // a 태그의 {RETURN_URL} 문자열을 현재 페이지의 URL로 치환
+    function getReturnUrlParameter() {
+        var urlParams = new URLSearchParams(location.search);
+        return urlParams.get('returnUrl') || location.pathname + location.search;
+    }
 
+    $('a').map((_, a) => a.href = a.href.replace('{RETURN_URL}', encodeURIComponent(getReturnUrlParameter())))
 });
 
 

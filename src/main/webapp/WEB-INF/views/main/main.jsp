@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="static/stylesheet/main.css"/>
-    <jsp:param name="script" value="static/script/main.js"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/main.css"/>
+    <jsp:param name="script" value="/static/script/main.js"/>
 </jsp:include>
 <!-- 메인 상단 - 옆으로 넘어가는 슬라이드 -->
 <div id="main-top-swiper" class="main-swiper" data-aos="fade-up" data-aos-offset="200" data-aos-delay="50"

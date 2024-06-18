@@ -1,4 +1,4 @@
-package com.team4.museum.util;
+package com.team4.artgallery.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 
