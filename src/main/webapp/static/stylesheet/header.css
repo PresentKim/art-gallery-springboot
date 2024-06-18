@@ -1,0 +1,291 @@
+@charset "UTF-8";
+
+.header_util {
+	margin: 0 auto;
+	position: relative;
+	width: 100%;
+	height: 40px;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+.util-link {
+	position: absolute;
+	top: 7px;
+	right: -15%;
+	font-size: 0.5rem;
+	display: flex;
+	width: 46%;
+}
+
+.util-link li {
+	margin-right: 20px;
+}
+
+.util-link li a {
+	font-size: 0.9rem;
+}
+
+header {
+	margin-bottom: 80px;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 1.5rem;
+	font-weight: 400;
+	font-size: 1rem;
+	word-break: keep-all;
+	word-wrap: break-word;
+	text-align: left;
+	line-height: 1.5;
+	color: #1D1D1D;
+	background-color: #F8F8F8;
+	border-bottom: 1px solid #ccc;
+}
+
+
+
+header nav h1 {
+	cursor: pointer;
+}
+.logo03{
+	transform: translate(50px, 0px);
+}
+.logo04{
+	transform: translate(78px, 0px);
+}
+.logo05{
+	transform: translate(105px, 0px);
+}
+.logo06{
+	transform: translate(130px, 0px);
+}
+.logo07{
+	transform: translate(157px, 0px);
+}
+
+.logo08{
+	transform: translate(50px, 31px);
+}
+
+header nav {
+	position: relative;
+	top: 7px;
+	display: flex;
+}
+
+.header_gnb {
+	display: flex;
+	position: relative;
+	align-items: center;
+	font-size: 1.4rem;
+	margin-left: 0px;
+	width: 100%;
+	font-weight: bold;
+}
+
+.header_gnb a {
+	margin-right: 20px;
+}
+
+
+.header_logo {
+	width: 208px;
+	height: 55px;
+	background: url(../image/header/header_logo.png) no-repeat center/cover;
+}
+
+header a {
+	position: relative;
+	display: inline-block;
+	color: #1D1D1D;
+	text-decoration: none;
+	transition: 0.3s ease-in-out;
+}
+
+header a:hover {
+	color: #4D4D4D;
+}
+
+header a::after {
+	position: absolute;
+	content: "";
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: #1D1D1D;
+	transform: scaleX(0);
+	transform-origin: right;
+	transition: transform 0.3s ease-in-out;
+}
+
+header a:hover::after {
+	transform: scaleX(1);
+	transform-origin: left;
+}
+
+.login_join_box {
+	font-size: 1.1rem;
+	position: absolute;
+	top: -14px;
+	right: 0px;
+	margin-left: auto;
+	font-weight:bold;
+}
+ 
+.login-join-box_btn{
+ 	margin-right: 1rem;
+ }
+ 
+.artwork, .notice {
+	margin-top: 1rem;
+}
+
+.sub-menu a {
+	margin-right: 1rem;
+}
+
+/* 하위 컨테이너  */
+
+
+.header_gnb_list_containner  {
+	display:none;
+	position: absolute;
+	top: 169px;
+	left: 0px;
+	width: 100%;
+	height: 70px;
+	font-weight: bold;
+	background-color: #F8F8F8;
+	font-size: 1rem;
+	border-bottom: 1px solid #ccc;
+}
+
+.header_gnb_list_containner div {
+	width: 60%;
+	height: 100%;
+	margin-left: 17%;
+	margin-top: 10px;
+}
+
+.header_gnb_list_containner a {
+	margin-top:13px;
+	margin-right: 20px;
+	font-family: 'notokr-medium';
+	position: relative;
+	display: inline-block;
+	color: #1D1D1D;
+	text-decoration: none;
+	transition: 0.3s ease-in-out;
+}
+
+.header_gnb_list_containner a:hover {
+	color: #4D4D4D;
+}
+
+.header_gnb_list_containner a::after {
+	position: absolute;
+	content: "";
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: #1D1D1D;
+	transform: scaleX(0);
+	transform-origin: right;
+	transition: transform 0.3s ease-in-out;
+}
+
+.header_gnb_list_containner a:hover::after {
+	transform: scaleX(1);
+	transform-origin: left;
+}
+
+.header_gnb_list_containner01  {
+	display:none;
+	position: absolute;
+	top: 169px;
+	left: 0px;
+	width: 100%;
+	height: 70px;
+	font-weight: bold;
+	background-color: #F8F8F8;
+	font-size: 1rem;
+	border-bottom: 1px solid #ccc;
+}
+
+.header_gnb_list_containner01 div {
+	width: 60%;
+	height: 100%;
+	margin-left: 17%;
+	/* border: 1px solid blue; */
+	margin-top: 10px;
+}
+
+.header_gnb_list_containner01 a {
+	margin-right: 20px;
+	margin-top:13px;
+	font-family: 'notokr-medium';
+	position: relative;
+	display: inline-block;
+	color: #1D1D1D;
+	text-decoration: none;
+	transition: 0.3s ease-in-out;
+}
+
+.header_gnb_list_containner01 a:hover {
+	color: #4D4D4D;
+}
+
+.header_gnb_list_containner01 a::after {
+	position: absolute;
+	content: "";
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: #1D1D1D;
+	transform: scaleX(0);
+	transform-origin: right;
+	transition: transform 0.3s ease-in-out;
+}
+
+.header_gnb_list_containner01 a:hover::after {
+	transform: scaleX(1);
+	transform-origin: left;
+}
+.login_join_box span{
+	cursor:pointer;
+	position: relative;
+	display: inline-block;
+	color: #1D1D1D;
+	text-decoration: none;
+	transition: 0.3s ease-in-out;
+}
+.login_join_box span:hover{
+	color: #4D4D4D;
+}
+
+.login_join_box span::after{
+	position: absolute;
+	content: "";
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: #1D1D1D;
+	transform: scaleX(0);
+	transform-origin: right;
+	transition: transform 0.3s ease-in-out;
+}
+
+.login_join_box span:hover::after{
+	transform: scaleX(1);
+	transform-origin: left;
+}
+
+
+.content-wrap{
+	flex:1;
+}

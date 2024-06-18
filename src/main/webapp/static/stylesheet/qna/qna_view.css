@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+.qna-view {
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+	padding: 0 1rem;
+	max-width: 768px;
+	font-size: 1rem;
+}
+
+/* -- .qna-view_header  -------------- */
+.qna-view_header, .qna-view_header_title {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+}
+
+.qna-view_header h1 {
+	font-size: 2rem;
+	margin: 0rem 0 1rem 1rem;
+}
+
+.qna-view_header_buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.qna-view_header_buttons .qna-view_submit {
+	background: transparent;
+	padding: 0.25rem 2rem;
+	border-radius: 0.25rem;
+	border: 0;
+	font-size: 1rem;
+	box-shadow: 0.125rem 0.125rem 0.5rem 0.2rem rgba(0, 0, 0, 0.1);
+	transition: box-shadow 0.3s;
+}
+
+.qna-view_header_buttons .qna-view_submit:hover {
+	box-shadow: 0 0 0.5rem 0.2rem #0804;
+}
+
+@media only screen and (min-width: 768px) {
+	.qna-view_header {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.qna-view_header_title {
+		margin-bottom: 0;
+		align-items: start;
+	}
+}
+
+/* -- .qna-view_body  -------------- */
+.qna-view_body {
+	width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+	.qna-view_body {
+		margin-bottom: 2rem;
+		box-shadow: 0 .1rem .5rem .1rem rgba(0, 0, 0, 0.2);
+	}
+	.qna-view_body .pagination {
+		padding: 0.5rem;
+		border-top: 1px solid #D1D1D1;
+	}
+}
+
+/* -- .qna-view_info  -------------- */
+.qna-view_info {
+	width: 100%;
+	text-align: left;
+	font-size: 1rem;
+	border: none;
+	border-radius: 0.25rem;
+	word-break: break-all;
+	padding: 1rem 0.5rem;
+}
+
+.qna-view_info>h1 {
+	font-size: 1.75rem;
+	margin-bottom: 0.75rem;
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+/* -- .qna-view_content  -------------- */
+.qna-view_content {
+	padding: 1rem 0.5rem;
+	border-bottom: 1px solid #ccc;
+	word-break: break-all;
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+/* -- .qna-view_reply  -------------- */
+.qna-view_reply {
+	padding: 1rem 1rem;
+	word-break: break-all;
+}
+
+.qna-view_reply>h2 {
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+.qna-view_reply_no {
+	font-size: 1.5rem;
+	color: #666;
+}
+
+.qna-view_reply textarea {
+	width: 100%;
+	height: 8rem;
+	font-size: 1rem;
+	padding: 0.5rem;
+	border-color: #ccc;
+	border-radius: 0.5rem;
+	resize: vertical;
+}
+
+.qna-view_reply input[type=submit] {
+	width: 100%;
+	font-size: 1.25rem;
+	cursor: pointer;
+	transition: all 1s;
+}
+
+.qna-view_reply input[type=submit]:hover {
+	color: #0A0;
+	border-color: #0A0;
+	transition: color 0.3s;
+}

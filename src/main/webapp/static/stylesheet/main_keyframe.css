@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/* 아래 움직이는 슬라이드 *//* 아래 움직이는 슬라이드 */
+@keyframes container1 {
+  0%{
+    transform: translateX(0);
+  }
+
+  50% {
+    transform:
+      translateX(100%);
+  }
+
+  50.01% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes container2 {
+  0%{
+    transform: translateX(-200%);
+  }
+
+  100% {
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes container3 {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform:
+      translateX(-100%);
+  }
+
+  50.01% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes container4 {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform:
+      translateX(-200%);
+  }
+}

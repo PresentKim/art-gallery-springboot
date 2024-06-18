@@ -1,0 +1,117 @@
+.join-form-wrapper {
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 150px;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.join-form > h2 {
+    margin-bottom: 30px;
+}
+.joinForm {
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+/* Form header */
+.joinForm h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Field container */
+.field {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+/* Label */
+.field label {
+    display: inline-block;
+    width: 12%;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* Input fields */
+.field input[type="text"],
+.field input[type="password"],
+.field input[type="tel"],
+.field input[type="email"] {
+    width: calc(100% - 12%);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* ID wrapper */
+.id-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.id-wrapper input[type="text"] {
+    width: calc(100% - 100px);
+    margin-right: 10px;
+}
+
+.id-wrapper input[type="button"] {
+    padding: 8px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.id-wrapper input[type="button"]:hover {
+    background-color: #555;
+}
+
+/* Button container */
+.btn {
+    text-align: center;
+}
+
+/* Buttons */
+.btn input[type="button"],
+.btn input[type="submit"] {
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn input[type="button"]:hover,
+.btn input[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* Additional styles */
+.middle {
+    display: flex;
+    flex-direction: column;
+}
+
+.middle p {
+    font-size: 13px;
+}
+
+/* Asterisk */
+.field span {
+    color: red;
+    margin-right: 5px;
+}

@@ -1,0 +1,110 @@
+.gallery-form-header {
+	width: 80%;
+	margin: 0 auto;
+	height: 5rem;
+	font-size: 2rem;
+	text-align: center;
+	align-content: center;
+	border-bottom: 2px solid gray;
+}
+
+.gallery-form-main {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.gallery-form {
+	width: 100%;
+	display: flex;
+	margin: 2rem 0;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 2rem;
+}
+
+.gallery-form_info {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	
+}
+
+.gallery-form_info input[type="text"],
+.gallery-form_info input[type="file"]{
+	width: 70%;
+	height: 2rem;
+	border: none;
+	border-bottom: solid #aaaaaa 1px;
+	outline: none;
+}
+
+.gallery-form_info>ul{
+	width: 40%;
+}
+
+.gallery-form_info li {
+	margin: 1.5rem 0;
+	display: flex;
+	align-items: start;	
+}
+
+.gallery-form-text>li{
+	margin: 1.5rem 0;
+	display: flex;
+	align-items: start;
+	justify-content: end;
+	flex-wrap: wrap;
+}
+
+.gallery-form_info li>div,
+.gallery-form_info li>label {
+	width: 20%;
+	height: 2rem;
+	align-content: center;
+	font-weight: bold;
+}
+
+.gallery-form-text li label {
+	width: 5rem;
+	font-size: 1rem;
+	align-content: center;
+	margin-left: 5px;
+}
+
+.gallery-form-img>li:last-child {
+	justify-content: center;
+}
+.gallery-form img {
+	max-width: 70%;
+}
+
+.gallery-form textarea {
+	width: 70%;
+	height: 30rem;
+	font-size: 1rem;
+	background-color: #8b8b8b1c;
+	color: black;
+	resize: none;
+	border: none;
+	border-bottom: 2px solid #0000007e;
+	outline: none;
+	padding: 1rem;
+}
+.gallery-form_btn{
+	width: 100%;
+	text-align: center;
+}
+
+.gallery-form_btn>input {
+	width: 20%;
+	height: 2rem;
+	margin: 1rem 1rem;
+	cursor: pointer;
+}
+
+.gallery-form_btn>input:hover {
+	border-bottom: solid black 2px;
+	font-weight: bold;
+}

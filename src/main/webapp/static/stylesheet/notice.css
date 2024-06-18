@@ -1,0 +1,599 @@
+@charset "UTF-8";
+
+.notice_box {
+	width: 90%;
+	margin: 20px auto;
+	background-color: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notice_header_box {
+	width: 100%;
+	padding: 20px;
+	border-bottom: 1px solid #e0e0e0;
+	display: flex;
+	align-items: center;
+	z-index: 10;
+}
+
+.notice_header_box h2, .notice_header_box h3 {
+	margin: 0;
+	padding: 0 20px;
+	font-size: 1.2em;
+	color: #333;
+}
+
+.notice_header_box .writebutton {
+	margin-left: auto;
+	width: 30%;
+}
+
+.notice_header_box .writebutton input {
+	background-color: #fff;
+	color: #000;
+	border: none;
+	cursor: pointer;
+	font-size: 1em;
+	width: 100%;
+	height: 40px;
+	border: 1px solid #000;
+	transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.notice_header_box .writebutton input:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.notice_title_box {
+	width: 100%;
+	display: table;
+	border-collapse: collapse;
+}
+
+.notice_title_row {
+	display: table-row;
+	background-color: #f0f0f0;
+	font-weight: bold;
+}
+
+.notice_title_col {
+	display: table-cell;
+	padding: 10px;
+	border-bottom: 1px solid #e0e0e0;
+	text-align: center;
+}
+
+.notice_title_col.col_number, .notice_col.col_number {
+	width: 5%;
+}
+
+.notice_title_col.col_title, .notice_col.col_title {
+	width: 25%;
+}
+
+.notice_title_col.col_author, .notice_col.col_author {
+	width: 7%;
+}
+
+.notice_title_col.col_content, .notice_col.col_content {
+	width: 30%;
+}
+
+.notice_title_col.col_date, .notice_col.col_date {
+	width: 15%;
+}
+
+.notice_title_col.col_views, .notice_col.col_views {
+	width: 8%;
+}
+
+.notice_title_col.col_category, .notice_col.col_category {
+	width: 10%;
+}
+
+.row {
+	display: table-row;
+}
+
+.col {
+	display: table-cell;
+	padding: 10px;
+	border-bottom: 1px solid #e0e0e0;
+	text-align: center;
+}
+
+.paging_wrap {
+	width: 100%;
+}
+
+.paging {
+	text-align: center;
+	padding: 20px 0;
+	margin: 0 auto;
+}
+
+.paging a, .paging span {
+	margin: 0 5px;
+	padding: 5px 10px;
+	background-color: #0073e6;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 1em;
+	display: inline-block;
+}
+
+.paging a:hover {
+	background-color: #005bb5;
+}
+
+.paging .current-page {
+	background-color: #ccc;
+	color: #333;
+	cursor: default;
+}
+
+.notice_insert_box {
+	background-color: #fff;
+	padding: 30px;
+	margin: 40px auto;
+	border: 1px solid #ddd;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	max-width: 800px;
+	border-radius: 10px;
+}
+
+.notice_insert_box h2 {
+	font-size: 28px;
+	margin-bottom: 20px;
+	color: #333;
+	text-align: center;
+	border-bottom: 2px solid #eaeaea;
+	padding-bottom: 10px;
+}
+
+.notice_insert_header_box {
+	display: flex;
+	flex-direction: column;
+}
+
+.notice_insert_header_box form {
+	display: flex;
+	flex-direction: column;
+}
+
+.notice_insert_field {
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.notice_insert_field label {
+	font-weight: bold;
+	margin-bottom: 5px;
+	color: #555;
+}
+
+.notice_insert_field input[type="text"], .notice_insert_field input[type="password"],
+	.notice_insert_field input[type="file"], .notice_insert_field textarea
+	{
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+	width: 100%;
+}
+
+.notice_insert_field textarea {
+	resize: vertical;
+	height: 200px;
+}
+
+.notice_insert_field div {
+	margin-top: 5px;
+	color: #777;
+	font-size: 14px;
+}
+
+.notice_insert_button {
+	width: 50%;
+	margin: 0 auto;
+}
+
+.notice_insert_button input[type="submit"] {
+	background-color: #fff;
+	color: #000;
+	border: 1px solid #000;
+	padding: 12px;
+	font-size: 16px;
+	cursor: pointer;
+	align-self: center;
+	width: 150px;
+	margin-top: 20px;
+	margin-right: 30px;
+}
+
+.notice_insert_button input[type="submit"]:hover {
+	background-color: #000;
+	color: #fff;
+	transition: all 0.3s ease 0s;
+}
+
+/* 전체 컨테이너 스타일 */
+.noticeView_container {
+	margin: 20px;
+	padding: 20px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	background-color: #f9f9f9;
+}
+
+/* 제목 스타일 */
+h2 {
+	color: #333;
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+/* 상세 보기 박스 스타일 */
+.noticeView_box {
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	background-color: #fff;
+}
+
+/* 필드 스타일 */
+.noticeView_field {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+
+/* 레이블 스타일 */
+.noticeView_label {
+	flex: 0.5;
+	color: #666;
+}
+
+/* 텍스트 스타일 */
+.noticeView_text {
+	flex: 2;
+	color: #333;
+}
+
+/* 이미지 스타일 */
+.noticeView_image img {
+	width: 100%;
+	max-width: 350px;
+	height: auto;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+/* 버튼 스타일 */
+.noticeView-button {
+	text-align: center;
+}
+
+.btn-noticeView {
+	padding: 10px 20px;
+	background-color: #fff;
+	color: #000;
+	border: 1px solid #000;
+	font-size: 16px;
+	cursor: pointer;
+	transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-noticeView:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+#notice_update_box {
+	width: 50%;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #ccc;
+	background-color: #f9f9f9;
+}
+
+.notice_update_innerbox {
+	margin-top: 20px;
+}
+
+.notice_update_field {
+	margin-bottom: 15px;
+}
+
+.notice_update_field_btn {
+	width: 23%;
+	margin: 0 auto;
+}
+
+.notice_update_field label {
+	display: inline-block;
+	width: 100px;
+	font-weight: bold;
+}
+
+.notice_update_field input[type="text"], .notice_update_field select, .notice_update_field input[type="password"],
+	.notice_update_field textarea {
+	width: 100%;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.notice_update_field textarea {
+	height: 30px;
+}
+
+.notice_update_field_btn input[type="submit"], .notice_update_field_btn input[type="button"]
+	{
+	padding: 8px 15px;
+	background-color: #333; color : #fff;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	color: #fff;
+}
+
+.notice_update_field_btn input[type="submit"]:hover,
+	.notice_update_field_btn input[type="button"]:hover {
+	background-color: #555;
+}
+
+.notice_update_field img {
+	vertical-align: middle;
+}
+
+.notice-list_btn {
+	margin-right: 30px;
+}
+/* magazine */
+.noticeMagazine_container {
+	display: flex;
+	width: 95%;
+	height: auto;
+	margin: 0 auto;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.noticeMagazine-button {
+	float: right;
+	text-align: center;
+}
+
+.btn-noticeMagazine {
+	padding: 10px 20px;
+	background-color: #fff;
+	color: #000;
+	border: 1px solid #000;
+	font-size: 16px;
+	cursor: pointer;
+	transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-noticeMagazine:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.mu-news_left {
+	width: 45%;
+}
+
+.l-img {
+	width: 500px;
+	height: 650px;
+	background: url(../image/magazine/magazine1.jpg) no-repeat center/contain;
+	box-shadow: 6px 6px #dadada;
+	margin-bottom: 40px;
+}
+
+.mu-news_left .btn {
+	display: inline-block;
+	padding: 10px 20px;
+	margin-right: 10px;
+	background-color: #fff;
+	color: #000;
+	text-decoration: none;
+	border: 1px solid #000;
+	transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.mu-news_left .pdf-down i, .mu-news_left .pdf-down i {
+	width: 20px;
+	height: 20px;
+	padding-left: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	background: url(../image/magazine/ico_pdf_type1.png) no-repeat right;
+	background-size: 20px;
+}
+
+.mu-news_left .btn-link i, .mu-news_left .btn-link i {
+	width: 20px;
+	height: 20px;
+	padding-left: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	background: url(../image/magazine/ico_link_arrow.png) no-repeat right;
+	background-size: 20px;
+}
+
+.mu-news_left .btn-link {
+	margin-left: 10px;
+	margin-bottom: 20px;
+}
+
+.txt-area_right {
+	margin-left: 50px;
+}
+
+.mu-news_left .btn:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.mu-news_left .btn-link {
+	border-color: #000;
+}
+
+.mu-news_left .btn-link:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.mu-news_left .pdf-down {
+	border-color: #000;
+}
+
+.mu-news_left .pdf-down:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.chapter-info {
+	display: block;
+	padding: 50px 30px;
+	box-sizing: border-box;
+	background-color: #f8f8f8;
+	height: 650px;
+	overflow: auto;
+	margin-bottom: 40px;
+}
+
+/* Magazine- newpaper */
+.noticeNewpaper_containner {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.noticeNewpaper_innerbox {
+	margin-top: 80px;
+}
+
+.noticeNewpaper_innerbox li {
+	float: left;
+	width: 22%;
+	margin-right: 10%;
+	margin-bottom: 40px;
+	min-height: 695px;
+}
+
+.noticeNewpaper_img_box {
+	width: 130%;
+	margin-right: 20px;
+	margin-bottom: 40px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+}
+
+.noticeNewpaper_info {
+	margin-bottom: 40px;
+}
+
+.noticeNewpaper_info>p:nth-child(1) {
+	font-size: 1.3rem;
+	margin-bottom: 20px;
+	font-weight: bold;
+}
+
+.noticeNewpaper_info>p:nth-child(2) {
+	font-size: 0.8rem;
+	margin-bottom: 20px;
+}
+
+/* newspaper- btn */
+.noticeNewpaper_info .btn {
+	display: inline-block;
+	padding: 10px 20px;
+	margin-bottom: 15px;
+	background-color: #fff;
+	color: #000;
+	text-decoration: none;
+	border: 1px solid #000;
+	transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.noticeNewpaper_info .pdf-down i, .noticeNewpaper_info .pdf-down i {
+	width: 20px;
+	height: 20px;
+	padding-left: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	background: url(../image/magazine/ico_pdf_type1.png) no-repeat right;
+	background-size: 20px;
+}
+
+.noticeNewpaper_info .btn-link i, .noticeNewpaper_info .btn-link i {
+	width: 20px;
+	height: 20px;
+	padding-left: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	background: url(../image/magazine/ico_link_arrow.png) no-repeat right;
+	background-size: 20px;
+}
+
+.noticeNewpaper_info .btn:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.noticeNewpaper_info .btn-link {
+	border-color: #000;
+}
+
+.noticeNewpaper_info .btn-link:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.noticeNewpaper_info .pdf-down {
+	border-color: #000;
+}
+
+.noticeNewpaper_info .pdf-down:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.noticeNewpaper-button {
+	position: relative;
+	top: 561px;
+	float: right;
+	text-align: center;
+}
+
+.btn-noticeNewspaper {
+	padding: 10px 20px;
+	background-color: #fff;
+	color: #000;
+	border: 1px solid #000;
+	font-size: 16px;
+	cursor: pointer;
+	transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-noticeNewspaper:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.notice_insert_field select {
+	height: 30px;
+}
+
+.updateNotice_bottomClear {
+	width: 100%;
+	height: 100px;
+}
