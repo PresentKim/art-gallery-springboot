@@ -3,7 +3,6 @@ package com.team4.artgallery.controller;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.UrlUtil;
-import com.team4.artgallery.util.ajax.ResponseBody;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -199,7 +198,7 @@ public class MemberController {
 
         // 회원 정보 수정 성공 시 성공 결과 반환
         memberService.setLoginMember(session, memberDto);
-        return ResponseEntity.ok(new ResponseBody("회원정보 수정에 성공하였습니다.", "/member/mypage"));
+        return ok("회원정보 수정에 성공하였습니다.", "/member/mypage");
     }
 
     @GetMapping("/withdraw")

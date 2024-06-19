@@ -14,7 +14,7 @@ public interface IMemberDao {
 
     MemberDto findMember(String memberId);
 
-    List<MemberDto> getMembers(@Param("pagination") Pagination pagination);
+    List<MemberDto> getMembers(Pagination pagination);
 
     List<MemberDto> searchMembers(@Param("search") String search, @Param("pagination") Pagination pagination);
 

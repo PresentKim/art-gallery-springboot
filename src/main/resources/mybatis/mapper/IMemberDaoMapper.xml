@@ -33,12 +33,12 @@
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
 
-    <select id="getAllCount" resultType="int">
+    <select id="getAllCount" resultType="Integer">
         SELECT COUNT(*)
         FROM member
     </select>
 
-    <select id="getSearchCount" parameterType="String" resultType="int">
+    <select id="getSearchCount" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
         FROM member
         WHERE id LIKE CONCAT('%', #{search}, '%')
