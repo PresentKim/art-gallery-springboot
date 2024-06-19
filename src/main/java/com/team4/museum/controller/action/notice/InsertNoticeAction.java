@@ -1,11 +1,11 @@
 package com.team4.museum.controller.action.notice;
 
+import com.team4.artgallery.dto.NoticeDto;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.dao.NoticeDao;
 import com.team4.museum.util.MultipartFileInfo;
 import com.team4.museum.util.Security;
 import com.team4.museum.vo.MemberVO;
-import com.team4.museum.vo.NoticeVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,7 +29,7 @@ public class InsertNoticeAction implements Action {
             return;
         }
 
-        NoticeVO nvo = new NoticeVO();
+        NoticeDto nvo = new NoticeDto();
         nvo.setTitle(request.getParameter("title"));
         nvo.setAuthor(mvo.getId());
         nvo.setContent(request.getParameter("content"));

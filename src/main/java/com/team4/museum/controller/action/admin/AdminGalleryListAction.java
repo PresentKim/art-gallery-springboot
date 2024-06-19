@@ -1,10 +1,10 @@
 package com.team4.museum.controller.action.admin;
 
+import com.team4.artgallery.dto.MemberGalleryDto;
+import com.team4.artgallery.util.Pagination;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.dao.MemberGalleryDao;
-import com.team4.museum.util.Pagination;
 import com.team4.museum.util.Security;
-import com.team4.museum.vo.MemberGalleryVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,7 +25,7 @@ public class AdminGalleryListAction implements Action {
         Pagination pagination = Pagination.with(request, mgdao.getAllCount(), "command=adminGalleryList");
         String searchWord = request.getParameter("searchWord");
 
-        List<MemberGalleryVO> galleryList;
+        List<MemberGalleryDto> galleryList;
         if (searchWord != null) {
             pagination.setItemCount(mgdao.getSearchCount(searchWord));
             pagination.setUrlTemplate("museum.do?command=adminGalleryList&page=%d&searchWord=" + searchWord);

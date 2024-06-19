@@ -1,11 +1,11 @@
 package com.team4.museum.controller.action.notice;
 
+import com.team4.artgallery.dto.NoticeDto;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.dao.NoticeDao;
 import com.team4.museum.util.MultipartFileInfo;
 import com.team4.museum.util.Security;
 import com.team4.museum.vo.MemberVO;
-import com.team4.museum.vo.NoticeVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ public class UpdateNoticeAction implements Action {
         }
 
         NoticeDao ndao = NoticeDao.getInstance();
-        NoticeVO nvo = new NoticeVO();
+        NoticeDto nvo = new NoticeDto();
         nvo.setNseq(Integer.parseInt(request.getParameter("nseq")));
         nvo.setAuthor(mvo.getId());
         nvo.setTitle(request.getParameter("title"));

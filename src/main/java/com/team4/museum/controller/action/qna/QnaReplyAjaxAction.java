@@ -1,10 +1,10 @@
 package com.team4.museum.controller.action.qna;
 
+import com.team4.artgallery.dto.QnaDto;
 import com.team4.museum.controller.action.AjaxAction;
 import com.team4.museum.dao.QnaDao;
 import com.team4.museum.util.ajax.AjaxException;
 import com.team4.museum.util.ajax.AjaxResult;
-import com.team4.museum.vo.QnaVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -25,8 +25,8 @@ public class QnaReplyAjaxAction extends AjaxAction {
 
         // 입력된 'qseq'에 해당하는 문의글이 없는 경우
         QnaDao qdao = QnaDao.getInstance();
-        QnaVO qnaVO = qdao.getQna(qseq);
-        if (qnaVO == null) {
+        QnaDto qnaDto = qdao.getQna(qseq);
+        if (qnaDto == null) {
             return noContent("해당 문의가 존재하지 않습니다");
         }
 

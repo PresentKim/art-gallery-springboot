@@ -1,7 +1,7 @@
 package com.team4.museum.controller.action.qna;
 
+import com.team4.artgallery.dto.QnaDto;
 import com.team4.museum.dao.QnaDao;
-import com.team4.museum.vo.QnaVO;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -10,7 +10,7 @@ import static com.team4.museum.controller.action.qna.QnaPwdCheckAjaxAction.isAlr
 
 @FunctionalInterface
 interface QnaAccessValidator {
-    boolean validate(@Nonnull QnaVO qnaVO, HttpServletRequest request);
+    boolean validate(@Nonnull QnaDto qnaDto, HttpServletRequest request);
 
     // 기본 접근 권한 검사자
 
@@ -36,7 +36,7 @@ interface QnaAccessValidator {
      * @param validator 접근 조건 검사자
      * @return 접근 조건을 만족하는 문의글 정보
      */
-    static QnaVO getValidatedQna(HttpServletRequest request, QnaAccessValidator validator) {
+    static QnaDto getValidatedQna(HttpServletRequest request, QnaAccessValidator validator) {
         // 'qseq' 파라미터가 없는 경우
         String qseqParam = request.getParameter("qseq");
         if (qseqParam == null || qseqParam.isEmpty() || !qseqParam.matches("^[0-9]*$")) {
@@ -44,17 +44,17 @@ interface QnaAccessValidator {
         }
 
         // 'qseq'에 해당하는 문의글 정보가 없는 경우
-        QnaVO qnaVO = QnaDao.getInstance().getQna(Integer.parseInt(qseqParam));
-        if (qnaVO == null) {
+        QnaDto qnaDto = QnaDao.getInstance().getQna(Integer.parseInt(qseqParam));
+        if (qnaDto == null) {
             return null;
         }
 
         // 'qnaVO'가 필터링 조건을 만족하지 않는 경우
-        if (!validator.validate(qnaVO, request)) {
+        if (!validator.validate(qnaDto, request)) {
             return null;
         }
 
         // 'qnaVO'를 반환
-        return qnaVO;
+        return qnaDto;
     }
 }

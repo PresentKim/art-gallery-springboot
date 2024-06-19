@@ -1,10 +1,10 @@
 package com.team4.museum.controller.action.artwork;
 
+import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.dao.ArtworkDao;
 import com.team4.museum.util.MultipartFileInfo;
 import com.team4.museum.util.Security;
-import com.team4.museum.vo.ArtworkVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ public class ArtworkWriteFormAction implements Action {
             return;
         }
 
-        ArtworkVO avo = new ArtworkVO();
+        ArtworkDto avo = new ArtworkDto();
         avo.setName(request.getParameter("artname"));
         avo.setCategory(request.getParameter("category"));
         avo.setArtist(request.getParameter("artist"));

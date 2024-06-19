@@ -1,4 +1,4 @@
-package com.team4.museum.util;
+package com.team4.artgallery.enums;
 
 import java.util.List;
 

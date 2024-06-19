@@ -1,10 +1,10 @@
 package com.team4.museum.controller.action.qna;
 
+import com.team4.artgallery.dto.QnaDto;
 import com.team4.museum.controller.action.AjaxAction;
 import com.team4.museum.dao.QnaDao;
 import com.team4.museum.util.ajax.AjaxException;
 import com.team4.museum.util.ajax.AjaxResult;
-import com.team4.museum.vo.QnaVO;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,13 +53,13 @@ public class QnaPwdCheckAjaxAction extends AjaxAction {
 
         // 입력된 'qseq'에 해당하는 문의글이 없는 경우
         QnaDao qdao = QnaDao.getInstance();
-        QnaVO qnaVO = qdao.getQna(qseq);
-        if (qnaVO == null) {
+        QnaDto qnaDto = qdao.getQna(qseq);
+        if (qnaDto == null) {
             return noContent("해당 문의가 존재하지 않습니다");
         }
 
         // subAction의 접근 조건을 만족하지 않는 경우
-        if (!subAction.validate(qnaVO, request)) {
+        if (!subAction.validate(qnaDto, request)) {
             // 'pwd' 파라미터가 없는 경우
             String pwd = request.getParameter("pwd");
             if (pwd == null || pwd.trim().isEmpty()) {
@@ -67,7 +67,7 @@ public class QnaPwdCheckAjaxAction extends AjaxAction {
             }
 
             // 비밀번호가 일치하지 않는 경우
-            if (!qnaVO.getPwd().equals(pwd)) {
+            if (!qnaDto.getPwd().equals(pwd)) {
                 return badRequest("비밀번호가 일치하지 않습니다");
             }
 
@@ -76,14 +76,14 @@ public class QnaPwdCheckAjaxAction extends AjaxAction {
         }
 
         // ResultMapper로 결과를 생성해 반환
-        return subAction.execute(qnaVO, request);
+        return subAction.execute(qnaDto, request);
     }
 
     /**
      * 세션에 문의글 비밀번호 확인 기록이 있는지 확인합니다.
      *
      * @param request 세션 객체
-     * @param qseq   문의글 번호
+     * @param qseq    문의글 번호
      * @return 비밀번호 확인 기록이 있으면 true, 없으면 false
      */
     public static boolean isAlreadyPwdChecked(HttpServletRequest request, int qseq) {
@@ -94,7 +94,7 @@ public class QnaPwdCheckAjaxAction extends AjaxAction {
      * 세션에 문의글 비밀번호 확인 기록을 남깁니다.
      *
      * @param request 세션 객체
-     * @param qseq   문의글 번호
+     * @param qseq    문의글 번호
      */
     public static void savePwdCheckLog(HttpServletRequest request, int qseq) {
         request.getSession().setAttribute("qnaPass" + qseq, true);
@@ -116,17 +116,17 @@ public class QnaPwdCheckAjaxAction extends AjaxAction {
             this.mapper = mapper;
         }
 
-        public boolean validate(@Nonnull QnaVO qnaVO, HttpServletRequest request) {
-            return validator.validate(qnaVO, request);
+        public boolean validate(@Nonnull QnaDto qnaDto, HttpServletRequest request) {
+            return validator.validate(qnaDto, request);
         }
 
-        public AjaxResult execute(@Nonnull QnaVO qnaVO, HttpServletRequest request) {
-            return mapper.execute(qnaVO, request);
+        public AjaxResult execute(@Nonnull QnaDto qnaDto, HttpServletRequest request) {
+            return mapper.execute(qnaDto, request);
         }
 
         @FunctionalInterface
         private interface RequestMapper {
-            AjaxResult execute(@Nonnull QnaVO qnaVO, HttpServletRequest request);
+            AjaxResult execute(@Nonnull QnaDto qnaDto, HttpServletRequest request);
         }
     }
 }

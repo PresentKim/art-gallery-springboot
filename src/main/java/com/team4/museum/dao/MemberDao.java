@@ -1,6 +1,6 @@
 package com.team4.museum.dao;
 
-import com.team4.museum.util.Pagination;
+import com.team4.artgallery.util.Pagination;
 import com.team4.museum.vo.MemberVO;
 
 import java.sql.ResultSet;

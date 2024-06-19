@@ -1,8 +1,8 @@
 package com.team4.museum.controller.action.admin;
 
+import com.team4.artgallery.util.Pagination;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.dao.QnaDao;
-import com.team4.museum.util.Pagination;
 import com.team4.museum.util.Security;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

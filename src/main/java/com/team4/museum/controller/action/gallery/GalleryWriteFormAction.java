@@ -1,10 +1,10 @@
 package com.team4.museum.controller.action.gallery;
 
+import com.team4.artgallery.dto.MemberGalleryDto;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.controller.action.member.LoginAjaxAction;
 import com.team4.museum.dao.MemberGalleryDao;
 import com.team4.museum.util.MultipartFileInfo;
-import com.team4.museum.vo.MemberGalleryVO;
 import com.team4.museum.vo.MemberVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class GalleryWriteFormAction implements Action {
         }
 
         MemberGalleryDao mgdao = MemberGalleryDao.getInstance();
-        MemberGalleryVO mgvo = new MemberGalleryVO();
+        MemberGalleryDto mgvo = new MemberGalleryDto();
         mgvo.setTitle(request.getParameter("title"));
         mgvo.setContent(request.getParameter("content"));
         mgvo.setAuthorId(mvo.getId());

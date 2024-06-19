@@ -1,7 +1,7 @@
 package com.team4.museum.controller.action;
 
+import com.team4.artgallery.util.UrlUtil;
 import com.team4.museum.controller.action.member.LoginAjaxAction;
-import com.team4.museum.util.UrlUtil;
 import com.team4.museum.util.ajax.AjaxException;
 import com.team4.museum.util.ajax.AjaxResult;
 import com.team4.museum.vo.MemberVO;

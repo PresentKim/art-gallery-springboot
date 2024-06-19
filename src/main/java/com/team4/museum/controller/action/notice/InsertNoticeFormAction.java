@@ -17,7 +17,7 @@ public class InsertNoticeFormAction implements Action {
             return;
         }
 
-        request.getRequestDispatcher("/WEB-INF/views/notice/insertNoticeForm.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/notice/noticeWriteForm.jsp").forward(request, response);
     }
 
 }

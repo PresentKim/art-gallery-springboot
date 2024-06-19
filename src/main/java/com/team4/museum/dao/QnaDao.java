@@ -1,13 +1,13 @@
 package com.team4.museum.dao;
 
-import com.team4.museum.util.Pagination;
-import com.team4.museum.vo.QnaVO;
+import com.team4.artgallery.dto.QnaDto;
+import com.team4.artgallery.util.Pagination;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class QnaDao extends BaseDao<QnaVO> {
+public class QnaDao extends BaseDao<QnaDto> {
 
     private QnaDao() {
     }
@@ -24,7 +24,7 @@ public class QnaDao extends BaseDao<QnaVO> {
      * @param pagination 페이지 정보
      * @return 문의글 목록
      */
-    public List<QnaVO> selectQna(Pagination pagination) {
+    public List<QnaDto> selectQna(Pagination pagination) {
         return select(
                 "SELECT * FROM qna ORDER BY qseq DESC LIMIT ? OFFSET ?",
                 pagination::applyTo
@@ -38,7 +38,7 @@ public class QnaDao extends BaseDao<QnaVO> {
      * @param isReply    답변이 있는지 여부 (Y: 답변 있음, N: 답변 없음)
      * @return 문의글 목록
      */
-    public List<QnaVO> selectQna(Pagination pagination, String isReply) {
+    public List<QnaDto> selectQna(Pagination pagination, String isReply) {
         String query;
         if (isReply.equals("Y")) {
             query = "SELECT * FROM qna WHERE COALESCE(reply, '') <> '' ORDER BY qseq DESC LIMIT ? OFFSET ?";
@@ -54,7 +54,7 @@ public class QnaDao extends BaseDao<QnaVO> {
      * @param qseq 문의글 번호 (qna sequence)
      * @return 문의글 정보
      */
-    public QnaVO getQna(int qseq) {
+    public QnaDto getQna(int qseq) {
         return selectOne("SELECT * FROM qna WHERE qseq = ?", qseq);
     }
 
@@ -64,7 +64,7 @@ public class QnaDao extends BaseDao<QnaVO> {
      * @param qvo 문의글 정보 (qna sequence)
      * @return 등록된 문의글 번호
      */
-    public int insertQna(QnaVO qvo) {
+    public int insertQna(QnaDto qvo) {
         update(
                 "INSERT INTO qna (title, content, email, phone, publicyn, pwd) VALUES (?, ?, ?, ?, ? ,?)",
                 qvo.getTitle(),
@@ -84,7 +84,7 @@ public class QnaDao extends BaseDao<QnaVO> {
      * @param qvo 문의글 정보 (qna sequence)
      * @return 수정된 문의글 번호
      */
-    public int updateQna(QnaVO qvo) {
+    public int updateQna(QnaDto qvo) {
         int qseq = qvo.getQseq();
         update(
                 "UPDATE qna SET title = ?, content = ?, email = ?, phone = ?, publicyn = ?, pwd = ? WHERE qseq = ?",
@@ -148,7 +148,7 @@ public class QnaDao extends BaseDao<QnaVO> {
      * @param searchWord 검색어
      * @return 문의글 목록
      */
-    public List<QnaVO> searchQna(Pagination pagination, String searchWord) {
+    public List<QnaDto> searchQna(Pagination pagination, String searchWord) {
         return select(
                 "SELECT * FROM qna "
                         + " WHERE title LIKE CONCAT('%', ?, '%') OR content LIKE CONCAT('%', ?, '%') "
@@ -166,8 +166,8 @@ public class QnaDao extends BaseDao<QnaVO> {
      * @param rs ResultSet 객체
      * @return QnaVO VO 객체
      */
-    protected QnaVO parseVO(ResultSet rs) throws SQLException {
-        QnaVO qvo = new QnaVO();
+    protected QnaDto parseVO(ResultSet rs) throws SQLException {
+        QnaDto qvo = new QnaDto();
         qvo.setQseq(rs.getInt("qseq"));
         qvo.setTitle(rs.getString("title"));
         qvo.setContent(rs.getString("content"));

@@ -1,10 +1,10 @@
 package com.team4.museum.controller.action.notice;
 
+import com.team4.artgallery.dto.NoticeDto;
+import com.team4.artgallery.enums.NoticeCategory;
+import com.team4.artgallery.util.Pagination;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.dao.NoticeDao;
-import com.team4.museum.util.NoticeCategory;
-import com.team4.museum.util.Pagination;
-import com.team4.museum.vo.NoticeVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ public class NoticeListAction implements Action {
         String category = request.getParameter("category");
 
         Pagination pagination = Pagination.with(request, 0, "command=noticeList&category=" + category);
-        List<NoticeVO> noticeList = ndao.selectNoticeList(pagination);
+        List<NoticeDto> noticeList = ndao.selectNoticeList(pagination);
         if (category == null || category.equals(NoticeCategory.전체.name())) {// 전체목록 조회
             pagination.setItemCount(ndao.getAllCount());
             noticeList = ndao.selectNoticeList(pagination);
@@ -31,7 +31,7 @@ public class NoticeListAction implements Action {
             request.getRequestDispatcher("/WEB-INF/views/notice/noticeMagazine.jsp").forward(request, response);
             return;
         } else if (category.equals(NoticeCategory.신문.name())) {
-            request.getRequestDispatcher("/WEB-INF/views/notice/noticeNewpaper.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/notice/noticeNewspaper.jsp").forward(request, response);
             return;
         } else { // 카테고리 조회
             pagination.setItemCount(ndao.getNoticeCount(category));

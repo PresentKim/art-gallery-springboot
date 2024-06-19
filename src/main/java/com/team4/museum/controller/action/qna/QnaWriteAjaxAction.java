@@ -1,9 +1,9 @@
 package com.team4.museum.controller.action.qna;
 
+import com.team4.artgallery.dto.QnaDto;
 import com.team4.museum.controller.action.AjaxAction;
 import com.team4.museum.dao.QnaDao;
 import com.team4.museum.util.ajax.AjaxResult;
-import com.team4.museum.vo.QnaVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -15,26 +15,26 @@ public class QnaWriteAjaxAction extends AjaxAction {
 
     protected AjaxResult handleAjaxRequest(HttpServletRequest request, HttpServletResponse response) {
         // 'PERSONAL' 접근 조건을 만족하는 문의글 정보를 가져옴
-        QnaVO qnaVO = getValidatedQna(request, PERSONAL);
+        QnaDto qnaDto = getValidatedQna(request, PERSONAL);
 
         // 새로운 문의글인지 확인
-        boolean isNew = qnaVO == null;
+        boolean isNew = qnaDto == null;
         if (isNew) {
             // 새로운 문의글인 경우 새로운 'QnaVO' 객체를 생성
-            qnaVO = new QnaVO();
+            qnaDto = new QnaDto();
         }
 
         // 'QnaVO' 객체에 파라미터 값을 저장
-        qnaVO.setTitle(request.getParameter("title"));
-        qnaVO.setContent(request.getParameter("content"));
-        qnaVO.setEmail(request.getParameter("email"));
-        qnaVO.setPhone(request.getParameter("phone"));
-        qnaVO.setPublic(request.getParameter("publicyn") != null && request.getParameter("publicyn").equals("on"));
-        qnaVO.setPwd(request.getParameter("pwd"));
+        qnaDto.setTitle(request.getParameter("title"));
+        qnaDto.setContent(request.getParameter("content"));
+        qnaDto.setEmail(request.getParameter("email"));
+        qnaDto.setPhone(request.getParameter("phone"));
+        qnaDto.setPublic(request.getParameter("publicyn") != null && request.getParameter("publicyn").equals("on"));
+        qnaDto.setPwd(request.getParameter("pwd"));
 
         // 새로운 문의글인 경우 'QnaDao' 객체를 이용해 문의글을 등록하고, 아니면 수정
         QnaDao dao = QnaDao.getInstance();
-        int qseq = isNew ? dao.insertQna(qnaVO) : dao.updateQna(qnaVO);
+        int qseq = isNew ? dao.insertQna(qnaDto) : dao.updateQna(qnaDto);
 
         // 세션에 비밀번호 확인 기록 저장
         savePwdCheckLog(request, qseq);

@@ -1,13 +1,13 @@
 package com.team4.museum.dao;
 
-import com.team4.museum.util.Pagination;
-import com.team4.museum.vo.MemberGalleryVO;
+import com.team4.artgallery.dto.MemberGalleryDto;
+import com.team4.artgallery.util.Pagination;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class MemberGalleryDao extends BaseDao<MemberGalleryVO> {
+public class MemberGalleryDao extends BaseDao<MemberGalleryDto> {
 
     private MemberGalleryDao() {
     }
@@ -18,11 +18,11 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryVO> {
         return instance;
     }
 
-    public MemberGalleryVO getMemberGalleryOne(int mseq) {
+    public MemberGalleryDto getMemberGalleryOne(int mseq) {
         return selectOne("SELECT * FROM member_gallery_view WHERE mseq=?", mseq);
     }
 
-    public int insertMemberGallery(MemberGalleryVO mgvo) {
+    public int insertMemberGallery(MemberGalleryDto mgvo) {
         return update(
                 "INSERT INTO member_gallery (author, title, content, image, savefilename) VALUES (?, ?, ?, ?, ?)",
                 mgvo.getAuthorId(),
@@ -33,7 +33,7 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryVO> {
         );
     }
 
-    public void updateMemberGallery(MemberGalleryVO mgvo) {
+    public void updateMemberGallery(MemberGalleryDto mgvo) {
         update(
                 "UPDATE member_gallery SET title=?, content=?, image=?, savefilename=? WHERE mseq=?",
                 mgvo.getTitle(),
@@ -52,7 +52,7 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryVO> {
         return selectInt("SELECT COUNT(*) FROM member_gallery");
     }
 
-    public List<MemberGalleryVO> getAllGallery(Pagination pagination) {
+    public List<MemberGalleryDto> getAllGallery(Pagination pagination) {
         return select(
                 "SELECT * FROM member_gallery_view ORDER BY mseq DESC LIMIT ? OFFSET ?",
                 pagination::applyTo
@@ -83,7 +83,7 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryVO> {
         );
     }
 
-    public List<MemberGalleryVO> searchGallery(Pagination pagination, String searchWord) {
+    public List<MemberGalleryDto> searchGallery(Pagination pagination, String searchWord) {
         return select(
                 "SELECT * FROM member_gallery_view "
                         + " WHERE title LIKE CONCAT('%', ?, '%')"
@@ -99,8 +99,8 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryVO> {
     }
 
     @Override
-    protected MemberGalleryVO parseVO(ResultSet rs) throws SQLException {
-        MemberGalleryVO mgvo = new MemberGalleryVO();
+    protected MemberGalleryDto parseVO(ResultSet rs) throws SQLException {
+        MemberGalleryDto mgvo = new MemberGalleryDto();
         mgvo.setMseq(rs.getInt("mseq"));
         mgvo.setAuthorId(rs.getString("author_id"));
         mgvo.setAuthorName(rs.getString("author_name"));

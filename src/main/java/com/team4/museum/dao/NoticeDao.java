@@ -1,13 +1,13 @@
 package com.team4.museum.dao;
 
-import com.team4.museum.util.Pagination;
-import com.team4.museum.vo.NoticeVO;
+import com.team4.artgallery.dto.NoticeDto;
+import com.team4.artgallery.util.Pagination;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-final public class NoticeDao extends BaseDao<NoticeVO> {
+final public class NoticeDao extends BaseDao<NoticeDto> {
 
     private NoticeDao() {
     }
@@ -18,11 +18,11 @@ final public class NoticeDao extends BaseDao<NoticeVO> {
         return instance;
     }
 
-    public List<NoticeVO> selectNoticeList(Pagination pagination) {
+    public List<NoticeDto> selectNoticeList(Pagination pagination) {
         return select("SELECT * FROM notice ORDER BY nseq DESC LIMIT ? OFFSET ? ", pagination::applyTo);
     }
 
-    public List<NoticeVO> selectCategoryNotice(String category, Pagination pagination) {
+    public List<NoticeDto> selectCategoryNotice(String category, Pagination pagination) {
         return select(
                 "SELECT * FROM notice WHERE category = ? ORDER BY nseq DESC LIMIT ? OFFSET ?",
                 category,
@@ -31,7 +31,7 @@ final public class NoticeDao extends BaseDao<NoticeVO> {
         );
     }
 
-    public void insertNotice(NoticeVO nvo) {
+    public void insertNotice(NoticeDto nvo) {
         update(
                 "INSERT INTO notice (title, author, content, category) VALUES (?, ?, ?, ?)",
                 nvo.getTitle(),
@@ -41,7 +41,7 @@ final public class NoticeDao extends BaseDao<NoticeVO> {
         );
     }
 
-    public void updateNotice(NoticeVO notice) {
+    public void updateNotice(NoticeDto notice) {
         update(
                 "UPDATE notice SET title = ?, author = ?, content = ?, category = ? WHERE nseq = ?",
                 notice.getTitle(),
@@ -60,11 +60,11 @@ final public class NoticeDao extends BaseDao<NoticeVO> {
         update("UPDATE notice SET readcount = readcount + 1 WHERE nseq = ?", nseq);
     }
 
-    public NoticeVO getNotice(int nseq) {
+    public NoticeDto getNotice(int nseq) {
         return selectOne("SELECT * FROM notice WHERE nseq = ?", nseq);
     }
 
-    public List<NoticeVO> searchNoticeList(Pagination pagination, String searchWord) {
+    public List<NoticeDto> searchNoticeList(Pagination pagination, String searchWord) {
         return select(
                 "SELECT * FROM notice "
                         + " WHERE title LIKE CONCAT('%', ?, '%') OR content LIKE CONCAT('%', ?, '%') "
@@ -99,12 +99,12 @@ final public class NoticeDao extends BaseDao<NoticeVO> {
         return selectInt("SELECT COUNT(*) FROM notice WHERE category=?", category);
     }
 
-    public List<NoticeVO> getRecentNotice() {
+    public List<NoticeDto> getRecentNotice() {
         return select("SELECT * FROM notice ORDER BY writedate DESC LIMIT 6");
     }
 
-    protected NoticeVO parseVO(ResultSet rs) throws SQLException {
-        NoticeVO notice = new NoticeVO();
+    protected NoticeDto parseVO(ResultSet rs) throws SQLException {
+        NoticeDto notice = new NoticeDto();
         notice.setNseq(rs.getInt("nseq"));
         notice.setTitle(rs.getString("title"));
         notice.setAuthor(rs.getString("author"));

@@ -1,13 +1,13 @@
 package com.team4.museum.dao;
 
-import com.team4.museum.util.Pagination;
-import com.team4.museum.vo.ArtworkVO;
+import com.team4.artgallery.dto.ArtworkDto;
+import com.team4.artgallery.util.Pagination;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ArtworkDao extends BaseDao<ArtworkVO> {
+public class ArtworkDao extends BaseDao<ArtworkDto> {
 
     private ArtworkDao() {
     }
@@ -23,7 +23,7 @@ public class ArtworkDao extends BaseDao<ArtworkVO> {
     /**
      * <관리자용> 예술품 등록
      */
-    public int insertArtwork(ArtworkVO avo) {
+    public int insertArtwork(ArtworkDto avo) {
         return update(
                 "INSERT INTO artwork (name, category, artist, year, material, size, displayyn, content, image, savefilename) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -50,7 +50,7 @@ public class ArtworkDao extends BaseDao<ArtworkVO> {
     /**
      * <관리자용> 예술품 수정
      */
-    public int updateArtwork(ArtworkVO avo) {
+    public int updateArtwork(ArtworkDto avo) {
         return update(
                 "UPDATE artwork SET artist=?, name=?, year=?, material=?, size=?, category=?, displayyn=?, content=?, image=?, savefilename=? "
                         + " WHERE aseq=?",
@@ -72,7 +72,7 @@ public class ArtworkDao extends BaseDao<ArtworkVO> {
      * <관리자용> 예술품 공개여부 전환
      */
     public int displayChangeArtwork(int aseq) {
-        ArtworkVO avo = selectOne("SELECT * FROM artwork WHERE aseq = ?", aseq);
+        ArtworkDto avo = selectOne("SELECT * FROM artwork WHERE aseq = ?", aseq);
         if (avo.isDisplay()) {
             return update("UPDATE artwork SET displayyn='N' WHERE aseq = ?", aseq);
         }
@@ -80,11 +80,11 @@ public class ArtworkDao extends BaseDao<ArtworkVO> {
         return update("UPDATE artwork SET displayyn='Y' WHERE aseq = ?", aseq);
     }
 
-    public ArtworkVO get(int aseq) {
+    public ArtworkDto get(int aseq) {
         return selectOne("SELECT * FROM artwork WHERE aseq = ?", aseq);
     }
 
-    public List<ArtworkVO> getAll(String category, String displayyn, String searchWord, Pagination pagination) {
+    public List<ArtworkDto> getAll(String category, String displayyn, String searchWord, Pagination pagination) {
         if (category == null)
             category = "";
         if (displayyn == null)
@@ -127,8 +127,8 @@ public class ArtworkDao extends BaseDao<ArtworkVO> {
         );
     }
 
-    public ArtworkVO parseVO(ResultSet rs) throws SQLException {
-        ArtworkVO avo = new ArtworkVO();
+    public ArtworkDto parseVO(ResultSet rs) throws SQLException {
+        ArtworkDto avo = new ArtworkDto();
         avo.setAseq(rs.getInt("aseq"));
         avo.setName(rs.getString("name"));
         avo.setCategory(rs.getString("category"));
@@ -144,7 +144,7 @@ public class ArtworkDao extends BaseDao<ArtworkVO> {
         return avo;
     }
 
-    public List<ArtworkVO> getRandomList(int limit) {
+    public List<ArtworkDto> getRandomList(int limit) {
         return select("SELECT * FROM museum.artwork ORDER BY RAND() LIMIT ?", limit);
     }
 

@@ -1,14 +1,14 @@
 package com.team4.museum.dao;
 
-import com.team4.museum.util.Pagination;
-import com.team4.museum.vo.FavoriteVO;
+import com.team4.artgallery.dto.FavoriteDto;
+import com.team4.artgallery.util.Pagination;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
-public class FavoriteDao extends BaseDao<FavoriteVO> {
+public class FavoriteDao extends BaseDao<FavoriteDto> {
 
     private FavoriteDao() {
     }
@@ -26,7 +26,7 @@ public class FavoriteDao extends BaseDao<FavoriteVO> {
      * @param pagination 페이지 정보
      * @return 즐겨찾기 목록
      */
-    public List<FavoriteVO> selectFavorite(String memberId, Pagination pagination) {
+    public List<FavoriteDto> selectFavorite(String memberId, Pagination pagination) {
         return select(
                 "SELECT * FROM favorite_view WHERE member_id = ? ORDER BY aseq DESC LIMIT ? OFFSET ?",
                 memberId,
@@ -69,8 +69,8 @@ public class FavoriteDao extends BaseDao<FavoriteVO> {
      * @param rs ResultSet 객체
      * @return FavoriteVO 즐겨찾기 정보 객체
      */
-    protected FavoriteVO parseVO(ResultSet rs) throws SQLException {
-        FavoriteVO fvo = FavoriteVO.fromArtwork(ArtworkDao.getInstance().parseVO(rs));
+    protected FavoriteDto parseVO(ResultSet rs) throws SQLException {
+        FavoriteDto fvo = FavoriteDto.fromArtwork(ArtworkDao.getInstance().parseVO(rs));
         fvo.setMemberId(rs.getString("member_id"));
         return fvo;
     }

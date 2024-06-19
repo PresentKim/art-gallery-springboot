@@ -1,9 +1,9 @@
 package com.team4.museum.controller.action.artwork;
 
+import com.team4.artgallery.enums.ArtworkCategory;
+import com.team4.artgallery.util.Pagination;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.dao.ArtworkDao;
-import com.team4.museum.util.ArtworkCategory;
-import com.team4.museum.util.Pagination;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
