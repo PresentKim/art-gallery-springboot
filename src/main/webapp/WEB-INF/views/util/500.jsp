@@ -5,6 +5,7 @@
     <jsp:param name="stylesheet" value="/static/stylesheet/error.css"/>
 </jsp:include>
 <main class="error bg-${random.nextInt(7)}">
-    <h1>요청하신 페이지를 찾을 수 없습니다</h1>
+    <h1>오류가 발생했습니다</h1>
+    <pre>${errorMessage}</pre>
 </main>
 <jsp:include page="/WEB-INF/views/footer.jsp"/>

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.not-found {
+.error {
     display: flex;
     height: 100%;
     justify-content: center;
@@ -13,35 +13,35 @@
     background-repeat: no-repeat;
 }
 
-.not-found.bg-0 {
+.error.bg-0 {
     background-image: url('../image/404/undraw_0.svg');
 }
 
-.not-found.bg-1 {
+.error.bg-1 {
     background-image: url('../image/404/undraw_1.svg');
 }
 
-.not-found.bg-2 {
+.error.bg-2 {
     background-image: url('../image/404/undraw_2.svg');
 }
 
-.not-found.bg-3 {
+.error.bg-3 {
     background-image: url('../image/404/undraw_3.svg');
 }
 
-.not-found.bg-4 {
+.error.bg-4 {
     background-image: url('../image/404/undraw_4.svg');
 }
 
-.not-found.bg-5 {
+.error.bg-5 {
     background-image: url('../image/404/undraw_5.svg');
 }
 
-.not-found.bg-6 {
+.error.bg-6 {
     background-image: url('../image/404/undraw_6.svg');
 }
 
-.not-found p {
+.error h1, .error h2 {
     font-weight: bold;
     font-size: 3rem;
     padding: 2rem 1rem;
@@ -52,13 +52,42 @@
     background: #FFFA;
 }
 
+.error h2 {
+    font-size: 2rem;
+    padding: 1rem 1rem;
+}
+
+.error pre {
+    font-size: 1rem;
+    text-align: left;
+    line-height: 1.4rem;
+    text-wrap: wrap;
+    word-break: break-all;
+    padding: 2rem 1rem;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    backdrop-filter: blur(4px);
+    color: #FFFA;
+    background: #1D1D1DCC;
+    transition: all 0.2s linear;
+}
+
+.error pre:hover {
+    color: #FFF;
+    background: #1D1D1D;
+}
+
 @media ( max-width: 768px) {
-    .not-found {
+    .error {
         background-size: cover;
     }
 
-    .not-found p {
+    .error h1 {
         font-size: 2rem;
         padding: 1rem 0.5rem;
+    }
+
+    .error h2 {
+        font-size: 1.5rem;
     }
 }
