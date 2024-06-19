@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.team4.artgallery.enums.NoticeCategory" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="static/stylesheet/notice.css"/>
-    <jsp:param name="script" value="static/script/notice.js"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/notice.css"/>
+    <jsp:param name="script" value="/static/script/notice.js"/>
 </jsp:include>
 <div id="notice_update_box">
     <h2>소식지 수정</h2>

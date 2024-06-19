@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="static/stylesheet/artwork.css"/>
-    <jsp:param name="script" value="static/script/artwork.js"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/artwork.css"/>
+    <jsp:param name="script" value="/static/script/artwork.js"/>
 </jsp:include>
 <h2 class="artwork-write-form-header">예술품 등록</h2>
 <section class="artwork-write-form-main">

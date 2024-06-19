@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="static/stylesheet/notice.css"/>
-    <jsp:param name="script" value="static/script/notice.js"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/notice.css"/>
+    <jsp:param name="script" value="/static/script/notice.js"/>
 </jsp:include>
 <div class="noticeView_container">
     <h2>상세 보기</h2>
@@ -33,11 +33,11 @@
             </div>
         </div>
         <div class="noticeView-button">
-            <c:if test="${isAdmin}">
+            <c:if test="${account.isAdmin}">
                 <input type="button" class="btn-noticeView" value="수정"
                        onClick="location.href='museum.do?command=updateNoticeForm&nseq=${noticeView.nseq}'"/>
                 <input type="button" class="btn-noticeView" value="삭제"
-                       onClick="deleteNotice('${loginUser.pwd}', '${noticeView.nseq}')"/>
+                       onClick="deleteNotice('${account.pwd}', '${noticeView.nseq}')"/>
                 <input type="button" class="btn-noticeView" value="목록"
                        onClick="location.href='museum.do?command=noticeList'"/>
             </c:if>
