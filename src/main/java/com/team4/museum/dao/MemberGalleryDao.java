@@ -22,25 +22,25 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryDto> {
         return selectOne("SELECT * FROM member_gallery_view WHERE mseq=?", mseq);
     }
 
-    public int insertMemberGallery(MemberGalleryDto mgvo) {
+    public int insertMemberGallery(MemberGalleryDto galleryDto) {
         return update(
                 "INSERT INTO member_gallery (author, title, content, image, savefilename) VALUES (?, ?, ?, ?, ?)",
-                mgvo.getAuthorId(),
-                mgvo.getTitle(),
-                mgvo.getContent(),
-                mgvo.getImage(),
-                mgvo.getSavefilename()
+                galleryDto.getAuthorId(),
+                galleryDto.getTitle(),
+                galleryDto.getContent(),
+                galleryDto.getImage(),
+                galleryDto.getSavefilename()
         );
     }
 
-    public void updateMemberGallery(MemberGalleryDto mgvo) {
+    public void updateMemberGallery(MemberGalleryDto galleryDto) {
         update(
                 "UPDATE member_gallery SET title=?, content=?, image=?, savefilename=? WHERE mseq=?",
-                mgvo.getTitle(),
-                mgvo.getContent(),
-                mgvo.getImage(),
-                mgvo.getSavefilename(),
-                mgvo.getMseq()
+                galleryDto.getTitle(),
+                galleryDto.getContent(),
+                galleryDto.getImage(),
+                galleryDto.getSavefilename(),
+                galleryDto.getMseq()
         );
     }
 
@@ -99,18 +99,18 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryDto> {
     }
 
     @Override
-    protected MemberGalleryDto parseVO(ResultSet rs) throws SQLException {
-        MemberGalleryDto mgvo = new MemberGalleryDto();
-        mgvo.setMseq(rs.getInt("mseq"));
-        mgvo.setAuthorId(rs.getString("author_id"));
-        mgvo.setAuthorName(rs.getString("author_name"));
-        mgvo.setTitle(rs.getString("title"));
-        mgvo.setWritedate(rs.getDate("writedate"));
-        mgvo.setContent(rs.getString("content"));
-        mgvo.setReadcount(rs.getInt("readcount"));
-        mgvo.setImage(rs.getString("image"));
-        mgvo.setSavefilename(rs.getString("savefilename"));
-        return mgvo;
+    protected MemberGalleryDto parseDto(ResultSet rs) throws SQLException {
+        MemberGalleryDto galleryDto = new MemberGalleryDto();
+        galleryDto.setMseq(rs.getInt("mseq"));
+        galleryDto.setAuthorId(rs.getString("author_id"));
+        galleryDto.setAuthorName(rs.getString("author_name"));
+        galleryDto.setTitle(rs.getString("title"));
+        galleryDto.setWritedate(rs.getDate("writedate"));
+        galleryDto.setContent(rs.getString("content"));
+        galleryDto.setReadcount(rs.getInt("readcount"));
+        galleryDto.setImage(rs.getString("image"));
+        galleryDto.setSavefilename(rs.getString("savefilename"));
+        return galleryDto;
     }
 
 }

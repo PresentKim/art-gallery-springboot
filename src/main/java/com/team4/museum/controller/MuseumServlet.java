@@ -1,8 +1,8 @@
 package com.team4.museum.controller;
 
+import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.util.UrlUtil;
 import com.team4.museum.controller.action.Action;
-import com.team4.museum.util.UrlUtil;
-import com.team4.museum.vo.MemberVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
@@ -27,16 +27,16 @@ public class MuseumServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         // 로그인 정보를 'userId'에서 가져오기
-        MemberVO mvo = (MemberVO) request.getSession().getAttribute("loginUser");
+        MemberDto memberDto = (MemberDto) request.getSession().getAttribute("account");
 
         // 로그인 정보가 존재하는 경우
-        if (mvo != null) {
+        if (memberDto != null) {
             // 'userId'에 로그인 정보의 아이디 저장
-            String userId = mvo.getId();
+            String userId = memberDto.getId();
             request.setAttribute("userId", userId);
 
             // 로그인 정보가 관리자인 경우 'isAdmin'에 true 저장
-            if (mvo.isAdmin()) {
+            if (memberDto.isAdmin()) {
                 request.setAttribute("isAdmin", true);
                 System.out.print("[ADMIN:" + userId + "] ");
             } else {

@@ -1,10 +1,10 @@
 package com.team4.museum.controller.action;
 
+import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.util.UrlUtil;
 import com.team4.museum.controller.action.member.LoginAjaxAction;
 import com.team4.museum.util.ajax.AjaxException;
 import com.team4.museum.util.ajax.AjaxResult;
-import com.team4.museum.vo.MemberVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,7 +48,7 @@ abstract public class AjaxAction implements Action {
     /**
      * AJAX 요청을 처리하는 핸들러 메소드
      *
-     * @param request 현재 요청
+     * @param request  현재 요청
      * @param response 현재 응답
      * @return AJAX 결과
      */
@@ -290,14 +290,14 @@ abstract public class AjaxAction implements Action {
     /**
      * 로그인된 사용자 정보를 반환합니다. 로그인되어 있지 않을 경우 AjaxException을 발생시킵니다.
      */
-    protected MemberVO mustGetLoginUser() throws AjaxException {
-        MemberVO mvo = LoginAjaxAction.getLoginUserFrom(currentRequest);
-        if (mvo == null) {
+    protected MemberDto mustGetLoginUser() throws AjaxException {
+        MemberDto memberDto = LoginAjaxAction.getLoginUserFrom(currentRequest);
+        if (memberDto == null) {
             throw new AjaxException(
                     SC_UNAUTHORIZED,
                     "로그인이 필요합니다",
                     LoginAjaxAction.getLoginUrl(UrlUtil.getUrlPath(currentRequest)));
         }
-        return mvo;
+        return memberDto;
     }
 }

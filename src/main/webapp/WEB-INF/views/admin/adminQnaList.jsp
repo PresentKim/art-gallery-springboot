@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="static/stylesheet/admin.css"/>
-    <jsp:param name="script" value="static/script/admin.js"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/admin.css"/>
+    <jsp:param name="script" value="/static/script/admin.js"/>
 </jsp:include>
 <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
 <%
@@ -33,22 +33,22 @@
             <li>내용</li>
             <li>작성일</li>
         </ul>
-        <c:forEach items="${qnaList}" var="qvo">
+        <c:forEach items="${qnaList}" var="qnaDto">
             <ul class="admin-list-main admin-qna-list" onclick="go_check(event)">
                 <li>
                     <input type="checkbox" onclick="" class="check-box">
                 </li>
                 <li>
                     <c:choose>
-                        <c:when test="${empty qvo.reply}">NO</c:when>
+                        <c:when test="${empty qnaDto.reply}">NO</c:when>
                         <c:otherwise>YES</c:otherwise>
                     </c:choose>
                 </li>
-                <li>${qvo.qseq}</li>
+                <li>${qnaDto.qseq}</li>
                 <li class="view-link"
-                    onclick="location.href='museum.do?command=qnaView&qseq=${qvo.qseq}'">${qvo.title}</li>
-                <li>${qvo.content}</li>
-                <li>${qvo.writedate}</li>
+                    onclick="location.href='museum.do?command=qnaView&qseq=${qnaDto.qseq}'">${qnaDto.title}</li>
+                <li>${qnaDto.content}</li>
+                <li>${qnaDto.writedate}</li>
             </ul>
         </c:forEach>
     </form>

@@ -20,21 +20,21 @@ public class ArtworkWriteFormAction implements Action {
             return;
         }
 
-        ArtworkDto avo = new ArtworkDto();
-        avo.setName(request.getParameter("artname"));
-        avo.setCategory(request.getParameter("category"));
-        avo.setArtist(request.getParameter("artist"));
-        avo.setYear(request.getParameter("year"));
-        avo.setMaterial(request.getParameter("material"));
-        avo.setSize(request.getParameter("size"));
-        avo.setDisplayyn(request.getParameter("displayYn"));
-        avo.setContent(request.getParameter("content"));
+        ArtworkDto artworkDto = new ArtworkDto();
+        artworkDto.setName(request.getParameter("artname"));
+        artworkDto.setCategory(request.getParameter("category"));
+        artworkDto.setArtist(request.getParameter("artist"));
+        artworkDto.setYear(request.getParameter("year"));
+        artworkDto.setMaterial(request.getParameter("material"));
+        artworkDto.setSize(request.getParameter("size"));
+        artworkDto.setDisplayyn(request.getParameter("displayYn"));
+        artworkDto.setContent(request.getParameter("content"));
 
         MultipartFileInfo info = MultipartFileInfo.getFromRequest(request, "static/image/artwork");
-        avo.setImage(info.getFileName());
-        avo.setSavefilename(info.getSaveFileName());
+        artworkDto.setImage(info.getFileName());
+        artworkDto.setSavefilename(info.getSaveFileName());
 
-        ArtworkDao.getInstance().insertArtwork(avo);
+        ArtworkDao.getInstance().insertArtwork(artworkDto);
         response.sendRedirect("museum.do?command=artworkList");
     }
 

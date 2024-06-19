@@ -1,7 +1,7 @@
 package com.team4.museum.util;
 
+import com.team4.artgallery.dto.MemberDto;
 import com.team4.museum.controller.action.member.LoginAjaxAction;
-import com.team4.museum.vo.MemberVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,8 +32,8 @@ final public class Security {
             HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-        MemberVO mvo = LoginAjaxAction.getLoginUserFrom(request);
-        return trueOr404Forward(mvo != null && memberId.equals(mvo.getId()), request, response);
+        MemberDto memberDto = LoginAjaxAction.getLoginUserFrom(request);
+        return trueOr404Forward(memberDto != null && memberId.equals(memberDto.getId()), request, response);
     }
 
     /**
@@ -74,8 +74,8 @@ final public class Security {
             HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-        MemberVO mvo = LoginAjaxAction.getLoginUserFrom(request);
-        return trueOrAlert(mvo != null && memberId.equals(mvo.getId()), response);
+        MemberDto memberDto = LoginAjaxAction.getLoginUserFrom(request);
+        return trueOrAlert(memberDto != null && memberId.equals(memberDto.getId()), response);
     }
 
     /**

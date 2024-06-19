@@ -1,11 +1,11 @@
 package com.team4.museum.controller.action.gallery;
 
+import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.MemberGalleryDto;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.controller.action.member.LoginAjaxAction;
 import com.team4.museum.dao.MemberGalleryDao;
 import com.team4.museum.util.MultipartFileInfo;
-import com.team4.museum.vo.MemberVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,22 +17,22 @@ public class GalleryWriteFormAction implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 로그인 정보가 없으면 로그인 페이지로 이동
-        MemberVO mvo = LoginAjaxAction.getLoginUser(request, response);
-        if (mvo == null) {
+        MemberDto memberDto = LoginAjaxAction.getLoginUser(request, response);
+        if (memberDto == null) {
             return;
         }
 
         MemberGalleryDao mgdao = MemberGalleryDao.getInstance();
-        MemberGalleryDto mgvo = new MemberGalleryDto();
-        mgvo.setTitle(request.getParameter("title"));
-        mgvo.setContent(request.getParameter("content"));
-        mgvo.setAuthorId(mvo.getId());
+        MemberGalleryDto galleryDto = new MemberGalleryDto();
+        galleryDto.setTitle(request.getParameter("title"));
+        galleryDto.setContent(request.getParameter("content"));
+        galleryDto.setAuthorId(memberDto.getId());
 
         MultipartFileInfo info = MultipartFileInfo.getFromRequest(request, "static/image/gallery");
-        mgvo.setImage(info.getFileName());
-        mgvo.setSavefilename(info.getSaveFileName());
+        galleryDto.setImage(info.getFileName());
+        galleryDto.setSavefilename(info.getSaveFileName());
 
-        mgdao.insertMemberGallery(mgvo);
+        mgdao.insertMemberGallery(galleryDto);
         response.sendRedirect("museum.do?command=galleryList");
 
     }

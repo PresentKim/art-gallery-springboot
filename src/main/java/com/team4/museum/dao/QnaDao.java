@@ -61,18 +61,18 @@ public class QnaDao extends BaseDao<QnaDto> {
     /**
      * 문의글을 등록한다.
      *
-     * @param qvo 문의글 정보 (qna sequence)
+     * @param qnaDto 문의글 정보 (qna sequence)
      * @return 등록된 문의글 번호
      */
-    public int insertQna(QnaDto qvo) {
+    public int insertQna(QnaDto qnaDto) {
         update(
                 "INSERT INTO qna (title, content, email, phone, publicyn, pwd) VALUES (?, ?, ?, ?, ? ,?)",
-                qvo.getTitle(),
-                qvo.getContent(),
-                qvo.getEmail(),
-                qvo.getPhone(),
-                qvo.getPublicyn(),
-                qvo.getPwd()
+                qnaDto.getTitle(),
+                qnaDto.getContent(),
+                qnaDto.getEmail(),
+                qnaDto.getPhone(),
+                qnaDto.getPublicyn(),
+                qnaDto.getPwd()
         );
 
         return selectInt("SELECT LAST_INSERT_ID()");
@@ -81,19 +81,19 @@ public class QnaDao extends BaseDao<QnaDto> {
     /**
      * 문의글을 수정한다.
      *
-     * @param qvo 문의글 정보 (qna sequence)
+     * @param qnaDto 문의글 정보 (qna sequence)
      * @return 수정된 문의글 번호
      */
-    public int updateQna(QnaDto qvo) {
-        int qseq = qvo.getQseq();
+    public int updateQna(QnaDto qnaDto) {
+        int qseq = qnaDto.getQseq();
         update(
                 "UPDATE qna SET title = ?, content = ?, email = ?, phone = ?, publicyn = ?, pwd = ? WHERE qseq = ?",
-                qvo.getTitle(),
-                qvo.getContent(),
-                qvo.getEmail(),
-                qvo.getPhone(),
-                qvo.getPublicyn(),
-                qvo.getPwd(),
+                qnaDto.getTitle(),
+                qnaDto.getContent(),
+                qnaDto.getEmail(),
+                qnaDto.getPhone(),
+                qnaDto.getPublicyn(),
+                qnaDto.getPwd(),
                 qseq
         );
 
@@ -161,23 +161,23 @@ public class QnaDao extends BaseDao<QnaDto> {
     }
 
     /**
-     * ResultSet의 데이터를 통해 QnaVO 객체를 생성합니다.
+     * ResultSet의 데이터를 통해 QnaDto 객체를 생성합니다.
      *
      * @param rs ResultSet 객체
-     * @return QnaVO VO 객체
+     * @return QnaDto Dto 객체
      */
-    protected QnaDto parseVO(ResultSet rs) throws SQLException {
-        QnaDto qvo = new QnaDto();
-        qvo.setQseq(rs.getInt("qseq"));
-        qvo.setTitle(rs.getString("title"));
-        qvo.setContent(rs.getString("content"));
-        qvo.setEmail(rs.getString("email"));
-        qvo.setPwd(rs.getString("pwd"));
-        qvo.setPhone(rs.getString("phone"));
-        qvo.setReply(rs.getString("reply"));
-        qvo.setWritedate(rs.getDate("writedate"));
-        qvo.setPublicyn(rs.getString("publicyn"));
-        return qvo;
+    protected QnaDto parseDto(ResultSet rs) throws SQLException {
+        QnaDto qnaDto = new QnaDto();
+        qnaDto.setQseq(rs.getInt("qseq"));
+        qnaDto.setTitle(rs.getString("title"));
+        qnaDto.setContent(rs.getString("content"));
+        qnaDto.setEmail(rs.getString("email"));
+        qnaDto.setPwd(rs.getString("pwd"));
+        qnaDto.setPhone(rs.getString("phone"));
+        qnaDto.setReply(rs.getString("reply"));
+        qnaDto.setWritedate(rs.getDate("writedate"));
+        qnaDto.setPublicyn(rs.getString("publicyn"));
+        return qnaDto;
     }
 
 }

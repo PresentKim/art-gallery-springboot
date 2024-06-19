@@ -18,13 +18,13 @@ public class QnaViewAction implements Action {
         // 'RESTRICT' 접근 조건을 만족하는 문의글 정보를 가져옴
         QnaDto qnaDto = getValidatedQna(request, RESTRICT);
 
-        // 'qnaVO'가 null 이면 404 페이지로 포워딩
+        // 'qnaDto'가 null 이면 404 페이지로 포워딩
         if (!Security.trueOr404Forward(qnaDto != null, request, response)) {
             return;
         }
 
-        // 'qnaVO'를 'qnaView.jsp'로 전달
-        request.setAttribute("qnaVO", qnaDto);
+        // 'qnaDto'를 'qnaView.jsp'로 전달
+        request.setAttribute("qnaDto", qnaDto);
         request.getRequestDispatcher("/WEB-INF/views/qna/qnaView.jsp").forward(request, response);
     }
 

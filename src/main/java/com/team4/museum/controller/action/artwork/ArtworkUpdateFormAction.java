@@ -21,29 +21,29 @@ public class ArtworkUpdateFormAction implements Action {
         }
 
         int aseq = Integer.parseInt(request.getParameter("aseq"));
-        ArtworkDto avo = ArtworkDao.getInstance().get(aseq);
+        ArtworkDto artworkDto = ArtworkDao.getInstance().get(aseq);
 
         // 예술품 정보가 없으면 404 페이지로 포워딩
-        if (!Security.trueOr404Forward(avo != null, request, response)) {
+        if (!Security.trueOr404Forward(artworkDto != null, request, response)) {
             return;
         }
 
-        avo.setArtist(request.getParameter("artist"));
-        avo.setName(request.getParameter("artname"));
-        avo.setYear(request.getParameter("year"));
-        avo.setMaterial(request.getParameter("material"));
-        avo.setSize(request.getParameter("size"));
-        avo.setCategory(request.getParameter("category"));
-        avo.setDisplayyn(request.getParameter("displayYn"));
-        avo.setContent(request.getParameter("content"));
+        artworkDto.setArtist(request.getParameter("artist"));
+        artworkDto.setName(request.getParameter("artname"));
+        artworkDto.setYear(request.getParameter("year"));
+        artworkDto.setMaterial(request.getParameter("material"));
+        artworkDto.setSize(request.getParameter("size"));
+        artworkDto.setCategory(request.getParameter("category"));
+        artworkDto.setDisplayyn(request.getParameter("displayYn"));
+        artworkDto.setContent(request.getParameter("content"));
 
         MultipartFileInfo info = MultipartFileInfo.getFromRequest(request, "static/image/artwork");
         if (!info.isEmpty()) {
-            avo.setImage(info.getFileName());
-            avo.setSavefilename(info.getSaveFileName());
+            artworkDto.setImage(info.getFileName());
+            artworkDto.setSavefilename(info.getSaveFileName());
         }
 
-        ArtworkDao.getInstance().updateArtwork(avo);
+        ArtworkDao.getInstance().updateArtwork(artworkDto);
         response.sendRedirect("museum.do?command=artworkView&aseq=" + aseq);
     }
 

@@ -23,20 +23,20 @@ public class ArtworkDao extends BaseDao<ArtworkDto> {
     /**
      * <관리자용> 예술품 등록
      */
-    public int insertArtwork(ArtworkDto avo) {
+    public int insertArtwork(ArtworkDto artworkDto) {
         return update(
                 "INSERT INTO artwork (name, category, artist, year, material, size, displayyn, content, image, savefilename) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                avo.getName(),
-                avo.getCategory(),
-                avo.getArtist(),
-                avo.getYear(),
-                avo.getMaterial(),
-                avo.getSize(),
-                avo.getDisplayyn(),
-                avo.getContent(),
-                avo.getImage(),
-                avo.getSavefilename()
+                artworkDto.getName(),
+                artworkDto.getCategory(),
+                artworkDto.getArtist(),
+                artworkDto.getYear(),
+                artworkDto.getMaterial(),
+                artworkDto.getSize(),
+                artworkDto.getDisplayyn(),
+                artworkDto.getContent(),
+                artworkDto.getImage(),
+                artworkDto.getSavefilename()
         );
     }
 
@@ -50,21 +50,21 @@ public class ArtworkDao extends BaseDao<ArtworkDto> {
     /**
      * <관리자용> 예술품 수정
      */
-    public int updateArtwork(ArtworkDto avo) {
+    public int updateArtwork(ArtworkDto artworkDto) {
         return update(
                 "UPDATE artwork SET artist=?, name=?, year=?, material=?, size=?, category=?, displayyn=?, content=?, image=?, savefilename=? "
                         + " WHERE aseq=?",
-                avo.getArtist(),
-                avo.getName(),
-                avo.getYear(),
-                avo.getMaterial(),
-                avo.getSize(),
-                avo.getCategory(),
-                avo.getDisplayyn(),
-                avo.getContent(),
-                avo.getImage(),
-                avo.getSavefilename(),
-                avo.getAseq()
+                artworkDto.getArtist(),
+                artworkDto.getName(),
+                artworkDto.getYear(),
+                artworkDto.getMaterial(),
+                artworkDto.getSize(),
+                artworkDto.getCategory(),
+                artworkDto.getDisplayyn(),
+                artworkDto.getContent(),
+                artworkDto.getImage(),
+                artworkDto.getSavefilename(),
+                artworkDto.getAseq()
         );
     }
 
@@ -72,8 +72,8 @@ public class ArtworkDao extends BaseDao<ArtworkDto> {
      * <관리자용> 예술품 공개여부 전환
      */
     public int displayChangeArtwork(int aseq) {
-        ArtworkDto avo = selectOne("SELECT * FROM artwork WHERE aseq = ?", aseq);
-        if (avo.isDisplay()) {
+        ArtworkDto artworkDto = selectOne("SELECT * FROM artwork WHERE aseq = ?", aseq);
+        if (artworkDto.isDisplay()) {
             return update("UPDATE artwork SET displayyn='N' WHERE aseq = ?", aseq);
         }
 
@@ -127,21 +127,21 @@ public class ArtworkDao extends BaseDao<ArtworkDto> {
         );
     }
 
-    public ArtworkDto parseVO(ResultSet rs) throws SQLException {
-        ArtworkDto avo = new ArtworkDto();
-        avo.setAseq(rs.getInt("aseq"));
-        avo.setName(rs.getString("name"));
-        avo.setCategory(rs.getString("category"));
-        avo.setArtist(rs.getString("artist"));
-        avo.setYear(rs.getString("year"));
-        avo.setMaterial(rs.getString("material"));
-        avo.setSize(rs.getString("size"));
-        avo.setDisplayyn(rs.getString("displayyn"));
-        avo.setContent(rs.getString("content"));
-        avo.setImage(rs.getString("image"));
-        avo.setSavefilename(rs.getString("savefilename"));
-        avo.setIndate(rs.getDate("indate"));
-        return avo;
+    public ArtworkDto parseDto(ResultSet rs) throws SQLException {
+        ArtworkDto artworkDto = new ArtworkDto();
+        artworkDto.setAseq(rs.getInt("aseq"));
+        artworkDto.setName(rs.getString("name"));
+        artworkDto.setCategory(rs.getString("category"));
+        artworkDto.setArtist(rs.getString("artist"));
+        artworkDto.setYear(rs.getString("year"));
+        artworkDto.setMaterial(rs.getString("material"));
+        artworkDto.setSize(rs.getString("size"));
+        artworkDto.setDisplayyn(rs.getString("displayyn"));
+        artworkDto.setContent(rs.getString("content"));
+        artworkDto.setImage(rs.getString("image"));
+        artworkDto.setSavefilename(rs.getString("savefilename"));
+        artworkDto.setIndate(rs.getDate("indate"));
+        return artworkDto;
     }
 
     public List<ArtworkDto> getRandomList(int limit) {

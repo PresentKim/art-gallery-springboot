@@ -20,14 +20,14 @@ public class ArtworkUpdateAction implements Action {
         }
 
         int aseq = Integer.parseInt(request.getParameter("aseq"));
-        ArtworkVO avo = ArtworkDao.getInstance().get(aseq);
+        ArtworkDto artworkDto = ArtworkDao.getInstance().get(aseq);
 
         // 예술품 정보가 없으면 404 페이지로 포워딩
-        if (!Security.trueOr404Forward(avo != null, request, response)) {
+        if (!Security.trueOr404Forward(artworkDto != null, request, response)) {
             return;
         }
 
-        request.setAttribute("artwork", avo);
+        request.setAttribute("artwork", artworkDto);
         request.getRequestDispatcher("/WEB-INF/views/artwork/artworkUpdateForm.jsp").forward(request, response);
     }
 

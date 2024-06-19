@@ -17,8 +17,8 @@ public class QnaWriteFormAction implements Action {
         // 'PERSONAL' 접근 조건을 만족하는 문의글 정보를 가져옴
         QnaDto qnaDto = getValidatedQna(request, PERSONAL);
 
-        // 'qnaVO'를 'qnaView.jsp'로 전달
-        request.setAttribute("qnaVO", qnaDto);
+        // 'qnaDto'를 'qnaView.jsp'로 전달
+        request.setAttribute("qnaDto", qnaDto);
         request.getRequestDispatcher("/WEB-INF/views/qna/qnaWriteForm.jsp").forward(request, response);
     }
 

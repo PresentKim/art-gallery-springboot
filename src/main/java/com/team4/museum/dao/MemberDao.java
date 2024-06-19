@@ -1,13 +1,13 @@
 package com.team4.museum.dao;
 
+import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.util.Pagination;
-import com.team4.museum.vo.MemberVO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class MemberDao extends BaseDao<MemberVO> {
+public class MemberDao extends BaseDao<MemberDto> {
 
     private MemberDao() {
     }
@@ -18,15 +18,15 @@ public class MemberDao extends BaseDao<MemberVO> {
         return instance;
     }
 
-    public MemberVO getMember(String id) {
+    public MemberDto getMember(String id) {
         return selectOne("SELECT * FROM member WHERE id = ?", id);
     }
 
-    public List<MemberVO> getMemberList(Pagination pagination) {
+    public List<MemberDto> getMemberList(Pagination pagination) {
         return select("SELECT * FROM member ORDER BY id DESC LIMIT ? OFFSET ?", pagination::applyTo);
     }
 
-    public List<MemberVO> searchMemberList(Pagination pagination, String searchWord) {
+    public List<MemberDto> searchMemberList(Pagination pagination, String searchWord) {
         return select(
                 "SELECT * FROM member "
                         + " WHERE id LIKE CONCAT('%', ?, '%')"
@@ -41,27 +41,27 @@ public class MemberDao extends BaseDao<MemberVO> {
         );
     }
 
-    public int insertMember(MemberVO mvo) {
+    public int insertMember(MemberDto memberDto) {
         return update(
                 "INSERT INTO member (id, name, pwd, email, phone)"
                         + " VALUES ( ?, ?, ?, ?, ? )",
-                mvo.getId(),
-                mvo.getName(),
-                mvo.getPwd(),
-                mvo.getEmail(),
-                mvo.getPhone()
+                memberDto.getId(),
+                memberDto.getName(),
+                memberDto.getPwd(),
+                memberDto.getEmail(),
+                memberDto.getPhone()
         );
     }
 
-    public int updateMember(MemberVO mvo) {
+    public int updateMember(MemberDto memberDto) {
         return update(
                 "UPDATE member SET pwd = ?, name = ?, email = ?, phone = ?, adminyn = ? WHERE id = ?",
-                mvo.getPwd(),
-                mvo.getName(),
-                mvo.getEmail(),
-                mvo.getPhone(),
-                mvo.getAdminyn(),
-                mvo.getId()
+                memberDto.getPwd(),
+                memberDto.getName(),
+                memberDto.getEmail(),
+                memberDto.getPhone(),
+                memberDto.getAdminyn(),
+                memberDto.getId()
         );
     }
 
@@ -90,16 +90,16 @@ public class MemberDao extends BaseDao<MemberVO> {
         );
     }
 
-    protected MemberVO parseVO(ResultSet rs) throws SQLException {
-        MemberVO mvo = new MemberVO();
-        mvo.setId(rs.getString("id"));
-        mvo.setName(rs.getString("name"));
-        mvo.setPwd(rs.getString("pwd"));
-        mvo.setEmail(rs.getString("email"));
-        mvo.setIndate(rs.getDate("indate"));
-        mvo.setPhone(rs.getString("phone"));
-        mvo.setAdminyn(rs.getString("adminyn"));
-        return mvo;
+    protected MemberDto parseDto(ResultSet rs) throws SQLException {
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId(rs.getString("id"));
+        memberDto.setName(rs.getString("name"));
+        memberDto.setPwd(rs.getString("pwd"));
+        memberDto.setEmail(rs.getString("email"));
+        memberDto.setIndate(rs.getDate("indate"));
+        memberDto.setPhone(rs.getString("phone"));
+        memberDto.setAdminyn(rs.getString("adminyn"));
+        return memberDto;
     }
 
 }

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="static/stylesheet/qna/qna_icon.css"/>
-    <jsp:param name="stylesheet" value="static/stylesheet/qna/qna_write.css"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/qna/qna_icon.css"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/qna/qna_write.css"/>
 </jsp:include>
 <main class="qna-write">
     <div class="qna-write_header">

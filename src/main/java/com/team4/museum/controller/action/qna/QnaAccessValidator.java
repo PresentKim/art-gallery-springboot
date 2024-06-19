@@ -49,12 +49,12 @@ interface QnaAccessValidator {
             return null;
         }
 
-        // 'qnaVO'가 필터링 조건을 만족하지 않는 경우
+        // 'qnaDto'가 필터링 조건을 만족하지 않는 경우
         if (!validator.validate(qnaDto, request)) {
             return null;
         }
 
-        // 'qnaVO'를 반환
+        // 'qnaDto'를 반환
         return qnaDto;
     }
 }

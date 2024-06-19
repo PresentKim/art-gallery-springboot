@@ -18,29 +18,29 @@ public class GalleryUpdateFormAction implements Action {
         MemberGalleryDao mgdao = MemberGalleryDao.getInstance();
 
         int mseq = Integer.parseInt(request.getParameter("mseq"));
-        MemberGalleryDto mgvo = mgdao.getMemberGalleryOne(mseq);
+        MemberGalleryDto galleryDto = mgdao.getMemberGalleryOne(mseq);
 
         // 갤러리 정보가 없으면 404 페이지로 포워딩
-        if (!Security.trueOr404Forward(mgvo != null, request, response)) {
+        if (!Security.trueOr404Forward(galleryDto != null, request, response)) {
             return;
         }
 
         // 갤러리 주인이 아니면 경고창 스크립트만 발송
-        if (!Security.memberEqualsOrAlert(mgvo.getAuthorId(), request, response)) {
+        if (!Security.memberEqualsOrAlert(galleryDto.getAuthorId(), request, response)) {
             return;
         }
 
-        mgvo.setMseq(mseq);
-        mgvo.setTitle(request.getParameter("title"));
-        mgvo.setContent(request.getParameter("content"));
+        galleryDto.setMseq(mseq);
+        galleryDto.setTitle(request.getParameter("title"));
+        galleryDto.setContent(request.getParameter("content"));
 
         MultipartFileInfo info = MultipartFileInfo.getFromRequest(request, "static/image/gallery");
         if (!info.isEmpty()) {
-            mgvo.setImage(info.getFileName());
-            mgvo.setSavefilename(info.getSaveFileName());
+            galleryDto.setImage(info.getFileName());
+            galleryDto.setSavefilename(info.getSaveFileName());
         }
 
-        mgdao.updateMemberGallery(mgvo);
+        mgdao.updateMemberGallery(galleryDto);
         response.sendRedirect("museum.do?command=galleryView&mseq=" + mseq);
     }
 

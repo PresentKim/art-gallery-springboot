@@ -31,13 +31,13 @@ final public class NoticeDao extends BaseDao<NoticeDto> {
         );
     }
 
-    public void insertNotice(NoticeDto nvo) {
+    public void insertNotice(NoticeDto noticeDto) {
         update(
                 "INSERT INTO notice (title, author, content, category) VALUES (?, ?, ?, ?)",
-                nvo.getTitle(),
-                nvo.getAuthor(),
-                nvo.getContent(),
-                nvo.getCategory()
+                noticeDto.getTitle(),
+                noticeDto.getAuthor(),
+                noticeDto.getContent(),
+                noticeDto.getCategory()
         );
     }
 
@@ -103,7 +103,7 @@ final public class NoticeDao extends BaseDao<NoticeDto> {
         return select("SELECT * FROM notice ORDER BY writedate DESC LIMIT 6");
     }
 
-    protected NoticeDto parseVO(ResultSet rs) throws SQLException {
+    protected NoticeDto parseDto(ResultSet rs) throws SQLException {
         NoticeDto notice = new NoticeDto();
         notice.setNseq(rs.getInt("nseq"));
         notice.setTitle(rs.getString("title"));

@@ -67,12 +67,12 @@ public class FavoriteDao extends BaseDao<FavoriteDto> {
      * 즐겨찾기 정보를 ResultSet에서 추출한다.
      *
      * @param rs ResultSet 객체
-     * @return FavoriteVO 즐겨찾기 정보 객체
+     * @return FavoriteDto 즐겨찾기 정보 객체
      */
-    protected FavoriteDto parseVO(ResultSet rs) throws SQLException {
-        FavoriteDto fvo = FavoriteDto.fromArtwork(ArtworkDao.getInstance().parseVO(rs));
-        fvo.setMemberId(rs.getString("member_id"));
-        return fvo;
+    protected FavoriteDto parseDto(ResultSet rs) throws SQLException {
+        FavoriteDto favoriteDto = FavoriteDto.fromArtwork(ArtworkDao.getInstance().parseDto(rs));
+        favoriteDto.setMemberId(rs.getString("member_id"));
+        return favoriteDto;
     }
 
 }

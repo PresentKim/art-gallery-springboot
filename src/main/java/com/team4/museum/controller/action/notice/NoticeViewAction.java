@@ -16,10 +16,10 @@ public class NoticeViewAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         NoticeDao ndao = NoticeDao.getInstance();
         int nseq = Integer.parseInt(request.getParameter("nseq"));
-        NoticeDto nvo = ndao.getNotice(nseq);
+        NoticeDto noticeDto = ndao.getNotice(nseq);
 
         // 소식지 정보가 없으면 404 페이지로 포워딩
-        if (!Security.trueOr404Forward(nvo != null, request, response)) {
+        if (!Security.trueOr404Forward(noticeDto != null, request, response)) {
             return;
         }
 
@@ -27,7 +27,7 @@ public class NoticeViewAction implements Action {
         ndao.plusReadCount(nseq);
 
         // 소식지 정보를 request에 저장
-        request.setAttribute("noticeView", nvo);
+        request.setAttribute("noticeView", noticeDto);
         request.getRequestDispatcher("/WEB-INF/views/notice/noticeView.jsp").forward(request, response);
     }
 

@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="static/stylesheet/notice.css"/>
-    <jsp:param name="script" value="static/script/notice.js"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/notice.css"/>
+    <jsp:param name="script" value="/static/script/notice.js"/>
 </jsp:include>
 <div class="noticeMagazine_container">
     <div class="mu-news_left">

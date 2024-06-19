@@ -15,14 +15,14 @@ public class NoticeViewWithoutCntAction implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int nseq = Integer.parseInt(request.getParameter("nseq"));
-        NoticeDto nvo = NoticeDao.getInstance().getNotice(nseq);
+        NoticeDto noticeDto = NoticeDao.getInstance().getNotice(nseq);
 
         // 소식지 정보가 없으면 404 페이지로 포워딩
-        if (!Security.trueOr404Forward(nvo != null, request, response)) {
+        if (!Security.trueOr404Forward(noticeDto != null, request, response)) {
             return;
         }
 
-        request.setAttribute("noticeView", nvo);
+        request.setAttribute("noticeView", noticeDto);
         request.getRequestDispatcher("/WEB-INF/views/notice/noticeView.jsp").forward(request, response);
     }
 

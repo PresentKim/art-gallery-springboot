@@ -20,11 +20,11 @@ public class QnaWriteAjaxAction extends AjaxAction {
         // 새로운 문의글인지 확인
         boolean isNew = qnaDto == null;
         if (isNew) {
-            // 새로운 문의글인 경우 새로운 'QnaVO' 객체를 생성
+            // 새로운 문의글인 경우 새로운 'QnaDto' 객체를 생성
             qnaDto = new QnaDto();
         }
 
-        // 'QnaVO' 객체에 파라미터 값을 저장
+        // 'QnaDto' 객체에 파라미터 값을 저장
         qnaDto.setTitle(request.getParameter("title"));
         qnaDto.setContent(request.getParameter("content"));
         qnaDto.setEmail(request.getParameter("email"));

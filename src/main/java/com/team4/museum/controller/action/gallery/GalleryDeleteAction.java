@@ -17,15 +17,15 @@ public class GalleryDeleteAction implements Action {
         MemberGalleryDao mgdao = MemberGalleryDao.getInstance();
 
         int mseq = Integer.parseInt(request.getParameter("mseq"));
-        MemberGalleryDto mgvo = mgdao.getMemberGalleryOne(mseq);
+        MemberGalleryDto galleryDto = mgdao.getMemberGalleryOne(mseq);
 
         // 갤러리 정보가 없으면 404 페이지로 포워딩
-        if (!Security.trueOr404Forward(mgvo != null, request, response)) {
+        if (!Security.trueOr404Forward(galleryDto != null, request, response)) {
             return;
         }
 
         // 갤러리 주인이 아니면 경고창 스크립트만 발송
-        if (!Security.memberEqualsOrAlert(mgvo.getAuthorId(), request, response)) {
+        if (!Security.memberEqualsOrAlert(galleryDto.getAuthorId(), request, response)) {
             return;
         }
 

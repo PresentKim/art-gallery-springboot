@@ -17,17 +17,17 @@ public class GalleryViewAction implements Action {
         MemberGalleryDao mgdao = MemberGalleryDao.getInstance();
 
         int mseq = Integer.parseInt(request.getParameter("mseq"));
-        MemberGalleryDto mgvo = mgdao.getMemberGalleryOne(mseq);
+        MemberGalleryDto galleryDto = mgdao.getMemberGalleryOne(mseq);
 
         // 갤러리 정보가 없으면 404 페이지로 포워딩
-        if (!Security.trueOr404Forward(mgvo != null, request, response)) {
+        if (!Security.trueOr404Forward(galleryDto != null, request, response)) {
             return;
         }
 
         // 조회수 1 증가
         mgdao.increaseReadCount(mseq);
 
-        request.setAttribute("galleryVO", mgvo);
+        request.setAttribute("galleryDto", galleryDto);
         request.getRequestDispatcher("/WEB-INF/views/gallery/galleryView.jsp").forward(request, response);
     }
 
