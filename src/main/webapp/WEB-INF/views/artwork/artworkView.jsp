@@ -11,7 +11,7 @@
         </div>
         <div class="artwork-view_btn">
             <c:choose>
-                <c:when test="${isAdmin}">
+                <c:when test="${account.isAdmin}">
                     <c:choose>
                         <c:when test="${artwork.displayyn.equals('Y')}">
                             <input type="button" value="비공개로 전환"
@@ -47,7 +47,7 @@
             <li><span>재료</span> <span>${artwork.material}</span></li>
             <li><span>규격</span> <span>${artwork.size}</span></li>
             <li><span>부문</span> <span>${artwork.category}</span></li>
-            <c:if test="${isAdmin}">
+            <c:if test="${account.isAdmin}">
                 <li><span>전시상태</span> <c:choose>
                     <c:when test="${artwork.displayyn.equals('Y')}">
                         <span>공개</span>

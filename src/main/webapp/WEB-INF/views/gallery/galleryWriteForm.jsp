@@ -30,7 +30,7 @@
         </div>
         <div class="gallery-form_btn">
             <input class="btn" type="button" value="갤러리 등록" onclick="go_save()">
-            <input type="hidden" name="authorid" value="${memberDto.id}">
+            <input type="hidden" name="authorid" value="${account.id}">
             <input class="btn" type="button" value="목록으로" onclick="location.href='museum.do?command=galleryList'">
         </div>
     </form>

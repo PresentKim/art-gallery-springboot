@@ -31,13 +31,10 @@ public class MuseumServlet extends HttpServlet {
 
         // 로그인 정보가 존재하는 경우
         if (memberDto != null) {
-            // 'userId'에 로그인 정보의 아이디 저장
             String userId = memberDto.getId();
-            request.setAttribute("userId", userId);
 
-            // 로그인 정보가 관리자인 경우 'isAdmin'에 true 저장
+            // 로그인 정보가 관리자인 경우
             if (memberDto.isAdmin()) {
-                request.setAttribute("isAdmin", true);
                 System.out.print("[ADMIN:" + userId + "] ");
             } else {
                 System.out.print("[MEMBER:" + userId + "] ");

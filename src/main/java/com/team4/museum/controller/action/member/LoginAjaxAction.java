@@ -34,7 +34,7 @@ public class LoginAjaxAction extends AjaxAction {
 
         // 로그인 성공 시 세션에 로그인 정보를 저장
         HttpSession session = request.getSession();
-        session.setAttribute("loginUser", memberDto);
+        session.setAttribute("account", memberDto);
 
         // 돌아갈 페이지 정보와 함께 성공 메시지를 반환
         return ok("로그인에 성공하였습니다", getReturnUrl());
@@ -47,7 +47,7 @@ public class LoginAjaxAction extends AjaxAction {
      * @return 관리자면 true, 아니면 false
      */
     public static boolean isAdmin(HttpServletRequest request) {
-        return request.getAttribute("isAdmin") != null;
+        return request.getAttribute("account") != null && ((MemberDto) request.getAttribute("account")).isAdmin();
     }
 
     /**
@@ -58,7 +58,7 @@ public class LoginAjaxAction extends AjaxAction {
      * @throws IOException
      */
     public static MemberDto getLoginUserFrom(HttpServletRequest request) {
-        return (MemberDto) request.getSession().getAttribute("loginUser");
+        return (MemberDto) request.getSession().getAttribute("account");
     }
 
     /**
