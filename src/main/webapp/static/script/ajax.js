@@ -9,13 +9,6 @@ function ajax(requestUrl, requestBody, ajaxHandler) {
         lastAjaxRequest.abort();
     }
 
-    // ajax(requestBody, ajaxHandler) 형식의 호출을 지원
-    if (typeof requestUrl === 'object') {
-        ajaxHandler = requestBody;
-        requestBody = requestUrl;
-        requestUrl = null;
-    }
-
     // requestUrl이 유효하지 않으면 `location.pathname`를 사용
     if (!requestUrl) {
         requestUrl = location.pathname;
@@ -24,11 +17,6 @@ function ajax(requestUrl, requestBody, ajaxHandler) {
     // ajaxHandler이 유효하지 않으면 `defaultAjaxHandler`를 사용
     if (!ajaxHandler) {
         ajaxHandler = defaultAjaxHandler;
-    }
-
-    // requestBody가 유효하고, requestUrl에 '?'가 포함되지 않으면 뒤에 '?' 추가
-    if (requestBody && !requestUrl.includes('?')) {
-        requestUrl += '?';
     }
 
     // requestBody가 리터럴 객체인 경우 문자열로 변환
