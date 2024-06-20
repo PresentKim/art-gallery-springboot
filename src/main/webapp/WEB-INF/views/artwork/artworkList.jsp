@@ -11,8 +11,10 @@
         <div>
             <input type="hidden" name="displayyn" value="Y">
             <input type="hidden" name="category" value="${filter.category}">
-            <input type="text" placeholder="작품명 또는 작가명을 검색하세요" name="search" class="artwork-search-form_input"
-                   value="${filter.search}">
+            <label>
+                <input type="text" placeholder="작품명 또는 작가명을 검색하세요" name="search" class="artwork-search-form_input"
+                       value="${filter.search}">
+            </label>
             <input type="submit" value="검색" class="artwork-search-form_btn">
         </div>
     </form>

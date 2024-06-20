@@ -39,7 +39,7 @@ function sendHttpRequest(xhr, requestBody, ajaxHandler) {
  *
  * @param {string} requestUrl - 요청 URL
  * @param {Object} requestBody - 요청 바디 객체
- * @param {function} ajaxHandler - 응답 처리 함수
+ * @param {function} [ajaxHandler] - 응답 처리 함수, 생략 시 기본 처리 함수 사용
  */
 function ajax(requestUrl, requestBody, ajaxHandler) {
     // requestBody 값이 리터럴 객체인 경우 문자열로 변환

@@ -8,7 +8,7 @@
         <input type="hidden" name="returnUrl" value="${returnUrl}">
         <div class="login_icon_box">
             <div>
-                <img src="<c:url value="/static/image/ico_login_img.png"/>" style="width: 80px; height: 80px;">
+                <img src="<c:url value="/static/image/ico_login_img.png"/>" alt="withdraw-logo">
             </div>
             <h2>회원 탈퇴</h2>
         </div>
