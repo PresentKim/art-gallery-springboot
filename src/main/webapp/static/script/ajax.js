@@ -102,22 +102,58 @@ function ajaxSubmit(event, ajaxHandler) {
         ajaxHandler);
 }
 
-var defaultAjaxHandler = function (status, response) {
-    if (response.message) alert(response.message);
-    if (response.url) location.href = response.url;
-};
-defaultAjaxHandler.then = function (ajaxHandler, expectStatus) {
-    return function (status, response) {
-        if (
-            (expectStatus === undefined || expectStatus === status)
-            && ajaxHandler(status, response) === false
-        ) {
-            // ajaxHandler()가 false 를 반환하면 기본 처리를 중단
-            return;
+/**
+ * 기본 AJAX 응답 처리 함수
+ * - 응답 메시지가 있으면 alert()로 출력
+ * - 응답 데이터에 URL 값이 있으면 해당 주소로 이동
+ *
+ * .then() 메서드로 체이닝하여 응답 처리 함수를 확장할 수 있음
+ *
+ * @param status
+ * @param response
+ */
+var defaultAjaxHandler = (function () {
+    var handlers = [];
+
+    function executeHandlers(status, response) {
+        for (var i = 0; i < handlers.length; i++) {
+            var handler = handlers[i];
+            // 상태코드가 일치하거나 상태코드 기대값이 없으면 ajaxHandler() 실행
+            if (
+                (handler.expectStatus === undefined || handler.expectStatus === status)
+                && handler.ajaxHandler(status, response) === false
+            ) {
+                // ajaxHandler()가 false 를 반환하면 처리 중단
+                return;
+            }
         }
-        defaultAjaxHandler(status, response);
+
+        // 기본 응답 처리
+        if (response.message) alert(response.message);
+        if (response.url) location.href = response.url;
+    }
+
+    var mainHandler = function (status, response) {
+        executeHandlers(status, response);
     };
-};
+
+    /**
+     *
+     * AJAX 응답 처리 함수를 확장하는 함수
+     *
+     * @param ajaxHandler - 응답 처리 함수, status, response 를 인자로 받음, false 를 반환하면 처리 중단
+     * @param expectStatus - 기대 응답 상태 코드, 생략 시 모든 상태 코드 처리
+     */
+    mainHandler.then = function (ajaxHandler, expectStatus) {
+        handlers.push({
+            ajaxHandler: ajaxHandler,
+            expectStatus: expectStatus
+        });
+        return mainHandler; // 체이닝을 위해 mainHandler 를 반환
+    };
+
+    return mainHandler;
+})();
 
 function getInputName(input) {
     return (input.labels[0] && input.labels[0].innerText) || input.name || input.id;
