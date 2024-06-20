@@ -64,8 +64,8 @@ public class MemberController {
             return badRequest("ID 혹은 비밀번호가 일치하지 않습니다.");
         }
 
-        // 로그인 성공 시 성공 결과와 돌아갈 URL 반환
-        return ok("로그인에 성공하였습니다", returnUrl);
+        // 로그인 성공 시 성공 결과와 돌아갈 URL 반환 (로그인 성공은 메시지 없이 returnUrl 로 리다이렉트)
+        return ok("", returnUrl);
     }
 
     @PostMapping("/logout")
