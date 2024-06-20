@@ -40,7 +40,7 @@
     <div class="qna-view_reply">
         <h2>답변</h2>
         <c:choose>
-            <c:when test="${account.isAdmin}">
+            <c:when test="${account.admin}">
                 <form id="qnaReplyForm" action="museum.do?command=qnaReply" method="post" onsubmit="ajaxSubmit(event)">
                     <input type="hidden" name="qseq" value="${qnaDto.qseq}"/>
                     <textarea name="reply" placeholder="답변을 입력하세요"><c:out value="${qnaDto.reply}"/></textarea>
