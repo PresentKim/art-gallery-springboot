@@ -33,8 +33,8 @@ final public class MultipartFileService {
 
         // 디렉토리 생성에 실패하면 중단
         File uploadDir = new File(context.getRealPath(uploadDirName));
-        if (uploadDir.exists() || !uploadDir.mkdir()) {
-            System.out.println("Failed to create directory: " + uploadDirName);
+        if (!uploadDir.exists() && !uploadDir.mkdir()) {
+            System.out.println("Failed to create directory: " + uploadDir);
             return null;
         }
 

@@ -282,7 +282,7 @@
     justify-content: flex-end;
 }
 
-.artwork-write-form_info li > div, .artwork-write-form_info > div > div {
+.artwork-write-form_info li > div, .artwork-write-form_info li > label, .artwork-write-form_info > div > label {
     width: 20%;
     height: 2rem;
     align-content: center;

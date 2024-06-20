@@ -7,100 +7,74 @@
 </jsp:include>
 <h2 class="artwork-write-form-header">예술품 수정</h2>
 <section class="artwork-write-form-main">
-    <form method="post" name="artworkWriteForm" action="museum.do?command=artworkUpdateForm" class="artwork-write-form"
-          enctype="multipart/form-data">
+    <form name="artworkWriteForm" class="artwork-write-form"
+          method="post" action="<c:url value="/artwork/update"/>" enctype="multipart/form-data"
+          onsubmit="ajaxSubmit(event)">
+        <input type="hidden" name="aseq" value="${artworkDto.aseq}">
         <div class="artwork-write-form_info">
             <ul>
                 <li>
-                    <div>작가명</div>
-                    <input type="text" name="artist" value="${artwork.artist}" onchange="changeValue('unknownArtist')">
-                    <c:choose>
-                        <c:when test="${artwork.artist.equals('작자미상')}">
-                            <input type="checkbox" name="unknownArtist" onclick="artistUnknown()" id="unknownArtist"
-                                   checked="checked">
-                        </c:when>
-                        <c:otherwise>
-                            <input type="checkbox" name="unknownArtist" onclick="artistUnknown()" id="unknownArtist">
-                        </c:otherwise>
-                    </c:choose>
+                    <label for="artist">작가명</label>
+                    <input type="text" name="artist" id="artist" value="${artworkDto.artist}"
+                           onchange="changeValue('unknownArtist')">
+                    <input type="checkbox" name="unknownArtist" id="unknownArtist" onclick="artistUnknown()"
+                           <c:if test="${artworkDto.artist = '작자미상'}">checked</c:if>>
                     <label for="unknownArtist" class="unknown-label">작자미상</label>
                 </li>
                 <li>
-                    <div>작품명</div>
-                    <input type="text" name="artname" value="${artwork.name}">
+                    <label for="name">작품명</label>
+                    <input type="text" name="name" id="name" value="${artworkDto.name}">
                 </li>
                 <li>
-                    <div>제작연도</div>
-                    <input type="text" name="year" value="${artwork.year}" maxlength="4"
+                    <label for="year">제작연도</label>
+                    <input type="text" name="year" id="year" value="${artworkDto.year}" maxlength="4"
                            onchange="changeValue('unknownYear')">
-                    <c:choose>
-                        <c:when test="${artwork.year.equals('연도미상')}">
-                            <input type="checkbox" name="unknownYear" onclick="yearUnknown()" id="unknownYear"
-                                   checked="checked">
-                        </c:when>
-                        <c:otherwise>
-                            <input type="checkbox" name="unknownYear" onclick="yearUnknown()" id="unknownYear">
-                        </c:otherwise>
-                    </c:choose>
+                    <input type="checkbox" name="unknownYear" id="unknownYear" onclick="yearUnknown()"
+                           <c:if test="${artworkDto.year = '연도미상'}">checked</c:if>>
                     <label for="unknownYear" class="unknown-label">연도미상</label>
                 </li>
                 <li>
-                    <div>재료</div>
-                    <input type="text" name="material" value="${artwork.material}">
+                    <label for="material">재료</label>
+                    <input type="text" name="material" id="material" value="${artworkDto.material}">
                 </li>
                 <li>
-                    <div>규격</div>
-                    <input type="text" name="size" value="${artwork.size}">
+                    <label for="size">규격</label>
+                    <input type="text" name="size" id="size" value="${artworkDto.size}">
                 </li>
                 <li>
-                    <div>부문</div>
-                    <select name="category">
+                    <label for="category">부문</label>
+                    <select name="category" id="category">
                         <option value="">카테고리를 선택하세요</option>
                         <c:forEach items="${ArtworkCategory.validValues()}" var="c">
-                            <c:choose>
-                                <c:when test="${c.name().equals(artwork.category)}">
-                                    <option value="${c.name()}" selected>${c.name()}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="${c.name()}">${c.name()}</option>
-                                </c:otherwise>
-                            </c:choose>
+                            <option value="${c.name()}"
+                                    <c:if test="${c.name().equals(artworkDto.category)}">selected</c:if>>${c.name()}</option>
                         </c:forEach>
                     </select>
                 </li>
                 <li>
                     <div>전시상태</div>
-                    <c:choose>
-                        <c:when test="${artwork.displayyn.equals('Y')}">
-                            <input type="radio" name="displayYn" value="Y" id="displayOn" checked="checked">
-                            <label for="displayOn">공개</label>
-                            <input type="radio" name="displayYn" value="N" id="displayOff">
-                            <label for="displayOff">비공개</label>
-                        </c:when>
-                        <c:otherwise>
-                            <input type="radio" name="displayYn" value="Y" id="displayOn">
-                            <label for="displayOn">공개</label>
-                            <input type="radio" name="displayYn" value="N" id="displayOff" checked="checked">
-                            <label for="displayOff">비공개</label>
-                        </c:otherwise>
-                    </c:choose>
+                    <input type="radio" name="displayyn" value="Y" id="displayOn"
+                           <c:if test="${artworkDto.display}">checked</c:if>>
+                    <label for="displayOn">공개</label>
+                    <input type="radio" name="displayyn" value="N" id="displayOff"
+                           <c:if test="${!artworkDto.display}">checked</c:if>>
+                    <label for="displayOff">비공개</label>
                 </li>
                 <li>
-                    <div>이미지 등록</div>
-                    <input type="file" name="image" accept="image/*" onchange="previewImage()">
+                    <label for="imageFile">이미지 등록</label>
+                    <input type="file" name="imageFile" id="imageFile" accept="image/*" onchange="previewImage()">
                 </li>
                 <li>
-                    <img alt="image" src="${artwork.fullSavefilename}" name="uploadedImage">
+                    <img id="image-preview" alt="image-preview" src="${artworkDto.fullSavefilename}">
                 </li>
             </ul>
             <div>
-                <div>작품설명</div>
-                <textarea name="content">${artwork.content}</textarea>
+                <label for="content">작품설명</label>
+                <textarea name="content" id="content">${artworkDto.content}</textarea>
             </div>
         </div>
         <div class="artwork-write-form-btn">
-            <input type="button" value="수정" onclick="artworkUpdate(this)">
-            <input type="hidden" name="aseq" value="${artwork.aseq}">
+            <input type="submit" value="수정">
             <input type="button" value="취소" onclick="history.back()">
         </div>
     </form>

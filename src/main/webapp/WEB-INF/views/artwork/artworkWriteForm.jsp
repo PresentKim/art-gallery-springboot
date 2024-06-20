@@ -7,37 +7,39 @@
 </jsp:include>
 <h2 class="artwork-write-form-header">예술품 등록</h2>
 <section class="artwork-write-form-main">
-    <form method="post" name="artworkWriteForm" action="museum.do?command=artworkWriteForm" class="artwork-write-form"
-          enctype="multipart/form-data">
+    <form name="artworkWriteForm" class="artwork-write-form"
+          method="post" action="<c:url value="/artwork/write"/>" enctype="multipart/form-data"
+          onsubmit="ajaxSubmit(event)">
         <div class="artwork-write-form_info">
             <ul>
                 <li>
-                    <div>작가명</div>
-                    <input type="text" name="artist" onchange="changeValue('unknownArtist')">
-                    <input type="checkbox" name="unknownArtist" onclick="artistUnknown()" id="unknownArtist">
+                    <label for="artist">작가명</label>
+                    <input type="text" name="artist" id="artist" onchange="changeValue('unknownArtist')">
+                    <input type="checkbox" name="unknownArtist" id="unknownArtist" onclick="artistUnknown()">
                     <label for="unknownArtist" class="unknown-label">작자미상</label>
                 </li>
                 <li>
-                    <div>작품명</div>
-                    <input type="text" name="artname">
+                    <label for="name">작품명</label>
+                    <input type="text" name="name" id="name">
                 </li>
                 <li>
-                    <div>제작연도</div>
-                    <input type="text" name="year" onchange="changeValue('unknownYear')">
-                    <input type="checkbox" name="unknownYear" onclick="yearUnknown()" id="unknownYear">
+                    <label for="year">제작연도</label>
+                    <input type="text" name="year" id="year" maxlength="4"
+                           onchange="changeValue('unknownYear')">
+                    <input type="checkbox" name="unknownYear" id="unknownYear" onclick="yearUnknown()">
                     <label for="unknownYear" class="unknown-label">연도미상</label>
                 </li>
                 <li>
-                    <div>재료</div>
-                    <input type="text" name="material">
+                    <label for="material">재료</label>
+                    <input type="text" name="material" id="material">
                 </li>
                 <li>
-                    <div>규격</div>
-                    <input type="text" name="size">
+                    <label for="size">규격</label>
+                    <input type="text" name="size" id="size">
                 </li>
                 <li>
-                    <div>부문</div>
-                    <select name="category">
+                    <label for="category">부문</label>
+                    <select name="category" id="category">
                         <option value="">카테고리를 선택하세요</option>
                         <c:forEach items="${ArtworkCategory.validValues()}" var="c">
                             <option value="${c.name()}">${c.name()}</option>
@@ -46,27 +48,27 @@
                 </li>
                 <li>
                     <div>전시상태</div>
-                    <input type="radio" name="displayYn" value="Y" id="displayOn">
+                    <input type="radio" name="displayyn" value="Y" id="displayOn" checked>
                     <label for="displayOn">공개</label>
-                    <input type="radio" name="displayYn" value="N" id="displayOff">
+                    <input type="radio" name="displayyn" value="N" id="displayOff">
                     <label for="displayOff">비공개</label>
                 </li>
                 <li>
-                    <div>이미지 등록</div>
-                    <input type="file" name="image" accept="image/*" onchange="previewImage()">
+                    <label for="imageFile">이미지 등록</label>
+                    <input type="file" name="imageFile" id="imageFile" accept="image/*" onchange="previewImage()">
                 </li>
                 <li>
-                    <img alt="image" src="" name="uploadedImage">
+                    <img id="image-preview" alt="image-preview" src="">
                 </li>
             </ul>
             <div>
-                <div>작품설명</div>
-                <textarea name="content"></textarea>
+                <label for="content">작품설명</label>
+                <textarea name="content" id="content"></textarea>
             </div>
         </div>
         <div class="artwork-write-form-btn">
-            <input type="button" value="등록" onclick="artworkWrite(this)">
-            <input type="button" value="취소" onclick="location.href='museum.do?command=artworkList'">
+            <input type="submit" value="등록">
+            <input type="button" value="취소" onclick="history.back()">
         </div>
     </form>
 </section>

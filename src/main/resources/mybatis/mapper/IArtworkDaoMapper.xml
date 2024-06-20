@@ -20,6 +20,14 @@
         </if>
     </sql>
 
+    <insert id="insertArtwork" parameterType="com.team4.artgallery.dto.ArtworkDto"
+            useGeneratedKeys="true" keyProperty="aseq">
+        INSERT INTO artwork
+        (name, category, artist, year, material, size, displayyn, content, image, savefilename)
+        VALUES (#{name}, #{category}, #{artist}, #{year}, #{material},
+                #{size}, #{displayyn}, #{content}, #{image}, #{savefilename})
+    </insert>
+
     <select id="findArtwork" parameterType="int" resultType="com.team4.artgallery.dto.ArtworkDto">
         SELECT *
         FROM artwork
@@ -54,6 +62,21 @@
         WHERE
         <include refid="search"/>
     </select>
+
+    <update id="updateArtwork" parameterType="com.team4.artgallery.dto.ArtworkDto">
+        UPDATE artwork
+        SET name        = #{name},
+            category    = #{category},
+            artist      = #{artist},
+            year        = #{year},
+            material    = #{material},
+            size        = #{size},
+            displayyn   = #{displayyn},
+            content     = #{content},
+            image       = #{image},
+            savefilename= #{savefilename}
+        WHERE aseq = #{aseq}
+    </update>
 
     <update id="toggleArtworkDisplay" parameterType="int">
         UPDATE artwork
