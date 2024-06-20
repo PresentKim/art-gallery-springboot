@@ -2,16 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/artwork/artwork_write.css"/>
-    <jsp:param name="script" value="/static/script/artwork/artwork_write.js"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/artwork/artwork_form.css"/>
+    <jsp:param name="script" value="/static/script/artwork/artwork_form.js"/>
 </jsp:include>
-<h2 class="artwork-write-form-header">예술품 수정</h2>
-<section class="artwork-write-form-main">
-    <form name="artworkWriteForm" class="artwork-write-form"
-          method="post" action="<c:url value="/artwork/update"/>" enctype="multipart/form-data"
-          onsubmit="ajaxSubmit(event)">
+<h2 class="artwork-form-header">예술품 수정</h2>
+<section class="artwork-form-main">
+    <form class="artwork-form" onsubmit="ajaxSubmit(event)"
+          method="post" action="<c:url value="/artwork/update"/>" enctype="multipart/form-data">
         <input type="hidden" name="aseq" value="${artworkDto.aseq}">
-        <div class="artwork-write-form_info">
+        <div class="artwork-form_info">
             <ul>
                 <li>
                     <label for="artist">작가명</label>
@@ -73,7 +72,7 @@
                 <textarea name="content" id="content">${artworkDto.content}</textarea>
             </div>
         </div>
-        <div class="artwork-write-form-btn">
+        <div class="artwork-form-btn">
             <input type="submit" value="수정">
             <input type="button" value="취소" onclick="history.back()">
         </div>
