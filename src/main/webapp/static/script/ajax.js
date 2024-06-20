@@ -113,6 +113,17 @@ var defaultAjaxHandler = function (status, response) {
     if (response.message) alert(response.message);
     if (response.url) location.href = response.url;
 };
+defaultAjaxHandler.then = function (ajaxHandler, expectStatus) {
+    return function (status, response) {
+        if (
+            (expectStatus === undefined || expectStatus === status)
+            && ajaxHandler(status, response) === false
+        ) {
+            // ajaxHandler()가 false 를 반환하면 기본 처리를 중단
+            return;
+        }
+        defaultAjaxHandler(status, response);
+    };
 };
 
 function getInputName(input) {
