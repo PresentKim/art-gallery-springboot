@@ -3,7 +3,7 @@
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
     <jsp:param name="stylesheet" value="/static/stylesheet/artwork.css"/>
-    <jsp:param name="script" value="/static/script/artwork.js"/>
+    <jsp:param name="script" value="/static/script/artwork/artwork_write.js"/>
 </jsp:include>
 <h2 class="artwork-write-form-header">예술품 수정</h2>
 <section class="artwork-write-form-main">
@@ -16,10 +16,10 @@
                 <li>
                     <label for="artist">작가명</label>
                     <input type="text" name="artist" id="artist" value="${artworkDto.artist}"
-                           onchange="changeValue('unknownArtist')">
-                    <input type="checkbox" name="unknownArtist" id="unknownArtist" onclick="artistUnknown()"
-                           <c:if test="${artworkDto.artist = '작자미상'}">checked</c:if>>
-                    <label for="unknownArtist" class="unknown-label">작자미상</label>
+                           oninput="uncheck('unknown-artist')">
+                    <input type="checkbox" name="unknown-artist" id="unknown-artist" onchange="onUnknownArtistChange()"
+                           <c:if test="${artworkDto.artist.equals('작자미상')}">checked</c:if>>
+                    <label for="unknown-artist" class="unknown-label">작자미상</label>
                 </li>
                 <li>
                     <label for="name">작품명</label>
@@ -28,10 +28,10 @@
                 <li>
                     <label for="year">제작연도</label>
                     <input type="text" name="year" id="year" value="${artworkDto.year}" maxlength="4"
-                           onchange="changeValue('unknownYear')">
-                    <input type="checkbox" name="unknownYear" id="unknownYear" onclick="yearUnknown()"
-                           <c:if test="${artworkDto.year = '연도미상'}">checked</c:if>>
-                    <label for="unknownYear" class="unknown-label">연도미상</label>
+                           oninput="uncheck('unknown-year')">
+                    <input type="checkbox" name="unknown-year" id="unknown-year" onchange="onUnknownYearChange()"
+                           <c:if test="${artworkDto.year.equals('연도미상')}">checked</c:if>>
+                    <label for="unknown-year" class="unknown-label">연도미상</label>
                 </li>
                 <li>
                     <label for="material">재료</label>
@@ -62,7 +62,7 @@
                 </li>
                 <li>
                     <label for="imageFile">이미지 등록</label>
-                    <input type="file" name="imageFile" id="imageFile" accept="image/*" onchange="previewImage()">
+                    <input type="file" name="imageFile" id="imageFile" accept="image/*" onchange="updatePreviewImage()">
                 </li>
                 <li>
                     <img id="image-preview" alt="image-preview" src="${artworkDto.fullSavefilename}">

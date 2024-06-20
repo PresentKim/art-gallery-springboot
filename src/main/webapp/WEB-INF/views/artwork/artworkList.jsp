@@ -4,7 +4,6 @@
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
     <jsp:param name="stylesheet" value="/static/stylesheet/artwork.css"/>
-    <jsp:param name="script" value="/static/script/artwork.js"/>
 </jsp:include>
 <section class="artwork-list-header">
     <form action="<c:url value="/artwork"/>" method="get" name="searchForm" class="artwork-search-form">
