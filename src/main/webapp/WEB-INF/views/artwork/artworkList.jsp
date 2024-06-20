@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/artwork.css"/>
+    <jsp:param name="stylesheet" value="/static/stylesheet/artwork/artwork_list.css"/>
 </jsp:include>
 <section class="artwork-list-header">
     <form action="<c:url value="/artwork"/>" method="get" name="searchForm" class="artwork-search-form">
