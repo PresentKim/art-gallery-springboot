@@ -34,8 +34,8 @@
 <main class="artwork-list-main">
     <div class="artwork-list-head">
         <h4>검색결과가 총 ${pagination.itemCount}건 입니다</h4>
-        <c:if test="${account.isAdmin}">
             <a href="museum.do?command=artworkWrite" class="artwork-list_btn">예술품 등록</a>
+        <c:if test="${account.admin}">
         </c:if>
     </div>
     <div class="artwork-list">

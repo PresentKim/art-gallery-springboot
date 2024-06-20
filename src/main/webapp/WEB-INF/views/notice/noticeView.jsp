@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="noticeView-button">
-            <c:if test="${account.isAdmin}">
+            <c:if test="${account.admin}">
                 <input type="button" class="btn-noticeView" value="수정"
                        onClick="location.href='museum.do?command=updateNoticeForm&nseq=${noticeView.nseq}'"/>
                 <input type="button" class="btn-noticeView" value="삭제"

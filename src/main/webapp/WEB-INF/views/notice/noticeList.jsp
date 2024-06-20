@@ -12,7 +12,7 @@
             <a href="museum.do?command=noticeList&category=${c.name()}" class="notice-list_btn">${c.name()}</a>
         </c:forEach>
         <div class="writebutton">
-            <c:if test="${account.isAdmin}">
+            <c:if test="${account.admin}">
                 <input type="button" value="게시글 등록" onClick="location.href='museum.do?command=insertNoticeForm'"/>
             </c:if>
         </div>

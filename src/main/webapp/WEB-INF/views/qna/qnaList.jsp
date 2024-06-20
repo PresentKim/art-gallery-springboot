@@ -43,7 +43,7 @@
                                 <c:when test="${qnaDto.isPublic()}">
                                     <i class="qna-icon public"></i>
                                 </c:when>
-                                <c:when test="${account.isAdmin}">
+                                <c:when test="${account.admin}">
                                     <i class="qna-icon admin"></i>
                                 </c:when>
                                 <c:otherwise>

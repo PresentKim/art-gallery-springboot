@@ -26,7 +26,7 @@
             <p>
                 <strong>작성자</strong>:
                 <c:choose>
-                    <c:when test="${account.isAdmin}">
+                    <c:when test="${account.admin}">
                         ${qnaDto.email} (${qnaDto.phone})
                     </c:when>
                     <c:otherwise>${qnaDto.email.substring(0, 3)}**** (010-****-****)</c:otherwise>
