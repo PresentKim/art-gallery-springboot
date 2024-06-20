@@ -55,4 +55,16 @@
         <include refid="search"/>
     </select>
 
+    <update id="toggleArtworkDisplay" parameterType="int">
+        UPDATE artwork
+        SET displayyn = IF(displayyn = 'Y', 'N', 'Y')
+        WHERE aseq = #{aseq}
+    </update>
+
+    <delete id="deleteArtwork" parameterType="int">
+        DELETE
+        FROM artwork
+        WHERE aseq = #{aseq}
+    </delete>
+
 </mapper>
