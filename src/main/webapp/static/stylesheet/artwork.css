@@ -148,13 +148,15 @@
     align-items: center;
 }
 
-.artwork-view_btn > input {
+.artwork-view_btn > * {
+    display: block;
     padding: 0;
     width: 7rem;
     height: 3rem;
     align-content: center;
     background-color: white;
     color: black;
+    font-size: 1rem;
     font-weight: bold;
     text-align: center;
     border: 2px solid black;
@@ -165,7 +167,7 @@
     cursor: pointer;
 }
 
-.artwork-view_btn > input:hover {
+.artwork-view_btn > *:hover {
     background-color: black;
     color: white;
 }

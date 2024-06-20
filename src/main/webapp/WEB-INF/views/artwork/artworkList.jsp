@@ -1,3 +1,4 @@
+<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
@@ -6,25 +7,25 @@
     <jsp:param name="script" value="/static/script/artwork.js"/>
 </jsp:include>
 <section class="artwork-list-header">
-    <form action="museum.do" method="get" name="searchForm" class="artwork-search-form">
+    <form action="<c:url value="/artwork"/>" method="get" name="searchForm" class="artwork-search-form">
         <h1>예술품 검색</h1>
         <div>
-            <input type="hidden" name="command" value="artworkList">
-            <input type="hidden" name="category" value="${category}">
-            <input type="text" placeholder="작품명 또는 작가명을 검색하세요" name="searchWord" class="artwork-search-form_input"
-                   value="${searchWord}">
+            <input type="hidden" name="displayyn" value="Y">
+            <input type="hidden" name="category" value="${filter.category}">
+            <input type="text" placeholder="작품명 또는 작가명을 검색하세요" name="search" class="artwork-search-form_input"
+                   value="${filter.search}">
             <input type="submit" value="검색" class="artwork-search-form_btn">
         </div>
     </form>
     <div class="category-btn-container">
         <c:forEach items="${ArtworkCategory.values()}" var="c">
             <c:choose>
-                <c:when test="${category == c.name() or (empty category and c.name() == '전체')}">
-                    <a href="museum.do?command=artworkList&category=${c.name()}&searchWord=${searchWord}"
+                <c:when test="${filter.category == c.name() or (empty filter.category and c.name() == '전체')}">
+                    <a href="<c:url value="/artwork?category=${c.name()}&search=${filter.search}"/>"
                        class="artwork-list_btn artwork-list_selected-btn">${c.name()}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="museum.do?command=artworkList&category=${c.name()}&searchWord=${searchWord}"
+                    <a href="<c:url value="/artwork?category=${c.name()}&search=${filter.search}"/>"
                        class="artwork-list_btn">${c.name()}</a>
                 </c:otherwise>
             </c:choose>
@@ -34,13 +35,13 @@
 <main class="artwork-list-main">
     <div class="artwork-list-head">
         <h4>검색결과가 총 ${pagination.itemCount}건 입니다</h4>
-            <a href="museum.do?command=artworkWrite" class="artwork-list_btn">예술품 등록</a>
         <c:if test="${account.admin}">
+            <a href="<c:url value="/artwork/write"/>" class="artwork-list_btn">예술품 등록</a>
         </c:if>
     </div>
     <div class="artwork-list">
         <c:forEach items="${artworkList}" var="artwork">
-            <div onclick="location.href='museum.do?command=artworkView&aseq=${artwork.aseq}'">
+            <div onclick="location.href='/artwork/view?aseq=${artwork.aseq}'">
                 <img src="${artwork.fullSavefilename}" alt="artwork_image" class="artwork-list_img"/>
                 <div class="artwork-list_info">
                     <span>${artwork.artist}</span>
