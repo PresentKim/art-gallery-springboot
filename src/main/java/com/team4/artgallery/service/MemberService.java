@@ -62,6 +62,17 @@ public class MemberService {
     }
 
     /**
+     * 세션에 저장된 회원 정보가 관리자인지 확인한다.
+     *
+     * @param session 세션 객체
+     * @return 관리자이면 true, 그렇지 않으면 false
+     */
+    public boolean isAdmin(HttpSession session) {
+        MemberDto memberDto = getLoginMember(session);
+        return memberDto != null && memberDto.isAdmin();
+    }
+
+    /**
      * 주어진 ID와 비밀번호로 로그인을 시도한다.
      *
      * @param session 세션 객체
