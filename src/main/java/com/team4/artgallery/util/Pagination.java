@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 @Getter
 @Setter
@@ -281,4 +282,9 @@ public class Pagination {
         return new Pagination();
     }
 
+    public record Pair<T>(
+            Pagination pagination,
+            List<T> list
+    ) {
+    }
 }
