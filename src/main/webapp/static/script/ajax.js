@@ -110,45 +110,9 @@ function ajaxSubmit(event) {
 }
 
 var defaultAjaxHandler = function (status, response) {
-    var url = response.url;
-    var message = response.message;
-    switch (status) {
-        case 200: // OK
-        case 201: // Created
-        case 202: // Accepted
-            break;
-
-        case 400: // Bad Request
-            message = message || "잘못된 요청입니다.";
-            break;
-
-        case 401: // Unauthorized
-            message = message || "로그인이 필요합니다";
-            break;
-
-        case 403: // Forbidden
-            message = message || "접근 권한이 없습니다";
-            break;
-
-        case 204: // No Content
-        case 404: // Not Found
-            message = message || "요청한 페이지를 찾을 수 없습니다";
-            break;
-
-        case 500: // Internal Server Error
-            message = message || "서버 오류가 발생했습니다.";
-            break;
-
-        default:
-            message = message || "알 수 없는 오류가 발생했습니다.";
-            break;
-    }
-    if (message) {
-        alert(message);
-    }
-    if (url) {
-        location.href = url;
-    }
+    if (response.message) alert(response.message);
+    if (response.url) location.href = response.url;
+};
 };
 
 function getInputName(input) {
