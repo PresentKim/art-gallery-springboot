@@ -1,10 +1,12 @@
 <%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/artwork/artwork_list.css"/>
-</jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>예술품 목록 :: ${filter.category} ${pagination.currentPage}페이지</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_list.css"/>">
+</t:header>
 <section class="artwork-list-header">
     <form action="<c:url value="/artwork"/>" method="get" name="searchForm" class="artwork-search-form">
         <h1>예술품 검색</h1>
@@ -52,6 +54,6 @@
             </div>
         </c:forEach>
     </div>
-    <%@ include file="/WEB-INF/views/util/pagination.jsp" %>
+    <t:pagination/>
 </main>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

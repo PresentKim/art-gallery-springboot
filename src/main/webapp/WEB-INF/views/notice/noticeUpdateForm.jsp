@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.team4.artgallery.enums.NoticeCategory" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/notice.css"/>
-    <jsp:param name="script" value="/static/script/notice.js"/>
-</jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>소식지 수정 :: ${noticeUpdate.nseq}</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
+    <script src="<c:url value="/static/script/notice.js"/>"></script>
+</t:header>
 <div id="notice_update_box">
     <h2>소식지 수정</h2>
     <div class="notice_update_innerbox">
@@ -42,5 +44,4 @@
     </div>
 </div>
 <div class="updateNotice_bottomClear"></div>
-
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

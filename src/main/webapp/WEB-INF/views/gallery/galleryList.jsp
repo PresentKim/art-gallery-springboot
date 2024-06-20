@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/gallery.css"/>
-    <jsp:param name="script" value="/static/script/gallery.js"/>
-</jsp:include>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>갤러리 목록</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/gallery.css"/>">
+    <script src="<c:url value="/static/script/gallery.js"/>"></script>
+</t:header>
 <main class="gallery-list">
     <section class="gallery-list-header">
         <form action="museum.do?command=galleryList" method="post" name="searchForm">
@@ -31,7 +33,7 @@
                 </div>
             </c:forEach>
         </div>
-        <%@ include file="/WEB-INF/views/util/pagination.jsp" %>
+        <t:pagination/>
     </section>
 </main>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

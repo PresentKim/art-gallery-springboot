@@ -1,16 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%--@elvariable id="pagination" type="com.team4.artgallery.util.Pagination"--%>
+<%@ tag language="java" pageEncoding="UTF-8" body-content="empty" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-    // paginationName: Pagination 객체를 저장할 속성명
-    String paginationName = request.getParameter("paginationName");
-
-// paginationName 값이 존재하면 해당 속성명으로 저장된 Pagination 객체를 사용
-    if (paginationName != null && !paginationName.isEmpty()) {
-        request.setAttribute("pagination", request.getAttribute(paginationName));
-    }
-
-// paginationName 값이 존재하지 않으면 기본 속성명(pagination)으로 Pagination 객체를 사용
-%>
+<%@ attribute name="paginationName" required="false" %>
+<c:if test="${pagination == null}">
+    <c:set var="pagination" value="${pageContext.request.getAttribute('paginationName')}"/>
+</c:if>
 <div class="pagination">
     <a class="page-navi prev" href="${pagination.getUrl(pagination.prevPage)}">이전</a>
     <div class="page-links">

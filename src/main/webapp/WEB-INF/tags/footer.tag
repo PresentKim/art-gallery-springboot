@@ -1,5 +1,5 @@
 <%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ tag language="java" pageEncoding="UTF-8" body-content="tagdependent" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </div>
 <footer>
@@ -9,6 +9,7 @@
     <div class="footer_info">
         <address>(03163) 서울 종로구 인사동길 12 대일빌딩 7층</address>
         <strong>대표전화 <a href="tel:12-345-678">12-345-678</a></strong>
+        <jsp:doBody/>
     </div>
     <div class="footer_bottom">
         <ul class="footer_bottom_items">

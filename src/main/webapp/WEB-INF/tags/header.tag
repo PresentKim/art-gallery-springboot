@@ -1,14 +1,16 @@
 <%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ tag language="java" pageEncoding="UTF-8" body-content="scriptless" %>
+<%@ tag import="com.team4.artgallery.enums.NoticeCategory" %>
+<%@ tag import="com.team4.artgallery.enums.ArtworkCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.team4.artgallery.enums.NoticeCategory" %>
-<%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load tag dependant content (TAG BODY) -->
+    <jsp:doBody/>
     <title>Museum</title>
     <!-- CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
@@ -18,9 +20,6 @@
     <link rel="stylesheet" href="<c:url value="/static/stylesheet/header.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/stylesheet/footer.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/stylesheet/pagination.css"/>">
-    <c:forEach items="${paramValues.stylesheet}" var="path">
-        <link rel="stylesheet" href="${path}">
-    </c:forEach>
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.drawsvg/1/jquery.drawsvg.min.js"></script>
@@ -29,10 +28,6 @@
     <script src="http://cdn.jsdelivr.net/vivus/0.2.1/vivus.min.js"></script>
     <script src="<c:url value="/static/script/header.js"/>"></script>
     <script src="<c:url value="/static/script/ajax.js"/>"></script>
-    <!-- Load other scripts -->
-    <c:forEach items="${paramValues.script}" var="path">
-        <script src="${path}"></script>
-    </c:forEach>
 </head>
 <body>
 <header>

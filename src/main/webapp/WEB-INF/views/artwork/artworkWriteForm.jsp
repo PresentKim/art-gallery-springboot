@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/artwork/artwork_form.css"/>
-    <jsp:param name="script" value="/static/script/artwork/artwork_form.js"/>
-</jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>예술품 등록</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_form.css"/>">
+    <script src="<c:url value="/static/script/artwork/artwork_form.js"/>"></script>
+</t:header>
 <h2 class="artwork-form-header">예술품 등록</h2>
 <section class="artwork-form-main">
     <form class="artwork-form" onsubmit="ajaxSubmit(event)"
@@ -70,4 +72,4 @@
         </div>
     </form>
 </section>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

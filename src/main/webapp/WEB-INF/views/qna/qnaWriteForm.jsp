@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/qna/qna_icon.css"/>
-    <jsp:param name="stylesheet" value="/static/stylesheet/qna/qna_write.css"/>
-</jsp:include>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>고객센터 :: <c:choose>
+        <c:when test="${empty qnaDto}">문의 작성</c:when>
+        <c:otherwise>${qnaDto.qseq}번 문의 수정</c:otherwise>
+    </c:choose></title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_icon.css"/>">
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_write.css"/>">
+    <script src="<c:url value="/static/script/qna.js"/>"></script>
+</t:header>
 <main class="qna-write">
     <div class="qna-write_header">
         <div class="qna-write_header_title">
@@ -66,4 +72,4 @@
         </div>
     </form>
 </main>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

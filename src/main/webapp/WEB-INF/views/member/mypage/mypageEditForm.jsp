@@ -1,9 +1,11 @@
 <%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/member/join_form.css"/>
-</jsp:include>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>마이페이지 :: 회원정보 수정</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/join_form.css"/>">
+</t:header>
 <main class="join-form-wrapper">
     <form class="join-form" method="post" action="<c:url value="/member/mypage/edit"/>" onsubmit="ajaxSubmit(event)">
         <h2>회원정보 수정</h2>
@@ -46,4 +48,4 @@
         </div>
     </form>
 </main>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

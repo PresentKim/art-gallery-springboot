@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/qna/qna_icon.css"/>
-    <jsp:param name="stylesheet" value="/static/stylesheet/qna/qna_list.css"/>
-    <jsp:param name="script" value="/static/script/qna.js"/>
-</jsp:include>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>고객센터 :: ${pagination.currentPage}페이지</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_icon.css"/>">
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_list.css"/>">
+    <script src="<c:url value="/static/script/qna.js"/>"></script>
+</t:header>
 <main class="qna-list">
     <div class="qna-list_header">
         <div class="qna-list_header_title">
@@ -62,7 +64,7 @@
             </c:forEach>
             </tbody>
         </table>
-        <%@ include file="/WEB-INF/views/util/pagination.jsp" %>
+        <t:pagination/>
     </div>
 </main>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

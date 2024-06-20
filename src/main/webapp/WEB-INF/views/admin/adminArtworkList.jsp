@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/admin.css"/>
-    <jsp:param name="script" value="/static/script/admin.js"/>
-</jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>관리자 :: 예술품 관리</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
+    <script src="<c:url value="/static/script/admin.js"/>"></script>
+</t:header>
 <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
-<%
-    String displayState = request.getParameter("displayState") != null ? request.getParameter("displayState") : "";
-%>
 <section class="admin-list">
     <form action="museum.do" method="post" name="adminForm">
         <div class="admin-list-btn">
@@ -24,8 +23,8 @@
             <li><input type="checkbox" onclick="checkAll()" class="select-all-box"></li>
             <li><select name=displayState class="admin-select" onchange="this.form.submit();">
                 <option value="">전시 상태</option>
-                <option value="Y" <%=displayState.equals("Y") ? "selected" : ""%>>Y</option>
-                <option value="N" <%=displayState.equals("N") ? "selected" : ""%>>N</option>
+                <option value="Y" <c:if test="${'Y'.equals(displayState)}">selected</c:if>>Y</option>
+                <option value="N" <c:if test="${'N'.equals(displayState)}">selected</c:if>>N</option>
             </select></li>
             <li>번호</li>
             <li><select name="category" class="admin-select" onchange="this.form.submit();">
@@ -72,5 +71,5 @@
         </c:forEach>
     </form>
 </section>
-<%@ include file="/WEB-INF/views/util/pagination.jsp" %>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:pagination/>
+<t:footer/>

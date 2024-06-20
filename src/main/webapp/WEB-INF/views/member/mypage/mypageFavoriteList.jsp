@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/artwork.css"/>
-</jsp:include>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>나의 관심 예술품 :: ${pagination.currentPage} 페이지 </title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_list.css"/>">
+</t:header>
 <section class="artwork-list-header">
     <h1>나의 관심 예술품</h1>
 </section>
@@ -22,6 +24,6 @@
             </div>
         </c:forEach>
     </div>
-    <%@ include file="/WEB-INF/views/util/pagination.jsp" %>
+    <t:pagination/>
 </main>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

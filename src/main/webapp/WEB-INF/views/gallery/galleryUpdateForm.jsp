@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/galleryForm.css"/>
-    <jsp:param name="script" value="/static/script/gallery.js"/>
-</jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>갤러리 수정 :: ${galleryDto.mseq}</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/galleryForm.css"/>">
+    <script src="<c:url value="/static/script/gallery.js"/>"></script>
+</t:header>
 <h1 class="gallery-form-header">작품 수정</h1>
 <section class="gallery-form-main">
     <form action="museum.do?command=galleryUpdateForm" method="post" name="galleryForm" class="gallery-form"
@@ -37,4 +40,4 @@
         </div>
     </form>
 </section>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

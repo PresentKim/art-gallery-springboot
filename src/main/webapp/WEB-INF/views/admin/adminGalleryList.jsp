@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/admin.css"/>
-    <jsp:param name="script" value="/static/script/admin.js"/>
-</jsp:include>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>관리자 :: 갤러리 관리</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
+    <script src="<c:url value="/static/script/admin.js"/>"></script>
+</t:header>
 <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
 <section class="admin-list">
     <form method="post" name="adminForm">
@@ -28,9 +30,7 @@
         </ul>
         <c:forEach items="${galleryList}" var="galleryDto" varStatus="index">
             <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
-                <li>
-                    <input type="checkbox" class="check-box">
-                </li>
+                <li><input type="checkbox" class="check-box"></li>
                 <li>${galleryDto.mseq}</li>
                 <li>${galleryDto.authorId}</li>
                 <li>${galleryDto.authorName}</li>
@@ -51,5 +51,5 @@
         </c:forEach>
     </form>
 </section>
-<%@ include file="/WEB-INF/views/util/pagination.jsp" %>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:pagination/>
+<t:footer/>

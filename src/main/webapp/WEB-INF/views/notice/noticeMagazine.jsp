@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/notice.css"/>
-    <jsp:param name="script" value="/static/script/notice.js"/>
-</jsp:include>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>소식지 :: 매거진</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
+    <script src="<c:url value="/static/script/notice.js"/>"></script>
+</t:header>
 <div class="noticeMagazine_container">
     <div class="mu-news_left">
         <div class="l-img"></div>
@@ -148,4 +149,4 @@
         </div>
     </div>
 </div>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>

@@ -1,10 +1,12 @@
 <%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="stylesheet" value="/static/stylesheet/artwork/artwork_view.css"/>
-    <jsp:param name="script" value="/static/script/artwork/artwork_view.js"/>
-</jsp:include>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:header>
+    <title>예술품 :: ${artworkDto.artist} | ${artworkDto.name}</title>
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_view.css"/>">
+    <script src="<c:url value="/static/script/artwork/artwork_view.js"/>"></script>
+</t:header>
 <section class="artwork-view">
     <div class="artwork-view-header">
         <div class="artwork-view-title">
@@ -59,4 +61,4 @@
         <p>${artworkDto.content}</p>
     </div>
 </section>
-<jsp:include page="/WEB-INF/views/footer.jsp"/>
+<t:footer/>
