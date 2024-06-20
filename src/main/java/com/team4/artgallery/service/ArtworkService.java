@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ArtworkService {
@@ -28,23 +26,22 @@ public class ArtworkService {
      * @return 작품 목록과 페이지네이션 정보
      */
     public Pagination.Pair<ArtworkDto> getOrSearchArtworks(int page, IArtworkDao.ArtworkFilter filter) {
-        List<ArtworkDto> artworkList;
-        Pagination pagination;
+        // 검색 조건이 없을 경우 전체 작품 목록을 가져옵니다.
         if (filter.isEmpty()) {
-            pagination = new Pagination()
+            Pagination pagination = new Pagination()
                     .setCurrentPage(page)
                     .setItemCount(getAllCount())
                     .setUrlTemplate("/artwork?page=%d");
-            artworkList = getArtworks(pagination);
-        } else {
-            pagination = new Pagination()
-                    .setCurrentPage(page)
-                    .setItemCount(getSearchCount(filter))
-                    .setUrlTemplate("/artwork?page=%d&" + filter.toUrlParam(false));
-            artworkList = searchArtworks(filter, pagination);
+
+            return pagination.pair(getArtworks(pagination));
         }
 
-        return new Pagination.Pair<>(pagination, artworkList);
+        // 검색 조건이 있을 경우 검색 결과를 가져옵니다.
+        Pagination pagination = new Pagination()
+                .setCurrentPage(page)
+                .setItemCount(getSearchCount(filter))
+                .setUrlTemplate("/artwork?page=%d&" + filter.toUrlParam(false));
+        return pagination.pair(searchArtworks(filter, pagination));
     }
 
     /**

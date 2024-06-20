@@ -254,6 +254,17 @@ public class Pagination {
     }
 
     /**
+     * Pagination 객체와 리스트를 묶어 Pair 객체로 반환합니다.
+     *
+     * @param list 리스트
+     * @param <T>  리스트의 타입
+     * @return Pagination 객체와 리스트를 묶은 Pair 객체
+     */
+    public <T> Pair<T> pair(List<T> list) {
+        return new Pair<>(this, list);
+    }
+
+    /**
      * 주어진 인자로 Pagination 객체를 생성하고 Model 객체에 적용합니다.
      *
      * @param currentPage 현재 페이지
