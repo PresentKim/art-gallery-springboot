@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>회원가입 :: 약관 동의</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/contract.css"/>">
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>회원가입 :: 약관 동의</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/contract.css"/>">
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <main class="contract-form-wrapper">
     <form class="contract-form" method="get" action="<c:url value="/member/join"/>">
         <input type="hidden" name="returnUrl" value="${returnUrl}"/>
@@ -39,4 +44,6 @@
         </div>
     </form>
 </main>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

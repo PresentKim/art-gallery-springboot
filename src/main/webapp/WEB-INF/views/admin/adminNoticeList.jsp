@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.team4.artgallery.enums.NoticeCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>관리자 :: 소식지 관리</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
-    <script src="<c:url value="/static/script/admin.js"/>"></script>
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>관리자 :: 소식지 관리</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
+        <script src="<c:url value="/static/script/admin.js"/>"></script>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
 <section class="admin-list">
     <form method="post" name="adminForm">
@@ -72,4 +76,6 @@
     </form>
 </section>
 <t:pagination/>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

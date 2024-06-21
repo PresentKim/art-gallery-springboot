@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>회원가입 :: 정보 입력</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/join_form.css"/>">
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>회원가입 :: 정보 입력</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/join_form.css"/>">
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <main class="join-form-wrapper">
     <form class="join-form" method="post" action="<c:url value="/member/join"/>" onsubmit="ajaxSubmit(event)">
         <input type="hidden" name="returnUrl" value="${returnUrl}">
@@ -50,4 +55,6 @@
         </div>
     </form>
 </main>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

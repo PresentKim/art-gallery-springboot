@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>나의 관심 예술품 :: ${pagination.currentPage} 페이지 </title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_list.css"/>">
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>나의 관심 예술품 :: ${pagination.currentPage} 페이지 </title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_list.css"/>">
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <section class="artwork-list-header">
     <h1>나의 관심 예술품</h1>
 </section>
@@ -26,4 +31,6 @@
     </div>
     <t:pagination/>
 </main>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

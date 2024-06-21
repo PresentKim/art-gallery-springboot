@@ -1,13 +1,19 @@
 <%--@elvariable id="artworkDto" type="com.team4.artgallery.dto.ArtworkDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>${empty artworkDto ? '예술품 등록' : '예술품 수정 :: '}${artworkDto.aseq}</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_form.css"/>">
-    <script src="<c:url value="/static/script/artwork/artwork_form.js"/>"></script>
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>${empty artworkDto ? '예술품 등록' : '예술품 수정 :: '}${artworkDto.aseq}</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_form.css"/>">
+        <script src="<c:url value="/static/script/artwork/artwork_form.js"/>"></script>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <h2 class="artwork-form-header">${empty artworkDto ? '예술품 등록' : '예술품 수정'}</h2>
 <section class="artwork-form-main">
     <form class="artwork-form"
@@ -94,4 +100,6 @@
         </div>
     </form>
 </section>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

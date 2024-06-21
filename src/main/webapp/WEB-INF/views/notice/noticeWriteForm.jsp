@@ -2,11 +2,16 @@
 <%@ page import="com.team4.artgallery.enums.NoticeCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>소식지 등록</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
-    <script src="<c:url value="/static/script/notice.js"/>"></script>
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>소식지 등록</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
+        <script src="<c:url value="/static/script/notice.js"/>"></script>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <div class="notice_insert_box">
     <h2>소식지 등록</h2>
     <div class="notice_insert_header_box">
@@ -44,4 +49,6 @@
         </form>
     </div>
 </div>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

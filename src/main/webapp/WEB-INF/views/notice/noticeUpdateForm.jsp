@@ -2,11 +2,16 @@
 <%@ page import="com.team4.artgallery.enums.NoticeCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>소식지 수정 :: ${noticeUpdate.nseq}</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
-    <script src="<c:url value="/static/script/notice.js"/>"></script>
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>소식지 수정 :: ${noticeUpdate.nseq}</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
+        <script src="<c:url value="/static/script/notice.js"/>"></script>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <div id="notice_update_box">
     <h2>소식지 수정</h2>
     <div class="notice_update_innerbox">
@@ -31,17 +36,18 @@
                     </c:forEach>
                 </select>
             </div>
-            <input type="hidden" name="oldimage" value="${noticeUpdate.image}"/> <input type="hidden"
-                                                                                        name="oldsavefilename"
-                                                                                        value="${noticeUpdate.savefilename}"/>
+            <input type="hidden" name="oldimage" value="${noticeUpdate.image}"/>
+            <input type="hidden" name="oldsavefilename" value="${noticeUpdate.savefilename}"/>
             <div class="notice_update_field_btn">
                 <input type="submit" value="수정완료" onClick="return updateNoticeCheck('${member.pass}')"/>
-                <input type="button" value="되돌아가기" onClick="location.href='museum.do?command=noticeList'"/> <input
-                    type="hidden" name="command" value="updateNotice"/> <input type="hidden" name="nseq"
-                                                                               value="${noticeUpdate.nseq}"/>
+                <input type="button" value="되돌아가기" onClick="location.href='museum.do?command=noticeList'"/>
+                <input type="hidden" name="command" value="updateNotice"/>
+                <input type="hidden" name="nseq" value="${noticeUpdate.nseq}"/>
             </div>
         </form>
     </div>
 </div>
 <div class="updateNotice_bottomClear"></div>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

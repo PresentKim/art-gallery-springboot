@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
     <title>관리자 :: 문의사항 관리</title>
     <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
     <script src="<c:url value="/static/script/admin.js"/>"></script>
-</t:header>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
-<%
-    String isReply = request.getParameter("isReply") != null ? request.getParameter("isReply") : "";
-%>
 <section class="admin-list">
     <form method="post" name="adminForm">
         <div class="admin-list-btn">
@@ -26,8 +28,8 @@
                 <select onchange="displayFilter('adminQnaList', 'isReply')" name="selectDisplayFilter"
                         class="admin-select">
                     <option value="state">답변 여부</option>
-                    <option value="Y" <%=isReply.equals("Y") ? "selected" : ""%>>YES</option>
-                    <option value="N" <%=isReply.equals("N") ? "selected" : ""%>>NO</option>
+                    <option value="Y" <c:if test="'Y'.equals(isReply)">selected</c:if>>YES</option>
+                    <option value="N" <c:if test="'N'.equals(isReply)">selected</c:if>>NO</option>
                 </select>
             </li>
             <li>번호</li>
@@ -56,4 +58,6 @@
     </form>
 </section>
 <t:pagination/>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

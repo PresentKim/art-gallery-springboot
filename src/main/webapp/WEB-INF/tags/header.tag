@@ -1,35 +1,9 @@
 <%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
-<%@ tag language="java" pageEncoding="UTF-8" body-content="scriptless" %>
+<%@ tag language="java" pageEncoding="UTF-8" %>
 <%@ tag import="com.team4.artgallery.enums.NoticeCategory" %>
 <%@ tag import="com.team4.artgallery.enums.ArtworkCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Load tag dependant content (TAG BODY) -->
-    <jsp:doBody/>
-    <title>Museum</title>
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-gov-dynamic-subset.min.css"/>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/reset.css"/>">
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/header.css"/>">
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/footer.css"/>">
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/pagination.css"/>">
-    <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.drawsvg/1/jquery.drawsvg.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
-    <script src="https://unpkg.com/aos@2.2/dist/aos.js"></script>
-    <script src="http://cdn.jsdelivr.net/vivus/0.2.1/vivus.min.js"></script>
-    <script src="<c:url value="/static/script/header.js"/>"></script>
-    <script src="<c:url value="/static/script/ajax.js"/>"></script>
-</head>
-<body>
+
 <header>
     <div class="header_util">
         <ul class="util-link">
@@ -153,4 +127,3 @@
         AOS.refresh();
     });
 </script>
-<div class="content-wrap">

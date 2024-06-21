@@ -2,11 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>하이 미술관</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/main.css"/>">
-    <script src="<c:url value="/static/script/main.js"/>"></script>
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>하이 미술관</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/main.css"/>">
+        <script src="<c:url value="/static/script/main.js"/>"></script>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <!-- 메인 상단 - 옆으로 넘어가는 슬라이드 -->
 <div id="main-top-swiper" class="main-swiper" data-aos="fade-up" data-aos-offset="200" data-aos-delay="50"
      data-aos-duration="500" data-aos-easing="ease-in">
@@ -109,4 +114,6 @@
         </div>
     </div>
 </div>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

@@ -1,13 +1,19 @@
+<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>고객센터 :: ${qnaDto.title}</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_icon.css"/>">
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_view.css"/>">
-    <script src="<c:url value="/static/script/qna.js"/>"></script>
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>고객센터 :: ${qnaDto.title}</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_icon.css"/>">
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_view.css"/>">
+        <script src="<c:url value="/static/script/qna.js"/>"></script>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <main class="qna-view">
     <div class="qna-view_header">
         <div class="qna-view_header_title">
@@ -62,4 +68,6 @@
         </c:choose>
     </div>
 </main>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

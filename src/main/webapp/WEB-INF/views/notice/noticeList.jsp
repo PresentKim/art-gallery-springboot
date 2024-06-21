@@ -1,13 +1,19 @@
+<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.team4.artgallery.enums.NoticeCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>소식지 :: ${pagination.currentPage}</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
-    <script src="<c:url value="/static/script/notice.js"/>"></script>
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>소식지 :: ${pagination.currentPage}</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
+        <script src="<c:url value="/static/script/notice.js"/>"></script>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <div class="notice_box">
     <div class="notice_header_box">
         <c:forEach items="${NoticeCategory.values()}" var="c">
@@ -56,4 +62,6 @@
     </div>
     <t:pagination/>
 </div>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

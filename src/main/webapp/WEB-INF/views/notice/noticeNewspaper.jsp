@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>소식지 :: 신문</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
-    <script src="<c:url value="/static/script/notice.js"/>"></script>
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>소식지 :: 신문</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
+        <script src="<c:url value="/static/script/notice.js"/>"></script>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <div class="noticeNewpaper_containner">
     <ul class="noticeNewpaper_innerbox">
         <li>
@@ -166,4 +171,6 @@
         </div>
     </ul>
 </div>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>

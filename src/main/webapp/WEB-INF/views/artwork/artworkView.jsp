@@ -2,11 +2,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<t:header>
-    <title>예술품 :: ${artworkDto.artist} | ${artworkDto.name}</title>
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_view.css"/>">
-    <script src="<c:url value="/static/script/artwork/artwork_view.js"/>"></script>
-</t:header>
+
+<t:layout>
+    <jsp:attribute name="head">
+        <title>예술품 :: ${artworkDto.artist} | ${artworkDto.name}</title>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_view.css"/>">
+        <script src="<c:url value="/static/script/artwork/artwork_view.js"/>"></script>
+    </jsp:attribute>
+
+    <jsp:attribute name="content">
+
 <section class="artwork-view">
     <div class="artwork-view-header">
         <div class="artwork-view-title">
@@ -61,4 +66,6 @@
         <p>${artworkDto.content}</p>
     </div>
 </section>
-<t:footer/>
+
+    </jsp:attribute>
+</t:layout>
