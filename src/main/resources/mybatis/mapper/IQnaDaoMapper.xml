@@ -39,6 +39,12 @@
         WHERE qseq = #{qseq}
     </update>
 
+    <update id="reply">
+        UPDATE qna
+        SET reply = #{reply}
+        WHERE qseq = #{qseq}
+    </update>
+
     <delete id="delete" parameterType="int">
         DELETE
         FROM qna

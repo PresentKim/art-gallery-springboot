@@ -114,6 +114,31 @@ public class QnaController {
         return ok("문의 수정이 완료되었습니다.", "/qna/view?qseq=" + qseq);
     }
 
+    @PostMapping("/reply")
+    public ResponseEntity<?> reply(
+            @RequestParam(value = "qseq") int qseq,
+            @RequestParam(value = "reply") String reply,
+            HttpSession session
+    ) {
+        // 문의글 정보가 없는 경우 404 실패 반환
+        if (qnaService.get(qseq) == null) {
+            return notFound("문의글 정보를 찾을 수 없습니다.", "/qna");
+        }
+
+        // 접근 권한이 없는 경우 403 실패 반환
+        if (!memberService.isAdmin(session)) {
+            return forbidden("접근 권한이 없습니다.");
+        }
+
+        // 문의글 답변에 실패한 경우 500 에러 반환
+        if (qnaService.reply(qseq, reply) == 0) {
+            return internalServerError("문의 답변에 실패했습니다.");
+        }
+
+        // 문의글 답변에 성공한 경우 200 성공 반환
+        return ok("문의 답변이 완료되었습니다.");
+    }
+
     @PostMapping("/authorize")
     public ResponseEntity<?> authorize(
             @RequestParam(value = "qseq") int qseq,

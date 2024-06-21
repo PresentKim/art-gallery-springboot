@@ -49,9 +49,11 @@
         <h2>답변</h2>
         <c:choose>
             <c:when test="${account.admin}">
-                <form id="qnaReplyForm" action="museum.do?command=qnaReply" method="post" onsubmit="ajaxSubmit(event)">
+                <form action="<c:url value="/qna/reply"/>" method="post" onsubmit="ajaxSubmit(event)">
                     <input type="hidden" name="qseq" value="${qnaDto.qseq}"/>
-                    <textarea name="reply" placeholder="답변을 입력하세요"><c:out value="${qnaDto.reply}"/></textarea>
+                    <label>
+                        <textarea name="reply" placeholder="답변을 입력하세요"><c:out value="${qnaDto.reply}"/></textarea>
+                    </label>
                     <input type="submit" value="답변 등록"/>
                 </form>
             </c:when>
