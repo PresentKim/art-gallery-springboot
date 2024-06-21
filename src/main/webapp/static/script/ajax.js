@@ -26,8 +26,15 @@ function sendHttpRequest(xhr, requestBody, ajaxHandler) {
             return;
         }
 
+        // HTML 문서 응답이면 페이지 갱신
+        if (xhr.responseText.trim().startsWith("<!DOCTYPE html>")) {
+            document.children[0].innerHTML = xhr.responseText;
+            return;
+        }
+
         // 응답 완료 시 ajaxHandler() 실행
         ajaxHandler(xhr.status, JSON.parse(xhr.responseText));
+
     };
 
     // requestBody 그대로 POST 요청 전송
