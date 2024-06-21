@@ -1,8 +1,5 @@
 package com.team4.museum.controller.action;
 
-import com.team4.artgallery.dto.MemberDto;
-import com.team4.artgallery.util.UrlUtil;
-import com.team4.museum.controller.action.member.LoginAjaxAction;
 import com.team4.museum.util.ajax.AjaxException;
 import com.team4.museum.util.ajax.AjaxResult;
 import jakarta.servlet.ServletException;
@@ -15,16 +12,11 @@ import static jakarta.servlet.http.HttpServletResponse.*;
 
 abstract public class AjaxAction implements Action {
 
-    private HttpServletRequest currentRequest;
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AjaxResult result;
 
         try {
-            // 유틸 메소드에서 사용하기 위해 현재 요청을 멤버 변수에 저장
-            currentRequest = request;
-
             // AJAX 요청을 처리
             result = handleAjaxRequest(request, response);
         } catch (AjaxException e) {
@@ -34,9 +26,6 @@ abstract public class AjaxAction implements Action {
             // 확인되지 않은 예외를 처리
             e.printStackTrace();
             result = internalServerError();
-        } finally {
-            // 현재 요청을 초기화
-            currentRequest = null;
         }
 
         // AJAX 결과를 응답
@@ -54,34 +43,6 @@ abstract public class AjaxAction implements Action {
      */
     abstract protected AjaxResult handleAjaxRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, AjaxException;
-
-    /**
-     * OK(200) 알림 없이 URL로 이동되는 성공 코드를 반환
-     */
-    protected AjaxResult ok() {
-        return ok("성공");
-    }
-
-    /**
-     * OK(200) 알림 없이 URL로 이동되는 성공 코드를 반환
-     */
-    protected AjaxResult ok(String message) {
-        return ok(message, "");
-    }
-
-    /**
-     * OK(200) 알림 없이 URL로 이동되는 성공 코드를 반환
-     */
-    protected AjaxResult ok(String message, String url) {
-        return new AjaxResult(SC_OK, message, url);
-    }
-
-    /**
-     * CREATED(201) 알림과 함께 URL로 이동되는 성공 코드를 반환
-     */
-    protected AjaxResult created() {
-        return created("생성되었습니다");
-    }
 
     /**
      * CREATED(201) 알림과 함께 URL로 이동되는 성공 코드를 반환
@@ -119,55 +80,6 @@ abstract public class AjaxAction implements Action {
     }
 
     /**
-     * BAD_REQUEST(400) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult badRequest() {
-        return badRequest("잘못된 요청입니다");
-    }
-
-    /**
-     * BAD_REQUEST(400) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult badRequest(String message) {
-        return badRequest(message, "");
-    }
-
-    /**
-     * BAD_REQUEST(400) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult badRequest(String message, String url) {
-        return new AjaxResult(SC_BAD_REQUEST, message, url);
-    }
-
-    /**
-     * UNAUTHORIZED(401) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult unauthorized() {
-        return unauthorized("로그인이 필요합니다");
-    }
-
-    /**
-     * UNAUTHORIZED(401) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult unauthorized(String message) {
-        return unauthorized(message, "");
-    }
-
-    /**
-     * UNAUTHORIZED(401) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult unauthorized(String message, String url) {
-        return new AjaxResult(SC_UNAUTHORIZED, message, url);
-    }
-
-    /**
-     * FORBIDDEN(403) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult forbidden() {
-        return forbidden("접근 권한이 없습니다");
-    }
-
-    /**
      * FORBIDDEN(403) 알림과 함께 URL로 이동되는 실패 코드를 반환
      */
     protected AjaxResult forbidden(String message) {
@@ -181,123 +93,4 @@ abstract public class AjaxAction implements Action {
         return new AjaxResult(SC_FORBIDDEN, message, url);
     }
 
-    /**
-     * NO_CONTENT(204) 알림 없이 URL로 이동되는 성공 코드를 반환
-     */
-    protected AjaxResult noContent() {
-        return noContent("내용이 없습니다");
-    }
-
-    /**
-     * NO_CONTENT(204) 알림 없이 URL로 이동되는 성공 코드를 반환
-     */
-    protected AjaxResult noContent(String message) {
-        return noContent(message, "");
-    }
-
-    /**
-     * NO_CONTENT(204) 알림 없이 URL로 이동되는 성공 코드를 반환
-     */
-    protected AjaxResult noContent(String message, String url) {
-        return new AjaxResult(SC_NO_CONTENT, message, url);
-    }
-
-    /**
-     * NOT_FOUND(404) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult notFound() {
-        return notFound("찾을 수 없습니다");
-    }
-
-    /**
-     * NOT_FOUND(404) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult notFound(String message) {
-        return notFound(message, "");
-    }
-
-    /**
-     * NOT_FOUND(404) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult notFound(String message, String url) {
-        return new AjaxResult(SC_NOT_FOUND, message, url);
-    }
-
-    /**
-     * NOT_IMPLEMENTED(501) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult notImplemented() {
-        return notImplemented("구현되지 않은 요청입니다");
-    }
-
-    /**
-     * NOT_IMPLEMENTED(501) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult notImplemented(String message) {
-        return notImplemented(message, "");
-    }
-
-    /**
-     * NOT_IMPLEMENTED(501) 알림과 함께 URL로 이동되는 실패 코드를 반환
-     */
-    protected AjaxResult notImplemented(String message, String url) {
-        return new AjaxResult(SC_NOT_IMPLEMENTED, message, url);
-    }
-
-    /**
-     * 돌아갈 페이지 URL을 반환합니다. 없을 경우 기본값으로 index 페이지로 이동합니다.
-     */
-    protected String getReturnUrl() throws AjaxException {
-        if (currentRequest == null) {
-            throw new AjaxException(SC_INTERNAL_SERVER_ERROR, "메소드는 반드시 handleAjaxRequest 메소드 내에서만 사용해주세요");
-        }
-
-        String returnUrl = "museum.do?command=index";
-        String returnUrlParam = (String) currentRequest.getParameter("returnUrl");
-        if (returnUrlParam != null && !returnUrlParam.isEmpty()) {
-            returnUrl = UrlUtil.decode(returnUrlParam);
-        }
-
-        return returnUrl;
-    }
-
-    /**
-     * 요구되는 파라미터를 문자열로 반환합니다. 없을 경우 AjaxException을 발생시킵니다.
-     */
-    protected String mustGetString(String parameter) throws AjaxException {
-        if (currentRequest == null) {
-            throw new AjaxException(SC_INTERNAL_SERVER_ERROR, "메소드는 반드시 handleAjaxRequest 메소드 내에서만 사용해주세요");
-        }
-
-        String str = currentRequest.getParameter(parameter);
-        if (str == null || str.equals("")) {
-            throw new AjaxException(SC_BAD_REQUEST, "'" + parameter + "'를 입력해주세요");
-        }
-        return str;
-    }
-
-    /**
-     * 요구되는 파라미터를 정수로 반환합니다. 없거나 정수가 아닐 경우 AjaxException을 발생시킵니다.
-     */
-    protected int mustGetInt(String parameter) throws AjaxException {
-        try {
-            return Integer.parseInt(mustGetString(parameter));
-        } catch (NumberFormatException e) {
-            throw new AjaxException(SC_BAD_REQUEST, "'" + parameter + "'는 숫자로 입력해주세요");
-        }
-    }
-
-    /**
-     * 로그인된 사용자 정보를 반환합니다. 로그인되어 있지 않을 경우 AjaxException을 발생시킵니다.
-     */
-    protected MemberDto mustGetLoginUser() throws AjaxException {
-        MemberDto memberDto = LoginAjaxAction.getLoginUserFrom(currentRequest);
-        if (memberDto == null) {
-            throw new AjaxException(
-                    SC_UNAUTHORIZED,
-                    "로그인이 필요합니다",
-                    LoginAjaxAction.getLoginUrl(UrlUtil.getUrlPath(currentRequest)));
-        }
-        return memberDto;
-    }
 }

@@ -18,10 +18,6 @@ public class MemberDao extends BaseDao<MemberDto> {
         return instance;
     }
 
-    public MemberDto getMember(String id) {
-        return selectOne("SELECT * FROM member WHERE id = ?", id);
-    }
-
     public List<MemberDto> getMemberList(Pagination pagination) {
         return select("SELECT * FROM member ORDER BY id DESC LIMIT ? OFFSET ?", pagination::applyTo);
     }
@@ -38,30 +34,6 @@ public class MemberDao extends BaseDao<MemberDto> {
                 searchWord,
                 pagination.getLimit(),
                 pagination.getOffset()
-        );
-    }
-
-    public int insertMember(MemberDto memberDto) {
-        return update(
-                "INSERT INTO member (id, name, pwd, email, phone)"
-                        + " VALUES ( ?, ?, ?, ?, ? )",
-                memberDto.getId(),
-                memberDto.getName(),
-                memberDto.getPwd(),
-                memberDto.getEmail(),
-                memberDto.getPhone()
-        );
-    }
-
-    public int updateMember(MemberDto memberDto) {
-        return update(
-                "UPDATE member SET pwd = ?, name = ?, email = ?, phone = ?, adminyn = ? WHERE id = ?",
-                memberDto.getPwd(),
-                memberDto.getName(),
-                memberDto.getEmail(),
-                memberDto.getPhone(),
-                memberDto.getAdminyn(),
-                memberDto.getId()
         );
     }
 

@@ -49,74 +49,12 @@ public class QnaDao extends BaseDao<QnaDto> {
     }
 
     /**
-     * 문의글을 조회한다.
-     *
-     * @param qseq 문의글 번호 (qna sequence)
-     * @return 문의글 정보
-     */
-    public QnaDto getQna(int qseq) {
-        return selectOne("SELECT * FROM qna WHERE qseq = ?", qseq);
-    }
-
-    /**
-     * 문의글을 등록한다.
-     *
-     * @param qnaDto 문의글 정보 (qna sequence)
-     * @return 등록된 문의글 번호
-     */
-    public int insertQna(QnaDto qnaDto) {
-        update(
-                "INSERT INTO qna (title, content, email, phone, publicyn, pwd) VALUES (?, ?, ?, ?, ? ,?)",
-                qnaDto.getTitle(),
-                qnaDto.getContent(),
-                qnaDto.getEmail(),
-                qnaDto.getPhone(),
-                qnaDto.getPublicyn(),
-                qnaDto.getPwd()
-        );
-
-        return selectInt("SELECT LAST_INSERT_ID()");
-    }
-
-    /**
-     * 문의글을 수정한다.
-     *
-     * @param qnaDto 문의글 정보 (qna sequence)
-     * @return 수정된 문의글 번호
-     */
-    public int updateQna(QnaDto qnaDto) {
-        int qseq = qnaDto.getQseq();
-        update(
-                "UPDATE qna SET title = ?, content = ?, email = ?, phone = ?, publicyn = ?, pwd = ? WHERE qseq = ?",
-                qnaDto.getTitle(),
-                qnaDto.getContent(),
-                qnaDto.getEmail(),
-                qnaDto.getPhone(),
-                qnaDto.getPublicyn(),
-                qnaDto.getPwd(),
-                qseq
-        );
-
-        return qseq;
-    }
-
-    /**
      * 문의글을 삭제한다.
      *
      * @param qseq 문의글 번호 (qna sequence)
      */
     public void deleteQna(int qseq) {
         update("DELETE FROM qna WHERE qseq = ?", qseq);
-    }
-
-    /**
-     * 문의글에 답변을 등록한다.
-     *
-     * @param qseq  문의글 번호 (qna sequence)
-     * @param reply 답변 내용
-     */
-    public void updateQnaReply(int qseq, String reply) {
-        update("UPDATE qna SET reply = ? WHERE qseq = ?", reply, qseq);
     }
 
     /**

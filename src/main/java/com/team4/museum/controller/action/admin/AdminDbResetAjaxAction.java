@@ -7,7 +7,7 @@ import com.team4.museum.util.ajax.AjaxResult;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static com.team4.museum.controller.action.member.LoginAjaxAction.isAdmin;
+import static com.team4.museum.util.AccountUtil.isAdmin;
 
 public class AdminDbResetAjaxAction extends AjaxAction {
 

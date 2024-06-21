@@ -3,10 +3,8 @@ package com.team4.museum.controller;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.controller.action.IndexAction;
 import com.team4.museum.controller.action.admin.*;
-import com.team4.museum.controller.action.artwork.*;
 import com.team4.museum.controller.action.gallery.*;
 import com.team4.museum.controller.action.notice.*;
-import com.team4.museum.controller.action.qna.*;
 
 public class ActionFactory {
 
@@ -24,24 +22,6 @@ public class ActionFactory {
 
             // index action
             case "", "index" -> new IndexAction();
-
-            // artwork actions
-            case "artworkList" -> new ArtworkListAction();
-            case "artworkView" -> new ArtworkViewAction();
-            case "artworkWrite" -> new ArtworkWriteAction();
-            case "artworkWriteForm" -> new ArtworkWriteFormAction();
-            case "artworkUpdate" -> new ArtworkUpdateAction();
-            case "artworkUpdateForm" -> new ArtworkUpdateFormAction();
-            case "artworkDelete" -> new ArtworkDeleteAction();
-            case "artworkDisplaySet" -> new ArtworkDisplaySetAction();
-
-            // QnA actions
-            case "qnaList" -> new QnaListAction();
-            case "qnaPwdCheck" -> new QnaPwdCheckAjaxAction();
-            case "qnaView" -> new QnaViewAction();
-            case "qnaReply" -> new QnaReplyAjaxAction();
-            case "qnaWriteForm" -> new QnaWriteFormAction();
-            case "qnaWrite" -> new QnaWriteAjaxAction();
 
             // user gallery
             case "galleryList" -> new GalleryListAction();

@@ -16,10 +16,6 @@ public class MuseumServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public MuseumServlet() {
-        super();
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // 요청과 응답의 인코딩을 UTF-8로 설정

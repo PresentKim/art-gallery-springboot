@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static com.team4.museum.controller.action.member.LoginAjaxAction.getLoginUser;
+import static com.team4.museum.util.AccountUtil.getLoginUser;
 
 public class InsertNoticeAction implements Action {
 

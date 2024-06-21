@@ -1,7 +1,6 @@
 package com.team4.museum.util;
 
 import com.team4.artgallery.dto.MemberDto;
-import com.team4.museum.controller.action.member.LoginAjaxAction;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,21 +18,7 @@ final public class Security {
             HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-        return trueOr404Forward(LoginAjaxAction.isAdmin(request), request, response);
-    }
-
-    /**
-     * 멤머 아이디가 일치하지 않을 경우 404 페이지로 포워딩
-     *
-     * @return 멤버 아이디 일치 여부
-     */
-    public static boolean memberEqualsOr404Forward(
-            String memberId,
-            HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
-        MemberDto memberDto = LoginAjaxAction.getLoginUserFrom(request);
-        return trueOr404Forward(memberDto != null && memberId.equals(memberDto.getId()), request, response);
+        return trueOr404Forward(AccountUtil.isAdmin(request), request, response);
     }
 
     /**
@@ -53,18 +38,6 @@ final public class Security {
     }
 
     /**
-     * 관리자가 아닐 경우 경고창 스크립트만 발송
-     *
-     * @return 관리자 여부
-     */
-    public static boolean adminOrAlert(
-            HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
-        return trueOrAlert(LoginAjaxAction.isAdmin(request), response);
-    }
-
-    /**
      * 멤머 아이디가 일치하지 않을 경우 404 페이지로 포워딩
      *
      * @return 멤버 아이디 일치 여부
@@ -73,8 +46,8 @@ final public class Security {
             String memberId,
             HttpServletRequest request,
             HttpServletResponse response)
-            throws ServletException, IOException {
-        MemberDto memberDto = LoginAjaxAction.getLoginUserFrom(request);
+            throws IOException {
+        MemberDto memberDto = AccountUtil.getLoginUserFrom(request);
         return trueOrAlert(memberDto != null && memberId.equals(memberDto.getId()), response);
     }
 
@@ -86,7 +59,7 @@ final public class Security {
     public static boolean trueOrAlert(
             boolean condition,
             HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         if (!condition) {
             response.setContentType("text/html; charset=UTF-8");
             response.getWriter().write("<script>alert('잘못된 요청입니다.'); history.back();</script>");

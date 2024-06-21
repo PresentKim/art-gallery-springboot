@@ -29,27 +29,6 @@ public class Db {
         return conn;
     }
 
-    /**
-     * 주어진 Connection, PreparedStatement, ResultSet 객체를 닫습니다.
-     *
-     * @deprecated try-with-resources를 사용하여 자동으로 자원을 반환하도록 하기 위해 사용되지 않습니다.
-     */
-    public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void executeSqlFile(String sqlFilePath) {
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement()) {
@@ -170,16 +149,6 @@ public class Db {
         }
 
         return list;
-    }
-
-    /**
-     * SQL 쿼리를 실행하고 결과 중 첫 번째 행을 반환합니다.
-     *
-     * @param resultMapper SQL 쿼리 결과를 매핑하는 람다식
-     */
-    public static <T> T executeSelectOne(String query, ResultMapper<T> resultMapper) {
-        return executeSelectOne(query, pstmt -> {
-        }, resultMapper);
     }
 
     /**

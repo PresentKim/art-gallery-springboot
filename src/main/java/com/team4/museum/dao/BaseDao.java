@@ -100,46 +100,11 @@ public abstract class BaseDao<T> {
 
     /**
      * SQL 쿼리를 실행하고 결과 중 첫 번째 행을 반환합니다.
-     */
-    public T selectOne(String query) {
-        return Db.executeSelectOne(query, this::parseDto);
-    }
-
-    /**
-     * SQL 쿼리를 실행하고 결과 중 첫 번째 행을 반환합니다.
      *
      * @param param SQL 쿼리에 전달할 단일 파라미터, 혹은 파라미터 배열
      */
     public T selectOne(String query, Object param) {
         return Db.executeSelectOne(query, prepareSetterFrom(param), this::parseDto);
-    }
-
-    /**
-     * SQL 쿼리를 실행하고 결과 중 첫 번째 행을 반환합니다.
-     *
-     * @param params SQL 쿼리에 전달할 파라미터 배열
-     */
-    public T selectOne(String query, Object... params) {
-        return Db.executeSelectOne(query, prepareSetterFrom(params), this::parseDto);
-    }
-
-    /**
-     * SQL 쿼리를 실행하고 결과 중 첫 번째 행을 반환합니다.
-     *
-     * @param paramSetter SQL 쿼리를 준비하는 람다식
-     */
-    public T selectOne(String query, ParameterSetter paramSetter) {
-        return Db.executeSelectOne(query, paramSetter, this::parseDto);
-    }
-
-    /**
-     * SQL 쿼리를 실행하고 결과 중 첫 번째 행을 반환합니다.
-     *
-     * @param paramSetter  SQL 쿼리를 준비하는 람다식
-     * @param resultMapper SQL 쿼리 결과를 매핑하는 람다식
-     */
-    public <R> R selectOne(String query, ParameterSetter paramSetter, ResultMapper<R> resultMapper) {
-        return Db.executeSelectOne(query, paramSetter, resultMapper);
     }
 
     /**

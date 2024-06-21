@@ -20,25 +20,6 @@ public class ArtworkDao extends BaseDao<ArtworkDto> {
 
     /* 관리자용 로직 ============================================> */
 
-    /**
-     * <관리자용> 예술품 등록
-     */
-    public int insertArtwork(ArtworkDto artworkDto) {
-        return update(
-                "INSERT INTO artwork (name, category, artist, year, material, size, displayyn, content, image, savefilename) "
-                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                artworkDto.getName(),
-                artworkDto.getCategory(),
-                artworkDto.getArtist(),
-                artworkDto.getYear(),
-                artworkDto.getMaterial(),
-                artworkDto.getSize(),
-                artworkDto.getDisplayyn(),
-                artworkDto.getContent(),
-                artworkDto.getImage(),
-                artworkDto.getSavefilename()
-        );
-    }
 
     /**
      * <관리자용> 예술품 삭제
@@ -47,38 +28,6 @@ public class ArtworkDao extends BaseDao<ArtworkDto> {
         return update("DELETE FROM artwork WHERE aseq = ?", aseq);
     }
 
-    /**
-     * <관리자용> 예술품 수정
-     */
-    public int updateArtwork(ArtworkDto artworkDto) {
-        return update(
-                "UPDATE artwork SET artist=?, name=?, year=?, material=?, size=?, category=?, displayyn=?, content=?, image=?, savefilename=? "
-                        + " WHERE aseq=?",
-                artworkDto.getArtist(),
-                artworkDto.getName(),
-                artworkDto.getYear(),
-                artworkDto.getMaterial(),
-                artworkDto.getSize(),
-                artworkDto.getCategory(),
-                artworkDto.getDisplayyn(),
-                artworkDto.getContent(),
-                artworkDto.getImage(),
-                artworkDto.getSavefilename(),
-                artworkDto.getAseq()
-        );
-    }
-
-    /**
-     * <관리자용> 예술품 공개여부 전환
-     */
-    public int displayChangeArtwork(int aseq) {
-        ArtworkDto artworkDto = selectOne("SELECT * FROM artwork WHERE aseq = ?", aseq);
-        if (artworkDto.isDisplay()) {
-            return update("UPDATE artwork SET displayyn='N' WHERE aseq = ?", aseq);
-        }
-
-        return update("UPDATE artwork SET displayyn='Y' WHERE aseq = ?", aseq);
-    }
 
     public ArtworkDto get(int aseq) {
         return selectOne("SELECT * FROM artwork WHERE aseq = ?", aseq);
