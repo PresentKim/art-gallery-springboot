@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <nav class="admin-sub-menu">
     <ul>
         <li><a href="museum.do?command=adminMemberList">회원 목록</a></li>
