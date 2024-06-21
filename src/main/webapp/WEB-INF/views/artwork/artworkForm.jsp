@@ -1,16 +1,28 @@
+<%--@elvariable id="artworkDto" type="com.team4.artgallery.dto.ArtworkDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.team4.artgallery.enums.ArtworkCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:header>
-    <title>예술품 수정 :: ${artworkDto.aseq} </title>
+    <title>${empty artworkDto ? '예술품 등록' : '예술품 수정 :: '}${artworkDto.aseq}</title>
     <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_form.css"/>">
     <script src="<c:url value="/static/script/artwork/artwork_form.js"/>"></script>
 </t:header>
-<h2 class="artwork-form-header">예술품 수정</h2>
+<h2 class="artwork-form-header">${empty artworkDto ? '예술품 등록' : '예술품 수정'}</h2>
 <section class="artwork-form-main">
-    <form class="artwork-form" onsubmit="ajaxSubmit(event)"
-          method="post" action="<c:url value="/artwork/update"/>" enctype="multipart/form-data">
+    <form class="artwork-form"
+          method="post"
+            <c:choose>
+                <c:when test="${empty artworkDto}">
+                    action="<c:url value="/artwork/write"/>"
+                </c:when>
+                <c:otherwise>
+                    action="<c:url value="/artwork/update"/>"
+                </c:otherwise>
+            </c:choose>
+          enctype="multipart/form-data"
+          onsubmit="ajaxSubmit(event)"
+    >
         <input type="hidden" name="aseq" value="${artworkDto.aseq}">
         <div class="artwork-form_info">
             <ul>
@@ -45,7 +57,9 @@
                 <li>
                     <label for="category">부문</label>
                     <select name="category" id="category">
-                        <option value="">카테고리를 선택하세요</option>
+                        <c:if test="${empty artworkDto}">
+                            <option value="" disabled selected>카테고리를 선택하세요</option>
+                        </c:if>
                         <c:forEach items="${ArtworkCategory.validValues()}" var="c">
                             <option value="${c.name()}"
                                     <c:if test="${c.name().equals(artworkDto.category)}">selected</c:if>>${c.name()}</option>

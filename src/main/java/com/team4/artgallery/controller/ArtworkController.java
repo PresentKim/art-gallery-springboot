@@ -66,7 +66,7 @@ public class ArtworkController {
 
         // 작품 정보를 뷰에 전달
         model.addAttribute("artworkDto", artworkDto);
-        return "artwork/artworkUpdateForm";
+        return "artwork/artworkForm";
     }
 
     @PostMapping("/update")
@@ -131,7 +131,7 @@ public class ArtworkController {
             return "util/404";
         }
 
-        return "artwork/artworkWriteForm";
+        return "artwork/artworkForm";
     }
 
     @PostMapping("/write")
