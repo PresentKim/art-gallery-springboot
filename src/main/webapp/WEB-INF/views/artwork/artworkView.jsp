@@ -20,7 +20,7 @@
         </div>
         <div class="artwork-view_btn">
             <c:if test="${not empty account}">
-                <div onclick="ajax('/member/favorite', {aseq: ${artworkDto.aseq}})">
+                <div onclick="ajax('/member/mypage/favorite', {aseq: ${artworkDto.aseq}})">
                     관심 예술품 +
                 </div>
 

@@ -1,7 +1,10 @@
 package com.team4.artgallery.controller;
 
+import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
+import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.UrlUtil;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
@@ -16,12 +19,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class MemberController {
 
     private final MemberService memberService;
+
+    private final FavoriteService favoriteService;
 
     @Delegate
     private final ResponseHelper responseHelper;
@@ -248,14 +255,42 @@ public class MemberController {
     }
 
     @GetMapping("/mypage/favorite")
-    public String favorite(HttpSession session) {
+    public String favorite(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            HttpSession session,
+            Model model
+    ) {
         // 로그인 상태가 아니라면 로그인 페이지로 리다이렉트
-        if (!memberService.isLogin(session)) {
+        MemberDto memberDto = memberService.getLoginMember(session);
+        if (memberDto == null) {
             return memberService.redirectToLogin("/member/mypage/favorite");
         }
 
         // 관심 예술품 페이지로 이동
+        Pagination.Pair<FavoriteDto> pair = favoriteService.getFavorites(memberDto.getId(), page);
+        model.addAttribute("artworkList", pair.list());
+        model.addAttribute("pagination", pair.pagination());
         return "member/mypage/mypageFavoriteList";
+    }
+
+    @PostMapping("/mypage/favorite")
+    public ResponseEntity<?> favorite(@RequestParam(value = "aseq") int aseq, HttpSession session) {
+        // 로그인 상태가 아니라면 에러 결과 반환
+        MemberDto memberDto = memberService.getLoginMember(session);
+        if (memberDto == null) {
+            return ok("로그인이 필요합니다", "/member/login?returnUrl=" + UrlUtil.encode("/artwork/view?aseq=" + aseq));
+        }
+
+        try {
+            // 관심 예술품 토글 성공 시 성공 결과 반환
+            boolean result = favoriteService.toggleFavorite(memberDto.getId(), aseq);
+            return ok("관심 예술품 목록에 " + (result ? "추가" : "삭제") + "되었습니다.");
+        } catch (Exception e) {
+            // 관심 예술품 토글 실패 시 에러 결과 반환
+            System.out.println(e.getMessage());
+            System.out.println(Arrays.toString(e.getStackTrace()));
+            return badRequest("관심 예술품 처리에 실패하였습니다.");
+        }
     }
 
 }
