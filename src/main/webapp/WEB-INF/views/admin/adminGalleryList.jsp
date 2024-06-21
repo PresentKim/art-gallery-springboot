@@ -34,6 +34,7 @@
             <li>미리보기</li>
         </ul>
         <c:forEach items="${galleryList}" var="galleryDto" varStatus="index">
+        <c:set var="previewId" value="artwork-${galleryDto.mseq}-${index}"/>
             <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
                 <li><input type="checkbox" class="check-box"></li>
                 <li>${galleryDto.mseq}</li>
@@ -47,11 +48,11 @@
                 <li>${galleryDto.readcount}</li>
                 <li>
                     <img alt="artwork-img" src="static/image/gallery/${galleryDto.savefilename}"
-                         onmouseover="previewImg('artwork-${galleryDto.mseq}-${index}')"
-                         onmouseleave="previewImg('artwork-${galleryDto.mseq}-${index}')">
+                         onmouseover="previewImg('${previewId}')"
+                         onmouseleave="previewImg('${previewId}')">
                 </li>
             </ul>
-            <div id="artwork-${galleryDto.mseq}-${index}" class="preview hidden">
+            <div id="${previewId}" class="preview hidden">
                 <img alt="artwork-img" src="static/image/gallery/${galleryDto.savefilename}">
             </div>
         </c:forEach>
