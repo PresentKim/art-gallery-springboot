@@ -21,9 +21,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSS -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-gov-dynamic-subset.min.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="stylesheet" href="<c:url value="/static/stylesheet/reset.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/stylesheet/pagination.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/stylesheet/header.css"/>">
