@@ -20,8 +20,8 @@
             <h1>고객센터</h1>
         </div>
         <div class="qna-view_header_buttons">
-            <button class="qna-view_submit" onclick="qnaPwdCheck(${qnaDto.qseq}, 'edit')">수정하기</button>
-            <button class="qna-view_submit" onclick="qnaPwdCheck(${qnaDto.qseq}, 'delete')">삭제하기</button>
+            <button class="qna-view_submit" onclick="qnaAuth(${qnaDto.qseq}, 'update')">수정하기</button>
+            <button class="qna-view_submit" onclick="qnaAuth(${qnaDto.qseq}, 'delete')">삭제하기</button>
         </div>
     </div>
     <div class="qna-view_body">

@@ -24,7 +24,7 @@
                 건이 검색되었습니다
             </p>
         </div>
-        <a href="museum.do?command=qnaWriteForm">
+        <a href="<c:url value="/qna/write"/>">
             <button class="qna-list_write-button">문의하기</button>
         </a>
     </div>
@@ -40,7 +40,7 @@
             <tbody>
             <c:forEach items="${qnaList}" var="qnaDto">
                 <c:set var="qnaPassKey" value="qnaPass${qnaDto.qseq}"/>
-                <tr onclick="qnaPwdCheck(${qnaDto.qseq}, 'view')">
+                <tr onclick="qnaAuth(${qnaDto.qseq}, 'view')">
                     <td data-title="번호">${qnaDto.qseq}</td>
                     <td data-title="제목">
                         <div>
