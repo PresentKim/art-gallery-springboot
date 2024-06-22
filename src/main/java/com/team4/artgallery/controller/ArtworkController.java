@@ -45,9 +45,16 @@ public class ArtworkController {
         return "artwork/artworkList";
     }
 
-    @GetMapping("/view")
-    public String view(@RequestParam(value = "aseq") int aseq, Model model) {
-        model.addAttribute("artworkDto", artworkService.findArtwork(aseq));
+    @GetMapping({"/{aseq}", "/view/{aseq}"})
+    public String view(@PathVariable(value = "aseq") Integer aseq, Model model) {
+        // 작품 정보를 가져올 수 없는 경우 404 페이지로 포워딩
+        ArtworkDto artworkDto = artworkService.findArtwork(aseq);
+        if (artworkDto == null) {
+            return "util/404";
+        }
+
+        // 작품 정보를 뷰에 전달
+        model.addAttribute("artworkDto", artworkDto);
         return "artwork/artworkView";
     }
 
@@ -105,7 +112,7 @@ public class ArtworkController {
         }
 
         // 작품 수정 성공 시 성공 결과 반환
-        return ok("작품이 수정되었습니다.", "/artwork/view?aseq=" + artworkDto.getAseq());
+        return ok("작품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @PostMapping("/toggleArtworkDisplay")
@@ -156,7 +163,7 @@ public class ArtworkController {
         }
 
         // 작품 등록 성공 시 성공 결과 반환
-        return ok("작품이 등록되었습니다.", "/artwork/view?aseq=" + artworkDto.getAseq());
+        return ok("작품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @PostMapping("/delete")

@@ -37,8 +37,8 @@ public class QnaController {
         return "qna/qnaList";
     }
 
-    @GetMapping("/view")
-    public String view(@RequestParam(value = "qseq") int qseq, Model model, HttpSession session) {
+    @GetMapping({"/{qseq}", "/view/{qseq}"})
+    public String view(@PathVariable(value = "qseq") Integer qseq, Model model, HttpSession session) {
         // 문의글 정보가 없는 경우 404 페이지로 이동
         QnaDto qnaDto = qnaService.get(qseq);
         if (qnaDto == null) {
@@ -69,7 +69,7 @@ public class QnaController {
         }
 
         // 문의글 작성에 성공한 경우 200 성공 반환
-        return ok("문의 작성이 완료되었습니다.", "/qna/view?qseq=" + qnaDto.getQseq());
+        return ok("문의 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
     }
 
     @GetMapping("/update")
@@ -111,7 +111,7 @@ public class QnaController {
         }
 
         // 문의글 수정에 성공한 경우 200 성공 반환
-        return ok("문의 수정이 완료되었습니다.", "/qna/view?qseq=" + qseq);
+        return ok("문의 수정이 완료되었습니다.", "/qna/" + qseq);
     }
 
     @PostMapping("/reply")
@@ -150,7 +150,7 @@ public class QnaController {
         switch (mode) {
             case "view":
                 if (qnaService.authorizeForRestrict(session, qseq)) {
-                    return ok("", "/qna/view?qseq=" + qseq);
+                    return ok("", "/qna/" + qseq);
                 }
                 break;
             case "delete":

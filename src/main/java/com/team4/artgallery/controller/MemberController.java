@@ -278,7 +278,7 @@ public class MemberController {
         // 로그인 상태가 아니라면 에러 결과 반환
         MemberDto memberDto = memberService.getLoginMember(session);
         if (memberDto == null) {
-            return ok("로그인이 필요합니다", "/member/login?returnUrl=" + UrlUtil.encode("/artwork/view?aseq=" + aseq));
+            return ok("로그인이 필요합니다", "/member/login?returnUrl=" + UrlUtil.encode("/artwork/" + aseq));
         }
 
         try {
