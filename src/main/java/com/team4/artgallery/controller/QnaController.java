@@ -26,7 +26,7 @@ public class QnaController {
     @Delegate
     private final ResponseHelper responseHelper;
 
-    @GetMapping("")
+    @GetMapping({"", "/"})
     public String list(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
