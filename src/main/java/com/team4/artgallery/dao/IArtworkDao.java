@@ -55,10 +55,6 @@ public interface IArtworkDao {
         }
 
         public boolean isEmpty() {
-            System.out.println("category: " + category);
-            System.out.println("displayyn: " + displayyn);
-            System.out.println("search: " + search);
-            System.out.println("isEmpty: " + (!hasCategory() && !hasDisplay() && !hasSearch()));
             return !hasCategory() && !hasDisplay() && !hasSearch();
         }
 
