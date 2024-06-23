@@ -14,24 +14,99 @@ import java.util.List;
 @Mapper
 public interface IArtworkDao {
 
-    int insertArtwork(ArtworkDto artworkDto);
+    /* ========== CREATE =========== */
 
-    ArtworkDto findArtwork(int aseq);
+    /**
+     * 예술품 정보를 추가합니다.
+     *
+     * @param artworkDto 예술품 정보
+     * @return 추가된 행의 수
+     */
+    int create(ArtworkDto artworkDto);
 
+
+    /* ========== READ =========== */
+
+    /**
+     * 예술품 정보를 가져옵니다.
+     *
+     * @param aseq 예술품 번호
+     * @return 예술품 정보
+     */
+    ArtworkDto getArtwork(int aseq);
+
+    /**
+     * 전체 예술품 목록을 가져옵니다.
+     *
+     * @param pagination 페이지네이션 정보
+     * @return 예술품 목록
+     */
     List<ArtworkDto> getArtworks(Pagination pagination);
 
-    List<ArtworkDto> searchArtworks(@Param("filter") ArtworkFilter filter,
-                                    @Param("pagination") Pagination pagination);
+    /**
+     * 검색된 예술품 목록을 가져옵니다.
+     *
+     * @param filter     검색 조건
+     * @param pagination 페이지네이션 정보
+     * @return 검색된 예술품 목록
+     */
+    List<ArtworkDto> searchArtworks(@Param("filter") ArtworkFilter filter, @Param("pagination") Pagination pagination);
 
-    int getAllCount();
+    /**
+     * 전체 예술품 개수를 가져옵니다.
+     *
+     * @return 전체 예술품 개수
+     */
+    int countArtworks();
 
-    int getSearchCount(@Param("filter") ArtworkFilter filter);
+    /**
+     * 검색된 예술품 개수를 가져옵니다.
+     *
+     * @param filter 검색 조건
+     * @return 검색된 예술품 개수
+     */
+    int countSearchArtworks(@Param("filter") ArtworkFilter filter);
 
+
+    /* ========== UPDATE =========== */
+
+    /**
+     * 예술품 정보를 수정합니다.
+     *
+     * @param artworkDto 수정할 예술품 정보
+     * @return 수정된 행의 수
+     */
     int updateArtwork(ArtworkDto artworkDto);
 
+    /**
+     * 예술품 전시 여부를 토글합니다.
+     *
+     * @param aseq 예술품 번호
+     * @return 수정된 행의 수
+     */
     int toggleArtworkDisplay(int aseq);
 
+
+    /* ========== DELETE =========== */
+
+    /**
+     * 예술품 정보를 삭제합니다.
+     *
+     * @param aseq 예술품 번호
+     * @return 삭제된 행의 수
+     */
     int deleteArtwork(int aseq);
+
+    /**
+     * 여러 예술품 정보를 삭제합니다.
+     *
+     * @param aseqList 예술품 번호 목록
+     * @return 삭제된 행의 수
+     */
+    int deleteArtworks(List<Integer> aseqList);
+
+
+    /* ========== INNER CLASS =========== */
 
     @Getter
     @Setter

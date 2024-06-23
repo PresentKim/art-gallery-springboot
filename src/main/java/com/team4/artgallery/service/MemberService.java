@@ -28,7 +28,7 @@ public class MemberService {
      * @return 회원이 존재하면 true, 그렇지 않으면 false
      */
     public boolean isMember(String id) {
-        return memberDao.findMember(id) != null;
+        return memberDao.getMember(id) != null;
     }
 
     /**
@@ -81,7 +81,7 @@ public class MemberService {
      * @return 로그인 성공 시 true, 그렇지 않으면 false
      */
     public boolean login(HttpSession session, String id, String pwd) {
-        MemberDto memberDto = memberDao.findMember(id);
+        MemberDto memberDto = memberDao.getMember(id);
         if (memberDto == null || !memberDto.getPwd().equals(pwd)) {
             return false;
         }

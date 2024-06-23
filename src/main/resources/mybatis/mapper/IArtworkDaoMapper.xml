@@ -4,12 +4,13 @@
 
 <mapper namespace="com.team4.artgallery.dao.IArtworkDao">
     <sql id="search">
+        WHERE displayyn =
         <choose>
             <when test="filter.hasDisplay">
-                displayyn = #{filter.displayyn}
+                #{filter.displayyn}
             </when>
             <otherwise>
-                displayyn = 'Y'
+                'Y'
             </otherwise>
         </choose>
         <if test="filter.hasCategory">
@@ -20,7 +21,7 @@
         </if>
     </sql>
 
-    <insert id="insertArtwork" parameterType="com.team4.artgallery.dto.ArtworkDto"
+    <insert id="createArtwork" parameterType="com.team4.artgallery.dto.ArtworkDto"
             useGeneratedKeys="true" keyProperty="aseq">
         INSERT INTO artwork
         (name, category, artist, year, material, size, displayyn, content, image, savefilename)
@@ -28,7 +29,7 @@
                 #{size}, #{displayyn}, #{content}, #{image}, #{savefilename})
     </insert>
 
-    <select id="findArtwork" parameterType="int" resultType="com.team4.artgallery.dto.ArtworkDto">
+    <select id="getArtwork" parameterType="int" resultType="com.team4.artgallery.dto.ArtworkDto">
         SELECT *
         FROM artwork
         WHERE aseq = #{aseq}
@@ -45,21 +46,19 @@
     <select id="searchArtworks" resultType="com.team4.artgallery.dto.ArtworkDto">
         SELECT *
         FROM artwork
-        WHERE
         <include refid="search"/>
         ORDER BY aseq DESC
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
 
-    <select id="getAllCount" resultType="int">
+    <select id="countArtworks" resultType="int">
         SELECT COUNT(*)
         FROM artwork
     </select>
 
-    <select id="getSearchCount" resultType="int">
+    <select id="countSearchArtworks" resultType="int">
         SELECT COUNT(*)
         FROM artwork
-        WHERE
         <include refid="search"/>
     </select>
 
@@ -88,6 +87,15 @@
         DELETE
         FROM artwork
         WHERE aseq = #{aseq}
+    </delete>
+
+    <delete id="deleteArtworks" parameterType="list">
+        DELETE
+        FROM artwork
+        WHERE aseq IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
 </mapper>

@@ -3,13 +3,20 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team4.artgallery.dao.IMemberDao">
+    <sql id="search">
+        <if test="not empty(search)">
+            WHERE id LIKE CONCAT('%', #{search}, '%')
+            OR name LIKE CONCAT('%', #{search}, '%')
+            OR email LIKE CONCAT('%', #{search}, '%')
+        </if>
+    </sql>
 
-    <insert id="insertMember" parameterType="com.team4.artgallery.dto.MemberDto">
+    <insert id="createMember" parameterType="com.team4.artgallery.dto.MemberDto">
         INSERT INTO member (id, pwd, name, email, phone)
         VALUES (#{id}, #{pwd}, #{name}, #{email}, #{phone})
     </insert>
 
-    <select id="findMember" parameterType="String" resultType="com.team4.artgallery.dto.MemberDto">
+    <select id="getMember" parameterType="String" resultType="com.team4.artgallery.dto.MemberDto">
         SELECT *
         FROM member
         WHERE id = #{id}
@@ -26,24 +33,20 @@
     <select id="searchMembers" resultType="com.team4.artgallery.dto.MemberDto">
         SELECT *
         FROM member
-        WHERE id LIKE CONCAT('%', #{search}, '%')
-           OR name LIKE CONCAT('%', #{search}, '%')
-           OR email LIKE CONCAT('%', #{search}, '%')
+        <include refid="search"/>
         ORDER BY id DESC
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
 
-    <select id="getAllCount" resultType="Integer">
+    <select id="countMembers" resultType="Integer">
         SELECT COUNT(*)
         FROM member
     </select>
 
-    <select id="getSearchCount" parameterType="String" resultType="Integer">
+    <select id="countSearchMembers" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
         FROM member
-        WHERE id LIKE CONCAT('%', #{search}, '%')
-           OR name LIKE CONCAT('%', #{search}, '%')
-           OR email LIKE CONCAT('%', #{search}, '%')
+        <include refid="search"/>
     </select>
 
     <update id="updateMember" parameterType="com.team4.artgallery.dto.MemberDto">
@@ -71,6 +74,15 @@
         DELETE
         FROM member
         WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteMembers" parameterType="list">
+        DELETE
+        FROM member
+        WHERE id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
 </mapper>

@@ -10,18 +10,78 @@ import java.util.List;
 @Mapper
 public interface IQnaDao {
 
-    int insert(QnaDto artworkDto);
+    /* ========== CREATE =========== */
 
-    QnaDto get(int qseq);
+    /**
+     * 문의글을 작성합니다
+     *
+     * @param qnaDto 문의글 정보
+     * @return 저장된 행의 수
+     */
+    int createInquiry(QnaDto qnaDto);
 
-    List<QnaDto> getAll(Pagination pagination);
 
-    int getAllCount();
+    /* ========== READ =========== */
 
-    int update(QnaDto artworkDto);
+    /**
+     * 문의글을 가져옵니다
+     *
+     * @param qseq 문의글 번호
+     * @return 문의글 정보
+     */
+    QnaDto getInquiry(int qseq);
 
-    int delete(int qseq);
+    /**
+     * 전체 문의글 목록을 가져옵니다
+     *
+     * @param pagination 페이지네이션 정보
+     * @return 문의글 목록
+     */
+    List<QnaDto> getInquiries(Pagination pagination);
 
-    int reply(@Param("qseq") int qseq, @Param("reply") String reply);
+    /**
+     * 전체 문의글 수를 가져옵니다
+     *
+     * @return 전체 문의글 수
+     */
+    int countInquiries();
+
+
+    /* ========== UPDATE =========== */
+
+    /**
+     * 문의글을 수정합니다
+     *
+     * @param qnaDto 문의글 정보
+     * @return 수정된 행의 수
+     */
+    int updateInquiry(QnaDto qnaDto);
+
+    /**
+     * 문의글에 답변을 작성합니다
+     *
+     * @param qseq  문의글 번호
+     * @param reply 답변 내용
+     * @return 수정된 행의 수
+     */
+    int updateReply(@Param("qseq") int qseq, @Param("updateReply") String reply);
+
+    /* ========== DELETE =========== */
+
+    /**
+     * 문의글을 삭제합니다
+     *
+     * @param qseq 문의글 번호
+     * @return 삭제된 행의 수
+     */
+    int deleteInquiry(int qseq);
+
+    /**
+     * 여러 문의글을 삭제합니다.
+     *
+     * @param qseqList 문의글 번호 목록
+     * @return 삭제된 행의 수
+     */
+    int deleteInquiries(List<Integer> qseqList);
 
 }

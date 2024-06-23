@@ -45,7 +45,7 @@ public class QnaService {
             return true;
         }
 
-        QnaDto qnaDto = qnaDao.get(qseq);
+        QnaDto qnaDto = qnaDao.getInquiry(qseq);
         if (qnaDto == null || !qnaDto.getPwd().equals(pwd)) {
             return false;
         }
@@ -78,7 +78,7 @@ public class QnaService {
      * RESTRICT(제한) : 공개글이거나 작성자 및 관리자만 접근 가능
      */
     public boolean authorizeForRestrict(HttpSession session, int qseq) {
-        return authorizeForPrivilege(session, qseq) || qnaDao.get(qseq).isPublic();
+        return authorizeForPrivilege(session, qseq) || qnaDao.getInquiry(qseq).isPublic();
     }
 
 }

@@ -137,7 +137,7 @@ public class MemberController {
         }
 
         // 회원가입 실패 시 에러 결과 반환
-        if (memberService.insertMember(memberDto) != 1) {
+        if (memberService.createMember(memberDto) != 1) {
             return badRequest("회원가입에 실패하였습니다.");
         }
 

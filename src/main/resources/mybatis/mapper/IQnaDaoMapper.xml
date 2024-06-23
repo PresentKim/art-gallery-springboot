@@ -4,18 +4,19 @@
 
 <mapper namespace="com.team4.artgallery.dao.IQnaDao">
 
-    <insert id="insert" parameterType="com.team4.artgallery.dto.QnaDto" useGeneratedKeys="true" keyProperty="qseq">
+    <insert id="createInquiry" parameterType="com.team4.artgallery.dto.QnaDto" useGeneratedKeys="true"
+            keyProperty="qseq">
         INSERT INTO qna (title, content, email, phone, publicyn, pwd)
         VALUES (#{title}, #{content}, #{email}, #{phone}, #{publicyn}, #{pwd})
     </insert>
 
-    <select id="get" parameterType="int" resultType="com.team4.artgallery.dto.QnaDto">
+    <select id="getInquiry" parameterType="int" resultType="com.team4.artgallery.dto.QnaDto">
         SELECT *
         FROM qna
         WHERE qseq = #{qseq}
     </select>
 
-    <select id="getAll" parameterType="com.team4.artgallery.util.Pagination"
+    <select id="getInquiries" parameterType="com.team4.artgallery.util.Pagination"
             resultType="com.team4.artgallery.dto.QnaDto">
         SELECT *
         FROM qna
@@ -23,12 +24,12 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <select id="getAllCount" resultType="int">
+    <select id="countInquiries" resultType="int">
         SELECT COUNT(*)
         FROM qna
     </select>
 
-    <update id="update" parameterType="com.team4.artgallery.dto.QnaDto">
+    <update id="updateInquiry" parameterType="com.team4.artgallery.dto.QnaDto">
         UPDATE qna
         SET title    = #{title},
             content  = #{content},
@@ -39,16 +40,24 @@
         WHERE qseq = #{qseq}
     </update>
 
-    <update id="reply">
+    <update id="updateReply">
         UPDATE qna
         SET reply = #{reply}
         WHERE qseq = #{qseq}
     </update>
 
-    <delete id="delete" parameterType="int">
+    <delete id="deleteInquiry" parameterType="int">
         DELETE
         FROM qna
         WHERE qseq = #{qseq}
     </delete>
 
+    <delete id="deleteInquiries" parameterType="list">
+        DELETE
+        FROM qna
+        WHERE qseq IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

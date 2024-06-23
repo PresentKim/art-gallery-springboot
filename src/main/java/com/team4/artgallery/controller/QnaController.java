@@ -30,17 +30,17 @@ public class QnaController {
     public String list(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
-                .setItemCount(qnaService.getAllCount())
+                .setItemCount(qnaService.countInquiries())
                 .setUrlTemplate("/qna?page=%d");
         model.addAttribute("pagination", pagination);
-        model.addAttribute("qnaList", qnaService.getAll(pagination));
+        model.addAttribute("qnaList", qnaService.getInquiries(pagination));
         return "qna/qnaList";
     }
 
     @GetMapping({"/{qseq}", "/view/{qseq}"})
     public String view(@PathVariable(value = "qseq") Integer qseq, Model model, HttpSession session) {
         // 문의글 정보가 없는 경우 404 페이지로 이동
-        QnaDto qnaDto = qnaService.get(qseq);
+        QnaDto qnaDto = qnaService.getInquiry(qseq);
         if (qnaDto == null) {
             return "util/404";
         }
@@ -52,7 +52,7 @@ public class QnaController {
         }
 
         // 문의글 조회 페이지로 이동
-        model.addAttribute("qnaDto", qnaService.get(qseq));
+        model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         return "qna/qnaView";
     }
 
@@ -64,7 +64,7 @@ public class QnaController {
     @PostMapping("/write")
     public ResponseEntity<?> write(@ModelAttribute QnaDto qnaDto) {
         // 문의글 작성에 실패한 경우 500 에러 반환
-        if (qnaService.insert(qnaDto) == 0) {
+        if (qnaService.createInquiry(qnaDto) == 0) {
             return internalServerError("문의 작성에 실패했습니다.");
         }
 
@@ -75,7 +75,7 @@ public class QnaController {
     @GetMapping("/update")
     public String update(@RequestParam(value = "qseq") int qseq, Model model, HttpSession session) {
         // 문의글 정보가 없는 경우 404 페이지로 이동
-        QnaDto qnaDto = qnaService.get(qseq);
+        QnaDto qnaDto = qnaService.getInquiry(qseq);
         if (qnaDto == null) {
             return "util/404";
         }
@@ -87,7 +87,7 @@ public class QnaController {
         }
 
         // 문의글 수정 페이지로 이동
-        model.addAttribute("qnaDto", qnaService.get(qseq));
+        model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         return "qna/qnaForm";
     }
 
@@ -96,7 +96,7 @@ public class QnaController {
         int qseq = qnaDto.getQseq();
 
         // 문의글 정보가 없는 경우 404 실패 반환
-        if (qnaService.get(qseq) == null) {
+        if (qnaService.getInquiry(qseq) == null) {
             return notFound("문의글 정보를 찾을 수 없습니다.", "/qna");
         }
 
@@ -106,7 +106,7 @@ public class QnaController {
         }
 
         // 문의글 수정에 실패한 경우 500 에러 반환
-        if (qnaService.update(qnaDto) == 0) {
+        if (qnaService.updateInquiry(qnaDto) == 0) {
             return internalServerError("문의 수정에 실패했습니다.");
         }
 
@@ -121,7 +121,7 @@ public class QnaController {
             HttpSession session
     ) {
         // 문의글 정보가 없는 경우 404 실패 반환
-        if (qnaService.get(qseq) == null) {
+        if (qnaService.getInquiry(qseq) == null) {
             return notFound("문의글 정보를 찾을 수 없습니다.", "/qna");
         }
 
@@ -130,12 +130,12 @@ public class QnaController {
             return forbidden("접근 권한이 없습니다.");
         }
 
-        // 문의글 답변에 실패한 경우 500 에러 반환
-        if (qnaService.reply(qseq, reply) == 0) {
+        // 문의글 답변 수정에 실패한 경우 500 에러 반환
+        if (qnaService.updateReply(qseq, reply) == 0) {
             return internalServerError("문의 답변에 실패했습니다.");
         }
 
-        // 문의글 답변에 성공한 경우 200 성공 반환
+        // 문의글 답변 수정에 성공한 경우 200 성공 반환
         return ok("문의 답변이 완료되었습니다.");
     }
 
@@ -155,7 +155,7 @@ public class QnaController {
                 break;
             case "delete":
                 if (qnaService.authorizeForPrivilege(session, qseq)) {
-                    if (qnaService.delete(qseq) == 0) {
+                    if (qnaService.deleteInquiry(qseq) == 0) {
                         return internalServerError("문의글 삭제에 실패했습니다.");
                     }
 

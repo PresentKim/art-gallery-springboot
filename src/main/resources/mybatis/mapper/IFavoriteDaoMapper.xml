@@ -4,6 +4,13 @@
 
 <mapper namespace="com.team4.artgallery.dao.IFavoriteDao">
 
+    <select id="isFavorite" resultType="boolean">
+        SELECT EXISTS(SELECT *
+                      FROM favorite_artwork
+                      WHERE id = #{memberId}
+                        AND aseq = #{aseq})
+    </select>
+
     <select id="getFavorites" resultType="com.team4.artgallery.dto.FavoriteDto">
         SELECT *
         FROM favorite_view
@@ -11,23 +18,16 @@
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
 
-    <select id="getCount" parameterType="String" resultType="int">
+    <select id="countFavorites" parameterType="String" resultType="int">
         SELECT COUNT(*)
         FROM favorite_artwork
         WHERE id = #{memberId}
     </select>
 
-    <select id="is" resultType="boolean">
-        SELECT EXISTS(SELECT *
-                      FROM favorite_artwork
-                      WHERE id = #{memberId}
-                        AND aseq = #{aseq})
-    </select>
-
-    <select id="callToggleFavorite" statementType="CALLABLE" parameterType="map">
+    <update id="toggleFavorite" statementType="CALLABLE" parameterType="map">
         {CALL toggle_favorite_artwork(#{memberId, mode=IN, jdbcType=VARCHAR, javaType=String},
                                       #{aseq, mode=IN, jdbcType=INTEGER, javaType=int},
                                       #{result, mode=OUT, jdbcType=BOOLEAN, javaType=boolean})}
-    </select>
+    </update>
 
 </mapper>

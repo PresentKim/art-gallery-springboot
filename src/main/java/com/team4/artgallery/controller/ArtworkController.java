@@ -1,6 +1,6 @@
 package com.team4.artgallery.controller;
 
-import com.team4.artgallery.dao.IArtworkDao;
+import com.team4.artgallery.dao.IArtworkDao.ArtworkFilter;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.service.MemberService;
@@ -30,14 +30,14 @@ public class ArtworkController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute IArtworkDao.ArtworkFilter filter,
+            @ModelAttribute ArtworkFilter filter,
             @RequestParam(value = "page", defaultValue = "1") int page,
             Model model
     ) {
-        // 전시 여부는 무시합니다. 항상 전시 중인 작품만 보여줍니다.
+        // 전시 여부는 무시합니다. 항상 전시 중인 예술품만 보여줍니다.
         filter.setDisplayyn("Y");
 
-        // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 작품 목록을 가져옵니다.
+        // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 예술품 목록을 가져옵니다.
         Pagination.Pair<ArtworkDto> pair = artworkService.getOrSearchArtworks(page, filter);
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pair.pagination());
@@ -47,13 +47,13 @@ public class ArtworkController {
 
     @GetMapping({"/{aseq}", "/view/{aseq}"})
     public String view(@PathVariable(value = "aseq") Integer aseq, Model model) {
-        // 작품 정보를 가져올 수 없는 경우 404 페이지로 포워딩
-        ArtworkDto artworkDto = artworkService.findArtwork(aseq);
+        // 예술품 정보를 가져올 수 없는 경우 404 페이지로 포워딩
+        ArtworkDto artworkDto = artworkService.getArtwork(aseq);
         if (artworkDto == null) {
             return "util/404";
         }
 
-        // 작품 정보를 뷰에 전달
+        // 예술품 정보를 뷰에 전달
         model.addAttribute("artworkDto", artworkDto);
         return "artwork/artworkView";
     }
@@ -65,13 +65,13 @@ public class ArtworkController {
             return "util/404";
         }
 
-        // 작품 정보를 가져올 수 없는 경우 404 페이지로 포워딩
-        ArtworkDto artworkDto = artworkService.findArtwork(aseq);
+        // 예술품 정보를 가져올 수 없는 경우 404 페이지로 포워딩
+        ArtworkDto artworkDto = artworkService.getArtwork(aseq);
         if (artworkDto == null) {
             return "util/404";
         }
 
-        // 작품 정보를 뷰에 전달
+        // 예술품 정보를 뷰에 전달
         model.addAttribute("artworkDto", artworkDto);
         return "artwork/artworkForm";
     }
@@ -87,9 +87,9 @@ public class ArtworkController {
             return forbidden();
         }
 
-        // 작품 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
+        // 예술품 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
         // 기존 정보가 있어야 UPDATE 쿼리를 실행할 수 있습니다.
-        ArtworkDto oldArtwork = artworkService.findArtwork(artworkDto.getAseq());
+        ArtworkDto oldArtwork = artworkService.getArtwork(artworkDto.getAseq());
         if (oldArtwork == null) {
             return notFound();
         }
@@ -106,13 +106,13 @@ public class ArtworkController {
             artworkDto.setSavefilename(oldArtwork.getSavefilename());
         }
 
-        // 작품 수정 실패 시 오류 결과 반환
+        // 예술품 수정 실패 시 오류 결과 반환
         if (artworkService.updateArtwork(artworkDto) != 1) {
-            return internalServerError("작품 수정에 실패했습니다.");
+            return internalServerError("예술품 수정에 실패했습니다.");
         }
 
-        // 작품 수정 성공 시 성공 결과 반환
-        return ok("작품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
+        // 예술품 수정 성공 시 성공 결과 반환
+        return ok("예술품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @PostMapping("/toggleArtworkDisplay")
@@ -157,13 +157,13 @@ public class ArtworkController {
             return internalServerError("이미지 저장에 실패했습니다.");
         }
 
-        // 작품 등록 실패 시 오류 결과 반환
-        if (artworkService.insertArtwork(artworkDto) != 1) {
-            return internalServerError("작품 등록에 실패했습니다.");
+        // 예술품 등록 실패 시 오류 결과 반환
+        if (artworkService.create(artworkDto) != 1) {
+            return internalServerError("예술품 등록에 실패했습니다.");
         }
 
-        // 작품 등록 성공 시 성공 결과 반환
-        return ok("작품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
+        // 예술품 등록 성공 시 성공 결과 반환
+        return ok("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @PostMapping("/delete")
@@ -173,13 +173,13 @@ public class ArtworkController {
             return forbidden();
         }
 
-        // 작품 삭제 실패 시 오류 결과 반환
+        // 예술품 삭제 실패 시 오류 결과 반환
         if (artworkService.deleteArtwork(aseq) != 1) {
-            return badRequest("작품 삭제에 실패했습니다.");
+            return badRequest("예술품 삭제에 실패했습니다.");
         }
 
-        // 작품 삭제 성공 시 성공 결과 반환
-        return ok("작품이 삭제되었습니다.", "/artwork");
+        // 예술품 삭제 성공 시 성공 결과 반환
+        return ok("예술품이 삭제되었습니다.", "/artwork");
     }
 
 }
