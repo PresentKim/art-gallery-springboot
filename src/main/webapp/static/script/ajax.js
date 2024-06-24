@@ -140,7 +140,15 @@ var defaultAjaxHandler = (function () {
 
         // 기본 응답 처리
         if (response.message) alert(response.message);
-        if (response.url) location.href = response.url;
+        if (response.url) {
+            if (response.url === ':back') {
+                history.back();
+            } else if (response.url === ':reload') {
+                location.reload();
+            } else {
+                location.href = response.url;
+            }
+        }
     }
 
     var mainHandler = function (status, response) {
