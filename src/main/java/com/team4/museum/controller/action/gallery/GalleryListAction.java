@@ -1,6 +1,6 @@
 package com.team4.museum.controller.action.gallery;
 
-import com.team4.artgallery.dto.MemberGalleryDto;
+import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.util.Pagination;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.dao.MemberGalleryDao;
@@ -20,7 +20,7 @@ public class GalleryListAction implements Action {
         Pagination pagination = Pagination.with(request, mgdao.getGalleryAllCount(), "command=galleryList");
         pagination.setItemsPerPage(4);
 
-        List<MemberGalleryDto> galleryList = null;
+        List<GalleryDto> galleryList = null;
         if (searchWord != null) {
             pagination.setItemCount(mgdao.getSearchCount(searchWord));
             pagination.setUrlTemplate("command=galleryList&searchWord=" + searchWord);

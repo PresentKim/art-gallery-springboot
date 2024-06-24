@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2024-05-27 15:09:24</creation_date>
-			<updated_date>2024-06-10 16:11:51</updated_date>
+			<updated_date>2024-06-24 10:24:51</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -360,8 +360,8 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>mseq</logical_name>
-			<physical_name>mseq</physical_name>
+			<logical_name>qseq</logical_name>
+			<physical_name>qseq</physical_name>
 			<type>integer</type>
 		</word>
 		<word>
@@ -1059,8 +1059,8 @@
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
 			</connections>
-			<physical_name>member_gallery</physical_name>
-			<logical_name>member_gallery</logical_name>
+			<physical_name>gallery</physical_name>
+			<logical_name>gallery</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>

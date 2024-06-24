@@ -1,13 +1,13 @@
 package com.team4.museum.dao;
 
-import com.team4.artgallery.dto.MemberGalleryDto;
+import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.util.Pagination;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class MemberGalleryDao extends BaseDao<MemberGalleryDto> {
+public class MemberGalleryDao extends BaseDao<GalleryDto> {
 
     private MemberGalleryDao() {
     }
@@ -18,13 +18,13 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryDto> {
         return instance;
     }
 
-    public MemberGalleryDto getMemberGalleryOne(int mseq) {
-        return selectOne("SELECT * FROM member_gallery_view WHERE mseq=?", mseq);
+    public GalleryDto getMemberGalleryOne(int gseq) {
+        return selectOne("SELECT * FROM gallery_view WHERE gseq=?", gseq);
     }
 
-    public int insertMemberGallery(MemberGalleryDto galleryDto) {
+    public int insertMemberGallery(GalleryDto galleryDto) {
         return update(
-                "INSERT INTO member_gallery (author, title, content, image, savefilename) VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO gallery (author, title, content, image, savefilename) VALUES (?, ?, ?, ?, ?)",
                 galleryDto.getAuthorId(),
                 galleryDto.getTitle(),
                 galleryDto.getContent(),
@@ -33,28 +33,28 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryDto> {
         );
     }
 
-    public void updateMemberGallery(MemberGalleryDto galleryDto) {
+    public void updateMemberGallery(GalleryDto galleryDto) {
         update(
-                "UPDATE member_gallery SET title=?, content=?, image=?, savefilename=? WHERE mseq=?",
+                "UPDATE gallery SET title=?, content=?, image=?, savefilename=? WHERE gseq=?",
                 galleryDto.getTitle(),
                 galleryDto.getContent(),
                 galleryDto.getImage(),
                 galleryDto.getSavefilename(),
-                galleryDto.getMseq()
+                galleryDto.getGseq()
         );
     }
 
-    public void deleteMemberGallery(int mseq) {
-        update("DELETE FROM member_gallery WHERE mseq = ?", mseq);
+    public void deleteMemberGallery(int gseq) {
+        update("DELETE FROM gallery WHERE gseq = ?", gseq);
     }
 
     public int getGalleryAllCount() {
-        return selectInt("SELECT COUNT(*) FROM member_gallery");
+        return selectInt("SELECT COUNT(*) FROM gallery");
     }
 
-    public List<MemberGalleryDto> getAllGallery(Pagination pagination) {
+    public List<GalleryDto> getAllGallery(Pagination pagination) {
         return select(
-                "SELECT * FROM member_gallery_view ORDER BY mseq DESC LIMIT ? OFFSET ?",
+                "SELECT * FROM gallery_view ORDER BY gseq DESC LIMIT ? OFFSET ?",
                 pagination::applyTo
         );
     }
@@ -62,18 +62,18 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryDto> {
     /**
      * 조회수를 1 증가시킨다
      */
-    public void increaseReadCount(int mseq) {
-        update("UPDATE member_gallery SET readcount = readcount + 1 WHERE mseq = ?", mseq);
+    public void increaseReadCount(int gseq) {
+        update("UPDATE gallery SET readcount = readcount + 1 WHERE gseq = ?", gseq);
     }
 
     /* 카운트 메서드 */
     public int getAllCount() {
-        return selectInt("SELECT COUNT(*) FROM member_gallery");
+        return selectInt("SELECT COUNT(*) FROM gallery");
     }
 
     public int getSearchCount(String searchWord) {
         return selectInt(
-                "SELECT COUNT(*) FROM member_gallery_view "
+                "SELECT COUNT(*) FROM gallery_view "
                         + " WHERE title LIKE CONCAT('%', ?, '%')"
                         + " OR content LIKE CONCAT('%', ?, '%') "
                         + " OR author_name LIKE CONCAT('%', ?, '%') ",
@@ -83,13 +83,13 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryDto> {
         );
     }
 
-    public List<MemberGalleryDto> searchGallery(Pagination pagination, String searchWord) {
+    public List<GalleryDto> searchGallery(Pagination pagination, String searchWord) {
         return select(
-                "SELECT * FROM member_gallery_view "
+                "SELECT * FROM gallery_view "
                         + " WHERE title LIKE CONCAT('%', ?, '%')"
                         + " OR content LIKE CONCAT('%', ?, '%') "
                         + " OR author_name LIKE CONCAT('%', ?, '%') "
-                        + " ORDER BY mseq DESC LIMIT ? OFFSET ?",
+                        + " ORDER BY gseq DESC LIMIT ? OFFSET ?",
                 searchWord,
                 searchWord,
                 searchWord,
@@ -99,9 +99,9 @@ public class MemberGalleryDao extends BaseDao<MemberGalleryDto> {
     }
 
     @Override
-    protected MemberGalleryDto parseDto(ResultSet rs) throws SQLException {
-        MemberGalleryDto galleryDto = new MemberGalleryDto();
-        galleryDto.setMseq(rs.getInt("mseq"));
+    protected GalleryDto parseDto(ResultSet rs) throws SQLException {
+        GalleryDto galleryDto = new GalleryDto();
+        galleryDto.setGseq(rs.getInt("gseq"));
         galleryDto.setAuthorId(rs.getString("author_id"));
         galleryDto.setAuthorName(rs.getString("author_name"));
         galleryDto.setTitle(rs.getString("title"));

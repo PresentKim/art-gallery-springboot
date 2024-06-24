@@ -18,10 +18,10 @@ public class AdminDeleteGalleryAction implements Action {
             return;
         }
 
-        String[] mseqList = request.getParameter("memberIds").split(",");
+        String[] gseqList = request.getParameter("memberIds").split(",");
 
-        for (String mseq : mseqList) {
-            MemberGalleryDao.getInstance().deleteMemberGallery(Integer.parseInt(mseq));
+        for (String gseq : gseqList) {
+            MemberGalleryDao.getInstance().deleteMemberGallery(Integer.parseInt(gseq));
         }
 
         response.sendRedirect("museum.do?command=adminGalleryList");

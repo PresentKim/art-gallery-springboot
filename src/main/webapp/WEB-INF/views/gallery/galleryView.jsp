@@ -40,9 +40,9 @@
         <c:if test="${account.id eq galleryDto.authorId}">
             <li class="gbtn">
                 <input value="수정하기" type="button" class="gbtn-update gallery-btn"
-                       onclick="location.href='museum.do?command=galleryUpdate&mseq=${galleryDto.mseq}'">
+                       onclick="location.href='museum.do?command=galleryUpdate&gseq=${galleryDto.gseq}'">
                 <input value="삭제하기" type="button" class="gbtn-delete gallery-btn"
-                       onclick="go_delete(${galleryDto.mseq})">
+                       onclick="go_delete(${galleryDto.gseq})">
             </li>
         </c:if>
     </ul>

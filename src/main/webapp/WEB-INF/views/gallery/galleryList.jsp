@@ -27,8 +27,8 @@
         </div>
         <div class="gallery-list-main-content">
             <c:forEach items="${galleryList}" var="galleryDto">
-                <div onclick="location.href='museum.do?command=galleryView&mseq=${galleryDto.mseq}'">
-                    <img src="static/image/gallery/${galleryDto.savefilename}" alt="member_gallery_image"/>
+                <div onclick="location.href='museum.do?command=galleryView&gseq=${galleryDto.gseq}'">
+                    <img src="static/image/gallery/${galleryDto.savefilename}" alt="gallery_image"/>
                     <div class="gallery-list-main-content_info">
                         <h1 class="glmc_info-title">${galleryDto.title}</h1>
                         <p class="glmc_info-name">${galleryDto.authorName}님의갤러리</p>

@@ -1,5 +1,5 @@
-CREATE OR REPLACE VIEW member_gallery_view AS
-SELECT mseq,
+CREATE OR REPLACE VIEW gallery_view AS
+SELECT gseq,
        author as author_id,
        name   as author_name,
        title,
@@ -8,9 +8,9 @@ SELECT mseq,
        readcount,
        image,
        savefilename
-FROM member_gallery
-         INNER JOIN member ON member_gallery.author = member.id
-ORDER BY member_gallery.writedate;
+FROM gallery
+         INNER JOIN member ON gallery.author = member.id
+ORDER BY gallery.writedate;
 
 
 
@@ -19,7 +19,6 @@ SELECT id AS member_id, artwork.*
 FROM favorite_artwork
          INNER JOIN artwork ON favorite_artwork.aseq = artwork.aseq
 ORDER BY favorite_artwork.writedate;
-
 
 
 -- START TOGGLE_FAVORITE_ARTWORK PROCEDURE

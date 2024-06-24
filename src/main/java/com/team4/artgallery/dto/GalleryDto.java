@@ -9,9 +9,9 @@ import java.sql.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberGalleryDto {
+public class GalleryDto {
 
-    private int mseq;
+    private int gseq;
     private String authorId;
     private String authorName;
     private String title;

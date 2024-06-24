@@ -34,13 +34,13 @@
             <li>미리보기</li>
         </ul>
         <c:forEach items="${galleryList}" var="galleryDto" varStatus="index">
-        <c:set var="previewId" value="artwork-${galleryDto.mseq}-${index}"/>
+        <c:set var="previewId" value="artwork-${galleryDto.gseq}-${index}"/>
             <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
                 <li><input type="checkbox" class="check-box"></li>
-                <li>${galleryDto.mseq}</li>
+                <li>${galleryDto.gseq}</li>
                 <li>${galleryDto.authorId}</li>
                 <li>${galleryDto.authorName}</li>
-                <li class="view-link" onclick="location.href='museum.do?command=galleryView&mseq=${galleryDto.mseq}'">
+                <li class="view-link" onclick="location.href='museum.do?command=galleryView&gseq=${galleryDto.gseq}'">
                         ${galleryDto.title}
                 </li>
                 <li>${galleryDto.content}</li>

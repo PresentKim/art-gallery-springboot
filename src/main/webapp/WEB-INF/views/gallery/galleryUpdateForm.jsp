@@ -4,7 +4,7 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>갤러리 수정 :: ${galleryDto.mseq}</title>
+        <title>갤러리 수정 :: ${galleryDto.gseq}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/galleryForm.css"/>">
         <script src="<c:url value="/static/script/gallery.js"/>"></script>
     </jsp:attribute>
@@ -39,9 +39,9 @@
         <div class="gallery-form_btn">
             <input class="btn" type="button" value="수정 등록" onclick="go_update()">
             <input type="hidden" name="authorid" value="${galleryDto.authorId}">
-            <input type="hidden" name="mseq" value="${galleryDto.mseq}">
+            <input type="hidden" name="gseq" value="${galleryDto.gseq}">
             <input class="btn" type="button" value="목록으로"
-                   onclick="location.href='museum.do?command=galleryView&mseq=${galleryDto.mseq}'">
+                   onclick="location.href='museum.do?command=galleryView&gseq=${galleryDto.gseq}'">
         </div>
     </form>
 </section>

@@ -1,7 +1,7 @@
 package com.team4.museum.controller.action.gallery;
 
+import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.MemberDto;
-import com.team4.artgallery.dto.MemberGalleryDto;
 import com.team4.museum.controller.action.Action;
 import com.team4.museum.dao.MemberGalleryDao;
 import com.team4.museum.util.AccountUtil;
@@ -23,7 +23,7 @@ public class GalleryWriteFormAction implements Action {
         }
 
         MemberGalleryDao mgdao = MemberGalleryDao.getInstance();
-        MemberGalleryDto galleryDto = new MemberGalleryDto();
+        GalleryDto galleryDto = new GalleryDto();
         galleryDto.setTitle(request.getParameter("title"));
         galleryDto.setContent(request.getParameter("content"));
         galleryDto.setAuthorId(memberDto.getId());

@@ -18,10 +18,10 @@ public class AdminDeleteMemberAction implements Action {
             return;
         }
 
-        String[] mseqList = request.getParameter("memberIds").split(",");
+        String[] gseqList = request.getParameter("memberIds").split(",");
 
-        for (String mseq : mseqList) {
-            MemberDao.getInstance().deleteMember(mseq);
+        for (String gseq : gseqList) {
+            MemberDao.getInstance().deleteMember(gseq);
         }
 
         response.sendRedirect("museum.do?command=adminMemberList");

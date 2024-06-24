@@ -51,9 +51,9 @@ function go_gallery() {
     }
 }
 
-function go_delete(mseq) {
+function go_delete(gseq) {
     confirm("삭제하시겠습니까?") ?
-        location.href = "museum.do?command=galleryDelete&mseq=" + mseq : "";
+        location.href = "museum.do?command=galleryDelete&gseq=" + gseq : "";
 }
 
 function previewImage(input) {
