@@ -18,7 +18,7 @@ public interface IGalleryDao {
      * @param galleryDto 갤러리 정보
      * @return 추가된 행의 수
      */
-    int create(GalleryDto galleryDto);
+    int createGallery(GalleryDto galleryDto);
 
 
     /* ========== READ =========== */

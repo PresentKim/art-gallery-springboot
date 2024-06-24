@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -14,6 +15,8 @@ public class GalleryService {
 
     @Delegate
     private final IGalleryDao galleryDao;
+
+    private final MultipartFileService fileService;
 
     /**
      * 갤러리 목록을 가져옵니다.
@@ -39,6 +42,25 @@ public class GalleryService {
                 .setItemCount(countSearchGalleries(search))
                 .setUrlTemplate("/gallery?page=%d&search=" + search);
         return pagination.pair(searchGalleries(search, pagination));
+    }
+
+
+    /**
+     * 갤러리 이미지를 저장하고 GalleryDto 객체에 이미지 경로를 저장합니다.
+     *
+     * @param file       이미지 파일
+     * @param galleryDto 갤러리 정보
+     */
+    public boolean saveImage(MultipartFile file, GalleryDto galleryDto) {
+        // 이미지 파일을 저장하고 저장된 파일 이름을 GalleryDto 객체에 저장합니다.
+        MultipartFileService.FileNamePair pair = fileService.saveFile(file, "/static/image/gallery");
+        if (pair != null) {
+            galleryDto.setImage(pair.fileName());
+            galleryDto.setSavefilename(pair.saveFileName());
+            return true;
+        }
+
+        return false;
     }
 
 }

@@ -13,9 +13,10 @@
         </where>
     </sql>
 
-    <insert id="createGallery" parameterType="com.team4.artgallery.dto.GalleryDto">
+    <insert id="createGallery" parameterType="com.team4.artgallery.dto.GalleryDto"
+            useGeneratedKeys="true" keyProperty="gseq">
         INSERT INTO gallery (author, title, content, image, savefilename)
-        VALUES (#{author}, #{title}, #{content}, #{image}, #{savefilename})
+        VALUES (#{authorId}, #{title}, #{content}, #{image}, #{savefilename})
     </insert>
 
     <select id="getGallery" parameterType="int" resultType="com.team4.artgallery.dto.GalleryDto">
