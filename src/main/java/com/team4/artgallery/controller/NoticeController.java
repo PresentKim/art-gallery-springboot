@@ -132,9 +132,20 @@ public class NoticeController {
         return ok("소식지 작성이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
     }
 
-    @GetMapping("/delete")
-    public String delete() {
-        return "notice/noticeDeleteOk";
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam(value = "nseq") int nseq, HttpSession session) {
+        // 관리자가 아닌 경우 요청 거부 결과 반환
+        if (!memberService.isAdmin(session)) {
+            return forbidden();
+        }
+
+        // 소식지 삭제 실패 시 오류 결과 반환
+        if (noticeService.deleteNotice(nseq) != 1) {
+            return badRequest("소식지 삭제에 실패했습니다.");
+        }
+
+        // 소식지 삭제 성공 시 성공 결과 반환
+        return ok("소식지가 삭제되었습니다.", "/notice");
     }
 
     @GetMapping("/magazine")
