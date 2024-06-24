@@ -77,18 +77,18 @@ public interface IMemberDao {
     /**
      * 회원의 관리자 권한을 부여합니다.
      *
-     * @param memberId 회원 ID
+     * @param memberIds 회원 ID 목록
      * @return 수정된 행의 수
      */
-    int grantAdmin(String memberId);
+    int grantAdminMembers(List<String> memberIds);
 
     /**
      * 회원의 관리자 권한을 박탈합니다.
      *
-     * @param memberId 회원 ID
+     * @param memberIds 회원 ID 목록
      * @return 수정된 행의 수
      */
-    int revokeAdmin(String memberId);
+    int revokeAdminMembers(List<String> memberIds);
 
 
     /* ========== DELETE =========== */
@@ -107,6 +107,6 @@ public interface IMemberDao {
      * @param memberIdList 회원 ID 목록
      * @return 삭제된 행의 수
      */
-    int deleteArtworks(List<String> memberIdList);
+    int deleteMembers(List<String> memberIdList);
 
 }

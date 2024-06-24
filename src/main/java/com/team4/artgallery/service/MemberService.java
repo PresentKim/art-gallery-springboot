@@ -2,6 +2,7 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IMemberDao;
 import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.UrlUtil;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotBlank;
@@ -20,6 +21,32 @@ public class MemberService {
 
     @Delegate
     private final IMemberDao memberDao;
+
+    /**
+     * 회원 목록을 가져옵니다.
+     *
+     * @param page   페이지 번호
+     * @param search 검색어  (검색어가 비어있으면 전체 회원 목록을 가져옵니다)
+     * @return 회원 목록과 페이지네이션 정보
+     */
+    public Pagination.Pair<MemberDto> getOrSearchMembers(int page, String search) {
+        // 검색어가 비어있을 경우 전체 회원 목록을 가져옵니다.
+        if (search == null || search.isEmpty()) {
+            Pagination pagination = new Pagination()
+                    .setCurrentPage(page)
+                    .setItemCount(countMembers())
+                    .setUrlTemplate("/admin/member?page=%d");
+
+            return pagination.pair(getMembers(pagination));
+        }
+
+        // 검색 조건이 있을 경우 검색 결과를 가져옵니다.
+        Pagination pagination = new Pagination()
+                .setCurrentPage(page)
+                .setItemCount(countSearchMembers(search))
+                .setUrlTemplate("/admin/member?page=%d&search=" + search);
+        return pagination.pair(searchMembers(search, pagination));
+    }
 
     /**
      * 주어진 ID에 해당하는 회원이 존재하는지 확인한다.
