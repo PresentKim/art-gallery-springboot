@@ -10,7 +10,7 @@ SELECT gseq,
        savefilename
 FROM gallery
          INNER JOIN member ON gallery.author = member.id
-ORDER BY gallery.writedate;
+ORDER BY gallery.writedate DESC;
 
 
 
