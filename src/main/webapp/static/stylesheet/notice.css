@@ -279,7 +279,7 @@ h2 {
     text-align: center;
 }
 
-.btn-noticeView {
+.noticeView-button > a {
     padding: 10px 20px;
     background-color: #fff;
     color: #000;
@@ -289,7 +289,7 @@ h2 {
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-.btn-noticeView:hover {
+.noticeView-button > a:hover {
     background-color: #000;
     color: #fff;
 }

@@ -42,12 +42,9 @@
         </div>
         <div class="noticeView-button">
             <c:if test="${account.admin}">
-                <input type="button" class="btn-noticeView" value="수정"
-                       onClick="location.href='museum.do?command=updateNoticeForm&nseq=${noticeDto.nseq}'"/>
-                <input type="button" class="btn-noticeView" value="삭제"
-                       onClick="deleteNotice('${account.pwd}', '${noticeDto.nseq}')"/>
-                <input type="button" class="btn-noticeView" value="목록"
-                       onClick="location.href='museum.do?command=noticeList'"/>
+                <a href="<c:url value="/notice/update?nseq=${noticeDto.nseq}"/>">수정</a>
+                <a href="#">삭제</a>
+                <a href="<c:url value="/notice"/>">목록</a>
             </c:if>
         </div>
     </div>
