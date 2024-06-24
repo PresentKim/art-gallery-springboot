@@ -31,37 +31,8 @@ final public class NoticeDao extends BaseDao<NoticeDto> {
         );
     }
 
-    public void insertNotice(NoticeDto noticeDto) {
-        update(
-                "INSERT INTO notice (title, author, content, category) VALUES (?, ?, ?, ?)",
-                noticeDto.getTitle(),
-                noticeDto.getAuthor(),
-                noticeDto.getContent(),
-                noticeDto.getCategory()
-        );
-    }
-
-    public void updateNotice(NoticeDto notice) {
-        update(
-                "UPDATE notice SET title = ?, author = ?, content = ?, category = ? WHERE nseq = ?",
-                notice.getTitle(),
-                notice.getAuthor(),
-                notice.getContent(),
-                notice.getCategory(),
-                notice.getNseq()
-        );
-    }
-
     public void deleteNotice(int nseq) {
         update("DELETE FROM notice WHERE nseq = ?", nseq);
-    }
-
-    public void plusReadCount(int nseq) {
-        update("UPDATE notice SET readcount = readcount + 1 WHERE nseq = ?", nseq);
-    }
-
-    public NoticeDto getNotice(int nseq) {
-        return selectOne("SELECT * FROM notice WHERE nseq = ?", nseq);
     }
 
     public List<NoticeDto> searchNoticeList(Pagination pagination, String searchWord) {
@@ -79,10 +50,6 @@ final public class NoticeDao extends BaseDao<NoticeDto> {
     /* 카운트 메서드 */
     public int getAllCount() {
         return selectInt("SELECT COUNT(*) FROM notice");
-    }
-
-    public int getNoticeCount(String category) {
-        return selectInt("SELECT COUNT(*) FROM notice WHERE category = ?", category);
     }
 
     public int getSearchCount(String searchWord) {

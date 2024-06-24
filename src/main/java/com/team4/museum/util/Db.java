@@ -163,29 +163,6 @@ public class Db {
     }
 
     /**
-     * SQL 프로시저 쿼리를 실행하고 결과를 반환합니다.
-     *
-     * @param resultMapper 프로시저 결과를 추출하는 람다식
-     */
-    public static <T> T executeCall(String query, CallParameterSetter paramSetter, CallResultMapper<T> resultMapper) {
-        T result = null;
-
-        try ( // try-with-resources
-              Connection conn = getConnection();
-              CallableStatement pstmt = conn.prepareCall(query)) {
-
-            paramSetter.accept(pstmt);
-            pstmt.execute();
-            result = resultMapper.extract(pstmt);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-    /**
      * Connection 객체와 query 문자열로 생성된 PreparedStatement 객체에 대해 파라미터 설정을 수행합니다.
      *
      * @param paramSetter SQL 쿼리를 준비하는 람다식
@@ -219,28 +196,6 @@ public class Db {
     @FunctionalInterface
     public interface ResultMapper<T> {
         T apply(ResultSet rs) throws SQLException;
-    }
-
-    /**
-     * {@link java.util.function.Consumer}의 역할을 수행
-     * <p>
-     * {@link java.sql.CallableStatement}를 처리하는 메서드에 대한 명시적인 의미를 부여하고,
-     * {@link java.sql.SQLException}을 던질 수 있도록 하기 위해 별도로 정의한 함수형 인터페이스입니다.
-     */
-    @FunctionalInterface
-    public interface CallParameterSetter {
-        void accept(CallableStatement cstmt) throws SQLException;
-    }
-
-    /**
-     * {@link java.util.function.Function}의 역할을 수행
-     * <p>
-     * {@link java.sql.CallableStatement}를 처리하고 결과를 반환하는 메서드에 대한 명시적인 의미를 부여하고,
-     * {@link java.sql.SQLException}을 던질 수 있도록 하기 위해 별도로 정의한 함수형 인터페이스입니다.
-     */
-    @FunctionalInterface
-    public interface CallResultMapper<T> {
-        T extract(CallableStatement cstmt) throws SQLException;
     }
 
 }

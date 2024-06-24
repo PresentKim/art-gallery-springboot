@@ -28,11 +28,6 @@ public class ArtworkDao extends BaseDao<ArtworkDto> {
         return update("DELETE FROM artwork WHERE aseq = ?", aseq);
     }
 
-
-    public ArtworkDto get(int aseq) {
-        return selectOne("SELECT * FROM artwork WHERE aseq = ?", aseq);
-    }
-
     public List<ArtworkDto> getAll(String category, String displayyn, String searchWord, Pagination pagination) {
         if (category == null)
             category = "";

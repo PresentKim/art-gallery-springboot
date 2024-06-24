@@ -35,19 +35,6 @@ public class AccountUtil {
      *
      * @param request
      * @param response
-     * @return 로그인한 사용자의 정보 (MemberDto), 로그인이 안되어 있으면 null
-     * @throws IOException
-     */
-    public static MemberDto getLoginUser(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        return getLoginUser(request, response, UrlUtil.getUrlPath(request));
-    }
-
-    /**
-     * 로그인이 필요한 페이지에서 세션에서 로그인한 사용자의 정보를 가져온다. 로그인이 안되어 있으면 자동으로 로그인 페이지로 이동한다.
-     *
-     * @param request
-     * @param response
      * @param returnUrl 로그인 후 돌아갈 페이지
      * @return 로그인한 사용자의 정보 (MemberDto), 로그인이 안되어 있으면 null
      * @throws IOException
@@ -62,32 +49,6 @@ public class AccountUtil {
         }
 
         return memberDto;
-    }
-
-    /**
-     * 로그인이 필요한 페이지에서 로그인 여부를 확인한다. 로그인이 안되어 있으면 false 를 반환한다.
-     *
-     * @param request
-     * @param response
-     * @return 로그인이 되어 있으면 true, 아니면 false
-     * @throws IOException
-     */
-    public static boolean isLogined(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        return getLoginUser(request, response) != null;
-    }
-
-    /**
-     * 로그인이 필요한 페이지에서 로그인 여부를 확인한다. 로그인이 안되어 있으면 false 를 반환한다.
-     *
-     * @param request
-     * @param response
-     * @param returnUrl 로그인 후 돌아갈 페이지
-     * @return 로그인이 되어 있으면 true, 아니면 false
-     * @throws IOException
-     */
-    public static boolean isLogined(HttpServletRequest request, HttpServletResponse response, String returnUrl)
-            throws IOException {
-        return getLoginUser(request, response, returnUrl) != null;
     }
 
     /**

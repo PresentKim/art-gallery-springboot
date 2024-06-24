@@ -18,38 +18,8 @@ public class MemberGalleryDao extends BaseDao<GalleryDto> {
         return instance;
     }
 
-    public GalleryDto getMemberGalleryOne(int gseq) {
-        return selectOne("SELECT * FROM gallery_view WHERE gseq=?", gseq);
-    }
-
-    public int insertMemberGallery(GalleryDto galleryDto) {
-        return update(
-                "INSERT INTO gallery (author, title, content, image, savefilename) VALUES (?, ?, ?, ?, ?)",
-                galleryDto.getAuthorId(),
-                galleryDto.getTitle(),
-                galleryDto.getContent(),
-                galleryDto.getImage(),
-                galleryDto.getSavefilename()
-        );
-    }
-
-    public void updateMemberGallery(GalleryDto galleryDto) {
-        update(
-                "UPDATE gallery SET title=?, content=?, image=?, savefilename=? WHERE gseq=?",
-                galleryDto.getTitle(),
-                galleryDto.getContent(),
-                galleryDto.getImage(),
-                galleryDto.getSavefilename(),
-                galleryDto.getGseq()
-        );
-    }
-
     public void deleteMemberGallery(int gseq) {
         update("DELETE FROM gallery WHERE gseq = ?", gseq);
-    }
-
-    public int getGalleryAllCount() {
-        return selectInt("SELECT COUNT(*) FROM gallery");
     }
 
     public List<GalleryDto> getAllGallery(Pagination pagination) {
@@ -57,13 +27,6 @@ public class MemberGalleryDao extends BaseDao<GalleryDto> {
                 "SELECT * FROM gallery_view ORDER BY gseq DESC LIMIT ? OFFSET ?",
                 pagination::applyTo
         );
-    }
-
-    /**
-     * 조회수를 1 증가시킨다
-     */
-    public void increaseReadCount(int gseq) {
-        update("UPDATE gallery SET readcount = readcount + 1 WHERE gseq = ?", gseq);
     }
 
     /* 카운트 메서드 */
