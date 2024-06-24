@@ -11,7 +11,9 @@
     </jsp:attribute>
 
     <jsp:attribute name="content">
-        <h1>오류가 발생했습니다</h1>
-        <pre>${errorMessage}</pre>
+        <main class="error bg-${random.nextInt(7)}">
+            <h1>오류가 발생했습니다</h1>
+            <pre>${errorMessage}</pre>
+        </main>
     </jsp:attribute>
 </t:layout>
