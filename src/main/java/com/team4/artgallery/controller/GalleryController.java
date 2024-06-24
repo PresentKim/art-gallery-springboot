@@ -41,12 +41,15 @@ public class GalleryController {
     }
 
     @GetMapping({"/{gseq}", "/view/{gseq}"})
-    public String view(@PathVariable(value = "gseq") Integer gseq, Model model) {
+    public String view(@PathVariable(value = "gseq") Integer gseq, HttpSession session, Model model) {
         // 갤러리 정보를 가져올 수 없는 경우 404 페이지로 포워딩
         GalleryDto galleryDto = galleryService.getGallery(gseq);
         if (galleryDto == null) {
             return "util/404";
         }
+
+        // 갤러리를 읽은 것으로 처리
+        galleryService.markAsRead(session, gseq);
 
         // 갤러리 정보를 뷰에 전달
         model.addAttribute("galleryDto", galleryDto);
