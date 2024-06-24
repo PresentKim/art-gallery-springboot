@@ -44,6 +44,14 @@ public interface IArtworkDao {
     List<ArtworkDto> getArtworks(Pagination pagination);
 
     /**
+     * 랜덤 예술품 목록을 가져옵니다.
+     *
+     * @param count 가져올 예술품 개수
+     * @return 랜덤 예술품 목록
+     */
+    List<ArtworkDto> getRandomArtworks(int count);
+
+    /**
      * 검색된 예술품 목록을 가져옵니다.
      *
      * @param filter     검색 조건

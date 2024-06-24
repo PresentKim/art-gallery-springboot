@@ -44,6 +44,13 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
+    <select id="getRandomArtworks" parameterType="int" resultType="com.team4.artgallery.dto.ArtworkDto">
+        SELECT *
+        FROM artwork
+        ORDER BY RAND()
+        LIMIT #{limit}
+    </select>
+
     <select id="searchArtworks" resultType="com.team4.artgallery.dto.ArtworkDto">
         SELECT *
         FROM artwork

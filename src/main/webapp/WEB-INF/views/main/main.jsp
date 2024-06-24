@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+         import="com.team4.artgallery.enums.NoticeCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -16,14 +17,14 @@
 <div id="main-top-swiper" class="main-swiper" data-aos="fade-up" data-aos-offset="200" data-aos-delay="50"
      data-aos-duration="500" data-aos-easing="ease-in">
     <div class="main-swiper_image-container">
-        <img src="static/image/main/main_image1.png">
-        <img src="static/image/main/main_image2.jpg">
-        <img src="static/image/main/main_image3.jpg">
-        <img src="static/image/main/main_image4.jpg">
-        <img src="static/image/main/main_image5.jpg">
-        <img src="static/image/main/main_image6.jpg">
-        <img src="static/image/main/main_image7.jpg">
-        <img src="static/image/main/main_image8.jpg">
+        <img alt="main_image1" src="<c:url value="/static/image/main/main_image1.png"/>"/>
+        <img alt="main_image2" src="<c:url value="/static/image/main/main_image2.jpg"/>"/>
+        <img alt="main_image3" src="<c:url value="/static/image/main/main_image3.jpg"/>"/>
+        <img alt="main_image4" src="<c:url value="/static/image/main/main_image4.jpg"/>"/>
+        <img alt="main_image5" src="<c:url value="/static/image/main/main_image5.jpg"/>"/>
+        <img alt="main_image6" src="<c:url value="/static/image/main/main_image6.jpg"/>"/>
+        <img alt="main_image7" src="<c:url value="/static/image/main/main_image7.jpg"/>"/>
+        <img alt="main_image8" src="<c:url value="/static/image/main/main_image8.jpg"/>"/>
     </div>
     <div class="main-swiper_remote-container"></div>
 </div>
@@ -37,28 +38,19 @@
         <div class="notice-area">
             <div class="notice_content">
                 <div class="notice_tabBtn">
-                    <button type="button" class="btn  selected" title="선택됨"
-                            onClick="location.href='museum.do?command=noticeList&category=공지사항'">공지사항
-                    </button>
-                    <button type="button" class="btn "
-                            onClick="location.href='museum.do?command=noticeList&category=이벤트'">이벤트
-                    </button>
-                    <button type="button" class="btn "
-                            onClick="location.href='museum.do?command=noticeList&category=매거진'">매거진
-                    </button>
-                    <button type="button" class="btn "
-                            onClick="location.href='museum.do?command=noticeList&category=신문'">신문
-                    </button>
+                    <c:forEach items="${NoticeCategory.values()}" var="c">
+                        <a class="btn" href="<c:url value="/notice?category=${c.name()}"/>">${c.name()}</a>
+                    </c:forEach>
                 </div>
                 <div class="notice_inner">
                     <ul>
-                        <c:forEach items="${noticeList}" var="n">
+                        <c:forEach items="${noticeList}" var="noticeDto">
                             <li class="main_notice_inner_row">
                                 <div class="col_col_title">
-                                    <a href="museum.do?command=noticeView&nseq=${n.nseq}"> ${n.content} </a>
+                                    <a href="<c:url value="/notice/${noticeDto.nseq}"/>"> ${noticeDto.content} </a>
                                 </div>
                                 <div class="col_col_date">
-                                    <fmt:formatDate value="${n.writedate}" pattern="yyyy-MM-dd"/>
+                                    <fmt:formatDate value="${noticeDto.writedate}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </li>
                         </c:forEach>
@@ -69,10 +61,10 @@
         <div id="main-notice-swiper" class="main-swiper" data-aos="fade-up" data-aos-offset="200" data-aos-delay="50"
              data-aos-duration="500" data-aos-easing="ease-in">
             <div class="main-swiper_image-container">
-                <img src="static/image/main/side_img01.jpg">
-                <img src="static/image/main/side_img02.jpg">
-                <img src="static/image/main/side_img03.jpg">
-                <img src="static/image/main/side_img04.jpg">
+                <img alt="side_img01" src="<c:url value="/static/image/main/side_img01.jpg"/>">
+                <img alt="side_img02" src="<c:url value="/static/image/main/side_img02.jpg"/>">
+                <img alt="side_img03" src="<c:url value="/static/image/main/side_img03.jpg"/>">
+                <img alt="side_img04" src="<c:url value="/static/image/main/side_img04.jpg"/>">
             </div>
             <div class="main-swiper_remote-container"></div>
         </div>
@@ -83,33 +75,33 @@
      class="main-middle-container">
     <div class="container-box">
         <div class="image-list" id="container1">
-            <c:forEach items="${artworkList1}" var="list">
-                <div class="imagelist" onclick="location.href='museum.do?command=artworkView&aseq=${list.aseq}'">
-                    <img src="${list.fullSavefilename}">
-                </div>
+            <c:forEach items="${artworkList1}" var="artworkDto">
+                    <a class="imagelist" href="<c:url value="/artwork/${artworkDto.aseq}"/>">
+                        <img alt="${artworkDto.name}" src="${artworkDto.fullSavefilename}">
+                    </a>
             </c:forEach>
         </div>
         <div class="image-list" id="container2">
-            <c:forEach items="${artworkList2}" var="list">
-                <div class="imagelist" onclick="location.href='museum.do?command=artworkView&aseq=${list.aseq}'">
-                    <img src="${list.fullSavefilename}">
-                </div>
+            <c:forEach items="${artworkList2}" var="artworkDto">
+                <a class="imagelist" href="<c:url value="/artwork/${artworkDto.aseq}"/>">
+                    <img alt="${artworkDto.name}" src="${artworkDto.fullSavefilename}">
+                </a>
             </c:forEach>
         </div>
     </div>
     <div class="container-box">
         <div class="image-list" id="container3">
-            <c:forEach items="${artworkList3}" var="list">
-                <div class="imagelist" onclick="location.href='museum.do?command=artworkView&aseq=${list.aseq}'">
-                    <img src="${list.fullSavefilename}">
-                </div>
+            <c:forEach items="${artworkList3}" var="artworkDto">
+                <a class="imagelist" href="<c:url value="/artwork/${artworkDto.aseq}"/>">
+                    <img alt="${artworkDto.name}" src="${artworkDto.fullSavefilename}">
+                </a>
             </c:forEach>
         </div>
         <div class="image-list" id="container4">
-            <c:forEach items="${artworkList4}" var="list">
-                <div class="imagelist" onclick="location.href='museum.do?command=artworkView&aseq=${list.aseq}'">
-                    <img src="${list.fullSavefilename}">
-                </div>
+            <c:forEach items="${artworkList4}" var="artworkDto">
+                <a class="imagelist" href="<c:url value="/artwork/${artworkDto.aseq}"/>">
+                    <img alt="${artworkDto.name}" src="${artworkDto.fullSavefilename}">
+                </a>
             </c:forEach>
         </div>
     </div>
