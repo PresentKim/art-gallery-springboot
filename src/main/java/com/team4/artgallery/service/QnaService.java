@@ -17,8 +17,8 @@ public class QnaService {
 
     private final MemberService memberService;
 
-    private String getPassAttribute(int qseq) {
-        return "qnaPass" + qseq;
+    private String hashQseq(int qseq) {
+        return "qnaHash" + qseq;
     }
 
     /**
@@ -29,7 +29,7 @@ public class QnaService {
      * @return 인증 결과가 세션에 저장되어 있으면 true, 그렇지 않으면 false
      */
     public boolean isAuthorized(HttpSession session, int qseq) {
-        return session.getAttribute(getPassAttribute(qseq)) != null;
+        return session.getAttribute(hashQseq(qseq)) != null;
     }
 
     /**
@@ -50,7 +50,7 @@ public class QnaService {
             return false;
         }
 
-        session.setAttribute(getPassAttribute(qseq), true);
+        session.setAttribute(hashQseq(qseq), true);
         return true;
     }
 
