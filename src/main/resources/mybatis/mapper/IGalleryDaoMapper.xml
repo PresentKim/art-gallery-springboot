@@ -4,15 +4,8 @@
 
 <mapper namespace="com.team4.artgallery.dao.IGalleryDao">
     <resultMap id="GalleryResultMap" type="com.team4.artgallery.dto.GalleryDto">
-        <result column="gseq" property="gseq"/>
         <result column="author_id" property="authorId"/>
         <result column="author_name" property="authorName"/>
-        <result column="title" property="title"/>
-        <result column="writedate" property="writedate"/>
-        <result column="content" property="content"/>
-        <result column="readcount" property="readcount"/>
-        <result column="image" property="image"/>
-        <result column="savefilename" property="savefilename"/>
     </resultMap>
 
     <sql id="search">
