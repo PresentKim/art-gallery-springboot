@@ -6,7 +6,7 @@
     <sql id="search">
         <where>
             <if test="search != null and search != ''">
-                author LIKE CONCAT('%', #{search}, '%')
+                author_id LIKE CONCAT('%', #{search}, '%')
                 OR title LIKE CONCAT('%', #{search}, '%')
                 OR content LIKE CONCAT('%', #{search}, '%')
             </if>
@@ -20,23 +20,21 @@
 
     <select id="getGallery" parameterType="int" resultType="com.team4.artgallery.dto.GalleryDto">
         SELECT *
-        FROM gallery
+        FROM gallery_view
         WHERE gseq = #{gseq}
     </select>
 
     <select id="getGalleries" parameterType="com.team4.artgallery.util.Pagination"
             resultType="com.team4.artgallery.dto.GalleryDto">
         SELECT *
-        FROM gallery
-        ORDER BY gseq DESC
+        FROM gallery_view
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <select id="searchGalleries" resultType="com.team4.artgallery.dto.GalleryDto">
         SELECT *
-        FROM gallery
+        FROM gallery_view
         <include refid="search"/>
-        ORDER BY gseq DESC
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
 
@@ -47,7 +45,7 @@
 
     <select id="countSearchGalleries" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
-        FROM gallery
+        FROM gallery_view
         <include refid="search"/>
     </select>
 
