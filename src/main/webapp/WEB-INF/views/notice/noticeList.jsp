@@ -17,11 +17,11 @@
 <div class="notice_box">
     <div class="notice_header_box">
         <c:forEach items="${NoticeCategory.values()}" var="c">
-            <a href="museum.do?command=noticeList&category=${c.name()}" class="notice-list_btn">${c.name()}</a>
+            <a href="<c:url value="/notice?category=${c.name()}"/>" class="notice-list_btn">${c.name()}</a>
         </c:forEach>
         <div class="writebutton">
             <c:if test="${account.admin}">
-                <input type="button" value="게시글 등록" onClick="location.href='museum.do?command=insertNoticeForm'"/>
+                <input type="button" value="게시글 등록" onClick="location.href='/notice/write'"/>
             </c:if>
         </div>
     </div>
@@ -39,15 +39,15 @@
             <div class="row">
                     <%-- <div class="col col_number">${noticeList.nseq}</div> --%>
                 <div class="col col_number">
-                    <a href="museum.do?command=noticeView&nseq=${noticeDto.nseq}"> ${noticeDto.nseq} </a>
+                    <a href="<c:url value="/notice/${noticeDto.nseq}"/>"> ${noticeDto.nseq} </a>
                     &nbsp;
                 </div>
                 <div class="col col_title">
-                    <a href="museum.do?command=noticeView&nseq=${noticeDto.nseq}"> ${noticeDto.title} </a>
+                    <a href="<c:url value="/notice/${noticeDto.nseq}"/>"> ${noticeDto.title} </a>
                     &nbsp;
                 </div>
                 <div class="col col_title">
-                    <a href="museum.do?command=noticeView&nseq=${noticeDto.nseq}"> ${noticeDto.content} </a>
+                    <a href="<c:url value="/notice/${noticeDto.nseq}"/>"> ${noticeDto.content} </a>
                     &nbsp;
                 </div>
                     <%-- <div class="col col_content">${noticeList.content}</div> --%>
