@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller;
 
 import com.team4.artgallery.dto.NoticeDto;
+import com.team4.artgallery.enums.NoticeCategory;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Pagination;
@@ -32,13 +33,18 @@ public class NoticeController {
             @RequestParam(value = "page", defaultValue = "1") int page,
             Model model
     ) {
+        // 카테고리가 매거진 혹은 신문인 경우 해당 페이지로 리다이렉트
+        if (NoticeCategory.매거진.name().equals(category)) {
+            return "redirect:/notice/magazine";
+        } else if (NoticeCategory.신문.name().equals(category)) {
+            return "redirect:/notice/newspaper";
+        }
+
+        // 페이지 정보를 뷰에 전달
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
                 .setItemCount(noticeService.countNotices(category))
                 .setUrlTemplate("/notice?page=%d" + (category == null ? "" : "&category=" + category));
-
-        // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 예술품 목록을 가져옵니다.
-        model.addAttribute("category", category);
         model.addAttribute("pagination", pagination);
         model.addAttribute("noticeList", noticeService.getNotices(category, pagination));
         return "notice/noticeList";

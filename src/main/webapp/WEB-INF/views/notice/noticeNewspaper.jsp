@@ -15,7 +15,7 @@
     <ul class="noticeNewpaper_innerbox">
         <li>
             <div class="noticeNewpaper_img_box">
-                <img src="static/image/magazine/magazine2.jpg" alt="박물관신문 632호 대표이미지"/>
+                <img src="/static/image/magazine/magazine2.jpg" alt="박물관신문 632호 대표이미지"/>
             </div>
             <div class="noticeNewpaper_info">
                 <p>박물관신문 632호</p>
@@ -34,7 +34,7 @@
         </li>
         <li>
             <div class="noticeNewpaper_img_box">
-                <img src="static/image/magazine/magazine3.jpg" alt="박물관신문 631호 대표이미지"/>
+                <img src="/static/image/magazine/magazine3.jpg" alt="박물관신문 631호 대표이미지"/>
             </div>
             <div class="noticeNewpaper_info">
                 <p>박물관신문 631호</p>
@@ -53,7 +53,7 @@
         </li>
         <li>
             <div class="noticeNewpaper_img_box">
-                <img src="static/image/magazine/magazine4.jpg" alt="박물관신문 630호 대표이미지"/>
+                <img src="/static/image/magazine/magazine4.jpg" alt="박물관신문 630호 대표이미지"/>
             </div>
             <div class="noticeNewpaper_info">
                 <p>박물관신문 630호</p>
@@ -72,7 +72,7 @@
         </li>
         <li>
             <div class="noticeNewpaper_img_box">
-                <img src="static/image/magazine/magazine5.jpg" alt="박물관신문 629호 대표이미지"/>
+                <img src="/static/image/magazine/magazine5.jpg" alt="박물관신문 629호 대표이미지"/>
             </div>
             <div class="noticeNewpaper_info">
                 <p>박물관신문 629호</p>
@@ -91,7 +91,7 @@
         </li>
         <li>
             <div class="noticeNewpaper_img_box">
-                <img src="static/image/magazine/magazine6.jpg" alt="박물관신문 628호 대표이미지"/>
+                <img src="/static/image/magazine/magazine6.jpg" alt="박물관신문 628호 대표이미지"/>
             </div>
             <div class="noticeNewpaper_info">
                 <p>박물관신문 628호</p>
@@ -110,7 +110,7 @@
         </li>
         <li>
             <div class="noticeNewpaper_img_box">
-                <img src="static/image/magazine/magazine7.jpg" alt="박물관신문 627호 대표이미지"/>
+                <img src="/static/image/magazine/magazine7.jpg" alt="박물관신문 627호 대표이미지"/>
             </div>
             <div class="noticeNewpaper_info">
                 <p>박물관신문 627호</p>
@@ -129,7 +129,7 @@
         </li>
         <li>
             <div class="noticeNewpaper_img_box">
-                <img src="static/image/magazine/magazine8.jpg" alt="박물관신문 626호 대표이미지"/>
+                <img src="/static/image/magazine/magazine8.jpg" alt="박물관신문 626호 대표이미지"/>
             </div>
             <div class="noticeNewpaper_info">
                 <p>박물관신문 626호</p>
@@ -148,7 +148,7 @@
         </li>
         <li>
             <div class="noticeNewpaper_img_box">
-                <img src="static/image/magazine/magazine9.jpg" alt="박물관신문 625호 대표이미지"/>
+                <img src="/static/image/magazine/magazine9.jpg" alt="박물관신문 625호 대표이미지"/>
             </div>
             <div class="noticeNewpaper_info">
                 <p>박물관신문 625호</p>
