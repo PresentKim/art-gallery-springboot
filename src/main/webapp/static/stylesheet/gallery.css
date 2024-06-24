@@ -21,6 +21,11 @@
     margin-bottom: 3rem;
 }
 
+.gallery-search-form_btn {
+    padding: 0 1rem;
+    cursor: pointer;
+}
+
 .gallery-list-main-title {
     margin: 2rem 2rem 0;
     display: flex;
@@ -41,7 +46,7 @@
     object-fit: contain;
 }
 
-.gallery-list-main-content > div {
+.gallery-list-main-content > a {
     width: 40rem;
     height: 30rem;
     padding: 3rem;
@@ -51,7 +56,7 @@
     transition: 0.5s;
 }
 
-.gallery-list-main-content > div:hover {
+.gallery-list-main-content > a:hover {
     background-color: #80808024;
     box-shadow: 1px 1px 2px gray;
     translate: -2px -2px;
