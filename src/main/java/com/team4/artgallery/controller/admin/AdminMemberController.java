@@ -1,4 +1,4 @@
-package com.team4.artgallery.controller;
+package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.MemberService;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/member")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class AdminController {
+public class AdminMemberController {
 
     private final MemberService memberService;
 
@@ -29,18 +29,7 @@ public class AdminController {
     private final ResponseHelper responseHelper;
 
     @GetMapping({"", "/"})
-    public String root(HttpSession session) {
-        // 관리자가 아닌 경우 404 페이지로 포워딩
-        if (!memberService.isAdmin(session)) {
-            System.out.println("관리자가 아닙니다");
-            return "util/404";
-        }
-
-        return "admin/adminMain";
-    }
-
-    @GetMapping("/member")
-    public String member(
+    public String list(
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "page", defaultValue = "1") int page,
             HttpSession session,
@@ -59,8 +48,8 @@ public class AdminController {
         return "admin/adminMemberList";
     }
 
-    @PostMapping("/member/grant")
-    public ResponseEntity<?> memberGrant(
+    @PostMapping("/grant")
+    public ResponseEntity<?> grant(
             @RequestParam(value = "memberIds", required = false) List<String> memberIds,
             HttpSession session
     ) {
@@ -84,8 +73,8 @@ public class AdminController {
         return ok("관리자 권한을 부여했습니다", ":reload");
     }
 
-    @PostMapping("/member/revoke")
-    public ResponseEntity<?> memberRevoke(
+    @PostMapping("/revoke")
+    public ResponseEntity<?> revoke(
             @RequestParam(value = "memberIds", required = false) List<String> memberIds,
             HttpSession session
     ) {
@@ -109,8 +98,8 @@ public class AdminController {
         return ok("관리자 권한을 제거했습니다", ":reload");
     }
 
-    @PostMapping("/member/delete")
-    public ResponseEntity<?> memberDelete(
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(
             @RequestParam(value = "memberIds", required = false) List<String> memberIds,
             HttpSession session
     ) {
@@ -132,31 +121,6 @@ public class AdminController {
         // 회원 정보 제거에 성공한 경우 성공 결과 반환 (페이지 새로고침)
         // TODO: 새고로침 없이 HTML 요소를 변경하는 방법으로 수정
         return ok("회원 정보를 제거했습니다", ":reload");
-    }
-
-    @GetMapping("/artwork")
-    public String artwork() {
-        return "admin/adminArtworkList";
-    }
-
-    @GetMapping("/notice")
-    public String notice() {
-        return "admin/adminNoticeList";
-    }
-
-    @GetMapping("/gallery")
-    public String gallery() {
-        return "admin/adminGalleryList";
-    }
-
-    @GetMapping("/qna")
-    public String qna() {
-        return "admin/adminQnaList";
-    }
-
-    @GetMapping("/resetDB")
-    public void resetDB() {
-        // TODO: Implement this method
     }
 
 }
