@@ -45,12 +45,15 @@ function sendHttpRequest(xhr, requestBody, ajaxHandler) {
  * AJAX 요청을 전송하는 함수 (requestBody 값이 객체인 경우 쿼리스트링으로 변환)
  *
  * @param {string} requestUrl - 요청 URL
- * @param {Object} requestBody - 요청 바디 객체
+ * @param {Object} [requestBody] - 요청 바디 객체
  * @param {function} [ajaxHandler] - 응답 처리 함수, 생략 시 기본 처리 함수 사용
  */
 function ajax(requestUrl, requestBody, ajaxHandler) {
-    // requestBody 값이 리터럴 객체인 경우 문자열로 변환
-    if (typeof requestBody === 'object') {
+    // requestBody 값이 없으면 빈 객체로 초기화
+    if (requestBody === undefined || requestBody === null) {
+        requestBody = {};
+    } else if (typeof requestBody === 'object') {
+        // requestBody 값이 리터럴 객체인 경우 문자열로 변환
         requestBody = Object
             .entries(requestBody)
             .filter(([, value]) => value !== null && value !== undefined)
