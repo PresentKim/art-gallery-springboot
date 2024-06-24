@@ -4,21 +4,22 @@
 
 <mapper namespace="com.team4.artgallery.dao.IArtworkDao">
     <sql id="search">
-        WHERE displayyn =
-        <choose>
-            <when test="filter.hasDisplay">
-                #{filter.displayyn}
-            </when>
-            <otherwise>
-                'Y'
-            </otherwise>
-        </choose>
-        <if test="filter.hasCategory">
-            AND category = #{filter.category}
-        </if>
-        <if test="filter.hasSearch">
-            AND (name LIKE CONCAT('%', #{filter.search}, '%') OR artist LIKE CONCAT('%', #{filter.search}, '%'))
-        </if>
+        <where>
+            <choose>
+                <when test="filter.hasDisplay">
+                    AND displayyn = #{filter.displayyn}
+                </when>
+                <otherwise>
+                    AND displayyn = 'Y'
+                </otherwise>
+            </choose>
+            <if test="filter.hasCategory">
+                AND category = #{filter.category}
+            </if>
+            <if test="filter.hasSearch">
+                AND (name LIKE CONCAT('%', #{filter.search}, '%') OR artist LIKE CONCAT('%', #{filter.search}, '%'))
+            </if>
+        </where>
     </sql>
 
     <insert id="createArtwork" parameterType="com.team4.artgallery.dto.ArtworkDto"

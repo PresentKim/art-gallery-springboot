@@ -4,11 +4,13 @@
 
 <mapper namespace="com.team4.artgallery.dao.IMemberDao">
     <sql id="search">
-        <if test="not empty(search)">
-            WHERE id LIKE CONCAT('%', #{search}, '%')
-            OR name LIKE CONCAT('%', #{search}, '%')
-            OR email LIKE CONCAT('%', #{search}, '%')
-        </if>
+        <where>
+            <if test="search != null and search != ''">
+                id LIKE CONCAT('%', #{search}, '%')
+                OR name LIKE CONCAT('%', #{search}, '%')
+                OR email LIKE CONCAT('%', #{search}, '%')
+            </if>
+        </where>
     </sql>
 
     <insert id="createMember" parameterType="com.team4.artgallery.dto.MemberDto">
