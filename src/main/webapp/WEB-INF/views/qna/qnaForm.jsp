@@ -76,7 +76,7 @@
             <label for="content">문의 내용</label>
         </div>
         <div class="qna-form_button-wrapper">
-            <input id="submit-btn" class="qna-form_button " type="submit" value="등록"/>
+            <input id="submit-btn" class="qna-form_button" type="submit" value="${empty qnaDto ? '등록' : '수정'}"/>
             <label for="submit-btn">
                 <i class="qna-icon upload"></i>
             </label>

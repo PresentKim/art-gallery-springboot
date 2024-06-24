@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="artwork-form-btn">
-            <input type="submit" value="수정">
+            <input type="submit" value="${empty artworkDto ? '등록' : '수정'}">
             <input type="button" value="취소" onclick="history.back()">
         </div>
     </form>
