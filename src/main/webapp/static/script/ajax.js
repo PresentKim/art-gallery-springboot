@@ -74,9 +74,6 @@ function ajax(requestUrl, requestBody, ajaxHandler) {
  * onsubmit 이벤트 핸들러로 사용 (사용 시 이벤트가 취소됨)
  */
 function ajaxSubmit(event, ajaxHandler) {
-    // 기본 이벤트 취소
-    event.preventDefault();
-
     var form = event.target;
 
     // form 요소 유효성 검사
@@ -97,6 +94,15 @@ function ajaxSubmit(event, ajaxHandler) {
             }
         }
     }
+
+    // 요청 메소드가 GET 인 경우 그대로 전송
+    var requestMethod = event.submitter.getAttribute("formmethod") || form.method;
+    if (requestMethod.toUpperCase() === "GET") {
+        return;
+    }
+
+    // 폼 등록 이벤트 취소
+    event.preventDefault();
 
     // submitter 버튼의 formaction 속성 또는 form 요소의 action 속성으로 요청 URL 결정
     var requestUrl = event.submitter.getAttribute("formaction") || form.action;
