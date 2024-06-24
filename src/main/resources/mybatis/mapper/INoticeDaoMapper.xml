@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team4.artgallery.dao.INoticeDao">
+    <sql id="category_filter">
+        <where>
+            <if test="category != null and category != '' and !category.equals('전체')">
+                category = #{category}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="createNotice" parameterType="com.team4.artgallery.dto.NoticeDto"
+            useGeneratedKeys="true" keyProperty="nseq">
+        INSERT INTO notice (title, author, content, category)
+        VALUES (#{title}, #{author}, #{content}, #{category})
+    </insert>
+
+    <select id="getNotice" parameterType="int" resultType="com.team4.artgallery.dto.NoticeDto">
+        SELECT *
+        FROM notice
+        WHERE nseq = #{nseq}
+    </select>
+
+    <select id="getNotices" resultType="com.team4.artgallery.dto.NoticeDto">
+        SELECT *
+        FROM notice
+        <include refid="category_filter"/>
+        ORDER BY nseq DESC
+        LIMIT #{pagination.limit} OFFSET #{pagination.offset}
+    </select>
+
+    <select id="countNotices" resultType="int">
+        SELECT COUNT(*)
+        FROM notice
+        <include refid="category_filter"/>
+    </select>
+
+    <update id="updateNotice" parameterType="com.team4.artgallery.dto.NoticeDto">
+        UPDATE notice
+        SET title    = #{title},
+            author   = #{author},
+            content  = #{content},
+            category = #{category}
+        WHERE nseq = #{nseq}
+    </update>
+
+    <delete id="deleteNotice" parameterType="int">
+        DELETE
+        FROM notice
+        WHERE nseq = #{nseq}
+    </delete>
+
+    <delete id="deleteNotices" parameterType="list">
+        DELETE
+        FROM notice
+        WHERE nseq IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>
