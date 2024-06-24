@@ -27,7 +27,9 @@
                     </c:otherwise>
                 </c:choose>
         >
-            <input type="hidden" name="nseq" value="${noticeDto.nseq}"/>
+            <c:if test="${not empty noticeDto}">
+                <input type="hidden" name="nseq" value="${noticeDto.nseq}">
+            </c:if>
             <div class="notice_update_field">
                 <label for="id">작성자</label> <input type="text" name="id" id="id" value="${account.id}" readonly/>
             </div>

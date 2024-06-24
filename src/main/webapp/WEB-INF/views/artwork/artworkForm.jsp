@@ -26,7 +26,9 @@
                 </c:otherwise>
             </c:choose>
     >
-        <input type="hidden" name="aseq" value="${artworkDto.aseq}">
+        <c:if test="${not empty artworkDto}">
+            <input type="hidden" name="aseq" value="${artworkDto.aseq}">
+        </c:if>
         <div class="artwork-form_info">
             <ul>
                 <li>

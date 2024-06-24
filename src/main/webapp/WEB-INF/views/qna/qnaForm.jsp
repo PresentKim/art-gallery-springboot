@@ -38,7 +38,9 @@
                 </c:otherwise>
             </c:choose>
     >
-        <input type="hidden" name="qseq" value="${qnaDto.qseq}"/>
+        <c:if test="${not empty qnaDto}">
+            <input type="hidden" name="qseq" value="${qnaDto.qseq}">
+        </c:if>
         <div class="qna-form_input-wrapper">
             <i class="qna-icon title"></i>
             <input type="text" name="title" id="title"
