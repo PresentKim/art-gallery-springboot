@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,8 +33,16 @@ public class GalleryController {
         return "gallery/galleryList";
     }
 
-    @GetMapping("/view")
-    public String view() {
+    @GetMapping({"/{gseq}", "/view/{gseq}"})
+    public String view(@PathVariable(value = "gseq") Integer gseq, Model model) {
+        // 갤러리 정보를 가져올 수 없는 경우 404 페이지로 포워딩
+        GalleryDto galleryDto = galleryService.getGallery(gseq);
+        if (galleryDto == null) {
+            return "util/404";
+        }
+
+        // 갤러리 정보를 뷰에 전달
+        model.addAttribute("galleryDto", galleryDto);
         return "gallery/galleryView";
     }
 

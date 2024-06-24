@@ -8,6 +8,7 @@
         <title>갤러리 :: ${galleryDto.title}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/gallery.css"/>">
         <script src="<c:url value="/static/script/gallery.js"/>"></script>
+        <script type="text/javascript" src="https://ssl.pstatic.net/share/js/naver_sharebutton.js"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
@@ -17,13 +18,11 @@
         <h1>${galleryDto.title}</h1>
         <li>${galleryDto.content}</li>
         <li>
-            <a href="museum.do?command=galleryList&searchWord=${galleryDto.authorName}"> ${galleryDto.authorName}님의
-                갤러리 </a>
+            <a href="<c:url value="/gallery?search=${galleryDto.authorName}"/>"> ${galleryDto.authorName}님의 갤러리 </a>
         </li>
         <li>
             <span>조회수 ${galleryDto.readcount}</span>
             <span>
-				<script type="text/javascript" src="https://ssl.pstatic.net/share/js/naver_sharebutton.js"></script>
 				<script type="text/javascript">
 					new ShareNaver.makeButton({
                         "type": "b"
@@ -32,23 +31,24 @@
 			</span>
         </li>
         <li>
-			<span>
-				<input value="목록으로" type="button" class="gbtn-back gallery-btn"
-                       onclick="location.href='museum.do?command=galleryList'">
-			</span>
+            <a href="<c:url value="/gallery"/>">
+                <input value="목록으로" type="button" class="gbtn-back gallery-btn">
+            </a>
         </li>
         <c:if test="${account.id eq galleryDto.authorId}">
             <li class="gbtn">
-                <input value="수정하기" type="button" class="gbtn-update gallery-btn"
-                       onclick="location.href='museum.do?command=galleryUpdate&gseq=${galleryDto.gseq}'">
-                <input value="삭제하기" type="button" class="gbtn-delete gallery-btn"
-                       onclick="go_delete(${galleryDto.gseq})">
+                <a class="gbtn-update gallery-btn" href="<c:url value="/gallery/update?gseq=${galleryDto.gseq}"/>">
+                    수정하기
+                </a>
+                <div class="gbtn-delete gallery-btn" onclick="ajax('/gellery/delete', 'gseq=${galleryDto.gseq}')">
+                    삭제하기
+                </div>
             </li>
         </c:if>
     </ul>
     <ul class="gallery-main">
         <li>
-            <img alt="gallery-img" src="static/image/gallery/${galleryDto.savefilename}">
+            <img alt="gallery-img" src="<c:url value="/static/image/gallery/${galleryDto.savefilename}"/>">
         </li>
     </ul>
 </section>
