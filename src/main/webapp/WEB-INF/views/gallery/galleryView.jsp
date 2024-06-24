@@ -35,16 +35,19 @@
                 <input value="목록으로" type="button" class="gbtn-back gallery-btn">
             </a>
         </li>
-        <c:if test="${account.id eq galleryDto.authorId}">
-            <li class="gbtn">
+        <li class="gbtn">
+            <c:if test="${account.id eq galleryDto.authorId}">
                 <a class="gbtn-update gallery-btn" href="<c:url value="/gallery/update?gseq=${galleryDto.gseq}"/>">
                     수정하기
                 </a>
-                <div class="gbtn-delete gallery-btn" onclick="ajax('/gellery/delete', 'gseq=${galleryDto.gseq}')">
+            </c:if>
+            <c:if test="${account.id eq galleryDto.authorId or account.admin}">
+                <div class="gbtn-delete gallery-btn" onclick="ajax('/gallery/delete', 'gseq=${galleryDto.gseq}')">
                     삭제하기
                 </div>
-            </li>
-        </c:if>
+            </c:if>
+        </li>
+
     </ul>
     <ul class="gallery-main">
         <li>

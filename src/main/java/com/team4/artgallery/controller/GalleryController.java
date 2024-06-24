@@ -169,4 +169,34 @@ public class GalleryController {
         return ok("갤러리가 작성되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam(value = "gseq") int gseq, HttpSession session) {
+        // 로그인 상태가 아닌 경우 실패 결과 반환
+        if (!memberService.isLogin(session)) {
+            return forbidden();
+        }
+
+        // 갤러리 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
+        GalleryDto galleryDto = galleryService.getGallery(gseq);
+        if (galleryDto == null) {
+            return notFound();
+        }
+
+        // 작성자 혹은 관리자가 아닌 경우 요청 거부 결과 반환
+        if (!memberService.getLoginMember(session).getId().equals(galleryDto.getAuthorId())
+                && !memberService.isAdmin(session)
+        ) {
+            return forbidden();
+        }
+
+        // 갤러리 삭제 실패 시 오류 결과 반환
+        if (galleryService.deleteGallery(gseq) != 1) {
+            return badRequest("갤러리 삭제에 실패했습니다.");
+        }
+
+        // 갤러리 삭제 성공 시 성공 결과 반환
+        return ok("갤러리가 삭제되었습니다.", "/gallery");
+    }
+
 }
