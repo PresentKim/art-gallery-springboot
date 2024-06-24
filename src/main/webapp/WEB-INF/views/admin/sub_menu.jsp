@@ -2,10 +2,11 @@
 
 <nav class="admin-sub-menu">
     <ul>
-        <li><a href="museum.do?command=adminMemberList">회원 목록</a></li>
-        <li><a href="museum.do?command=adminArtworkList">예술품 목록</a></li>
-        <li><a href="museum.do?command=adminNoticeList">소식지 목록</a></li>
-        <li><a href="museum.do?command=adminGalleryList">이용자 갤러리 목록</a></li>
-        <li><a href="museum.do?command=adminQnaList">문의사항 목록</a></li>
+        <li><a href="<c:url value="/admin/member"/>">회원 목록</a></li>
+        <li><a href="<c:url value="/admin/artwork"/>">예술품 목록</a></li>
+        <li><a href="<c:url value="/admin/notice"/>">소식지 목록</a></li>
+        <li><a href="<c:url value="/admin/gallery"/>">이용자 갤러리 목록</a></li>
+        <li><a href="<c:url value="/admin/qna"/>">문의사항 목록</a></li>
+        <li><a href="#" onclick="ajax('admin/resetDB')">데이터베이스 초기화</a></li>
     </ul>
 </nav>
