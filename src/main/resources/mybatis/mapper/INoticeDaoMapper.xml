@@ -46,6 +46,12 @@
         WHERE nseq = #{nseq}
     </update>
 
+    <update id="increaseReadCount" parameterType="int">
+        UPDATE notice
+        SET readcount = readcount + 1
+        WHERE nseq = #{nseq}
+    </update>
+
     <delete id="deleteNotice" parameterType="int">
         DELETE
         FROM notice

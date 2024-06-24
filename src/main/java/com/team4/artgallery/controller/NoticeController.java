@@ -3,6 +3,7 @@ package com.team4.artgallery.controller;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Pagination;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,12 +39,15 @@ public class NoticeController {
     }
 
     @GetMapping({"/{nseq}", "/view/{nseq}"})
-    public String view(@PathVariable(value = "nseq") Integer nseq, Model model) {
+    public String view(@PathVariable(value = "nseq") Integer nseq, HttpSession session, Model model) {
         // 소식지 정보를 가져올 수 없는 경우 404 페이지로 포워딩
         NoticeDto noticeDto = noticeService.getNotice(nseq);
         if (noticeDto == null) {
             return "util/404";
         }
+
+        // 소식지를 읽은 것으로 처리
+        noticeService.markAsRead(session, nseq);
 
         // 소식지 정보를 뷰에 전달
         model.addAttribute("noticeDto", noticeDto);

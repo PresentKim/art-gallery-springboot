@@ -78,6 +78,14 @@ public interface INoticeDao {
      */
     int updateNotice(NoticeDto noticeDto);
 
+    /**
+     * 소식지 조회수를 증가시킵니다.
+     *
+     * @param aseq 소식지 번호
+     * @return 수정된 행의 수
+     */
+    int increaseReadCount(int aseq);
+
 
     /* ========== DELETE =========== */
 
