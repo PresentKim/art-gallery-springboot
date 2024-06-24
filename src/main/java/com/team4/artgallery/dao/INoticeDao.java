@@ -18,7 +18,7 @@ public interface INoticeDao {
      * @param noticeDto 소식지 정보
      * @return 추가된 행의 수
      */
-    int create(NoticeDto noticeDto);
+    int createNotice(NoticeDto noticeDto);
 
 
     /* ========== READ =========== */
