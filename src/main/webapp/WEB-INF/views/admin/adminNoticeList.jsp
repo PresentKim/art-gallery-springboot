@@ -17,11 +17,19 @@
         <div class="admin-list-btn">
             <!-- 체크된 id들이 배열값으로 들어오고 String 변환되어 넘어감 -->
             <input type="hidden" name="memberIds">
-            <input type="button" value="게시글 등록" onclick="location.href='museum.do?command=insertNoticeForm'">
-            <input type="button" value="수정" onclick="updatePost('updateNoticeForm&nseq=', 'li:nth-child(2)')">
-            <input type="button" value="삭제" onclick="deletePost('adminDeleteNotice', 'li:nth-child(2)')">
-            <input type="text" placeholder="검색어를 입력하세요" name="searchWord" value="${searchWord}">
-            <input type="button" value="검색" onclick="searchAdmin('adminNoticeList')">
+
+            <!-- 기능 버튼 -->
+            <div class="admin-list-func-btn">
+                <input type="button" value="등록" onclick="location.href='museum.do?command=insertNoticeForm'">
+                <input type="button" value="수정" onclick="updatePost('updateNoticeForm&nseq=', 'li:nth-child(2)')">
+                <input type="button" value="삭제" onclick="deletePost('adminDeleteNotice', 'li:nth-child(2)')">
+            </div>
+
+            <!-- 검색 기능 -->
+            <div class="admin-list-search">
+                <input type="text" placeholder="검색어를 입력하세요" name="searchWord" value="${searchWord}">
+                <input type="button" value="검색" onclick="searchAdmin('adminNoticeList')">
+            </div>
         </div>
         <ul class="admin-list-header admin-notice-list">
             <li>
@@ -74,8 +82,8 @@
             </ul>
         </c:forEach>
     </form>
+    <t:pagination/>
 </section>
-<t:pagination/>
 
     </jsp:attribute>
 </t:layout>

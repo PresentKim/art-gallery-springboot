@@ -16,16 +16,20 @@
     <form name="adminForm" method="post" onsubmit="ajaxSubmit(event)">
         <div class="admin-list-btn">
             <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
-            <input type="submit" style="display: none;" formmethod="get" formaction="<c:url value="/admin/member"/>">
+            <input class="fake-submit" type="submit" formmethod="get" formaction="<c:url value="/admin/member"/>">
 
             <!-- 기능 버튼 -->
-            <input type="submit" value="관리자 권한 부여" formaction="<c:url value="/admin/member/grant"/>">
-            <input type="submit" value="관리자 권한 해제" formaction="<c:url value="/admin/member/revoke"/>">
-            <input type="submit" value="회원 삭제" formaction="<c:url value="/admin/member/delete"/>">
+            <div class="admin-list-func-btn">
+                <input type="submit" value="관리자 권한 부여" formaction="<c:url value="/admin/member/grant"/>">
+                <input type="submit" value="관리자 권한 해제" formaction="<c:url value="/admin/member/revoke"/>">
+                <input type="submit" value="회원 삭제" formaction="<c:url value="/admin/member/delete"/>">
+            </div>
 
             <!-- 검색 기능 -->
-            <label><input type="text" placeholder="검색어를 입력하세요" name="search" value="${search}"></label>
-            <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/member"/>">
+            <div class="admin-list-search">
+                <label><input type="text" placeholder="검색어를 입력하세요" name="search" value="${search}"></label>
+                <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/member"/>">
+            </div>
         </div>
         <ul class="admin-list-header admin-member-list">
             <li>
@@ -55,8 +59,8 @@
             </ul>
         </c:forEach>
     </form>
+    <t:pagination/>
 </section>
-<t:pagination/>
 
     </jsp:attribute>
 </t:layout>

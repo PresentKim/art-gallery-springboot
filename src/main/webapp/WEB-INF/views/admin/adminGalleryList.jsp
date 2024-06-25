@@ -16,9 +16,17 @@
     <form method="post" name="adminForm">
         <div class="admin-list-btn">
             <input type="hidden" name="memberIds">
-            <input type="button" value="삭제" onclick="deletePost('adminDeleteGallery', 'li:nth-child(2)')">
-            <input type="text" placeholder="ID 또는 이름으로 검색하세요" name="searchWord" value="${searchWord}">
-            <input type="button" value="검색" onclick="searchAdmin('adminGalleryList')">
+
+            <!-- 기능 버튼 -->
+            <div class="admin-list-func-btn">
+                <input type="button" value="삭제" onclick="deletePost('adminDeleteGallery', 'li:nth-child(2)')">
+            </div>
+
+            <!-- 검색 기능 -->
+            <div class="admin-list-search">
+                <input type="text" placeholder="ID 또는 이름으로 검색하세요" name="searchWord" value="${searchWord}">
+                <input type="button" value="검색" onclick="searchAdmin('adminGalleryList')">
+            </div>
         </div>
         <ul class="admin-list-header admin-artwork-list">
             <li>
@@ -57,8 +65,8 @@
             </div>
         </c:forEach>
     </form>
+    <t:pagination/>
 </section>
-<t:pagination/>
 
     </jsp:attribute>
 </t:layout>

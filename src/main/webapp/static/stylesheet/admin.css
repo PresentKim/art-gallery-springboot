@@ -76,14 +76,18 @@
 
 /* 관리자 페이지의 리스트 스타일 =========================>*/
 .admin-list {
-    margin: 0 0 2rem 12rem;
+    padding: 0 0 2rem 12rem;
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
+.admin-list > form {
+    padding-right: 1rem;
+}
+
 .admin-list ul {
-    width: 80%;
+    /* width: 80%; */
     display: flex;
     border: 1px solid gray;
 }
@@ -165,11 +169,14 @@
 
 .admin-list-btn {
     display: flex;
+    width: 100%;
     margin: 1rem 0;
     flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
 }
 
-.admin-list-btn input[type=button] {
+.admin-list-btn input[type="button"], .admin-list-btn input[type="submit"] {
     width: 8rem;
     height: 2rem;
     padding: 0;
@@ -184,7 +191,11 @@
     cursor: pointer;
 }
 
-.admin-list-btn input[type=button]:hover {
+.admin-list-btn .fake-submit {
+    display: none;
+}
+
+.admin-list-btn input[type="button"]:hover, .admin-list-btn input[type="submit"]:hover {
     background-color: black;
     color: white;
 }

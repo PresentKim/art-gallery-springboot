@@ -17,18 +17,21 @@
     <form name="adminForm" method="get" action="<c:url value="/admin/artwork"/>" onsubmit="ajaxSubmit(event)">
         <div class="admin-list-btn">
             <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
-            <input type="submit" style="display: none;" formmethod="get" formaction="<c:url value="/admin/artwork"/>">
+            <input class="fake-submit" type="submit" formmethod="get" formaction="<c:url value="/admin/artwork"/>">
 
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
-                <input type="submit" value="추가" formmethod="post" formaction="<c:url value="/artwork/write"/>">
+                <input type="submit" value="등록" formmethod="get" formaction="<c:url value="/artwork/write"/>">
                 <input type="submit" value="수정" formmethod="post" formaction="<c:url value="/admin/artwork/edit"/>">
                 <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/admin/artwork/delete"/>">
             </div>
 
             <!-- 검색 기능 -->
-            <label><input type="text" placeholder="작품명 또는 작가명을 입력하세요" name="search" value="${filter.search}"></label>
-            <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/artwork"/>">
+            <div class="admin-list-search">
+                <label><input type="text" placeholder="작품명 또는 작가명을 입력하세요" name="search"
+                              value="${filter.search}"></label>
+                <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/artwork"/>">
+            </div>
         </div>
         <ul class="admin-list-header admin-member-list">
             <li>
@@ -83,8 +86,8 @@
             </div>
         </c:forEach>
     </form>
+    <t:pagination/>
 </section>
-<t:pagination/>
 
     </jsp:attribute>
 </t:layout>
