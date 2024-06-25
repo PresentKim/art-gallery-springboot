@@ -5,7 +5,6 @@ import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Pagination;
-import com.team4.artgallery.util.UrlUtil;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -19,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 @Controller
@@ -142,7 +143,7 @@ public class MemberController {
         }
 
         // 회원가입 성공 시 성공 결과와 돌아갈 URL 반환 (로그인 페이지로 이동)
-        return ok("회원가입에 성공하였습니다.", "/member/login?returnUrl=" + UrlUtil.encode(returnUrl));
+        return ok("회원가입에 성공하였습니다.", "/member/login?returnUrl=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8));
     }
 
     @PostMapping("/idCheck")
@@ -232,7 +233,7 @@ public class MemberController {
         // 로그인 상태가 아니라면 에러 결과 반환
         MemberDto memberDto = memberService.getLoginMember(session);
         if (memberDto == null) {
-            return ok("로그인이 필요합니다", "/member/login?returnUrl=" + UrlUtil.encode("/member/withdraw"));
+            return ok("로그인이 필요합니다", "/member/login?returnUrl=" + URLEncoder.encode("/member/withdraw", StandardCharsets.UTF_8));
         }
 
         // 비밀번호가 일치하지 않다면 에러 결과 반환
@@ -278,7 +279,7 @@ public class MemberController {
         // 로그인 상태가 아니라면 에러 결과 반환
         MemberDto memberDto = memberService.getLoginMember(session);
         if (memberDto == null) {
-            return ok("로그인이 필요합니다", "/member/login?returnUrl=" + UrlUtil.encode("/artwork/" + aseq));
+            return ok("로그인이 필요합니다", "/member/login?returnUrl=" + URLEncoder.encode("/artwork/" + aseq, StandardCharsets.UTF_8));
         }
 
         try {

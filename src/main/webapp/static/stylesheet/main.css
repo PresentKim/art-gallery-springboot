@@ -90,8 +90,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 70%;
-    margin: 0 auto;
-    margin-bottom: 150px;
+    margin: 0 auto 150px;
 }
 
 /* Main Info Area */
@@ -256,8 +255,7 @@
     width: 70%;
     padding: 0 15px;
     position: relative;
-    margin: 70px auto;
-    margin-bottom: 150px;
+    margin: 70px auto 150px;
 }
 
 .main_notice_inner {

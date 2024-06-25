@@ -1,13 +1,9 @@
 package com.team4.artgallery.util;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.ui.Model;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 @Getter
@@ -101,18 +97,18 @@ public class Pagination {
     }
 
     /**
-     * SQL을 위한 개수 제한을 반환합니다.
+     * SQL 쿼리를 위한 개수 LIMIT 값을 반환합니다.
      *
-     * @return 아이템 시작 인덱스
+     * @return 페이지 LIMIT 값
      */
     public int getLimit() {
         return itemsPerPage;
     }
 
     /**
-     * SQL을 위한 오프셋을 반환합니다.
+     * SQL 쿼리를 위한 OFFSET 값을 반환합니다.
      *
-     * @return 아이템 오프셋
+     * @return 페이지 OFFSET 값
      */
     public int getOffset() {
         return Math.max(0, getCurrentPage() - 1) * itemsPerPage;
@@ -213,47 +209,6 @@ public class Pagination {
     }
 
     /**
-     * 모델에 Pagination 객체를 적용합니다.
-     *
-     * @param model 모델
-     */
-    public Pagination applyTo(Model model) {
-        return applyTo(model, "pagination");
-    }
-
-    /**
-     * 모델에 Pagination 객체를 적용합니다.
-     *
-     * @param model 모델
-     */
-    public Pagination applyTo(Model model, String attributeName) {
-        model.addAttribute(attributeName, this);
-
-        return this;
-    }
-
-    /**
-     * SQL 쿼리 문의 1, 2번 파라미터에 LIMIT과 OFFSET을 설정합니다.
-     *
-     * @param pstmt SQL 쿼리 문 객체
-     */
-    public void applyTo(PreparedStatement pstmt) throws SQLException {
-        applyTo(pstmt, 1, 2);
-    }
-
-    /**
-     * SQL 쿼리 문의 파라미터에 LIMIT과 OFFSET을 설정합니다.
-     *
-     * @param pstmt       SQL 쿼리 문 객체
-     * @param limitIndex  LIMIT 파라미터 인덱스
-     * @param offsetIndex OFFSET 파라미터 인덱스
-     */
-    public void applyTo(PreparedStatement pstmt, int limitIndex, int offsetIndex) throws SQLException {
-        pstmt.setInt(limitIndex, getLimit());
-        pstmt.setInt(offsetIndex, getOffset());
-    }
-
-    /**
      * Pagination 객체와 리스트를 묶어 Pair 객체로 반환합니다.
      *
      * @param list 리스트
@@ -262,35 +217,6 @@ public class Pagination {
      */
     public <T> Pair<T> pair(List<T> list) {
         return new Pair<>(this, list);
-    }
-
-    /**
-     * 주어진 인자로 Pagination 객체를 생성하고 Model 객체에 적용합니다.
-     *
-     * @param currentPage 현재 페이지
-     * @param itemCount   아이템의 총 갯수
-     * @param urlTemplate 페이지 URL 템플릿
-     * @param model       모델
-     * @return Pagination 객체
-     */
-    public static Pagination with(int currentPage, int itemCount, String urlTemplate, Model model) {
-        return new Pagination()
-                .setCurrentPage(currentPage)
-                .setItemCount(itemCount)
-                .setUrlTemplate(urlTemplate)
-                .applyTo(model);
-    }
-
-    /**
-     * 요청의 `page` 파라미터로 부터 Pagination 객체를 생성하고 아이템의 총 갯수와 URL 템플릿을 설정합니다.
-     *
-     * @param request   요청
-     * @param itemCount 아이템의 총 갯수
-     * @return Pagination 객체
-     * @deprecated 사용하지 않는 메서드입니다.
-     */
-    public static Pagination with(HttpServletRequest request, int itemCount, String urlParams) {
-        return new Pagination();
     }
 
     public record Pair<T>(

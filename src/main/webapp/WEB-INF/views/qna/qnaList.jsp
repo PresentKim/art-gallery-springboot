@@ -48,7 +48,7 @@
                                 <c:when test="${sessionScope[qnaPassKey]}">
                                     <i class="qna-icon owner"></i>
                                 </c:when>
-                                <c:when test="${qnaDto.isPublic()}">
+                                <c:when test="${qnaDto.public}">
                                     <i class="qna-icon public"></i>
                                 </c:when>
                                 <c:when test="${account.admin}">

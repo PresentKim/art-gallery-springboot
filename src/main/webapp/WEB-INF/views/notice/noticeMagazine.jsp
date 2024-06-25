@@ -6,7 +6,6 @@
     <jsp:attribute name="head">
         <title>소식지 :: 매거진</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
-        <script src="<c:url value="/static/script/notice.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">

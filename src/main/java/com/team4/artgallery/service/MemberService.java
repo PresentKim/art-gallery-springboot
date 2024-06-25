@@ -3,7 +3,6 @@ package com.team4.artgallery.service;
 import com.team4.artgallery.dao.IMemberDao;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.util.Pagination;
-import com.team4.artgallery.util.UrlUtil;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -14,6 +13,9 @@ import lombok.Setter;
 import lombok.experimental.Delegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -138,7 +140,7 @@ public class MemberService {
      * @param returnUrl 되돌아갈 페이지 URL
      */
     public String redirectToLogin(String returnUrl) {
-        return "redirect:/member/login?returnUrl=" + UrlUtil.encode(returnUrl);
+        return "redirect:/member/login?returnUrl=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8);
     }
 
     @Getter

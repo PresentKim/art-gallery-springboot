@@ -9,7 +9,6 @@
     <jsp:attribute name="head">
         <title>소식지 :: ${pagination.currentPage}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
-        <script src="<c:url value="/static/script/notice.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">

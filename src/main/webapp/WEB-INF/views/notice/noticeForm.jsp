@@ -8,7 +8,6 @@
     <jsp:attribute name="head">
         <title>${empty noticeDto ? '소식지 등록' : '소식지 수정 :: '}${noticeDto.nseq}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
-        <script src="<c:url value="/static/script/notice.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
