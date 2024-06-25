@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/qna")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class QnaController {
 
     private final QnaService qnaService;

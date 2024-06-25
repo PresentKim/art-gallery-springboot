@@ -7,7 +7,6 @@ import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +25,7 @@ import java.io.StringWriter;
 import java.util.logging.Logger;
 
 @ControllerAdvice
-
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
     @Delegate

@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/gallery")
 @CheckAdmin
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class AdminGalleryController {
 
     private final GalleryService galleryService;

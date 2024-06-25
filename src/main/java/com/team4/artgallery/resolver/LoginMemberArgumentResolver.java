@@ -16,7 +16,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final MemberService memberService;

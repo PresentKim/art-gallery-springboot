@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class RootController {
 
     private final NoticeService noticeService;

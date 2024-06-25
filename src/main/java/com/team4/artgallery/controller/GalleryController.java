@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/gallery")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class GalleryController {
 
     private final GalleryService galleryService;

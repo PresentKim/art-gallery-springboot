@@ -13,7 +13,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class MemberService {
 
     @Delegate

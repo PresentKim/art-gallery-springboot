@@ -17,7 +17,7 @@ import java.util.Arrays;
 @Controller
 @RequestMapping("/admin")
 @CheckAdmin
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class AdminController {
 
     private final DataBaseService dataBaseService;

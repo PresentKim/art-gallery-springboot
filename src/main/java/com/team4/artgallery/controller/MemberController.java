@@ -26,7 +26,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("/member")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;

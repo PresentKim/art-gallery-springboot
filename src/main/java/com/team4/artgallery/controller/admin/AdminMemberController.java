@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/member")
 @CheckAdmin
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class AdminMemberController {
 
     private final MemberService memberService;

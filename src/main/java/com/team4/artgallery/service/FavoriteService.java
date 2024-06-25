@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class FavoriteService {
 
     @Delegate

@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class DataBaseService {
 
     private final DataSource dataSource;

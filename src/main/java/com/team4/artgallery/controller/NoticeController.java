@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/notice")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class NoticeController {
 
     private final NoticeService noticeService;

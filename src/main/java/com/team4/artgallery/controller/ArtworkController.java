@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/artwork")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class ArtworkController {
 
     private final ArtworkService artworkService;

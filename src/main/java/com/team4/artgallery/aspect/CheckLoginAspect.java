@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class CheckLoginAspect {
 
     private final MemberService memberService;
