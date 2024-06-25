@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface CheckLogin {
     @AliasFor("value")
-    String returnUrl() default "/";
+    String returnUrl() default "";
 
     @AliasFor("returnUrl")
-    String value() default "/";
+    String value() default "";
 }
