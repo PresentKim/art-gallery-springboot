@@ -12,6 +12,7 @@
         <where>
             <if test="search != null and search != ''">
                 OR author_name LIKE CONCAT('%', #{search}, '%')
+                OR author_id LIKE CONCAT('%', #{search}, '%')
                 OR title LIKE CONCAT('%', #{search}, '%')
                 OR content LIKE CONCAT('%', #{search}, '%')
             </if>
