@@ -22,7 +22,7 @@ public interface IArtworkDao {
      * @param artworkDto 예술품 정보
      * @return 추가된 행의 수
      */
-    int create(ArtworkDto artworkDto);
+    int createArtwork(ArtworkDto artworkDto);
 
 
     /* ========== READ =========== */

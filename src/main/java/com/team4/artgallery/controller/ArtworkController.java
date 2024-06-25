@@ -158,7 +158,7 @@ public class ArtworkController {
         }
 
         // 예술품 등록 실패 시 오류 결과 반환
-        if (artworkService.create(artworkDto) != 1) {
+        if (artworkService.createArtwork(artworkDto) != 1) {
             return internalServerError("예술품 등록에 실패했습니다.");
         }
 
