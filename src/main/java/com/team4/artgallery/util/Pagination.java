@@ -38,7 +38,7 @@ public class Pagination {
     /**
      * 페이지의 URL 템플릿
      */
-    private String urlTemplate = "museum.do?command=example&page=%d";
+    private String urlTemplate = "";
 
     /**
      * 현재 페이지를 반환합니다.
