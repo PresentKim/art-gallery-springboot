@@ -1,12 +1,18 @@
 package com.team4.artgallery.controller;
 
+import com.team4.artgallery.util.ajax.ResponseBody;
+import com.team4.artgallery.util.ajax.ResponseHelper;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.Delegate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.io.PrintWriter;
@@ -14,16 +20,48 @@ import java.io.StringWriter;
 import java.util.logging.Logger;
 
 @ControllerAdvice
+
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class GlobalExceptionHandler {
 
-    @RequestMapping("/error")
+    @Delegate
+    private final ResponseHelper responseHelper;
+
     @ExceptionHandler(Exception.class)
-    public String handleException(Exception e, Model model, WebRequest request) {
-        // 404 에러 처리
-        if (e instanceof NoResourceFoundException) {
-            return "util/404";
+    public Object handleGetException(Exception e, HttpServletRequest request) {
+        ResponseEntity<ResponseBody> response = handlePostException(e);
+
+        // GET 요청이 아닌 경우에는 그대로 반환
+        if (!"GET".equals(request.getMethod())) {
+            return response;
         }
 
+        // GET 요청인 경우에는 에러 페이지로 포워딩
+        ModelAndView modelAndView = new ModelAndView();
+        ResponseBody responseBody = response.getBody();
+        if (responseBody != null) {
+            modelAndView.addObject("message", responseBody.getMessage());
+            modelAndView.addObject("url", responseBody.getUrl());
+        }
+
+        if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
+            modelAndView.setViewName("util/404");
+        } else if (response.getStatusCode() == HttpStatus.BAD_REQUEST) {
+            modelAndView.setViewName("util/alert");
+        } else {
+            modelAndView.setViewName("util/500");
+        }
+
+        return modelAndView;
+    }
+
+    public ResponseEntity<ResponseBody> handlePostException(Exception e) {
+        // NoResourceFoundException 예외 처리
+        if (e instanceof NoResourceFoundException) {
+            return notFound();
+        }
+
+        // MethodArgumentTypeMismatchException 예외 처리
         if (e instanceof MethodArgumentTypeMismatchException ex) {
             MethodParameter parameter = ex.getParameter();
             Object value = ex.getValue();
@@ -32,17 +70,14 @@ public class GlobalExceptionHandler {
                     + " 주어진 값은 " + (value == null ? "null" : value + "(" + value.getClass().getName() + ")") + "이므로 처리할 수 없습니다.";
 
             Logger.getGlobal().warning(message);
-            model.addAttribute("message", message);
-            return "util/alert";
+            return badRequest("잘못된 " + ex.getPropertyName() + "값입니다");
         }
 
-        // 에러 내용과 함께 500 페이지로 이동
+        // 에러 내용과 함께 500 에러 반환
         StringWriter stringWriter = new StringWriter();
         e.printStackTrace(new PrintWriter(stringWriter));
-        model.addAttribute("errorMessage", stringWriter);
-
         System.out.println(stringWriter);
-        return "util/500";
+        return internalServerError();
     }
 
 }
