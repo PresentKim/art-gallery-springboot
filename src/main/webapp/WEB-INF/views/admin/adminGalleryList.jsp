@@ -41,8 +41,8 @@
             <li>조회수</li>
             <li>미리보기</li>
         </ul>
-        <c:forEach items="${galleryList}" var="galleryDto" varStatus="index">
-        <c:set var="previewId" value="artwork-${galleryDto.gseq}-${index}"/>
+        <c:forEach items="${galleryList}" var="galleryDto" varStatus="status">
+            <c:set var="previewId" value="preview-${galleryDto.gseq}-${status.index}"/>
             <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
                 <li><input type="checkbox" class="check-box"></li>
                 <li>${galleryDto.gseq}</li>

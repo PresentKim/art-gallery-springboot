@@ -63,7 +63,8 @@
             <li>등록일</li>
             <li>미리보기</li>
         </ul>
-        <c:forEach items="${artworkList}" var="artworkDto" varStatus="index">
+        <c:forEach items="${artworkList}" var="artworkDto" varStatus="status">
+            <c:set var="previewId" value="preview-${artworkDto.aseq}-${status.index}"/>
             <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
                 <li>
                     <label><input name="aseqs" type="checkbox" value="${artworkDto.aseq}" class="check-box"></label>
@@ -77,11 +78,13 @@
                 <li>${artworkDto.material}</li>
                 <li>${artworkDto.size}</li>
                 <li>${artworkDto.indate}</li>
-                <li><img alt="artwork-img" src="${artworkDto.fullSavefilename}"
-                         onmouseover="previewImg('artwork-${artworkDto.aseq}-${index}')"
-                         onmouseleave="previewImg('artwork-${artworkDto.aseq}-${index}')"></li>
+                <li>
+                    <img alt="artwork-img" src="${artworkDto.fullSavefilename}"
+                         onmouseover="previewImg('${previewId}')"
+                         onmouseleave="previewImg('${previewId}')">
+                </li>
             </ul>
-            <div id="artwork-${artworkDto.aseq}-${index}" class="preview hidden">
+            <div id="${previewId}" class="preview hidden">
                 <img alt="artwork-img" src="${artworkDto.fullSavefilename}">
             </div>
         </c:forEach>
