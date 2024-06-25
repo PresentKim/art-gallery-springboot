@@ -30,9 +30,52 @@ public class GlobalExceptionHandler {
     private final ResponseHelper responseHelper;
 
     @ExceptionHandler(Exception.class)
-    public Object handleGetException(Exception e, HttpServletRequest request) {
-        ResponseEntity<ResponseBody> response = handlePostException(e);
+    public Object handleException(Exception e, HttpServletRequest request) {
+        StringWriter stringWriter = new StringWriter();
+        e.printStackTrace(new PrintWriter(stringWriter));
 
+        System.out.println(stringWriter);
+
+        return processResponse(internalServerError(), request);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public Object handleException(NoResourceFoundException e, HttpServletRequest request) {
+        return processResponse(notFound(), request);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public Object handleException(MaxUploadSizeExceededException e, HttpServletRequest request) {
+        return processResponse(badRequest("파일 크기가 너무 큽니다. 10MB 이하의 파일만 업로드 가능합니다."), request);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public Object handleException(MissingServletRequestParameterException e, HttpServletRequest request) {
+        return processResponse(badRequest("파라미터 " + e.getParameterName() + "이(가) 누락되었습니다."), request);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public Object handleException(MethodArgumentTypeMismatchException e, HttpServletRequest request) {
+        MethodParameter parameter = e.getParameter();
+        Object value = e.getValue();
+        String valueString = value == null ? "null" : value + "(" + value.getClass().getName() + ")";
+        Logger.getGlobal().warning(
+                "파라미터 " + e.getPropertyName() + "은(는) "
+                        + parameter.getParameterType().getName() + " 타입이어야 합니다."
+                        + " 주어진 값은 " + valueString + "이므로 처리할 수 없습니다."
+        );
+
+        return processResponse(badRequest("파라미터 " + e.getPropertyName() + "이(가) 올바르지 않습니다."), request);
+    }
+
+    /**
+     * 예외로부터 생성된 ResponseEntity 를 GET 요청인 경우 ModelAndView 로 변환하여 반환, POST 요청인 경우 그대로 반환
+     *
+     * @param response ResponseEntity 객체
+     * @param request  HttpServletRequest 객체
+     * @return GET 요청인 경우 ModelAndView, POST 요청인 경우 ResponseEntity
+     */
+    private Object processResponse(ResponseEntity<ResponseBody> response, HttpServletRequest request) {
         // GET 요청이 아닌 경우에는 그대로 반환
         if (!"GET".equals(request.getMethod())) {
             return response;
@@ -55,43 +98,6 @@ public class GlobalExceptionHandler {
         }
 
         return modelAndView;
-    }
-
-    public ResponseEntity<ResponseBody> handlePostException(Exception e) {
-        // NoResourceFoundException 예외 처리
-        if (e instanceof NoResourceFoundException) {
-            return notFound();
-        }
-
-        // MaxUploadSizeExceededException 예외 처리
-        if (e instanceof MaxUploadSizeExceededException) {
-            return badRequest("파일 크기가 너무 큽니다. 10MB 이하의 파일만 업로드 가능합니다.");
-        }
-
-        // MissingServletRequestParameterException 예외 처리
-        if (e instanceof MissingServletRequestParameterException ex) {
-            return badRequest("파라미터 " + ex.getParameterName() + "이(가) 누락되었습니다.");
-        }
-
-        // MethodArgumentTypeMismatchException 예외 처리
-        if (e instanceof MethodArgumentTypeMismatchException ex) {
-            MethodParameter parameter = ex.getParameter();
-            Object value = ex.getValue();
-            String valueString = value == null ? "null" : value + "(" + value.getClass().getName() + ")";
-            Logger.getGlobal().warning(
-                    "파라미터 " + ex.getPropertyName() + "은(는) "
-                            + parameter.getParameterType().getName() + " 타입이어야 합니다."
-                            + " 주어진 값은 " + valueString + "이므로 처리할 수 없습니다."
-            );
-
-            return badRequest("파라미터 " + ex.getPropertyName() + "이(가) 올바르지 않습니다.");
-        }
-
-        // 에러 내용과 함께 500 에러 반환
-        StringWriter stringWriter = new StringWriter();
-        e.printStackTrace(new PrintWriter(stringWriter));
-        System.out.println(stringWriter);
-        return internalServerError();
     }
 
 }
