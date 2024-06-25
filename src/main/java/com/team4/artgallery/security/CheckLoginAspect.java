@@ -13,8 +13,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
-
 @Aspect
 @Component
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -23,17 +21,21 @@ public class CheckLoginAspect {
     private final MemberService memberService;
     private final SessionService sessionService;
 
-    @Before("@annotation(com.team4.artgallery.annotation.CheckLogin)")
-    public void checkLogin(JoinPoint joinPoint) {
+    /*
+     * @Before(value = "@annotation(com.team4.artgallery.annotation.CheckAdmin)")
+     * 위와 같은 방식으로 직접 클래스를 작성해도 되지만, "어노테이션 매개변수" 방식을 통해 사용할 수 있습니다.
+     * 이 경우 해당 어노테이션 매개변수의 이름을 클래스 대신 사용하면 됩니다. (pointcut expression)
+     *
+     * @annotation() 은 메서드에 붙은 어노테이션을 찾아내는데 사용됩니다.
+     * @within() 은 클래스에 붙은 어노테이션을 찾아내는데 사용됩니다.
+     */
+    @Before(value = "@annotation(checkLogin) || @within(checkLogin)")
+    public void checkLogin(JoinPoint joinPoint, CheckLogin checkLogin) {
         // 세션이 없거나 로그인하지 않은 경우 예외 발생
         HttpSession session = sessionService.getSession();
         if (session == null || !memberService.isLogin(session)) {
-            // JoinPoint 객체로부터 메서드 시그니처를 가져와서 메서드에 추가된 CheckLogin 어노테이션 객체를 가져옵니다.
-            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-            Method method = signature.getMethod();
-            CheckLogin checkLogin = method.getAnnotation(CheckLogin.class);
-
             // 동적인 returnUrl을 생성하기 위해 파라미터 이름과 값을 가져옵니다.
+            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             String[] paramNames = signature.getParameterNames();
             Object[] args = joinPoint.getArgs();
 
