@@ -2,6 +2,7 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IQnaDao;
 import com.team4.artgallery.dto.QnaDto;
+import com.team4.artgallery.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
@@ -79,6 +80,34 @@ public class QnaService {
      */
     public boolean authorizeForRestrict(HttpSession session, int qseq) {
         return authorizeForPrivilege(session, qseq) || qnaDao.getInquiry(qseq).isPublic();
+    }
+
+
+    /**
+     * 문의글 목록을 가져옵니다.
+     *
+     * @param page   페이지 번호
+     * @param filter 검색 조건 (검색 조건이 비어있으면 전체 문의글 목록을 가져옵니다)
+     * @param path   페이지 경로
+     * @return 문의글 목록과 페이지네이션 정보
+     */
+    public Pagination.Pair<QnaDto> getOrSearchInquiries(int page, IQnaDao.Filter filter, String path) {
+        // 검색 조건이 없을 경우 전체 문의글 목록을 가져옵니다.
+        if (filter.isEmpty()) {
+            Pagination pagination = new Pagination()
+                    .setCurrentPage(page)
+                    .setItemCount(countInquiries())
+                    .setUrlTemplate("/" + path + "?page=%d");
+
+            return pagination.pair(getInquiries(pagination));
+        }
+
+        // 검색 조건이 있을 경우 검색 결과를 가져옵니다.
+        Pagination pagination = new Pagination()
+                .setCurrentPage(page)
+                .setItemCount(countSearchInquiries(filter))
+                .setUrlTemplate("/" + path + "?page=%d&" + filter.toUrlParam());
+        return pagination.pair(searchInquiries(filter, pagination));
     }
 
 }

@@ -2,9 +2,13 @@ package com.team4.artgallery.dao;
 
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.util.Pagination;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -40,11 +44,28 @@ public interface IQnaDao {
     List<QnaDto> getInquiries(Pagination pagination);
 
     /**
+     * 검색된 문의글 목록을 가져옵니다
+     *
+     * @param filter     검색 조건
+     * @param pagination 페이지네이션 정보
+     * @return 검색된 문의글 목록
+     */
+    List<QnaDto> searchInquiries(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
+
+    /**
      * 전체 문의글 수를 가져옵니다
      *
      * @return 전체 문의글 수
      */
     int countInquiries();
+
+    /**
+     * 검색된 문의글 수를 가져옵니다
+     *
+     * @param filter 검색 조건
+     * @return 검색된 문의글 수
+     */
+    int countSearchInquiries(@Param("filter") Filter filter);
 
 
     /* ========== UPDATE =========== */
@@ -83,5 +104,52 @@ public interface IQnaDao {
      * @return 삭제된 행의 수
      */
     int deleteInquiries(List<Integer> qseqList);
+
+
+    /* ========== INNER CLASS =========== */
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    class Filter {
+
+        private String replyyn;
+        private String search;
+
+        public boolean reply() {
+            return "Y".equals(replyyn);
+        }
+
+        public boolean hasReply() {
+            return replyyn != null && !replyyn.isEmpty();
+        }
+
+        public boolean hasSearch() {
+            return search != null && !search.isEmpty();
+        }
+
+        public boolean isEmpty() {
+            return !hasReply() && !hasSearch();
+        }
+
+        public String toUrlParam() {
+            if (isEmpty()) {
+                return "";
+            }
+
+            List<String> params = new ArrayList<>();
+
+            if (hasReply()) {
+                params.add("replyyn=" + replyyn);
+            }
+
+            if (hasSearch()) {
+                params.add("search=" + search);
+            }
+
+            return String.join("&", params);
+        }
+
+    }
 
 }

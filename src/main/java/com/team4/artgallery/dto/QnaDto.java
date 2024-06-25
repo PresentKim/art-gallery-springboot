@@ -29,4 +29,8 @@ public class QnaDto {
         publicyn = isPublic ? "Y" : "N";
     }
 
+    public boolean hasReply() {
+        return reply != null && !reply.isEmpty();
+    }
+
 }

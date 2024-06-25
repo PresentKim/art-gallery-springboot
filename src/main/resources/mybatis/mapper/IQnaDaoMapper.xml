@@ -3,6 +3,23 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team4.artgallery.dao.IQnaDao">
+    <sql id="search">
+        <where>
+            <if test="filter.hasReply">
+                <choose>
+                    <when test="filter.reply()">
+                        AND (reply IS NOT NULL AND reply != '')
+                    </when>
+                    <otherwise>
+                        AND (reply IS NULL OR reply = '')
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="filter.hasSearch">
+                AND (title LIKE CONCAT('%', #{filter.search}, '%') OR content LIKE CONCAT('%', #{filter.search}, '%'))
+            </if>
+        </where>
+    </sql>
 
     <insert id="createInquiry" parameterType="com.team4.artgallery.dto.QnaDto" useGeneratedKeys="true"
             keyProperty="qseq">
@@ -24,9 +41,24 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
+    <select id="searchInquiries" parameterType="com.team4.artgallery.util.Pagination"
+            resultType="com.team4.artgallery.dto.QnaDto">
+        SELECT *
+        FROM qna
+        <include refid="search"/>
+        ORDER BY qseq DESC
+        LIMIT #{pagination.limit} OFFSET #{pagination.offset}
+    </select>
+
     <select id="countInquiries" resultType="int">
         SELECT COUNT(*)
         FROM qna
+    </select>
+
+    <select id="countSearchInquiries" resultType="int">
+        SELECT COUNT(*)
+        FROM qna
+        <include refid="search"/>
     </select>
 
     <update id="updateInquiry" parameterType="com.team4.artgallery.dto.QnaDto">
