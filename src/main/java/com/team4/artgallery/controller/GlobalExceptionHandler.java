@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -86,6 +87,11 @@ public class GlobalExceptionHandler {
         // 보안을 위해 관리자가 아닌 경우 해당 페이지 혹은 기능이 존재하지 않는 것처럼 처리합니다
         // (브루트 포스 공격을 방지하기 위함)
         return processResponse(notFound(), request);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public Object handleException(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
+        return processResponse(methodNotAllowed(), request);
     }
 
 

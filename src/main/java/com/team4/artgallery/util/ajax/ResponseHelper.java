@@ -204,6 +204,32 @@ public class ResponseHelper {
     }
 
     /**
+     * METHOD_NOT_ALLOWED(405) 요청된 메소드가 허용되지 않음을 나타내는 코드를 반환
+     */
+    public ResponseEntity<ResponseBody> methodNotAllowed() {
+        return methodNotAllowed("허용되지 않은 요청입니다");
+    }
+
+    /**
+     * METHOD_NOT_ALLOWED(405) 요청된 메소드가 허용되지 않음을 나타내는 코드를 반환
+     *
+     * @param message 응답 메시지 (alert 메시지)
+     */
+    public ResponseEntity<ResponseBody> methodNotAllowed(String message) {
+        return methodNotAllowed(message, "");
+    }
+
+    /**
+     * METHOD_NOT_ALLOWED(405) 요청된 메소드가 허용되지 않음을 나타내는 코드를 반환
+     *
+     * @param message 응답 메시지 (alert 메시지)
+     * @param url     이동할 URL
+     */
+    public ResponseEntity<ResponseBody> methodNotAllowed(String message, String url) {
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(new ResponseBody(message, url));
+    }
+
+    /**
      * INTERNAL_SERVER_ERROR(500) 요청이 서버 오류로 실패했음을 나타내는 코드를 반환
      */
     public ResponseEntity<ResponseBody> internalServerError() {
