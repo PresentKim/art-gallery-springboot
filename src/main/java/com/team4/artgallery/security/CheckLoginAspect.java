@@ -47,7 +47,7 @@ public class CheckLoginAspect {
             }
 
             // NotLoginException 예외를 발생시킵니다.
-            throw new NotLoginException(memberService.redirectToLogin(returnUrl));
+            throw new NotLoginException(memberService.getRedirectToLogin(returnUrl));
         }
     }
 
