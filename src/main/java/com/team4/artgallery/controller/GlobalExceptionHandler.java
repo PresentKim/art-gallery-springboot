@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -59,6 +61,11 @@ public class GlobalExceptionHandler {
         // NoResourceFoundException 예외 처리
         if (e instanceof NoResourceFoundException) {
             return notFound();
+        }
+
+        // MaxUploadSizeExceededException 예외 처리
+        if (e instanceof MaxUploadSizeExceededException) {
+            return badRequest("파일 크기가 너무 큽니다. 10MB 이하의 파일만 업로드 가능합니다.");
         }
 
         // MethodArgumentTypeMismatchException 예외 처리
