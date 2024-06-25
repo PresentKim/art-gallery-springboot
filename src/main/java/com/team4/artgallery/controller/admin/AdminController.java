@@ -1,14 +1,19 @@
 package com.team4.artgallery.controller.admin;
 
+import com.team4.artgallery.service.DataBaseService;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/admin")
@@ -17,6 +22,8 @@ public class AdminController {
 
     private final MemberService memberService;
 
+    private final DataBaseService dataBaseService;
+
     @Delegate
     private final ResponseHelper responseHelper;
 
@@ -24,16 +31,30 @@ public class AdminController {
     public String root(HttpSession session) {
         // 관리자가 아닌 경우 404 페이지로 포워딩
         if (!memberService.isAdmin(session)) {
-            System.out.println("관리자가 아닙니다");
             return "util/404";
         }
 
         return "admin/adminMain";
     }
 
-    @GetMapping("/resetDB")
-    public void resetDB() {
-        // TODO: Implement this method
+    @PostMapping("/reset")
+    public ResponseEntity<?> reset(HttpSession session) {
+        // 관리자가 아닌 경우 404 페이지로 포워딩
+        if (!memberService.isAdmin(session)) {
+            return forbidden();
+        }
+
+        // 데이터베이스 초기화 시도
+        try {
+            dataBaseService.resetDatabase();
+        } catch (Exception e) {
+            // 오류가 발생한 경우 실패 응답 반환
+            System.out.println(Arrays.toString(e.getStackTrace()));
+            return internalServerError("데이터베이스 초기화에 실패했습니다.");
+        }
+
+        // 데이터베이스 초기화에 성공한 경우 성공 응답 반환
+        return ok("데이터베이스가 초기화되었습니다.");
     }
 
 }
