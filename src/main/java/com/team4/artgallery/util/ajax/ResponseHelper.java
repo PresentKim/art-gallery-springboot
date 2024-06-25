@@ -2,14 +2,14 @@ package com.team4.artgallery.util.ajax;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import java.util.Objects;
 
 import static jakarta.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 
-@Repository
+@Component
 public class ResponseHelper {
 
     /**
