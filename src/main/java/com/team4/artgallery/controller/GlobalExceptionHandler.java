@@ -91,14 +91,17 @@ public class GlobalExceptionHandler {
         ModelAndView modelAndView = new ModelAndView();
         ResponseBody responseBody = response.getBody();
         if (responseBody != null) {
+            String url = responseBody.getUrl();
             modelAndView.addObject("message", responseBody.getMessage());
-            modelAndView.addObject("url", responseBody.getUrl());
+            modelAndView.addObject("url", url);
+
+            if (url != null) {
+                modelAndView.setViewName("util/alert");
+            }
         }
 
         if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
             modelAndView.setViewName("util/404");
-        } else if (response.getStatusCode() == HttpStatus.BAD_REQUEST) {
-            modelAndView.setViewName("util/alert");
         } else {
             modelAndView.setViewName("util/500");
         }
