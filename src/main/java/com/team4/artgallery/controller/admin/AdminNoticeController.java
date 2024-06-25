@@ -10,12 +10,12 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/notice")
@@ -48,6 +48,30 @@ public class AdminNoticeController {
         model.addAttribute("pagination", pair.pagination());
         model.addAttribute("noticeList", pair.list());
         return "admin/adminNoticeList";
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<?> edit(
+            @RequestParam(value = "nseqs", required = false) List<Integer> nseqs,
+            HttpSession session
+    ) {
+        // nseqs 값이 없는 경우 요청 거부 결과 반환
+        if (nseqs == null || nseqs.isEmpty()) {
+            return badRequest("소식지를 선택해주세요");
+        }
+
+        // nseqs 값이 두개 이상인 경우 요청 거부 결과 반환
+        if (nseqs.size() > 1) {
+            return badRequest("소식지를 하나만 선택해주세요");
+        }
+
+        // 관리자가 아닌 경우 요청 거부 결과 반환
+        if (!memberService.isAdmin(session)) {
+            return forbidden();
+        }
+
+        // 소식지 정보 수정 페이지로 리다이렉트
+        return ok("", "/notice/update?nseq=" + nseqs.get(0));
     }
 
 }
