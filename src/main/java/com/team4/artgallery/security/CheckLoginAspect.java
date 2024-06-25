@@ -32,7 +32,7 @@ public class CheckLoginAspect {
             Method method = signature.getMethod();
             CheckLogin checkLogin = method.getAnnotation(CheckLogin.class);
 
-            String returnUrl = checkLogin.returnUrl();
+            String returnUrl = checkLogin.value();
             throw new NotLoginException(memberService.redirectToLogin(returnUrl));
         }
     }
