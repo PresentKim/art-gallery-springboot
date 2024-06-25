@@ -68,6 +68,11 @@ public class GlobalExceptionHandler {
             return badRequest("파일 크기가 너무 큽니다. 10MB 이하의 파일만 업로드 가능합니다.");
         }
 
+        // MissingServletRequestParameterException 예외 처리
+        if (e instanceof MissingServletRequestParameterException ex) {
+            return badRequest("파라미터 " + ex.getParameterName() + "이(가) 누락되었습니다");
+        }
+
         // MethodArgumentTypeMismatchException 예외 처리
         if (e instanceof MethodArgumentTypeMismatchException ex) {
             MethodParameter parameter = ex.getParameter();
