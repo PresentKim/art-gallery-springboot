@@ -38,7 +38,7 @@ public class ArtworkController {
         filter.setDisplayyn("Y");
 
         // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 예술품 목록을 가져옵니다.
-        Pagination.Pair<ArtworkDto> pair = artworkService.getOrSearchArtworks(page, filter);
+        Pagination.Pair<ArtworkDto> pair = artworkService.getOrSearchArtworks(page, filter, "artwork");
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pair.pagination());
         model.addAttribute("artworkList", pair.list());

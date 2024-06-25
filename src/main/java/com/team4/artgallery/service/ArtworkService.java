@@ -24,15 +24,16 @@ public class ArtworkService {
      *
      * @param page   페이지 번호
      * @param filter 검색 조건 (검색 조건이 비어있으면 전체 예술품 목록을 가져옵니다)
+     * @param path   페이지 경로
      * @return 예술품 목록과 페이지네이션 정보
      */
-    public Pagination.Pair<ArtworkDto> getOrSearchArtworks(int page, ArtworkFilter filter) {
+    public Pagination.Pair<ArtworkDto> getOrSearchArtworks(int page, ArtworkFilter filter, String path) {
         // 검색 조건이 없을 경우 전체 예술품 목록을 가져옵니다.
         if (filter.isEmpty()) {
             Pagination pagination = new Pagination()
                     .setCurrentPage(page)
                     .setItemCount(countArtworks())
-                    .setUrlTemplate("/artwork?page=%d");
+                    .setUrlTemplate("/" + path + "?page=%d");
 
             return pagination.pair(getArtworks(pagination));
         }
@@ -41,7 +42,7 @@ public class ArtworkService {
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
                 .setItemCount(countSearchArtworks(filter))
-                .setUrlTemplate("/artwork?page=%d&" + filter.toUrlParam(false));
+                .setUrlTemplate("/" + path + "?page=%d&" + filter.toUrlParam(false));
         return pagination.pair(searchArtworks(filter, pagination));
     }
 

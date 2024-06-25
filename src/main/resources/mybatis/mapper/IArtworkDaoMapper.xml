@@ -5,14 +5,9 @@
 <mapper namespace="com.team4.artgallery.dao.IArtworkDao">
     <sql id="search">
         <where>
-            <choose>
-                <when test="filter.hasDisplay">
-                    AND displayyn = #{filter.displayyn}
-                </when>
-                <otherwise>
-                    AND displayyn = 'Y'
-                </otherwise>
-            </choose>
+            <if test="filter.hasDisplay">
+                AND displayyn = #{filter.displayyn}
+            </if>
             <if test="filter.hasCategory">
                 AND category = #{filter.category}
             </if>

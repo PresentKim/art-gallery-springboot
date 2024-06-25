@@ -14,37 +14,44 @@
 
 <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
 <section class="admin-list">
-    <form action="museum.do" method="post" name="adminForm">
+    <form name="adminForm" method="get" action="<c:url value="/admin/artwork"/>" onsubmit="ajaxSubmit(event)">
         <div class="admin-list-btn">
-            <input type="hidden" name="command" value="adminArtworkList">
-            <input type="hidden" name="memberIds">
-            <input type="button" value="추가" onclick="location.href='museum.do?command=artworkWrite'">
-            <input type="button" value="수정" onclick="updatePost('artworkUpdate&aseq=', 'li:nth-child(3)')">
-            <input type="button" value="삭제" onclick="deletePost('adminDeleteArtwork', 'li:nth-child(3)')">
-            <input type="text" placeholder="작품명 또는 작가명을 검색하세요" name="searchWord" value="${searchWord}">
-            <input type="submit" value="검색">
+            <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
+            <input type="submit" style="display: none;" formmethod="get" formaction="<c:url value="/admin/artwork"/>">
+
+            <!-- 기능 버튼 -->
+            <div class="admin-list-func-btn">
+                <input type="submit" value="추가" formmethod="post" formaction="<c:url value="/artwork/write"/>">
+                <input type="submit" value="수정" formmethod="post" formaction="<c:url value="/admin/artwork/edit"/>">
+                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/admin/artwork/delete"/>">
+            </div>
+
+            <!-- 검색 기능 -->
+            <label><input type="text" placeholder="작품명 또는 작가명을 입력하세요" name="search" value="${filter.search}"></label>
+            <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/artwork"/>">
         </div>
-        <ul class="admin-list-header admin-artwork-list">
-            <li><input type="checkbox" onclick="checkAll()" class="select-all-box"></li>
-            <li><select name=displayState class="admin-select" onchange="this.form.submit();">
-                <option value="">전시 상태</option>
-                <option value="Y" <c:if test="${'Y'.equals(displayState)}">selected</c:if>>Y</option>
-                <option value="N" <c:if test="${'N'.equals(displayState)}">selected</c:if>>N</option>
-            </select></li>
-            <li>번호</li>
-            <li><select name="category" class="admin-select" onchange="this.form.submit();">
-                <option value="">분류</option>
-                <c:forEach items="${ArtworkCategory.validValues()}" var="c">
-                    <c:choose>
-                        <c:when test="${c.name().equals(category)}">
-                            <option value="${c.name()}" selected>${c.name()}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${c.name()}">${c.name()}</option>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </select></li>
+        <ul class="admin-list-header admin-member-list">
+            <li>
+                <label><input type="checkbox" onclick="checkAll()" class="select-all-box"></label>
+            </li>
+            <li>
+                <label for="displayyn"></label>
+                <select name="displayyn" id="displayyn" class="admin-select" onchange="this.form.submit();">
+                    <option value="">전체</option>
+                    <option value="Y" <c:if test="${'Y'.equals(filter.displayyn)}">selected</c:if>>공개</option>
+                    <option value="N" <c:if test="${'N'.equals(filter.displayyn)}">selected</c:if>>비공개</option>
+                </select>
+            </li>
+            <li>
+                <label for="category"></label>
+                <select name="category" id="category" class="admin-select" onchange="this.form.submit();">
+                    <option value="">전체</option>
+                    <c:forEach items="${ArtworkCategory.validValues()}" var="c">
+                        <option value="${c.name()}"
+                                <c:if test="${c.name().equals(filter.category)}">selected</c:if>>${c.name()}</option>
+                    </c:forEach>
+                </select>
+            </li>
             <li>작품명</li>
             <li>작가명</li>
             <li>제작연도</li>
@@ -55,12 +62,13 @@
         </ul>
         <c:forEach items="${artworkList}" var="artworkDto" varStatus="index">
             <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
-                <li><input type="checkbox" class="check-box"></li>
+                <li>
+                    <label><input name="aseqs" type="checkbox" value="${artworkDto.aseq}" class="check-box"></label>
+                </li>
                 <li>${artworkDto.displayyn}</li>
                 <li>${artworkDto.aseq}</li>
                 <li>${artworkDto.category}</li>
-                <li class="view-link"
-                    onclick="location.href='museum.do?command=artworkView&aseq=${artworkDto.aseq}'">${artworkDto.name}</li>
+                <li class="view-link"><a href="<c:url value="/artwork/${artworkDto.aseq}"/>">${artworkDto.name}</a></li>
                 <li>${artworkDto.artist}</li>
                 <li>${artworkDto.year}</li>
                 <li>${artworkDto.material}</li>
