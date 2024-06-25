@@ -50,6 +50,30 @@ public class AdminArtworkController {
         return "admin/adminArtworkList";
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<?> edit(
+            @RequestParam(value = "aseqs", required = false) List<Integer> aseqs,
+            HttpSession session
+    ) {
+        // aseqs 값이 없는 경우 요청 거부 결과 반환
+        if (aseqs == null || aseqs.isEmpty()) {
+            return badRequest("예술품을 선택해주세요");
+        }
+
+        // aseqs 값이 두개 이상인 경우 요청 거부 결과 반환
+        if (aseqs.size() > 1) {
+            return badRequest("예술품을 하나만 선택해주세요");
+        }
+
+        // 관리자가 아닌 경우 요청 거부 결과 반환
+        if (!memberService.isAdmin(session)) {
+            return forbidden();
+        }
+
+        // 예술품 정보 수정 페이지로 리다이렉트
+        return ok("", "/artwork/update?aseq=" + aseqs.get(0));
+    }
+
     @PostMapping("/delete")
     public ResponseEntity<?> delete(
             @RequestParam(value = "aseqs", required = false) List<Integer> aseqs,
