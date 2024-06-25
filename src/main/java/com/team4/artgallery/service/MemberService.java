@@ -135,12 +135,21 @@ public class MemberService {
     }
 
     /**
-     * 주어진 페이지로 되돌아가는 로그인 페이지로 리다이렉트하기 위한 URL 을 반환한다.
+     * 되돌아갈 페이지 주소가 포함된 로그인 페이지 View 이름을 반환한다.
      *
-     * @param returnUrl 되돌아갈 페이지 URL
+     * @param returnUrl 되돌아갈 페이지 주소가 포함된 로그인 페이지 View 이름
      */
     public String redirectToLogin(String returnUrl) {
-        return "redirect:/member/login?returnUrl=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8);
+        return "redirect:" + getRedirectToLogin(returnUrl);
+    }
+
+    /**
+     * 되돌아갈 페이지 주소가 포함된 로그인 페이지 URL을 반환한다.
+     *
+     * @param returnUrl 되돌아갈 페이지 주소가 포함된 로그인 페이지 URL
+     */
+    public String getRedirectToLogin(String returnUrl) {
+        return "/member/login?returnUrl=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8);
     }
 
     @Getter
