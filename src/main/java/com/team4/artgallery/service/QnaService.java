@@ -79,7 +79,7 @@ public class QnaService {
      * RESTRICT(제한) : 공개글이거나 작성자 및 관리자만 접근 가능
      */
     public boolean authorizeForRestrict(HttpSession session, int qseq) {
-        return authorizeForPrivilege(session, qseq) || qnaDao.getInquiry(qseq).isPublic();
+        return authorizeForPrivilege(session, qseq) || qnaDao.getInquiry(qseq).isDisplay();
     }
 
 

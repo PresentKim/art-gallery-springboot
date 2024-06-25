@@ -21,12 +21,12 @@ public class QnaDto {
     private String reply;
     private String publicyn;
 
-    public boolean isPublic() {
+    public boolean isDisplay() {
         return publicyn.equals("Y");
     }
 
-    public void setPublic(boolean isPublic) {
-        publicyn = isPublic ? "Y" : "N";
+    public void setDisplay(boolean display) {
+        publicyn = display ? "Y" : "N";
     }
 
     public boolean hasReply() {

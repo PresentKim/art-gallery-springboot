@@ -50,7 +50,7 @@
         <div class="qna-form_input-wrapper">
             <input type="hidden" name="publicyn" value="N"/>
             <input type="checkbox" name="publicyn" id="publicyn" value="Y"
-                   <c:if test="${qnaDto.public}">checked</c:if> />
+                   <c:if test="${qnaDto.display}">checked</c:if> />
             <label for="publicyn">전체 공개 여부</label>
         </div>
         <div class="qna-form_input-wrapper">
