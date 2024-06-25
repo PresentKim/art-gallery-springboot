@@ -1,26 +1,35 @@
 @charset "UTF-8";
 
 /* 관리자 페이지 adminMain.jsp ====================>*/
-.admin-main-menu {
-    margin: 5rem 0;
+.admin-main, .admin-main nav {
     width: 100%;
     height: 100%;
+}
+
+.admin-main ul {
     display: flex;
+    height: 100%;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    margin: 0 2rem;
 }
 
-.admin-main-menu li {
+.admin-main li {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 20rem;
+    max-height: 3rem;
     border: 2px solid gray;
-    width: 20%;
-    height: 5rem;
-    text-align: center;
-    margin: 0.5rem;
+    padding: 1rem 2rem;
     box-shadow: 1px 1px 2px gray;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
-.admin-main-menu li:hover {
+.admin-main li:hover {
     translate: -3px -3px;
     background: gray;
     color: white;
@@ -37,7 +46,7 @@
 /* <======================================== */
 
 /* 관리자 페이지 사이드 메뉴바 admin/sub_menu.jsp =============>*/
-.admin-sub-menu {
+*:not(.admin-main) .admin-sub-menu {
     margin: 0;
     width: 10rem;
     background: #faedcd;
@@ -49,17 +58,17 @@
     transition: 0.5s;
 }
 
-.admin-sub-menu:hover {
+*:not(.admin-main) .admin-sub-menu:hover {
     width: 11rem;
 }
 
-.admin-sub-menu li {
+*:not(.admin-main) .admin-sub-menu li {
     width: 100%;
     height: 2rem;
     margin: 1rem 0;
 }
 
-.admin-sub-menu a {
+*:not(.admin-main) .admin-sub-menu a {
     display: block;
     width: 100%;
     height: 100%;
@@ -67,7 +76,7 @@
     align-content: center;
 }
 
-.admin-sub-menu a:hover {
+*:not(.admin-main) .admin-sub-menu a:hover {
     background: #dad7cd;
     border-radius: 5px;
 }

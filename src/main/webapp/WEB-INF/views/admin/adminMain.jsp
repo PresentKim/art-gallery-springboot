@@ -10,14 +10,9 @@
 
     <jsp:attribute name="content">
 
-<ul class="admin-main-menu">
-    <li><a href="<c:url value="/admin/member"/>">회원 목록</a></li>
-    <li><a href="<c:url value="/admin/artwork"/>">예술품 목록</a></li>
-    <li><a href="<c:url value="/admin/notice"/>">소식지 목록</a></li>
-    <li><a href="<c:url value="/admin/gallery"/>">이용자 갤러리 목록</a></li>
-    <li><a href="<c:url value="/admin/qna"/>">문의사항 목록</a></li>
-    <li><a href="#" onclick="ajax('/admin/reset')">데이터베이스 초기화</a></li>
-</ul>
+<section class="admin-main">
+    <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
+</section>
 
     </jsp:attribute>
 </t:layout>
