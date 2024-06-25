@@ -1,9 +1,10 @@
 package com.team4.artgallery.controller;
 
 import com.team4.artgallery.annotation.CheckLogin;
+import com.team4.artgallery.annotation.LoginMember;
 import com.team4.artgallery.dto.GalleryDto;
+import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.GalleryService;
-import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class GalleryController {
 
     private final GalleryService galleryService;
-    private final MemberService memberService;
 
     @Delegate
     private final ResponseHelper responseHelper;
@@ -59,7 +59,7 @@ public class GalleryController {
 
     @CheckLogin("/gallery/update?gseq=${gseq}")
     @GetMapping("/update")
-    public String update(@RequestParam(value = "gseq") Integer gseq, Model model, HttpSession session) {
+    public String update(@RequestParam(value = "gseq") Integer gseq, @LoginMember MemberDto loginMember, Model model) {
         // 갤러리 정보를 가져올 수 없는 경우 404 페이지로 포워딩
         GalleryDto galleryDto = galleryService.getGallery(gseq);
         if (galleryDto == null) {
@@ -67,7 +67,7 @@ public class GalleryController {
         }
 
         // 작성자가 아닌 경우 alert 페이지로 포워딩
-        if (!memberService.getLoginMember(session).getId().equals(galleryDto.getAuthorId())) {
+        if (!loginMember.getId().equals(galleryDto.getAuthorId())) {
             model.addAttribute("message", "작성자만 수정할 수 있습니다.");
             return "util/alert";
         }
@@ -82,7 +82,7 @@ public class GalleryController {
     public ResponseEntity<?> update(
             @ModelAttribute GalleryDto galleryDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-            HttpSession session
+            @LoginMember MemberDto loginMember
     ) {
         // 갤러리 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
         // 기존 정보가 있어야 UPDATE 쿼리를 실행할 수 있습니다.
@@ -92,7 +92,7 @@ public class GalleryController {
         }
 
         // 작성자가 아닌 경우 요청 거부 결과 반환
-        if (!memberService.getLoginMember(session).getId().equals(oldGallery.getAuthorId())) {
+        if (!loginMember.getId().equals(oldGallery.getAuthorId())) {
             return forbidden();
         }
 
@@ -129,7 +129,7 @@ public class GalleryController {
     public ResponseEntity<?> write(
             @ModelAttribute GalleryDto galleryDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-            HttpSession session
+            @LoginMember MemberDto loginMember
     ) {
         // 이미지 파일이 없을 경우 오류 결과 반환
         if (imageFile == null || imageFile.isEmpty()) {
@@ -142,7 +142,7 @@ public class GalleryController {
         }
 
         // 작성자 ID 를 설정
-        galleryDto.setAuthorId(memberService.getLoginMember(session).getId());
+        galleryDto.setAuthorId(loginMember.getId());
 
         // 갤러리 작성 실패 시 오류 결과 반환
         if (galleryService.createGallery(galleryDto) != 1) {
@@ -155,7 +155,7 @@ public class GalleryController {
 
     @CheckLogin("/gallery/write")
     @PostMapping("/delete")
-    public ResponseEntity<?> delete(@RequestParam(value = "gseq") Integer gseq, HttpSession session) {
+    public ResponseEntity<?> delete(@RequestParam(value = "gseq") Integer gseq, @LoginMember MemberDto loginMember) {
         // 갤러리 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
         GalleryDto galleryDto = galleryService.getGallery(gseq);
         if (galleryDto == null) {
@@ -163,9 +163,7 @@ public class GalleryController {
         }
 
         // 작성자 혹은 관리자가 아닌 경우 요청 거부 결과 반환
-        if (!memberService.getLoginMember(session).getId().equals(galleryDto.getAuthorId())
-                && !memberService.isAdmin(session)
-        ) {
+        if (!loginMember.getId().equals(galleryDto.getAuthorId()) && !loginMember.isAdmin()) {
             return forbidden();
         }
 

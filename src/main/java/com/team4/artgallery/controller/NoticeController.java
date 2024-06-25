@@ -1,9 +1,10 @@
 package com.team4.artgallery.controller;
 
 import com.team4.artgallery.annotation.CheckAdmin;
+import com.team4.artgallery.annotation.LoginMember;
+import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.enums.NoticeCategory;
-import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ajax.ResponseHelper;
@@ -22,8 +23,6 @@ import org.springframework.web.bind.annotation.*;
 public class NoticeController {
 
     private final NoticeService noticeService;
-
-    private final MemberService memberService;
 
     @Delegate
     private final ResponseHelper responseHelper;
@@ -83,9 +82,9 @@ public class NoticeController {
 
     @CheckAdmin
     @PostMapping("/update")
-    public ResponseEntity<?> update(@ModelAttribute NoticeDto noticeDto, HttpSession session) {
-        // 작성자를 세션 정보로부터 가져와서 소식지 정보에 설정
-        noticeDto.setAuthor(memberService.getLoginMember(session).getId());
+    public ResponseEntity<?> update(@ModelAttribute NoticeDto noticeDto, @LoginMember MemberDto loginMember) {
+        // 작성자를 로그인 정보로부터 가져와서 소식지 정보에 설정
+        noticeDto.setAuthor(loginMember.getId());
 
         // 소식지 수정에 실패한 경우 500 에러 반환
         if (noticeService.updateNotice(noticeDto) == 0) {
@@ -104,9 +103,9 @@ public class NoticeController {
 
     @CheckAdmin
     @PostMapping("/write")
-    public ResponseEntity<?> write(@ModelAttribute NoticeDto noticeDto, HttpSession session) {
-        // 작성자를 세션 정보로부터 가져와서 소식지 정보에 설정
-        noticeDto.setAuthor(memberService.getLoginMember(session).getId());
+    public ResponseEntity<?> write(@ModelAttribute NoticeDto noticeDto, @LoginMember MemberDto loginMember) {
+        // 작성자를 로그인 정보로부터 가져와서 소식지 정보에 설정
+        noticeDto.setAuthor(loginMember.getId());
 
         // 소식지 작성에 실패한 경우 500 에러 반환
         if (noticeService.createNotice(noticeDto) == 0) {

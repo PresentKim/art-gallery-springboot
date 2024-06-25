@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller;
 
 import com.team4.artgallery.annotation.CheckLogin;
+import com.team4.artgallery.annotation.LoginMember;
 import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.FavoriteService;
@@ -164,10 +165,11 @@ public class MemberController {
     @PostMapping("/mypage/edit")
     public ResponseEntity<?> edit(
             @Valid @ModelAttribute MemberDto memberDto,
+            @LoginMember MemberDto loginMember,
             HttpSession session
     ) {
         // 로그인 회원의 ID 를 수정할 수 없도록 설정
-        memberDto.setId(memberService.getLoginMember(session).getId());
+        memberDto.setId(loginMember.getId());
 
         // 회원 정보 수정 실패 시 에러 결과 반환
         if (memberService.updateMember(memberDto) != 1) {
@@ -194,16 +196,16 @@ public class MemberController {
     @PostMapping("/withdraw")
     public ResponseEntity<?> withdraw(
             @Valid @NotNull @RequestParam(name = "pwd") String pwd,
+            @LoginMember MemberDto loginMember,
             HttpSession session
     ) {
         // 비밀번호가 일치하지 않다면 에러 결과 반환
-        MemberDto memberDto = memberService.getLoginMember(session);
-        if (!memberDto.getPwd().equals(pwd)) {
+        if (!loginMember.getPwd().equals(pwd)) {
             return badRequest("비밀번호가 일치하지 않습니다.");
         }
 
         // 회원 탈퇴 실패 시 에러 결과 반환
-        if (memberService.deleteMember(memberDto.getId()) != 1) {
+        if (memberService.deleteMember(loginMember.getId()) != 1) {
             return badRequest("회원 탈퇴에 실패하였습니다.");
         }
 
@@ -220,12 +222,11 @@ public class MemberController {
     @GetMapping("/mypage/favorite")
     public String favorite(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
-            HttpSession session,
+            @LoginMember MemberDto loginMember,
             Model model
     ) {
         // 관심 예술품 페이지로 이동
-        MemberDto memberDto = memberService.getLoginMember(session);
-        Pagination.Pair<FavoriteDto> pair = favoriteService.getFavorites(memberDto.getId(), page);
+        Pagination.Pair<FavoriteDto> pair = favoriteService.getFavorites(loginMember.getId(), page);
         model.addAttribute("artworkList", pair.list());
         model.addAttribute("pagination", pair.pagination());
         return "member/mypage/mypageFavoriteList";
@@ -233,10 +234,10 @@ public class MemberController {
 
     @CheckLogin("/artwork/${aseq}")
     @PostMapping("/mypage/favorite")
-    public ResponseEntity<?> favorite(@RequestParam(value = "aseq") Integer aseq, HttpSession session) {
+    public ResponseEntity<?> favorite(@RequestParam(value = "aseq") Integer aseq, @LoginMember MemberDto loginMember) {
         try {
             // 관심 예술품 토글 성공 시 성공 결과 반환
-            boolean result = favoriteService.toggleFavorite(memberService.getLoginMember(session).getId(), aseq);
+            boolean result = favoriteService.toggleFavorite(loginMember.getId(), aseq);
             return ok("관심 예술품 목록에 " + (result ? "추가" : "삭제") + "되었습니다.");
         } catch (Exception e) {
             // 관심 예술품 토글 실패 시 에러 결과 반환

@@ -2,7 +2,6 @@ package com.team4.artgallery.controller;
 
 import com.team4.artgallery.annotation.CheckAdmin;
 import com.team4.artgallery.dto.QnaDto;
-import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ajax.ResponseHelper;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class QnaController {
 
     private final QnaService qnaService;
-
-    private final MemberService memberService;
 
     @Delegate
     private final ResponseHelper responseHelper;
