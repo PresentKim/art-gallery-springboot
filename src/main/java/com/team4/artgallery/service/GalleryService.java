@@ -61,15 +61,16 @@ public class GalleryService {
      *
      * @param page   페이지 번호
      * @param search 검색어  (검색어가 비어있으면 전체 갤러리 목록을 가져옵니다)
+     * @param path   페이지 경로
      * @return 갤러리 목록과 페이지네이션 정보
      */
-    public Pagination.Pair<GalleryDto> getOrSearchGalleries(int page, String search) {
+    public Pagination.Pair<GalleryDto> getOrSearchGalleries(int page, String search, String path) {
         // 검색어가 비어있을 경우 전체 갤러리 목록을 가져옵니다.
         if (search == null || search.isEmpty()) {
             Pagination pagination = new Pagination()
                     .setCurrentPage(page)
                     .setItemCount(countGalleries())
-                    .setUrlTemplate("/gallery?page=%d");
+                    .setUrlTemplate("/" + path + "?page=%d");
 
             return pagination.pair(getGalleries(pagination));
         }
@@ -78,7 +79,7 @@ public class GalleryService {
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
                 .setItemCount(countSearchGalleries(search))
-                .setUrlTemplate("/gallery?page=%d&search=" + search);
+                .setUrlTemplate("/" + path + "?page=%d&search=" + search);
         return pagination.pair(searchGalleries(search, pagination));
     }
 

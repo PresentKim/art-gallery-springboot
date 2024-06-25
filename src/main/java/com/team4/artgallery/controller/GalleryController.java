@@ -33,7 +33,7 @@ public class GalleryController {
             Model model
     ) {
         // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 갤러리 목록을 가져옵니다.
-        Pagination.Pair<GalleryDto> pair = galleryService.getOrSearchGalleries(page, search);
+        Pagination.Pair<GalleryDto> pair = galleryService.getOrSearchGalleries(page, search, "gallery");
         model.addAttribute("search", search);
         model.addAttribute("pagination", pair.pagination());
         model.addAttribute("galleryList", pair.list());
