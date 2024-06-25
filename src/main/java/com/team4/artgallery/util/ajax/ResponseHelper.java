@@ -15,7 +15,7 @@ public class ResponseHelper {
     /**
      * OK(200) 요청이 성공적으로 처리되었음을 나타내는 코드를 반환
      */
-    public ResponseEntity<?> ok() {
+    public ResponseEntity<ResponseBody> ok() {
         return ok("요청이 성공적으로 처리되었습니다");
     }
 
@@ -24,7 +24,7 @@ public class ResponseHelper {
      *
      * @param message 응답 메시지 (alert 메시지)
      */
-    public ResponseEntity<?> ok(String message) {
+    public ResponseEntity<ResponseBody> ok(String message) {
         return ok(message, "");
     }
 
@@ -34,14 +34,14 @@ public class ResponseHelper {
      * @param message 응답 메시지 (alert 메시지)
      * @param url     이동할 URL
      */
-    public ResponseEntity<?> ok(String message, String url) {
+    public ResponseEntity<ResponseBody> ok(String message, String url) {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseBody(message, url));
     }
 
     /**
      * CREATED(201) 요청을 성공적으로 처리하고 새로운 리소스를 생성했음을 나타내는 코드를 반환
      */
-    public ResponseEntity<?> created() {
+    public ResponseEntity<ResponseBody> created() {
         return created("새로운 리소스가 생성되었습니다");
     }
 
@@ -50,7 +50,7 @@ public class ResponseHelper {
      *
      * @param message 응답 메시지 (alert 메시지)
      */
-    public ResponseEntity<?> created(String message) {
+    public ResponseEntity<ResponseBody> created(String message) {
         return created(message, "");
     }
 
@@ -60,14 +60,14 @@ public class ResponseHelper {
      * @param message 응답 메시지 (alert 메시지)
      * @param url     이동할 URL
      */
-    public ResponseEntity<?> created(String message, String url) {
+    public ResponseEntity<ResponseBody> created(String message, String url) {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseBody(message, url));
     }
 
     /**
      * NO_CONTENT(204) 요청이 성공적으로 처리되었으나 반환할 콘텐츠가 없음을 나타내는 코드를 반환
      */
-    public ResponseEntity<?> noContent() {
+    public ResponseEntity<ResponseBody> noContent() {
         return noContent("내용이 없습니다");
     }
 
@@ -76,7 +76,7 @@ public class ResponseHelper {
      *
      * @param message 응답 메시지 (alert 메시지)
      */
-    public ResponseEntity<?> noContent(String message) {
+    public ResponseEntity<ResponseBody> noContent(String message) {
         return noContent(message, "");
     }
 
@@ -86,14 +86,14 @@ public class ResponseHelper {
      * @param message 응답 메시지 (alert 메시지)
      * @param url     이동할 URL
      */
-    public ResponseEntity<?> noContent(String message, String url) {
+    public ResponseEntity<ResponseBody> noContent(String message, String url) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseBody(message, url));
     }
 
     /**
      * BAD_REQUEST(400) 잘못된 요청이나 잘못된 매개변수가 전달되었음을 나타내는 코드를 반환
      */
-    public ResponseEntity<?> badRequest() {
+    public ResponseEntity<ResponseBody> badRequest() {
         return badRequest("잘못된 요청입니다");
     }
 
@@ -102,7 +102,7 @@ public class ResponseHelper {
      *
      * @param message 응답 메시지 (alert 메시지)
      */
-    public ResponseEntity<?> badRequest(String message) {
+    public ResponseEntity<ResponseBody> badRequest(String message) {
         return badRequest(message, "");
     }
 
@@ -111,7 +111,7 @@ public class ResponseHelper {
      *
      * @param errors 에러 객체
      */
-    public ResponseEntity<?> badRequest(Errors errors) {
+    public ResponseEntity<ResponseBody> badRequest(Errors errors) {
         return badRequest(Objects.requireNonNull(errors.getFieldError()).getDefaultMessage());
     }
 
@@ -121,14 +121,14 @@ public class ResponseHelper {
      * @param message 응답 메시지 (alert 메시지)
      * @param url     이동할 URL
      */
-    public ResponseEntity<?> badRequest(String message, String url) {
+    public ResponseEntity<ResponseBody> badRequest(String message, String url) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseBody(message, url));
     }
 
     /**
      * UNAUTHORIZED(401) 인증이 필요함을 나타내는 코드를 반환
      */
-    public ResponseEntity<?> unauthorized() {
+    public ResponseEntity<ResponseBody> unauthorized() {
         return unauthorized("요청이 인증되지 않았습니다");
     }
 
@@ -137,7 +137,7 @@ public class ResponseHelper {
      *
      * @param message 응답 메시지 (alert 메시지)
      */
-    public ResponseEntity<?> unauthorized(String message) {
+    public ResponseEntity<ResponseBody> unauthorized(String message) {
         return unauthorized(message, "");
     }
 
@@ -147,14 +147,14 @@ public class ResponseHelper {
      * @param message 응답 메시지 (alert 메시지)
      * @param url     이동할 URL
      */
-    public ResponseEntity<?> unauthorized(String message, String url) {
+    public ResponseEntity<ResponseBody> unauthorized(String message, String url) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseBody(message, url));
     }
 
     /**
      * FORBIDDEN(403) 요청이 권한이 없어 거부됨을 나타내는 코드를 반환
      */
-    public ResponseEntity<?> forbidden() {
+    public ResponseEntity<ResponseBody> forbidden() {
         return forbidden("요청이 거부되었습니다");
     }
 
@@ -163,7 +163,7 @@ public class ResponseHelper {
      *
      * @param message 응답 메시지 (alert 메시지)
      */
-    public ResponseEntity<?> forbidden(String message) {
+    public ResponseEntity<ResponseBody> forbidden(String message) {
         return forbidden(message, "");
     }
 
@@ -173,14 +173,14 @@ public class ResponseHelper {
      * @param message 응답 메시지 (alert 메시지)
      * @param url     이동할 URL
      */
-    public ResponseEntity<?> forbidden(String message, String url) {
+    public ResponseEntity<ResponseBody> forbidden(String message, String url) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseBody(message, url));
     }
 
     /**
      * NOT_FOUND(404) 요청된 리소스를 찾을 수 없음을 나타내는 코드를 반환
      */
-    public ResponseEntity<?> notFound() {
+    public ResponseEntity<ResponseBody> notFound() {
         return notFound("찾을 수 없습니다");
     }
 
@@ -189,7 +189,7 @@ public class ResponseHelper {
      *
      * @param message 응답 메시지 (alert 메시지)
      */
-    public ResponseEntity<?> notFound(String message) {
+    public ResponseEntity<ResponseBody> notFound(String message) {
         return notFound(message, "");
     }
 
@@ -199,14 +199,14 @@ public class ResponseHelper {
      * @param message 응답 메시지 (alert 메시지)
      * @param url     이동할 URL
      */
-    public ResponseEntity<?> notFound(String message, String url) {
+    public ResponseEntity<ResponseBody> notFound(String message, String url) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseBody(message, url));
     }
 
     /**
      * INTERNAL_SERVER_ERROR(500) 요청이 서버 오류로 실패했음을 나타내는 코드를 반환
      */
-    public ResponseEntity<?> internalServerError() {
+    public ResponseEntity<ResponseBody> internalServerError() {
         return internalServerError("요청을 처리하는 중 서버 오류가 발생했습니다");
     }
 
@@ -215,7 +215,7 @@ public class ResponseHelper {
      *
      * @param message 응답 메시지 (alert 메시지)
      */
-    public ResponseEntity<?> internalServerError(String message) {
+    public ResponseEntity<ResponseBody> internalServerError(String message) {
         return internalServerError(message, "");
     }
 
@@ -225,14 +225,14 @@ public class ResponseHelper {
      * @param message 응답 메시지 (alert 메시지)
      * @param url     이동할 URL
      */
-    public ResponseEntity<?> internalServerError(String message, String url) {
+    public ResponseEntity<ResponseBody> internalServerError(String message, String url) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseBody(message, url));
     }
 
     /**
      * NOT_IMPLEMENTED(501) 서버가 요청을 처리할 수 있는 기능을 갖추지 못했음을 나타내는 코드를 반환
      */
-    public ResponseEntity<?> notImplemented() {
+    public ResponseEntity<ResponseBody> notImplemented() {
         return notImplemented("구현되지 않은 요청입니다");
     }
 
@@ -241,7 +241,7 @@ public class ResponseHelper {
      *
      * @param message 응답 메시지 (alert 메시지)
      */
-    public ResponseEntity<?> notImplemented(String message) {
+    public ResponseEntity<ResponseBody> notImplemented(String message) {
         return notImplemented(message, "");
     }
 
@@ -251,7 +251,7 @@ public class ResponseHelper {
      * @param message 응답 메시지 (alert 메시지)
      * @param url     이동할 URL
      */
-    public ResponseEntity<?> notImplemented(String message, String url) {
+    public ResponseEntity<ResponseBody> notImplemented(String message, String url) {
         return ResponseEntity.status(SC_NOT_IMPLEMENTED).body(new ResponseBody(message, url));
     }
 }
