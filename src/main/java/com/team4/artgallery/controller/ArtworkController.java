@@ -7,14 +7,17 @@ import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Controller
 @RequestMapping("/artwork")
@@ -78,7 +81,7 @@ public class ArtworkController {
 
     @PostMapping("/update")
     public ResponseEntity<?> update(
-            @ModelAttribute ArtworkDto artworkDto,
+            @Valid @ModelAttribute ArtworkDto artworkDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             HttpSession session
     ) {
@@ -132,10 +135,10 @@ public class ArtworkController {
     }
 
     @GetMapping("/write")
-    public String write(HttpSession session) {
+    public String write(HttpSession session, HttpMethod method) throws Exception {
         // 관리자가 아닌 경우 404 페이지로 포워딩
         if (!memberService.isAdmin(session)) {
-            return "util/404";
+            throw new NoResourceFoundException(method, "");
         }
 
         return "artwork/artworkForm";
@@ -143,13 +146,18 @@ public class ArtworkController {
 
     @PostMapping("/write")
     public ResponseEntity<?> write(
-            @ModelAttribute ArtworkDto artworkDto,
+            @Valid @ModelAttribute ArtworkDto artworkDto,
             @RequestParam(value = "imageFile") MultipartFile imageFile,
             HttpSession session
     ) {
         // 관리자가 아닌 경우 요청 거부 결과 반환
         if (!memberService.isAdmin(session)) {
             return forbidden();
+        }
+
+        // 이미지 파일이 없을 경우 오류 결과 반환
+        if (imageFile == null || imageFile.isEmpty()) {
+            return badRequest("이미지 파일을 업로드해주세요.");
         }
 
         // 이미지 저장에 실패하면 오류 결과 반환
