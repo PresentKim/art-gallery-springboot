@@ -74,4 +74,29 @@ public class AdminNoticeController {
         return ok("", "/notice/update?nseq=" + nseqs.get(0));
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(
+            @RequestParam(value = "nseqs", required = false) List<Integer> nseqs,
+            HttpSession session
+    ) {
+        // nseqs 값이 없는 경우 요청 거부 결과 반환
+        if (nseqs == null || nseqs.isEmpty()) {
+            return badRequest("소식지를 선택해주세요");
+        }
+
+        // 관리자가 아닌 경우 요청 거부 결과 반환
+        if (!memberService.isAdmin(session)) {
+            return forbidden();
+        }
+
+        // 소식지 정보 제거에 실패한 경우 실패 결과 반환
+        if (noticeService.deleteNotices(nseqs) == 0) {
+            return badRequest("소식지 정보 제거에 실패했습니다");
+        }
+
+        // 소식지 정보 제거에 성공한 경우 성공 결과 반환 (페이지 새로고침)
+        // TODO: 새고로침 없이 HTML 요소를 변경하는 방법으로 수정
+        return ok("소식지 정보를 제거했습니다", ":reload");
+    }
+
 }
