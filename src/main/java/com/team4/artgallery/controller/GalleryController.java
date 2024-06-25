@@ -1,5 +1,6 @@
 package com.team4.artgallery.controller;
 
+import com.team4.artgallery.annotation.CheckLogin;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.service.MemberService;
@@ -56,13 +57,9 @@ public class GalleryController {
         return "gallery/galleryView";
     }
 
+    @CheckLogin("/gallery/update?gseq=${gseq}")
     @GetMapping("/update")
     public String update(@RequestParam(value = "gseq") Integer gseq, Model model, HttpSession session) {
-        // 로그인 상태가 아니라면 로그인 페이지로 리다이렉트
-        if (!memberService.isLogin(session)) {
-            return memberService.redirectToLogin("/gallery/update?gseq=" + gseq);
-        }
-
         // 갤러리 정보를 가져올 수 없는 경우 404 페이지로 포워딩
         GalleryDto galleryDto = galleryService.getGallery(gseq);
         if (galleryDto == null) {
@@ -80,18 +77,13 @@ public class GalleryController {
         return "gallery/galleryForm";
     }
 
-
+    @CheckLogin()
     @PostMapping("/update")
     public ResponseEntity<?> update(
             @ModelAttribute GalleryDto galleryDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             HttpSession session
     ) {
-        // 로그인 상태가 아닌 경우 실패 결과 반환
-        if (!memberService.isLogin(session)) {
-            return forbidden();
-        }
-
         // 갤러리 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
         // 기존 정보가 있어야 UPDATE 쿼리를 실행할 수 있습니다.
         GalleryDto oldGallery = galleryService.getGallery(galleryDto.getGseq());
@@ -125,28 +117,20 @@ public class GalleryController {
         return ok("갤러리가 수정되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
+    @CheckLogin("/gallery/write")
     @GetMapping("/write")
-    public String write(HttpSession session) {
-        // 로그인 상태가 아니라면 로그인 페이지로 리다이렉트
-        if (!memberService.isLogin(session)) {
-            return memberService.redirectToLogin("/gallery/write");
-        }
-
+    public String write() {
         // 갤러리 작성 페이지로 이동
         return "gallery/galleryForm";
     }
 
+    @CheckLogin()
     @PostMapping("/write")
     public ResponseEntity<?> write(
             @ModelAttribute GalleryDto galleryDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             HttpSession session
     ) {
-        // 로그인 상태가 아닌 경우 실패 결과 반환
-        if (!memberService.isLogin(session)) {
-            return forbidden();
-        }
-
         // 이미지 파일이 없을 경우 오류 결과 반환
         if (imageFile == null || imageFile.isEmpty()) {
             return badRequest("이미지 파일을 업로드해주세요.");
@@ -169,14 +153,9 @@ public class GalleryController {
         return ok("갤러리가 작성되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
-
+    @CheckLogin("/gallery/write")
     @PostMapping("/delete")
     public ResponseEntity<?> delete(@RequestParam(value = "gseq") Integer gseq, HttpSession session) {
-        // 로그인 상태가 아닌 경우 실패 결과 반환
-        if (!memberService.isLogin(session)) {
-            return forbidden();
-        }
-
         // 갤러리 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
         GalleryDto galleryDto = galleryService.getGallery(gseq);
         if (galleryDto == null) {

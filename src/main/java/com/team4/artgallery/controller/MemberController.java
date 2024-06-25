@@ -1,5 +1,6 @@
 package com.team4.artgallery.controller;
 
+import com.team4.artgallery.annotation.CheckLogin;
 import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.FavoriteService;
@@ -69,6 +70,7 @@ public class MemberController {
         return ok("", returnUrl);
     }
 
+    @CheckLogin()
     @PostMapping("/logout")
     public ResponseEntity<?> logout(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
@@ -76,7 +78,7 @@ public class MemberController {
     ) {
         // 로그아웃 실패 시 에러 결과 반환
         if (!memberService.logout(session)) {
-            return badRequest("이미 로그인 상태가 아닙니다");
+            return internalServerError("로그아웃에 실패하였습니다");
         }
 
         // 로그아웃 성공 시 성공 결과와 돌아갈 URL 반환
@@ -144,41 +146,28 @@ public class MemberController {
         return ok("사용 가능한 아이디입니다.");
     }
 
+    @CheckLogin("/member/mypage")
     @GetMapping("/mypage")
-    public String mypage(HttpSession session) {
-        // 로그인 상태가 아니라면 로그인 페이지로 리다이렉트
-        if (!memberService.isLogin(session)) {
-            return memberService.redirectToLogin("/member/mypage");
-        }
-
+    public String mypage() {
         // 마이페이지로 이동
         return "member/mypage/index";
     }
 
+    @CheckLogin("/member/mypage/edit")
     @GetMapping("/mypage/edit")
-    public String mypageEdit(HttpSession session) {
-        // 로그인 상태가 아니라면 로그인 페이지로 리다이렉트
-        if (!memberService.isLogin(session)) {
-            return memberService.redirectToLogin("/member/mypage/edit");
-        }
-
+    public String mypageEdit() {
         // 회원 정보 수정 페이지로 이동
         return "member/mypage/mypageEditForm";
     }
 
+    @CheckLogin()
     @PostMapping("/mypage/edit")
     public ResponseEntity<?> edit(
             @Valid @ModelAttribute MemberDto memberDto,
             HttpSession session
     ) {
-        // 로그인 상태가 아니라면 에러 결과 반환
-        MemberDto sessionMemberDto = memberService.getLoginMember(session);
-        if (sessionMemberDto == null) {
-            return badRequest("로그인이 필요합니다.");
-        }
-
         // 로그인 회원의 ID 를 수정할 수 없도록 설정
-        memberDto.setId(sessionMemberDto.getId());
+        memberDto.setId(memberService.getLoginMember(session).getId());
 
         // 회원 정보 수정 실패 시 에러 결과 반환
         if (memberService.updateMember(memberDto) != 1) {
@@ -190,34 +179,25 @@ public class MemberController {
         return ok("회원정보 수정에 성공하였습니다.", "/member/mypage");
     }
 
+    @CheckLogin("/member/withdraw")
     @GetMapping("/withdraw")
     public String withdraw(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
-            HttpSession session,
             Model model
     ) {
-        // 로그인 상태가 아니라면 로그인 페이지로 리다이렉트
-        if (!memberService.isLogin(session)) {
-            return memberService.redirectToLogin("/member/withdraw");
-        }
-
         // 회원 탈퇴 페이지로 이동 (returnUrl 전달)
         model.addAttribute("returnUrl", returnUrl);
         return "member/mypage/withdrawForm";
     }
 
+    @CheckLogin()
     @PostMapping("/withdraw")
     public ResponseEntity<?> withdraw(
             @Valid @NotNull @RequestParam(name = "pwd") String pwd,
             HttpSession session
     ) {
-        // 로그인 상태가 아니라면 에러 결과 반환
-        MemberDto memberDto = memberService.getLoginMember(session);
-        if (memberDto == null) {
-            return ok("로그인이 필요합니다", "/member/login?returnUrl=" + URLEncoder.encode("/member/withdraw", StandardCharsets.UTF_8));
-        }
-
         // 비밀번호가 일치하지 않다면 에러 결과 반환
+        MemberDto memberDto = memberService.getLoginMember(session);
         if (!memberDto.getPwd().equals(pwd)) {
             return badRequest("비밀번호가 일치하지 않습니다.");
         }
@@ -236,36 +216,27 @@ public class MemberController {
         return ok("회원 탈퇴에 성공하였습니다.", "/");
     }
 
+    @CheckLogin("/member/mypage/favorite")
     @GetMapping("/mypage/favorite")
     public String favorite(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             HttpSession session,
             Model model
     ) {
-        // 로그인 상태가 아니라면 로그인 페이지로 리다이렉트
-        MemberDto memberDto = memberService.getLoginMember(session);
-        if (memberDto == null) {
-            return memberService.redirectToLogin("/member/mypage/favorite");
-        }
-
         // 관심 예술품 페이지로 이동
+        MemberDto memberDto = memberService.getLoginMember(session);
         Pagination.Pair<FavoriteDto> pair = favoriteService.getFavorites(memberDto.getId(), page);
         model.addAttribute("artworkList", pair.list());
         model.addAttribute("pagination", pair.pagination());
         return "member/mypage/mypageFavoriteList";
     }
 
+    @CheckLogin("/artwork/${aseq}")
     @PostMapping("/mypage/favorite")
     public ResponseEntity<?> favorite(@RequestParam(value = "aseq") Integer aseq, HttpSession session) {
-        // 로그인 상태가 아니라면 에러 결과 반환
-        MemberDto memberDto = memberService.getLoginMember(session);
-        if (memberDto == null) {
-            return ok("로그인이 필요합니다", "/member/login?returnUrl=" + URLEncoder.encode("/artwork/" + aseq, StandardCharsets.UTF_8));
-        }
-
         try {
             // 관심 예술품 토글 성공 시 성공 결과 반환
-            boolean result = favoriteService.toggleFavorite(memberDto.getId(), aseq);
+            boolean result = favoriteService.toggleFavorite(memberService.getLoginMember(session).getId(), aseq);
             return ok("관심 예술품 목록에 " + (result ? "추가" : "삭제") + "되었습니다.");
         } catch (Exception e) {
             // 관심 예술품 토글 실패 시 에러 결과 반환
