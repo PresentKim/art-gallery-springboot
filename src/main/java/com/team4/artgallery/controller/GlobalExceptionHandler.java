@@ -111,7 +111,7 @@ public class GlobalExceptionHandler {
             modelAndView.addObject("url", url);
 
             // url 값이 존재하는 경우 alert 페이지로 포워딩
-            if (url != null) {
+            if (url != null && !url.isEmpty()) {
                 modelAndView.setViewName("util/alert");
                 return modelAndView;
             }
