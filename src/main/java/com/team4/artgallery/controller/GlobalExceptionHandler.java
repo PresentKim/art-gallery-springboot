@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -66,6 +67,11 @@ public class GlobalExceptionHandler {
         );
 
         return processResponse(badRequest("파라미터 " + e.getPropertyName() + "이(가) 올바르지 않습니다."), request);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Object handleException(MethodArgumentNotValidException e, HttpServletRequest request) {
+        return processResponse(badRequest(e.getBindingResult()), request);
     }
 
     /**

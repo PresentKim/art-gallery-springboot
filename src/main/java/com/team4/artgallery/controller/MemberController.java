@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
@@ -54,14 +53,8 @@ public class MemberController {
     public ResponseEntity<?> login(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
             @Valid @ModelAttribute MemberService.LoginForm loginForm,
-            BindingResult bindingResult,
             HttpSession session
     ) {
-        // 입력 값 검증 실패 시 에러 결과 반환
-        if (bindingResult.hasErrors()) {
-            return badRequest(bindingResult);
-        }
-
         // 이미 로그인 상태라면 에러 결과와 함께 returnUrl 로 리다이렉트
         if (memberService.isLogin(session)) {
             return badRequest("이미 로그인 상태입니다.", returnUrl);
@@ -124,14 +117,8 @@ public class MemberController {
     @PostMapping("/join")
     public ResponseEntity<?> join(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
-            @Valid @ModelAttribute MemberDto memberDto,
-            BindingResult bindingResult
+            @Valid @ModelAttribute MemberDto memberDto
     ) {
-        // 입력 값 검증 실패 시 에러 결과 반환
-        if (bindingResult.hasErrors()) {
-            return badRequest(bindingResult);
-        }
-
         // 이미 사용중인 아이디라면 에러 결과 반환
         if (memberService.isMember(memberDto.getId())) {
             return badRequest("이미 사용중인 아이디입니다.");
@@ -182,14 +169,8 @@ public class MemberController {
     @PostMapping("/mypage/edit")
     public ResponseEntity<?> edit(
             @Valid @ModelAttribute MemberDto memberDto,
-            BindingResult bindingResult,
             HttpSession session
     ) {
-        // 입력 값 검증 실패 시 에러 결과 반환
-        if (bindingResult.hasErrors()) {
-            return badRequest(bindingResult);
-        }
-
         // 로그인 상태가 아니라면 에러 결과 반환
         MemberDto sessionMemberDto = memberService.getLoginMember(session);
         if (sessionMemberDto == null) {
