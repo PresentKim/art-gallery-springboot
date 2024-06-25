@@ -20,6 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/gallery")
+@CheckAdmin
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AdminGalleryController {
 
@@ -28,7 +29,6 @@ public class AdminGalleryController {
     @Delegate
     private final ResponseHelper responseHelper;
 
-    @CheckAdmin
     @GetMapping({"", "/"})
     public String list(
             @RequestParam(value = "search", required = false) String search,
@@ -43,7 +43,6 @@ public class AdminGalleryController {
         return "admin/adminGalleryList";
     }
 
-    @CheckAdmin
     @PostMapping("/delete")
     public ResponseEntity<?> delete(@RequestParam(value = "gseqs", required = false) List<Integer> gseqs) {
         // gseqs 값이 없는 경우 요청 거부 결과 반환

@@ -18,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/notice")
+@CheckAdmin
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AdminNoticeController {
 
@@ -26,7 +27,6 @@ public class AdminNoticeController {
     @Delegate
     private final ResponseHelper responseHelper;
 
-    @CheckAdmin
     @GetMapping({"", "/"})
     public String list(
             @ModelAttribute INoticeDao.Filter filter,
@@ -41,7 +41,6 @@ public class AdminNoticeController {
         return "admin/adminNoticeList";
     }
 
-    @CheckAdmin
     @PostMapping("/update")
     public ResponseEntity<?> edit(@RequestParam(value = "nseqs", required = false) List<Integer> nseqs) {
         // nseqs 값이 없는 경우 요청 거부 결과 반환
@@ -58,7 +57,6 @@ public class AdminNoticeController {
         return ok("", "/notice/update?nseq=" + nseqs.get(0));
     }
 
-    @CheckAdmin
     @PostMapping("/delete")
     public ResponseEntity<?> delete(@RequestParam(value = "nseqs", required = false) List<Integer> nseqs) {
         // nseqs 값이 없는 경우 요청 거부 결과 반환

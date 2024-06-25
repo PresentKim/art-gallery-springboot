@@ -18,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/artwork")
+@CheckAdmin
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AdminArtworkController {
 
@@ -26,7 +27,6 @@ public class AdminArtworkController {
     @Delegate
     private final ResponseHelper responseHelper;
 
-    @CheckAdmin
     @GetMapping({"", "/"})
     public String list(
             @ModelAttribute IArtworkDao.Filter filter,
@@ -41,7 +41,6 @@ public class AdminArtworkController {
         return "admin/adminArtworkList";
     }
 
-    @CheckAdmin
     @PostMapping("/update")
     public ResponseEntity<?> edit(@RequestParam(value = "aseqs", required = false) List<Integer> aseqs) {
         // aseqs 값이 없는 경우 요청 거부 결과 반환
@@ -58,7 +57,6 @@ public class AdminArtworkController {
         return ok("", "/artwork/update?aseq=" + aseqs.get(0));
     }
 
-    @CheckAdmin
     @PostMapping("/delete")
     public ResponseEntity<?> delete(@RequestParam(value = "aseqs", required = false) List<Integer> aseqs) {
         // aseqs 값이 없는 경우 요청 거부 결과 반환

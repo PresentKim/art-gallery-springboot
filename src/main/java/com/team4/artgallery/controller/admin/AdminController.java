@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("/admin")
+@CheckAdmin
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AdminController {
 
@@ -24,13 +25,11 @@ public class AdminController {
     @Delegate
     private final ResponseHelper responseHelper;
 
-    @CheckAdmin
     @GetMapping({"", "/"})
     public String root() {
         return "admin/adminMain";
     }
 
-    @CheckAdmin
     @PostMapping("/reset")
     public ResponseEntity<?> reset() {
         // 데이터베이스 초기화 시도

@@ -20,6 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/member")
+@CheckAdmin
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AdminMemberController {
 
@@ -28,7 +29,6 @@ public class AdminMemberController {
     @Delegate
     private final ResponseHelper responseHelper;
 
-    @CheckAdmin
     @GetMapping({"", "/"})
     public String list(
             @RequestParam(value = "search", required = false) String search,
@@ -43,7 +43,6 @@ public class AdminMemberController {
         return "admin/adminMemberList";
     }
 
-    @CheckAdmin
     @PostMapping("/grant")
     public ResponseEntity<?> grant(@RequestParam(value = "memberIds", required = false) List<String> memberIds) {
         // memberIds 값이 없는 경우 요청 거부 결과 반환
@@ -61,7 +60,6 @@ public class AdminMemberController {
         return ok("관리자 권한을 부여했습니다", ":reload");
     }
 
-    @CheckAdmin
     @PostMapping("/revoke")
     public ResponseEntity<?> revoke(@RequestParam(value = "memberIds", required = false) List<String> memberIds) {
         // memberIds 값이 없는 경우 요청 거부 결과 반환

@@ -18,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/qna")
+@CheckAdmin
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AdminQnaController {
 
@@ -26,7 +27,6 @@ public class AdminQnaController {
     @Delegate
     private final ResponseHelper responseHelper;
 
-    @CheckAdmin
     @GetMapping({"", "/"})
     public String list(
             @ModelAttribute IQnaDao.Filter filter,
@@ -41,7 +41,6 @@ public class AdminQnaController {
         return "admin/adminQnaList";
     }
 
-    @CheckAdmin
     @PostMapping("/delete")
     public ResponseEntity<?> delete(@RequestParam(value = "qseqs", required = false) List<Integer> qseqs) {
         // qseqs 값이 없는 경우 요청 거부 결과 반환
