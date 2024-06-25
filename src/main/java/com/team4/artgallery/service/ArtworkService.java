@@ -1,7 +1,6 @@
 package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IArtworkDao;
-import com.team4.artgallery.dao.IArtworkDao.ArtworkFilter;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.util.Pagination;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ public class ArtworkService {
      * @param path   페이지 경로
      * @return 예술품 목록과 페이지네이션 정보
      */
-    public Pagination.Pair<ArtworkDto> getOrSearchArtworks(int page, ArtworkFilter filter, String path) {
+    public Pagination.Pair<ArtworkDto> getOrSearchArtworks(int page, IArtworkDao.Filter filter, String path) {
         // 검색 조건이 없을 경우 전체 예술품 목록을 가져옵니다.
         if (filter.isEmpty()) {
             Pagination pagination = new Pagination()

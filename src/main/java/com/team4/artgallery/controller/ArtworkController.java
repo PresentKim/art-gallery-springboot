@@ -1,6 +1,6 @@
 package com.team4.artgallery.controller;
 
-import com.team4.artgallery.dao.IArtworkDao.ArtworkFilter;
+import com.team4.artgallery.dao.IArtworkDao;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.service.MemberService;
@@ -33,7 +33,7 @@ public class ArtworkController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute ArtworkFilter filter,
+            @ModelAttribute IArtworkDao.Filter filter,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {

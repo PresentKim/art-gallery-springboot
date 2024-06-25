@@ -2,7 +2,6 @@ package com.team4.artgallery.dao;
 
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.util.Pagination;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.ibatis.annotations.Mapper;
@@ -58,7 +57,7 @@ public interface IArtworkDao {
      * @param pagination 페이지네이션 정보
      * @return 검색된 예술품 목록
      */
-    List<ArtworkDto> searchArtworks(@Param("filter") ArtworkFilter filter, @Param("pagination") Pagination pagination);
+    List<ArtworkDto> searchArtworks(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
 
     /**
      * 전체 예술품 개수를 가져옵니다.
@@ -73,7 +72,7 @@ public interface IArtworkDao {
      * @param filter 검색 조건
      * @return 검색된 예술품 개수
      */
-    int countSearchArtworks(@Param("filter") ArtworkFilter filter);
+    int countSearchArtworks(@Param("filter") Filter filter);
 
 
     /* ========== UPDATE =========== */
@@ -118,8 +117,7 @@ public interface IArtworkDao {
 
     @Getter
     @Setter
-    @AllArgsConstructor
-    class ArtworkFilter {
+    class Filter {
 
         private String category;
         private String displayyn;

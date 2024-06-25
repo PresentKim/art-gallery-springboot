@@ -2,7 +2,6 @@ package com.team4.artgallery.dao;
 
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.util.Pagination;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.ibatis.annotations.Mapper;
@@ -110,7 +109,6 @@ public interface IQnaDao {
 
     @Getter
     @Setter
-    @AllArgsConstructor
     class Filter {
 
         private String replyyn;

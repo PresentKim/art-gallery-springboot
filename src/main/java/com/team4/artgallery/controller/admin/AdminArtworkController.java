@@ -31,7 +31,7 @@ public class AdminArtworkController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute IArtworkDao.ArtworkFilter filter,
+            @ModelAttribute IArtworkDao.Filter filter,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             HttpSession session,
             Model model
