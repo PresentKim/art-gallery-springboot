@@ -70,19 +70,21 @@ public class GlobalExceptionHandler {
 
         // MissingServletRequestParameterException 예외 처리
         if (e instanceof MissingServletRequestParameterException ex) {
-            return badRequest("파라미터 " + ex.getParameterName() + "이(가) 누락되었습니다");
+            return badRequest("파라미터 " + ex.getParameterName() + "이(가) 누락되었습니다.");
         }
 
         // MethodArgumentTypeMismatchException 예외 처리
         if (e instanceof MethodArgumentTypeMismatchException ex) {
             MethodParameter parameter = ex.getParameter();
             Object value = ex.getValue();
-            String message = "파라미터 " + ex.getPropertyName() + "은(는) "
-                    + "반드시 " + parameter.getParameterType().getName() + " 타입이어야 합니다."
-                    + " 주어진 값은 " + (value == null ? "null" : value + "(" + value.getClass().getName() + ")") + "이므로 처리할 수 없습니다.";
+            String valueString = value == null ? "null" : value + "(" + value.getClass().getName() + ")";
+            Logger.getGlobal().warning(
+                    "파라미터 " + ex.getPropertyName() + "은(는) "
+                            + parameter.getParameterType().getName() + " 타입이어야 합니다."
+                            + " 주어진 값은 " + valueString + "이므로 처리할 수 없습니다."
+            );
 
-            Logger.getGlobal().warning(message);
-            return badRequest("잘못된 " + ex.getPropertyName() + "값입니다");
+            return badRequest("파라미터 " + ex.getPropertyName() + "이(가) 올바르지 않습니다.");
         }
 
         // 에러 내용과 함께 500 에러 반환
