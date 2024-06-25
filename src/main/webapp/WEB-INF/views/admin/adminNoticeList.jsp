@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.team4.artgallery.enums.NoticeCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
@@ -13,43 +14,36 @@
 
 <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
 <section class="admin-list">
-    <form method="post" name="adminForm">
+    <form name="adminForm" method="get" action="<c:url value="/admin/notice"/>" onsubmit="ajaxSubmit(event)">
         <div class="admin-list-btn">
-            <!-- 체크된 id들이 배열값으로 들어오고 String 변환되어 넘어감 -->
-            <input type="hidden" name="memberIds">
+            <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
+            <input class="fake-submit" type="submit" formmethod="get" formaction="<c:url value="/admin/notice"/>">
 
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
-                <input type="button" value="등록" onclick="location.href='museum.do?command=insertNoticeForm'">
-                <input type="button" value="수정" onclick="updatePost('updateNoticeForm&nseq=', 'li:nth-child(2)')">
-                <input type="button" value="삭제" onclick="deletePost('adminDeleteNotice', 'li:nth-child(2)')">
+                <input type="submit" value="등록" formmethod="get" formaction="<c:url value="/notice/write"/>">
+                <input type="submit" value="수정" formmethod="post" formaction="<c:url value="/admin/notice/update"/>">
+                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/admin/notice/delete"/>">
             </div>
 
             <!-- 검색 기능 -->
             <div class="admin-list-search">
-                <input type="text" placeholder="검색어를 입력하세요" name="searchWord" value="${searchWord}">
-                <input type="button" value="검색" onclick="searchAdmin('adminNoticeList')">
+                <label><input type="text" placeholder="검색어를 입력해주세요" name="search" value="${filter.search}"></label>
+                <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/notice"/>">
             </div>
         </div>
         <ul class="admin-list-header admin-notice-list">
             <li>
-                <input type="checkbox" onclick="checkAll()" class="select-all-box">
+                <label><input type="checkbox" onclick="checkAll()" class="select-all-box"></label>
             </li>
             <li>번호</li>
             <li>
-                <select onchange="categoryFilter('adminNoticeList', 'noticeCategory', event)"
-                        name="selectCategoryFilter"
-                        class="admin-select">
-                    <option value="state">분류</option>
-                    <c:forEach items="${NoticeCategory.validValues()}" var="c">
-                        <c:choose>
-                            <c:when test="${c.name().equals(selectedCategory)}">
-                                <option value="${c.name()}" selected>${c.name()}</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="${c.name()}">${c.name()}</option>
-                            </c:otherwise>
-                        </c:choose>
+                <label for="category"></label>
+                <select name="category" id="category" class="admin-select" onchange="this.form.submit();">
+                    <option value="">전체</option>
+                    <c:forEach items="${NoticeCategory.writableValues()}" var="c">
+                        <option value="${c.name()}"
+                                <c:if test="${c.name().equals(filter.category)}">selected</c:if>>${c.name()}</option>
                     </c:forEach>
                 </select>
             </li>
@@ -62,7 +56,7 @@
         <c:forEach items="${noticeList}" var="noticeDto">
             <ul class="admin-list-main admin-notice-list" onclick="go_check(event)">
                 <li>
-                    <input type="checkbox" class="check-box">
+                    <label><input name="nseqs" type="checkbox" value="${noticeDto.nseq}" class="check-box"></label>
                 </li>
                 <li>${noticeDto.nseq}</li>
                 <li>${noticeDto.category}</li>

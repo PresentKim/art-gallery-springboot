@@ -2,9 +2,13 @@ package com.team4.artgallery.dao;
 
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.util.Pagination;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -51,6 +55,15 @@ public interface INoticeDao {
     List<NoticeDto> getNotices(@Param("category") String category, @Param("pagination") Pagination pagination);
 
     /**
+     * 검색된 소식지 목록을 가져옵니다.
+     *
+     * @param filter     검색 조건
+     * @param pagination 페이지네이션 정보
+     * @return 검색된 소식지 목록
+     */
+    List<NoticeDto> searchNotices(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
+
+    /**
      * 전체 소식지 개수를 가져옵니다.
      *
      * @return 전체 소식지 개수
@@ -66,6 +79,14 @@ public interface INoticeDao {
      * @return 검색된 소식지 개수
      */
     int countNotices(@Param("category") String category);
+
+    /**
+     * 검색된 소식지 개수를 가져옵니다.
+     *
+     * @param filter 검색 조건
+     * @return 검색된 소식지 개수
+     */
+    int countSearchNotices(@Param("filter") Filter filter);
 
 
     /* ========== UPDATE =========== */
@@ -104,5 +125,47 @@ public interface INoticeDao {
      * @return 삭제된 행의 수
      */
     int deleteNotices(List<Integer> aseqList);
+
+
+    /* ========== INNER CLASS =========== */
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    class Filter {
+
+        private String category;
+        private String search;
+
+        public boolean hasCategory() {
+            return category != null && !category.isEmpty() && !"전체".equals(category);
+        }
+
+        public boolean hasSearch() {
+            return search != null && !search.isEmpty();
+        }
+
+        public boolean isEmpty() {
+            return !hasCategory() && !hasSearch();
+        }
+
+        public String toUrlParam() {
+            if (isEmpty()) {
+                return "";
+            }
+
+            List<String> params = new ArrayList<>();
+            if (hasCategory()) {
+                params.add("category=" + category);
+            }
+
+            if (hasSearch()) {
+                params.add("search=" + search);
+            }
+
+            return String.join("&", params);
+        }
+
+    }
 
 }
