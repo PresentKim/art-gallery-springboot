@@ -1,7 +1,7 @@
 package com.team4.artgallery.annotation;
 
 import com.team4.artgallery.dto.MemberDto;
-import com.team4.artgallery.security.LoginMemberArgumentResolver;
+import com.team4.artgallery.resolver.LoginMemberArgumentResolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

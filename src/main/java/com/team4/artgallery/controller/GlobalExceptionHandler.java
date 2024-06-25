@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller;
 
-import com.team4.artgallery.security.exception.NotAdminException;
-import com.team4.artgallery.security.exception.NotLoginException;
+import com.team4.artgallery.exception.NotAdminException;
+import com.team4.artgallery.exception.NotLoginException;
 import com.team4.artgallery.util.ajax.ResponseBody;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpServletRequest;

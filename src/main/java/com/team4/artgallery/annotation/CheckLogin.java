@@ -1,8 +1,8 @@
 package com.team4.artgallery.annotation;
 
+import com.team4.artgallery.aspect.CheckLoginAspect;
 import com.team4.artgallery.controller.GlobalExceptionHandler;
-import com.team4.artgallery.security.CheckLoginAspect;
-import com.team4.artgallery.security.exception.NotLoginException;
+import com.team4.artgallery.exception.NotLoginException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.annotation.AliasFor;
 

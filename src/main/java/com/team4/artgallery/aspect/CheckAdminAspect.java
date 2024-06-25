@@ -1,7 +1,7 @@
-package com.team4.artgallery.security;
+package com.team4.artgallery.aspect;
 
 import com.team4.artgallery.annotation.CheckAdmin;
-import com.team4.artgallery.security.exception.NotAdminException;
+import com.team4.artgallery.exception.NotAdminException;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.SessionService;
 import jakarta.servlet.http.HttpSession;

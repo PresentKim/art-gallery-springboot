@@ -1,6 +1,6 @@
 package com.team4.artgallery;
 
-import com.team4.artgallery.security.LoginMemberArgumentResolver;
+import com.team4.artgallery.resolver.LoginMemberArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
