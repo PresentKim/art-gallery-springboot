@@ -257,7 +257,7 @@ public class MemberController {
 
     @GetMapping("/mypage/favorite")
     public String favorite(
-            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
             HttpSession session,
             Model model
     ) {
@@ -275,7 +275,7 @@ public class MemberController {
     }
 
     @PostMapping("/mypage/favorite")
-    public ResponseEntity<?> favorite(@RequestParam(value = "aseq") int aseq, HttpSession session) {
+    public ResponseEntity<?> favorite(@RequestParam(value = "aseq") Integer aseq, HttpSession session) {
         // 로그인 상태가 아니라면 에러 결과 반환
         MemberDto memberDto = memberService.getLoginMember(session);
         if (memberDto == null) {

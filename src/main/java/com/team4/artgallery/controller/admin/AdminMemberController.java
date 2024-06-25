@@ -31,7 +31,7 @@ public class AdminMemberController {
     @GetMapping({"", "/"})
     public String list(
             @RequestParam(value = "search", required = false) String search,
-            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
             HttpSession session,
             Model model
     ) {

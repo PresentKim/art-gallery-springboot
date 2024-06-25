@@ -32,7 +32,7 @@ public class AdminNoticeController {
     @GetMapping({"", "/"})
     public String list(
             @ModelAttribute INoticeDao.Filter filter,
-            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
             HttpSession session,
             Model model
     ) {

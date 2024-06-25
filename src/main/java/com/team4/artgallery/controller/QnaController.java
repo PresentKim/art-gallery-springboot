@@ -27,7 +27,7 @@ public class QnaController {
     private final ResponseHelper responseHelper;
 
     @GetMapping({"", "/"})
-    public String list(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+    public String list(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
                 .setItemCount(qnaService.countInquiries())
@@ -73,7 +73,7 @@ public class QnaController {
     }
 
     @GetMapping("/update")
-    public String update(@RequestParam(value = "qseq") int qseq, Model model, HttpSession session) {
+    public String update(@RequestParam(value = "qseq") Integer qseq, Model model, HttpSession session) {
         // 문의글 정보가 없는 경우 404 페이지로 이동
         QnaDto qnaDto = qnaService.getInquiry(qseq);
         if (qnaDto == null) {
@@ -116,7 +116,7 @@ public class QnaController {
 
     @PostMapping("/reply")
     public ResponseEntity<?> reply(
-            @RequestParam(value = "qseq") int qseq,
+            @RequestParam(value = "qseq") Integer qseq,
             @RequestParam(value = "reply") String reply,
             HttpSession session
     ) {
@@ -141,7 +141,7 @@ public class QnaController {
 
     @PostMapping("/authorize")
     public ResponseEntity<?> authorize(
-            @RequestParam(value = "qseq") int qseq,
+            @RequestParam(value = "qseq") Integer qseq,
             @RequestParam(value = "mode") String mode,
             @RequestParam(value = "pwd", required = false) String pwd,
             Model model,

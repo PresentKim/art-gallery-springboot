@@ -31,7 +31,7 @@ public class ArtworkController {
     @GetMapping({"", "/"})
     public String list(
             @ModelAttribute ArtworkFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
         // 전시 여부는 무시합니다. 항상 전시 중인 예술품만 보여줍니다.
@@ -59,7 +59,7 @@ public class ArtworkController {
     }
 
     @GetMapping("/update")
-    public String update(@RequestParam(value = "aseq") int aseq, Model model, HttpSession session) {
+    public String update(@RequestParam(value = "aseq") Integer aseq, Model model, HttpSession session) {
         // 관리자가 아닌 경우 404 페이지로 포워딩
         if (!memberService.isAdmin(session)) {
             return "util/404";
@@ -116,7 +116,7 @@ public class ArtworkController {
     }
 
     @PostMapping("/toggleArtworkDisplay")
-    public ResponseEntity<?> toggleArtworkDisplay(@RequestParam(value = "aseq") int aseq, HttpSession session) {
+    public ResponseEntity<?> toggleArtworkDisplay(@RequestParam(value = "aseq") Integer aseq, HttpSession session) {
         // 관리자가 아닌 경우 요청 거부 결과 반환
         if (!memberService.isAdmin(session)) {
             return forbidden();
@@ -167,7 +167,7 @@ public class ArtworkController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> delete(@RequestParam(value = "aseq") int aseq, HttpSession session) {
+    public ResponseEntity<?> delete(@RequestParam(value = "aseq") Integer aseq, HttpSession session) {
         // 관리자가 아닌 경우 요청 거부 결과 반환
         if (!memberService.isAdmin(session)) {
             return forbidden();

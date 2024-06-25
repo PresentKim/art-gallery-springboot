@@ -11,13 +11,13 @@ import java.sql.Date;
 @AllArgsConstructor
 public class GalleryDto {
 
-    private int gseq;
+    private Integer gseq;
     private String authorId;
     private String authorName;
     private String title;
     private Date writedate;
     private String content;
-    private int readcount;
+    private Integer readcount;
     private String image;
     private String savefilename;
 

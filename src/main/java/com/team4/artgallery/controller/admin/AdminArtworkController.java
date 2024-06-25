@@ -32,7 +32,7 @@ public class AdminArtworkController {
     @GetMapping({"", "/"})
     public String list(
             @ModelAttribute IArtworkDao.ArtworkFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
             HttpSession session,
             Model model
     ) {

@@ -30,7 +30,7 @@ public class NoticeController {
     @GetMapping({"", "/"})
     public String list(
             @RequestParam(value = "category", required = false) String category,
-            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
         // 카테고리가 매거진 혹은 신문인 경우 해당 페이지로 리다이렉트
@@ -67,7 +67,7 @@ public class NoticeController {
     }
 
     @GetMapping("/update")
-    public String update(@RequestParam(value = "nseq") int nseq, HttpSession session, Model model) {
+    public String update(@RequestParam(value = "nseq") Integer nseq, HttpSession session, Model model) {
         // 관리자가 아닌 경우 404 페이지로 포워딩
         if (!memberService.isAdmin(session)) {
             return "util/404";
@@ -133,7 +133,7 @@ public class NoticeController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> delete(@RequestParam(value = "nseq") int nseq, HttpSession session) {
+    public ResponseEntity<?> delete(@RequestParam(value = "nseq") Integer nseq, HttpSession session) {
         // 관리자가 아닌 경우 요청 거부 결과 반환
         if (!memberService.isAdmin(session)) {
             return forbidden();

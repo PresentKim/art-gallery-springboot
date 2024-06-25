@@ -29,7 +29,7 @@ public class GalleryController {
     @GetMapping({"", "/"})
     public String list(
             @RequestParam(value = "search", required = false) String search,
-            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
         // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 갤러리 목록을 가져옵니다.
@@ -57,7 +57,7 @@ public class GalleryController {
     }
 
     @GetMapping("/update")
-    public String update(@RequestParam(value = "gseq") int gseq, Model model, HttpSession session) {
+    public String update(@RequestParam(value = "gseq") Integer gseq, Model model, HttpSession session) {
         // 로그인 상태가 아니라면 로그인 페이지로 리다이렉트
         if (!memberService.isLogin(session)) {
             return memberService.redirectToLogin("/gallery/update?gseq=" + gseq);
@@ -171,7 +171,7 @@ public class GalleryController {
 
 
     @PostMapping("/delete")
-    public ResponseEntity<?> delete(@RequestParam(value = "gseq") int gseq, HttpSession session) {
+    public ResponseEntity<?> delete(@RequestParam(value = "gseq") Integer gseq, HttpSession session) {
         // 로그인 상태가 아닌 경우 실패 결과 반환
         if (!memberService.isLogin(session)) {
             return forbidden();
