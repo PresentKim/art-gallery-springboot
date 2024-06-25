@@ -1,9 +1,8 @@
 package com.team4.artgallery.controller.admin;
 
+import com.team4.artgallery.annotation.CheckAdmin;
 import com.team4.artgallery.service.DataBaseService;
-import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.ajax.ResponseHelper;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,30 +19,20 @@ import java.util.Arrays;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AdminController {
 
-    private final MemberService memberService;
-
     private final DataBaseService dataBaseService;
 
     @Delegate
     private final ResponseHelper responseHelper;
 
+    @CheckAdmin
     @GetMapping({"", "/"})
-    public String root(HttpSession session) {
-        // 관리자가 아닌 경우 404 페이지로 포워딩
-        if (!memberService.isAdmin(session)) {
-            return "util/404";
-        }
-
+    public String root() {
         return "admin/adminMain";
     }
 
+    @CheckAdmin
     @PostMapping("/reset")
-    public ResponseEntity<?> reset(HttpSession session) {
-        // 관리자가 아닌 경우 404 페이지로 포워딩
-        if (!memberService.isAdmin(session)) {
-            return forbidden();
-        }
-
+    public ResponseEntity<?> reset() {
         // 데이터베이스 초기화 시도
         try {
             dataBaseService.resetDatabase();

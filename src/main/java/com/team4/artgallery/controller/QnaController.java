@@ -1,5 +1,6 @@
 package com.team4.artgallery.controller;
 
+import com.team4.artgallery.annotation.CheckAdmin;
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.QnaService;
@@ -114,20 +115,15 @@ public class QnaController {
         return ok("문의 수정이 완료되었습니다.", "/qna/" + qseq);
     }
 
+    @CheckAdmin
     @PostMapping("/reply")
     public ResponseEntity<?> reply(
             @RequestParam(value = "qseq") Integer qseq,
-            @RequestParam(value = "reply") String reply,
-            HttpSession session
+            @RequestParam(value = "reply") String reply
     ) {
         // 문의글 정보가 없는 경우 404 실패 반환
         if (qnaService.getInquiry(qseq) == null) {
             return notFound("문의글 정보를 찾을 수 없습니다.", "/qna");
-        }
-
-        // 접근 권한이 없는 경우 403 실패 반환
-        if (!memberService.isAdmin(session)) {
-            return forbidden("접근 권한이 없습니다.");
         }
 
         // 문의글 답변 수정에 실패한 경우 500 에러 반환

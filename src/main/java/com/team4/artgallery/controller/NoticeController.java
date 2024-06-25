@@ -1,5 +1,6 @@
 package com.team4.artgallery.controller;
 
+import com.team4.artgallery.annotation.CheckAdmin;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.enums.NoticeCategory;
 import com.team4.artgallery.service.MemberService;
@@ -66,13 +67,9 @@ public class NoticeController {
         return "notice/noticeView";
     }
 
+    @CheckAdmin
     @GetMapping("/update")
-    public String update(@RequestParam(value = "nseq") Integer nseq, HttpSession session, Model model) {
-        // 관리자가 아닌 경우 404 페이지로 포워딩
-        if (!memberService.isAdmin(session)) {
-            return "util/404";
-        }
-
+    public String update(@RequestParam(value = "nseq") Integer nseq, Model model) {
         // 소식지 정보를 가져올 수 없는 경우 404 페이지로 포워딩
         NoticeDto noticeDto = noticeService.getNotice(nseq);
         if (noticeDto == null) {
@@ -84,13 +81,9 @@ public class NoticeController {
         return "notice/noticeForm";
     }
 
+    @CheckAdmin
     @PostMapping("/update")
     public ResponseEntity<?> update(@ModelAttribute NoticeDto noticeDto, HttpSession session) {
-        // 관리자가 아닌 경우 요청 거부 결과 반환
-        if (!memberService.isAdmin(session)) {
-            return forbidden();
-        }
-
         // 작성자를 세션 정보로부터 가져와서 소식지 정보에 설정
         noticeDto.setAuthor(memberService.getLoginMember(session).getId());
 
@@ -103,23 +96,15 @@ public class NoticeController {
         return ok("소식지 수정이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
     }
 
+    @CheckAdmin
     @GetMapping("/write")
-    public String write(HttpSession session) {
-        // 관리자가 아닌 경우 404 페이지로 포워딩
-        if (!memberService.isAdmin(session)) {
-            return "util/404";
-        }
-
+    public String write() {
         return "notice/noticeForm";
     }
 
+    @CheckAdmin
     @PostMapping("/write")
     public ResponseEntity<?> write(@ModelAttribute NoticeDto noticeDto, HttpSession session) {
-        // 관리자가 아닌 경우 요청 거부 결과 반환
-        if (!memberService.isAdmin(session)) {
-            return forbidden();
-        }
-
         // 작성자를 세션 정보로부터 가져와서 소식지 정보에 설정
         noticeDto.setAuthor(memberService.getLoginMember(session).getId());
 
@@ -132,13 +117,9 @@ public class NoticeController {
         return ok("소식지 작성이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
     }
 
+    @CheckAdmin
     @PostMapping("/delete")
-    public ResponseEntity<?> delete(@RequestParam(value = "nseq") Integer nseq, HttpSession session) {
-        // 관리자가 아닌 경우 요청 거부 결과 반환
-        if (!memberService.isAdmin(session)) {
-            return forbidden();
-        }
-
+    public ResponseEntity<?> delete(@RequestParam(value = "nseq") Integer nseq) {
         // 소식지 삭제 실패 시 오류 결과 반환
         if (noticeService.deleteNotice(nseq) != 1) {
             return badRequest("소식지 삭제에 실패했습니다.");
