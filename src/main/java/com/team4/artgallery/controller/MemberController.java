@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
@@ -29,7 +30,6 @@ import java.util.Arrays;
 public class MemberController {
 
     private final MemberService memberService;
-
     private final FavoriteService favoriteService;
 
     @Delegate
@@ -54,7 +54,7 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<?> login(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
-            @Valid @ModelAttribute MemberService.LoginForm loginForm,
+            @Validated(MemberDto.LOGIN_GROUP) @ModelAttribute MemberDto loginForm,
             HttpSession session
     ) {
         // 이미 로그인 상태라면 에러 결과와 함께 returnUrl 로 리다이렉트
@@ -120,7 +120,7 @@ public class MemberController {
     @PostMapping("/join")
     public ResponseEntity<?> join(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
-            @Valid @ModelAttribute MemberDto memberDto
+            @Validated(MemberDto.FORM_GROUP) @ModelAttribute MemberDto memberDto
     ) {
         // 이미 사용중인 아이디라면 에러 결과 반환
         if (memberService.isMember(memberDto.getId())) {
@@ -164,7 +164,7 @@ public class MemberController {
     @CheckLogin()
     @PostMapping("/mypage/edit")
     public ResponseEntity<?> edit(
-            @Valid @ModelAttribute MemberDto memberDto,
+            @Validated(MemberDto.FORM_GROUP) @ModelAttribute MemberDto memberDto,
             @LoginMember MemberDto loginMember,
             HttpSession session
     ) {

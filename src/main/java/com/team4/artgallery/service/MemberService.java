@@ -4,12 +4,7 @@ import com.team4.artgallery.dao.IMemberDao;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.util.Pagination;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.Delegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -141,21 +136,6 @@ public class MemberService {
      */
     public String getRedirectToLogin(String returnUrl) {
         return "/member/login?returnUrl=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8);
-    }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    public static class LoginForm {
-
-        @NotBlank(message = "아이디는 필수 입력값입니다.")
-        @Size(min = 4, max = 45, message = "아이디는 4자 이상 45자 이하로 입력해주세요.")
-        private String id;
-
-        @NotBlank(message = "비밀번호는 필수 입력값입니다.")
-        @Size(min = 4, max = 45, message = "비밀번호는 4자 이상 45자 이하로 입력해주세요.")
-        private String pwd;
-
     }
 
 }
