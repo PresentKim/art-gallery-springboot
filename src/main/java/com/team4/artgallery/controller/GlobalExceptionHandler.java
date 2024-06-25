@@ -1,5 +1,7 @@
 package com.team4.artgallery.controller;
 
+import com.team4.artgallery.security.exception.NotAdminException;
+import com.team4.artgallery.security.exception.NotLoginException;
 import com.team4.artgallery.util.ajax.ResponseBody;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -73,6 +75,19 @@ public class GlobalExceptionHandler {
     public Object handleException(MethodArgumentNotValidException e, HttpServletRequest request) {
         return processResponse(badRequest(e.getBindingResult()), request);
     }
+
+    @ExceptionHandler(NotLoginException.class)
+    public Object handleException(NotLoginException e, HttpServletRequest request) {
+        return processResponse(unauthorized("로그인이 필요합니다", e.getReturnUrl()), request);
+    }
+
+    @ExceptionHandler(NotAdminException.class)
+    public Object handleException(NotAdminException e, HttpServletRequest request) {
+        // 보안을 위해 관리자가 아닌 경우 해당 페이지 혹은 기능이 존재하지 않는 것처럼 처리합니다
+        // (브루트 포스 공격을 방지하기 위함)
+        return processResponse(notFound(), request);
+    }
+
 
     /**
      * 예외로부터 생성된 ResponseEntity 를 GET 요청인 경우 ModelAndView 로 변환하여 반환, POST 요청인 경우 그대로 반환
