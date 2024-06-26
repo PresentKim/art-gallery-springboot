@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+:root {
+    --black: #000000;
+
+    --gray-900: #1D1D1D;
+    --gray-850: #2D2D2D;
+    --gray-800: #3D3D3D;
+    --gray-750: #4D4D4D;
+    --gray-700: #5D5D5D;
+    --gray-650: #6D6D6D;
+    --gray-600: #7D7D7D;
+    --gray-550: #8D8D8D;
+
+    --gray-400: #A1A1A1;
+    --gray-300: #C1C1C1;
+    --gray-250: #D1D1D1;
+    --gray-200: #E1E1E1;
+    --gray-150: #F1F1F1;
+    --gray-100: #FAFAFA;
+
+    --white: #FFFFFF;
+}

@@ -12,8 +12,8 @@
     width: 31%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
+    background-color: var(--gray-100);
+    border: 1px solid var(--gray-300);
     border-radius: 5px;
 }
 
@@ -29,7 +29,7 @@
 .login-form-wrapper h2 {
     margin-top: 10px;
     font-size: 24px;
-    color: #333;
+    color: var(--gray-800);
 }
 
 .login-form .field {
@@ -41,13 +41,13 @@
     display: block;
     margin-bottom: 5px;
     font-size: 14px;
-    color: #333;
+    color: var(--gray-800);
 }
 
 .login-form .field input[type="text"], .field input[type="password"] {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--gray-300);
     border-radius: 5px;
     outline: none;
 }
@@ -61,11 +61,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #333;
-    color: #fff;
+    background-color: var(--gray-800);
+    color: var(--white);
     font-size: 16px;
 }
 
 .login-form .btn input[type="submit"]:hover, .btn input[type="button"]:hover {
-    background-color: #555;
+    background-color: var(--gray-700);
 }

@@ -50,8 +50,8 @@
     width: 7rem;
     height: 3rem;
     align-content: center;
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
     font-weight: bold;
     text-align: center;
     border: 2px solid black;
@@ -62,13 +62,13 @@
 }
 
 .artwork-list_btn:hover {
-    background-color: black;
-    color: white;
+    background-color: var(--black);
+    color: var(--white);
 }
 
 .artwork-list_selected-btn {
-    background-color: black;
-    color: white;
+    background-color: var(--black);
+    color: var(--white);
 }
 
 .artwork-list-head {

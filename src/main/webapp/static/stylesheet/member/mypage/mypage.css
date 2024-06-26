@@ -16,7 +16,7 @@
     margin-bottom: 2rem;
     font-size: 2rem;
     font-weight: bold;
-    border-bottom: 1px solid #6D6D6D;
+    border-bottom: 1px solid var(--gray-650);
 }
 
 .mypage_info_list {
@@ -41,7 +41,7 @@
 .mypage_info_label:after {
     content: ":";
     font-weight: normal;
-    color: #6D6D6D;
+    color: var(--gray-650);
     margin-left: 0.5rem;
 }
 
@@ -56,11 +56,11 @@
     width: 100%;
     padding: 1rem 4rem;
     text-align: center;
-    background: #1D1D1D;
-    color: #F1F1F1;
+    background: var(--gray-900);
+    color: var(--gray-150);
     cursor: pointer;
 }
 
 .mypage_button:hover {
-    background: #3D3D3D;
+    background: var(--gray-800);
 }

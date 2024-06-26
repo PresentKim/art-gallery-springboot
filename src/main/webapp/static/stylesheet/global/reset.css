@@ -57,9 +57,9 @@ fieldset {
 
 input {
     position: relative;
-    color: #1D1D1D;
+    color: var(--gray-900);
     border: none;
-    border-bottom: solid #aaaaaa 1px;
+    border-bottom: solid var(--gray-400) 1px;
     padding-left: 10px;
     background: none;
     z-index: 5;
@@ -67,7 +67,7 @@ input {
 }
 
 input::placeholder {
-    color: #AAAAAA;
+    color: var(--gray-400);
 }
 
 input:focus {
@@ -75,7 +75,7 @@ input:focus {
 }
 
 input:focus ~ label, input:valid ~ label {
-    color: #666;
+    color: var(--gray-650);
     font-weight: bold;
 }
 

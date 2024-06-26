@@ -82,8 +82,8 @@
     width: 7rem;
     height: 3rem;
     align-content: center;
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
     font-size: 1rem;
     font-weight: bold;
     text-align: center;
@@ -96,8 +96,8 @@
 }
 
 .gallery-btn:hover {
-    background-color: black;
-    color: white;
+    background-color: var(--black);
+    color: var(--white);
 }
 
 /* galleryView.jsp */
@@ -115,7 +115,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #f6f6f6;
+    background: var(--gray-150);
 }
 
 .gallery-header li {
@@ -126,14 +126,14 @@
 .gallery-header a {
     height: 2rem;
     display: block;
-    background: #ececec;
+    background: var(--gray-200);
     text-align: center;
     align-content: center;
     border-radius: 25px;
 }
 
 .gallery-header a:hover {
-    background: #d0d0d0de;
+    background: var(--gray-250);
 }
 
 .gbtn-back {
@@ -154,13 +154,13 @@
     border-radius: 0;
     margin: 0;
     padding: 0.5rem 0;
-    color: #1D1D1D;
-    background-color: white;
+    color: var(--gray-900);
+    background-color: var(--white);
 }
 
 .gallery-header .gbtn-update:hover, .gallery-header .gbtn-delete:hover {
-    color: white;
-    background-color: #1D1D1D;
+    color: var(--white);
+    background-color: var(--gray-900);
 }
 
 .gallery-main {

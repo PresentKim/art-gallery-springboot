@@ -33,8 +33,8 @@
     width: 7rem;
     height: 3rem;
     align-content: center;
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
     font-size: 1rem;
     font-weight: bold;
     text-align: center;
@@ -47,8 +47,8 @@
 }
 
 .artwork-view_btn > *:hover {
-    background-color: black;
-    color: white;
+    background-color: var(--black);
+    color: var(--white);
 }
 
 .artwork-view_img {

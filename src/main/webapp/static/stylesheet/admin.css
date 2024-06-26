@@ -32,8 +32,8 @@
 .admin-main li:hover {
     translate: -3px -3px;
     background: gray;
-    color: white;
-    box-shadow: 4px 4px 2px #373737;
+    color: var(--white);
+    box-shadow: 4px 4px 2px var(--gray-800);
 }
 
 .admin-main-menu a {
@@ -77,7 +77,7 @@
 }
 
 .content-wrap > .admin-sub-menu a:hover {
-    background: #dad7cd;
+    background: var(--gray-250);
     border-radius: 5px;
 }
 
@@ -190,8 +190,8 @@
     height: 2rem;
     padding: 0;
     margin: 0 0.5rem;
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
     font-weight: bold;
     border: 2px solid black;
     border-radius: 50px;
@@ -205,8 +205,8 @@
 }
 
 .admin-list-btn input[type="button"]:hover, .admin-list-btn input[type="submit"]:hover {
-    background-color: black;
-    color: white;
+    background-color: var(--black);
+    color: var(--white);
 }
 
 .admin-list-main {
@@ -224,7 +224,7 @@
 .admin-select {
     padding: 0.5rem 0.3rem;
     text-align: center;
-    border: 1px solid #888;
+    border: 1px solid var(--gray-550);
     border-radius: 5px;
     cursor: pointer;
     outline: none;

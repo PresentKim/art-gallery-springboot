@@ -63,14 +63,14 @@
 @media only screen and (min-width: 768px) {
     .qna-list_body {
         margin-bottom: 2rem;
-        border: 1px solid #e0e0e0;
+        border: 1px solid var(--gray-200);
         border-radius: 4px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .qna-list_body .pagination {
         padding: 0.5rem;
-        border-top: 1px solid #D1D1D1;
+        border-top: 1px solid var(--gray-250);
     }
 }
 
@@ -99,7 +99,7 @@
 }
 
 .qna-list_table tbody tr:hover {
-    background-color: #F5F5F5;
+    background-color: var(--gray-150);
     font-weight: 500;
 }
 
@@ -120,7 +120,7 @@
 .qna-list_table tbody tr td[data-title]:before {
     content: attr(data-title);
     float: left;
-    color: #6F6F6F;
+    color: var(--gray-650);
     font-weight: bold;
 }
 
@@ -142,7 +142,7 @@
 
     .qna-list_table thead {
         display: table-header-group;
-        background-color: #f0f0f0;
+        background-color: var(--gray-150);
         font-weight: bold;
     }
 

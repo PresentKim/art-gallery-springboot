@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 .qna-form {
-    --color-success: #1D1D1D;
-    --color-failure: #1D1D1D;
-    --color-primary: #1D1D1D;
+    --color-success: var(--gray-900);
+    --color-failure: var(--gray-900);
+    --color-primary: var(--gray-900);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +29,7 @@
     .qna-form {
         padding: 2rem;
         border-radius: 0.5rem;
-        border: 1px solid #C1C1C1;
+        border: 1px solid var(--gray-300);
         margin-bottom: 2rem;
     }
 
@@ -37,7 +37,7 @@
         align-items: center;
         padding-left: 2rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid #C1C1C1;
+        border-bottom: 1px solid var(--gray-300);
     }
 }
 
@@ -52,7 +52,7 @@
 @media only screen and (min-width: 768px) {
     .qna-form_body .pagination {
         padding: 0.5rem;
-        border-top: 1px solid #D1D1D1;
+        border-top: 1px solid var(--gray-300);
     }
 }
 
@@ -61,7 +61,7 @@
     display: grid;
     position: relative;
     width: 100%;
-    border-color: #D1D1D1;
+    border-color: var(--gray-250);
     border-style: solid;
     border-width: 0;
     border-bottom-width: 1px;
@@ -138,19 +138,19 @@
     text-align: center;
     font-weight: bold;
     padding: 0.5rem;
-    color: white;
+    color: var(--white);
     background: var(--color-failure);
     cursor: pointer;
 }
 
 .qna-form_input-wrapper input[type="checkbox"]:checked::after {
     content: '[공개]';
-    color: white;
+    color: var(--white);
     background: var(--color-success);
 }
 
 .qna-form_input-wrapper ::selection {
-    color: #F1F1F1;
+    color: var(--gray-150);
     background-color: var(--color-success);
 }
 
@@ -160,7 +160,7 @@
     top: 2.75rem;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #6D6D6D !important;
+    color: var(--gray-650) !important;
     cursor: text;
     transition: all .2s ease-out;
     transform: translateY(-120%);
@@ -238,8 +238,8 @@
     flex: 1;
     padding: 0.5rem 2em;
     font-size: 1.25rem;
-    background-color: #1D1D1D;
-    color: #F1F1F1;
+    background-color: var(--gray-900);
+    color: var(--gray-150);
 }
 
 .qna-form_button + label {

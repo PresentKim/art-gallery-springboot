@@ -2,8 +2,8 @@
     max-width: 40rem;
     margin: 0 auto 3rem auto;
     padding: 2rem;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
+    background-color: var(--gray-150);
+    border: 1px solid var(--gray-300);
     border-radius: 5px;
 }
 
@@ -19,8 +19,8 @@
 .join-form input[type="button"],
 .join-form input[type="submit"] {
     padding: 0.5rem 1rem;
-    background-color: #1D1D1D;
-    color: #F1F1F1;
+    background-color: var(--gray-900);
+    color: var(--gray-150);
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -28,7 +28,7 @@
 
 .join-form input[type="button"]:hover,
 .join-form input[type="submit"]:hover {
-    background-color: #3D3D3D;
+    background-color: var(--gray-800);
 }
 
 /* Form input */
@@ -38,7 +38,7 @@
 .join-form input[type="email"] {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--gray-300);
     border-radius: 5px;
     font-size: 14px;
 }

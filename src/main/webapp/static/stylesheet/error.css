@@ -47,9 +47,9 @@
     padding: 2rem 1rem;
     border-radius: 0.5rem;
     backdrop-filter: blur(4px);
-    box-shadow: 0 0 .5rem #3F3F5F;
-    color: #1D1D1D;
-    background: #FFFA;
+    box-shadow: 0 0 .5rem var(--gray-800);
+    color: var(--gray-900);
+    background: var(--white);
 }
 
 .error h2 {
@@ -67,14 +67,15 @@
     margin-top: 0.5rem;
     border-radius: 0.5rem;
     backdrop-filter: blur(4px);
-    color: #FFFA;
-    background: #1D1D1DCC;
+    color: var(--white);
+    background: var(--gray-900);
+    opacity: 80%;
     transition: all 0.2s linear;
 }
 
 .error pre:hover {
-    color: #FFF;
-    background: #1D1D1D;
+    color: var(--white);
+    background: var(--gray-900);
 }
 
 @media ( max-width: 768px) {
