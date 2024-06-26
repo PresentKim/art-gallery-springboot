@@ -189,5 +189,5 @@ var defaultAjaxHandler = (function () {
 })();
 
 function getInputName(input) {
-    return (input.labels[0] && input.labels[0].innerText) || input.name || input.id;
+    return (input.labels && input.labels[0] && input.labels[0].innerText) || input.name || input.id;
 }
