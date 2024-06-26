@@ -1,10 +1,10 @@
 package com.team4.artgallery.controller;
 
-import com.team4.artgallery.annotation.CheckAdmin;
+import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.service.QnaService;
+import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
-import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class QnaController {
     private final QnaService qnaService;
 
     @Delegate
-    private final ResponseHelper responseHelper;
+    private final ResponseService responseHelper;
 
     @GetMapping({"", "/"})
     public String list(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {

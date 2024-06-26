@@ -1,4 +1,4 @@
-package com.team4.artgallery.exception;
+package com.team4.artgallery.aspect.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

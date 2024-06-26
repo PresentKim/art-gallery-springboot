@@ -1,13 +1,13 @@
 package com.team4.artgallery.controller;
 
-import com.team4.artgallery.annotation.CheckAdmin;
-import com.team4.artgallery.annotation.LoginMember;
+import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
-import com.team4.artgallery.enums.NoticeCategory;
+import com.team4.artgallery.dto.enums.NoticeCategory;
 import com.team4.artgallery.service.NoticeService;
+import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
-import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @Delegate
-    private final ResponseHelper responseHelper;
+    private final ResponseService responseHelper;
 
     @GetMapping({"", "/"})
     public String list(

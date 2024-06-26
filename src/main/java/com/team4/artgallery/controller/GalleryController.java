@@ -1,12 +1,12 @@
 package com.team4.artgallery.controller;
 
-import com.team4.artgallery.annotation.CheckLogin;
-import com.team4.artgallery.annotation.LoginMember;
+import com.team4.artgallery.aspect.annotation.CheckLogin;
+import com.team4.artgallery.controller.annotation.LoginMember;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.GalleryService;
+import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
-import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class GalleryController {
     private final GalleryService galleryService;
 
     @Delegate
-    private final ResponseHelper responseHelper;
+    private final ResponseService responseHelper;
 
     @GetMapping({"", "/"})
     public String list(

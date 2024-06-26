@@ -1,10 +1,10 @@
 package com.team4.artgallery.controller.admin;
 
-import com.team4.artgallery.annotation.CheckAdmin;
+import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.MemberService;
+import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
-import com.team4.artgallery.util.ajax.ResponseHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class AdminMemberController {
     private final MemberService memberService;
 
     @Delegate
-    private final ResponseHelper responseHelper;
+    private final ResponseService responseHelper;
 
     @GetMapping({"", "/"})
     public String list(

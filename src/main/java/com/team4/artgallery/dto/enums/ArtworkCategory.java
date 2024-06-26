@@ -1,4 +1,4 @@
-package com.team4.artgallery.enums;
+package com.team4.artgallery.dto.enums;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
-package com.team4.artgallery.converter;
+package com.team4.artgallery.util;
 
-import com.team4.artgallery.util.Pagination;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;

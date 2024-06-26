@@ -1,7 +1,7 @@
 <%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ tag language="java" pageEncoding="UTF-8" %>
-<%@ tag import="com.team4.artgallery.enums.NoticeCategory" %>
-<%@ tag import="com.team4.artgallery.enums.ArtworkCategory" %>
+<%@ tag import="com.team4.artgallery.dto.enums.NoticeCategory" %>
+<%@ tag import="com.team4.artgallery.dto.enums.ArtworkCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <header class="flow-anchor">

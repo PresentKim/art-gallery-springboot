@@ -1,9 +1,9 @@
 package com.team4.artgallery.controller;
 
-import com.team4.artgallery.exception.NotAdminException;
-import com.team4.artgallery.exception.NotLoginException;
-import com.team4.artgallery.util.ajax.ResponseBody;
-import com.team4.artgallery.util.ajax.ResponseHelper;
+import com.team4.artgallery.aspect.exception.NotAdminException;
+import com.team4.artgallery.aspect.exception.NotLoginException;
+import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.service.ResponseService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class GlobalExceptionHandler {
 
     @Delegate
-    private final ResponseHelper responseHelper;
+    private final ResponseService responseHelper;
 
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception e, HttpServletRequest request) {

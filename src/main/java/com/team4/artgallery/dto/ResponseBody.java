@@ -1,4 +1,4 @@
-package com.team4.artgallery.util.ajax;
+package com.team4.artgallery.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

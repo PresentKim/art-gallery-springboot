@@ -1,13 +1,13 @@
 package com.team4.artgallery.controller;
 
-import com.team4.artgallery.annotation.CheckLogin;
-import com.team4.artgallery.annotation.LoginMember;
+import com.team4.artgallery.aspect.annotation.CheckLogin;
+import com.team4.artgallery.controller.annotation.LoginMember;
 import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
+import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
-import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -32,7 +32,7 @@ public class MemberController {
     private final FavoriteService favoriteService;
 
     @Delegate
-    private final ResponseHelper responseHelper;
+    private final ResponseService responseHelper;
 
     @GetMapping("/login")
     public String login(

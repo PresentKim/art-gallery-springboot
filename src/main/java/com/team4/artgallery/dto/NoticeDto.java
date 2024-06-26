@@ -1,6 +1,6 @@
 package com.team4.artgallery.dto;
 
-import com.team4.artgallery.enums.NoticeCategory;
+import com.team4.artgallery.dto.enums.NoticeCategory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;

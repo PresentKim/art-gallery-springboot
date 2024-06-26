@@ -1,16 +1,17 @@
-package com.team4.artgallery.util.ajax;
+package com.team4.artgallery.service;
 
+import com.team4.artgallery.dto.ResponseBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import java.util.Objects;
 
 import static jakarta.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 
-@Component
-public class ResponseHelper {
+@Service
+public class ResponseService {
 
     /**
      * OK(200) 요청이 성공적으로 처리되었음을 나타내는 코드를 반환

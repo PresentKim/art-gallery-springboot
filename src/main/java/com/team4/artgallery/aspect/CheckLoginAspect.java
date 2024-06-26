@@ -1,7 +1,7 @@
 package com.team4.artgallery.aspect;
 
-import com.team4.artgallery.annotation.CheckLogin;
-import com.team4.artgallery.exception.NotLoginException;
+import com.team4.artgallery.aspect.annotation.CheckLogin;
+import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.SessionService;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +21,7 @@ public class CheckLoginAspect {
     private final SessionService sessionService;
 
     /*
-     * @Before(value = "@annotation(com.team4.artgallery.annotation.CheckAdmin)")
+     * @Before(value = "@annotation(com.team4.artgallery.aspect.annotation.CheckAdmin)")
      * 위와 같은 방식으로 직접 클래스를 작성해도 되지만, "어노테이션 매개변수" 방식을 통해 사용할 수 있습니다.
      * 이 경우 해당 어노테이션 매개변수의 이름을 클래스 대신 사용하면 됩니다. (pointcut expression)
      *

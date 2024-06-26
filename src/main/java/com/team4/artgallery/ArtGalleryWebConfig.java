@@ -1,7 +1,7 @@
 package com.team4.artgallery;
 
-import com.team4.artgallery.converter.PaginationConverter;
-import com.team4.artgallery.resolver.LoginMemberArgumentResolver;
+import com.team4.artgallery.controller.resolver.LoginMemberArgumentResolver;
+import com.team4.artgallery.util.PaginationConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

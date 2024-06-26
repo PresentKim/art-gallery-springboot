@@ -1,8 +1,8 @@
-package com.team4.artgallery.annotation;
+package com.team4.artgallery.aspect.annotation;
 
 import com.team4.artgallery.aspect.CheckAdminAspect;
 import com.team4.artgallery.controller.GlobalExceptionHandler;
-import com.team4.artgallery.exception.NotAdminException;
+import com.team4.artgallery.aspect.exception.NotAdminException;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.lang.annotation.ElementType;

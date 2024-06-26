@@ -1,7 +1,8 @@
-package com.team4.artgallery.annotation;
+package com.team4.artgallery.controller.annotation;
 
+import com.team4.artgallery.aspect.annotation.CheckLogin;
+import com.team4.artgallery.controller.resolver.LoginMemberArgumentResolver;
 import com.team4.artgallery.dto.MemberDto;
-import com.team4.artgallery.resolver.LoginMemberArgumentResolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
