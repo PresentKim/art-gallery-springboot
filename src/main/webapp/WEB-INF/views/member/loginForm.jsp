@@ -5,39 +5,30 @@
 <t:layout>
     <jsp:attribute name="head">
         <title>로그인</title>
-        <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/login_form.css"/>">
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
-<main class="login-form-wrapper">
-    <form class="login-form" method="post" action="<c:url value="/member/login"/>" onsubmit="ajaxSubmit(event)">
+<section class="form-wrapper">
+    <form method="post" action="<c:url value="/member/login"/>" onsubmit="ajaxSubmit(event)">
         <input type="hidden" name="returnUrl" value="${returnUrl}">
-        <div class="login_icon_box">
-            <div>
-                <img src="<c:url value="/static/image/ico_login_img.png"/>" alt="login-logo">
-            </div>
-            <h2>LogIn</h2>
+        <img src="<c:url value="/static/image/ico_login_img.png"/>" alt="form-logo">
+        <h2>로그인</h2>
+        <div class="field">
+            <label for="id">아이디</label>
+            <input type="text" name="id" id="id" placeholder="아이디" required>
         </div>
         <div class="field">
-            <label>
-                아이디
-                <input name="id" type="text" placeholder="아이디" required>
-            </label>
+            <label for="pwd">비밀번호</label>
+            <input type="password" name="pwd" id="pwd" placeholder="비밀번호" required>
         </div>
-        <div class="field">
-            <label>
-                비밀번호
-                <input name="pwd" type="password" placeholder="비밀번호" required>
-            </label>
-        </div>
-        <div class="btn">
+        <div class="btn-container">
             <input type="submit" value="로그인">
-            <input type="button" value="회원가입" onclick="location.href='/member/contract'">
+            <a href="<c:url value="/member/contract"/>">회원가입</a>
             <input type="button" value="아이디 찾기" onclick="">
         </div>
     </form>
-</main>
+</section>
 
     </jsp:attribute>
 </t:layout>

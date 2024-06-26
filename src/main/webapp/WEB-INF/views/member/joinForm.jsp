@@ -5,15 +5,14 @@
 <t:layout>
     <jsp:attribute name="head">
         <title>회원가입 :: 정보 입력</title>
-        <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/join_form.css"/>">
         <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script src="<c:url value="/static/script/member/join_form.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
-<main class="join-form-wrapper">
-    <form class="join-form" method="post" action="<c:url value="/member/join"/>" onsubmit="ajaxSubmit(event)">
+<section class="form-wrapper wide-form">
+    <form method="post" action="<c:url value="/member/join"/>" onsubmit="ajaxSubmit(event)">
         <input type="hidden" name="returnUrl" value="${returnUrl}">
         <h2>회원가입</h2>
         <div class="field required">
@@ -59,7 +58,7 @@
             <input type="submit" value="가입">
         </div>
     </form>
-</main>
+</section>
 
     </jsp:attribute>
 </t:layout>

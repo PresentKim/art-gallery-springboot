@@ -1,0 +1,180 @@
+.form-wrapper {
+    flex: 1;
+    display: flex;
+    max-width: 40rem;
+    margin: 0 auto 3rem auto;
+    padding: 2rem;
+    background-color: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 5px;
+}
+
+.form-wrapper form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+/* Form header */
+.form-wrapper form > img {
+    margin: 0 auto;
+    max-width: 8rem;
+    margin-bottom: 0.5rem;
+    transition: max-width 0.3s;
+}
+
+.form-wrapper form > h2 {
+    font-size: 1.75rem;
+    text-align: center;
+}
+
+
+/* Form button */
+.form-wrapper form input[type="button"],
+.form-wrapper form input[type="submit"],
+.form-wrapper form .btn-container a {
+    padding: 0.5rem 1rem;
+    background-color: var(--gray-900);
+    color: var(--gray-150);
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-wrapper form input[type="button"]:hover,
+.form-wrapper form input[type="submit"]:hover,
+.form-wrapper form .btn-container a:hover {
+    background-color: var(--gray-800);
+}
+
+
+/* Form text input */
+.form-wrapper form input[type="text"],
+.form-wrapper form input[type="password"],
+.form-wrapper form input[type="tel"],
+.form-wrapper form input[type="email"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 5px;
+}
+
+/* Form checkbox input */
+.form-wrapper form input[type="checkbox"] {
+    padding: 0.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 5px;
+}
+
+.form-wrapper form input[type="checkbox"] ~ label {
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Form textarea */
+.form-wrapper form textarea {
+    width: 100%;
+    min-height: 16rem;
+    padding: 0.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 5px;
+    resize: vertical;
+}
+
+/* Field container */
+.form-wrapper form .field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1rem;
+}
+
+/* Wide form */
+.form-wrapper.wide-form form .field {
+    flex-direction: row;
+    align-items: center;
+}
+
+.form-wrapper.wide-form form .field::before {
+    content: "*";
+    margin-right: 0.25rem;
+}
+
+.form-wrapper form .field.required::before {
+    color: red;
+}
+
+/* Field Label */
+.form-wrapper form .field label:first-child {
+    display: inline-block;
+    width: 20%;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* Field description */
+.form-wrapper form .field ~ label {
+    font-size: 0.75rem;
+    margin: 0.5rem 0 1rem 22%;
+}
+
+/* Input group */
+.form-wrapper form .input-group {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    justify-content: left;
+}
+
+.form-wrapper form .input-group input {
+    flex: 1;
+}
+
+/* Button container */
+.form-wrapper form .btn-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.form-wrapper form .btn-container input[type="button"],
+.form-wrapper form .btn-container input[type="submit"],
+.form-wrapper form .btn-container a {
+    min-width: 7rem;
+}
+
+/* Media queries */
+
+@media ( max-width: 486px) {
+    .form-wrapper form > img {
+        max-width: 6rem;
+    }
+
+    .form-wrapper.wide-form form .field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-wrapper form .field::before {
+        display: none;
+    }
+
+    .form-wrapper form .field label:first-child {
+        width: 100%;
+    }
+
+    .form-wrapper form .field ~ p {
+        margin: 0;
+    }
+
+    .form-wrapper form .btn-container {
+        margin-top: 2rem;
+        flex-direction: column;
+    }
+}

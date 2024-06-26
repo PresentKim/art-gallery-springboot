@@ -5,19 +5,17 @@
 <t:layout>
     <jsp:attribute name="head">
         <title>회원가입 :: 약관 동의</title>
-        <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/contract.css"/>">
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
-<main class="contract-form-wrapper">
-    <form class="contract-form" method="get" action="<c:url value="/member/join"/>">
+<section class="form-wrapper">
+    <form method="get" action="<c:url value="/member/join"/>">
         <input type="hidden" name="returnUrl" value="${returnUrl}"/>
         <h2>가입 약관</h2>
-        <div class="contract-field">
-            <label> <textarea readonly>약관 총칙
-제 1장 총칙
-제 1 조 (목적)
+        <div class="field">
+            <label for="contract">약관 총칙</label>
+            <textarea id="contract" readonly>제 1 조 (목적)
 본 약관은 국립중앙박물관 사이트가 제공하는 모든 서비스(이하 "서비스")의 이용조건 및 절차, 이용자와 국립중앙박물관 사이트의 권리, 의무, 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.
 
 제 2 조 (약관의 효력과 변경)
@@ -31,19 +29,22 @@
 이용자 : 본 약관에 따라 국립중앙박물관 사이트가 제공하는 서비스를 받는 자.
 가입 : 국립중앙박물관 사이트가 제공하는 신청서 양식에 해당 정보를 기입하고, 본 약관에 동의하여 서비스 이용계약을 완료시키는 행위.
 회원 : 국립중앙박물관 사이트에 개인정보를 제공하여 회원 등록을 한 자로서 국립중앙박물관 사이트가 제공하는 서비스를 이용할 수 있는 자.
-비밀번호 : 이용자와 회원ID가 일치하는지를 확인하고 통신상의 자신의 비밀보호를 위하여 이용자 자신이 선정한 문자와 숫자의 조합.
+비밀번호 : 이용자와 회원 ID가 일치하는지를 확인하고 통신상의 자신의 비밀보호를 위하여 이용자 자신이 선정한 문자와 숫자의 조합.
 탈퇴 : 회원이 이용계약을 종료시키는 행위.
-제 2장 서비스 제공 및 이용
-</textarea> </label>
+제 2장 서비스 제공 및 이용</textarea>
         </div>
-        <div class="contract-agree">
-            <input type="checkbox" name="agree" id="agree" required> <label for="agree">약관에 동의합니다.</label>
+        <div class="field">
+            <label for="agree">약관 동의</label>
+            <div class="input-group">
+                <input id="agree" type="checkbox" required>
+                <label for="agree">가입 약관에 동의합니다.</label>
+            </div>
         </div>
-        <div class="contract-btn">
-            <input class="cbtn" type="submit" value="다음">
+        <div class="btn-container">
+            <input type="submit" value="다음">
         </div>
     </form>
-</main>
+</section>
 
     </jsp:attribute>
 </t:layout>

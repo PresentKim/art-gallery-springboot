@@ -6,15 +6,14 @@
 <t:layout>
     <jsp:attribute name="head">
         <title>마이페이지 :: 회원정보 수정</title>
-        <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/join_form.css"/>">
         <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script src="<c:url value="/static/script/member/join_form.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
-<main class="join-form-wrapper">
-    <form class="join-form" method="post" action="<c:url value="/member/mypage/edit"/>" onsubmit="ajaxSubmit(event)">
+<section class="form-wrapper wide-form">
+    <form method="post" action="<c:url value="/member/mypage/edit"/>" onsubmit="ajaxSubmit(event)">
         <h2>회원정보 수정</h2>
         <div class="field required">
             <label for="name">이름</label>
@@ -55,7 +54,7 @@
             <input type="submit" value="저장">
         </div>
     </form>
-</main>
+</section>
 
     </jsp:attribute>
 </t:layout>
