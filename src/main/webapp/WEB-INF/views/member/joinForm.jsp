@@ -37,7 +37,8 @@
         <div class="field">
             <span>*</span>
             <label for="pwdCheck">비밀번호 확인</label>
-            <input type="password" name="pwdCheck" id="pwdCheck" data-require-equals="pwd" required/>
+            <input type="password" name="pwdCheck" id="pwdCheck" required
+                   data-require-equals="pwd" data-require-message="비밀번호 확인이 일치하지 않습니다"/>
         </div>
         <div class="field">
             <span>*</span>
