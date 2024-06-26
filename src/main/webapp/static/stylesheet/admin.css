@@ -46,7 +46,7 @@
 /* <======================================== */
 
 /* 관리자 페이지 사이드 메뉴바 admin/sub_menu.jsp =============>*/
-*:not(.admin-main) .admin-sub-menu {
+.content-wrap > .admin-sub-menu {
     margin: 0;
     width: 10rem;
     background: #faedcd;
@@ -58,17 +58,17 @@
     transition: 0.5s;
 }
 
-*:not(.admin-main) .admin-sub-menu:hover {
+.content-wrap > .admin-sub-menu:hover {
     width: 11rem;
 }
 
-*:not(.admin-main) .admin-sub-menu li {
+.content-wrap > .admin-sub-menu li {
     width: 100%;
     height: 2rem;
     margin: 1rem 0;
 }
 
-*:not(.admin-main) .admin-sub-menu a {
+.content-wrap > .admin-sub-menu a {
     display: block;
     width: 100%;
     height: 100%;
@@ -76,7 +76,7 @@
     align-content: center;
 }
 
-*:not(.admin-main) .admin-sub-menu a:hover {
+.content-wrap > .admin-sub-menu a:hover {
     background: #dad7cd;
     border-radius: 5px;
 }
