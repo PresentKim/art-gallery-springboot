@@ -45,7 +45,7 @@
             <label for="address">주소</label>
             <input type="text" name="address" id="address" value="${account.address}" required/>
         </div>
-        <div class="btn">
+        <div class="btn-container">
             <input type="button" value="이전" onclick="history.back();">
             <input type="submit" value="저장">
         </div>
