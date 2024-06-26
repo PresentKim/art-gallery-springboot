@@ -34,7 +34,7 @@
             <input type="password" name="pwdCheck" id="pwdCheck"
                    data-require-equals="pwd" data-require-message="비밀번호 확인이 일치하지 않습니다"/>
         </div>
-        <p>비밀번호를 변경하시려면 새로운 비밀번호를 입력해주세요. 입력하지 않으면 이전 비밀번호가 유지됩니다.</p>
+        <p>비밀번호를 변경하시려면 새로운 비밀번호를 입력해주세요.</p>
         <div class="field">
             <label for="phone">연락처</label>
             <input type="tel" name="phone" id="phone" value="${account.phone}" required/>
