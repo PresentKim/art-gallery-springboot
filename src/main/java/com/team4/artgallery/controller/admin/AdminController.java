@@ -5,7 +5,6 @@ import com.team4.artgallery.service.DataBaseService;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

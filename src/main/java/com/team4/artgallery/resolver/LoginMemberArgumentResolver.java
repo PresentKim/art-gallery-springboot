@@ -6,7 +6,6 @@ import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.SessionService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
