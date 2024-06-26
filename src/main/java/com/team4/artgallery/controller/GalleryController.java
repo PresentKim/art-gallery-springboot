@@ -8,9 +8,9 @@ import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,7 +80,7 @@ public class GalleryController {
     @CheckLogin()
     @PostMapping("/update")
     public ResponseEntity<?> update(
-            @ModelAttribute GalleryDto galleryDto,
+            @Valid @ModelAttribute GalleryDto galleryDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             @LoginMember MemberDto loginMember
     ) {
@@ -127,7 +127,7 @@ public class GalleryController {
     @CheckLogin()
     @PostMapping("/write")
     public ResponseEntity<?> write(
-            @ModelAttribute GalleryDto galleryDto,
+            @Valid @ModelAttribute GalleryDto galleryDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             @LoginMember MemberDto loginMember
     ) {
