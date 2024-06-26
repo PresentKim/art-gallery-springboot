@@ -20,6 +20,11 @@ public class CheckAdminAspect {
 
     @Before(value = "@annotation(checkAdmin) || @within(checkAdmin)")
     public void checkAdmin(CheckAdmin checkAdmin) {
+        // 어노테이션이 null 인 경우 무시
+        if (checkAdmin == null) {
+            return;
+        }
+
         // 세션이 없거나 관리자가 아닌 경우 예외 발생
         HttpSession session = sessionService.getSession();
         if (session == null || !memberService.isAdmin(session)) {
