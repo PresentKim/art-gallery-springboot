@@ -81,6 +81,9 @@ function ajaxSubmit(event, ajaxHandler) {
         if (input.required && input.value.trim() === "") {
             alert(getInputName(input) + "을(를) 입력해 주세요.");
             input.focus();
+
+            // 폼 등록 이벤트 취소
+            event.preventDefault();
             return;
         }
 
@@ -90,6 +93,9 @@ function ajaxSubmit(event, ajaxHandler) {
             if (target && input.value !== target.value) {
                 alert(getInputName(target) + "와(과) " + getInputName(input) + "이(가) 일치하지 않습니다.");
                 input.focus();
+
+                // 폼 등록 이벤트 취소
+                event.preventDefault();
                 return;
             }
         }
