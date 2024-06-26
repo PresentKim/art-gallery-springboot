@@ -47,6 +47,11 @@
             <label for="email">이메일</label>
             <input type="email" name="email" id="email" value="${account.email}" required/>
         </div>
+        <div class="field">
+            <span>*</span>
+            <label for="address">주소</label>
+            <input type="text" name="address" id="address" value="${account.address}" required/>
+        </div>
         <div class="btn">
             <input type="button" value="이전" onclick="history.back();">
             <input type="submit" value="저장">

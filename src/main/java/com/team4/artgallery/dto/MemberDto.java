@@ -36,6 +36,10 @@ public class MemberDto {
     @Size(groups = OnForm.class, min = 4, max = 45, message = "전화번호는 4자 이상 45자 이하로 입력해주세요.")
     private String phone;
 
+    @NotBlank(groups = OnForm.class, message = "주소는 필수 입력값입니다.")
+    @Size(groups = OnForm.class, max = 100, message = "주소는 100자 이하로 입력해주세요.")
+    private String address;
+
     private Date indate;
 
     private String adminyn;
@@ -54,7 +58,7 @@ public class MemberDto {
     /**
      * 회원 가입 및 정보 수정 요청 시 사용하는 그룹
      * <p>
-     * 필수 요소 : {@link #id}, {@link #name}, {@link #pwd}, {@link #email}, {@link #phone}
+     * 필수 요소 : {@link #id}, {@link #name}, {@link #pwd}, {@link #email}, {@link #phone}, {@link #address}
      * <p>
      * 포함 그룹 : {@link OnLogin}
      */

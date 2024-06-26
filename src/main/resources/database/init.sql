@@ -47,6 +47,7 @@ CREATE TABLE member
     indate  datetime DEFAULT NOW() NOT NULL,
     phone   varchar(45)            NOT NULL,
     adminyn char     DEFAULT 'N'   NOT NULL,
+    address varchar(100)           NOT NULL,
     PRIMARY KEY (id)
 );
 
