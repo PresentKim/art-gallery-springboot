@@ -1,52 +1,56 @@
 .join-form-wrapper {
-    width: 50%;
-    margin: 0 auto 150px;
-    padding: 40px;
+    max-width: 40rem;
+    margin: 0 auto 3rem auto;
+    padding: 2rem;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.join-form > h2 {
-    margin-bottom: 30px;
-}
-
-.joinForm {
-    width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-}
-
 /* Form header */
-.joinForm h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+.join-form > h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
     text-align: center;
 }
 
 /* Field container */
-.field {
-    margin-bottom: 15px;
+.join-form .field {
     display: flex;
     align-items: center;
+    margin-top: 1rem;
 }
 
-/* Label */
-.field label {
+/* Field asterisk */
+.join-form .field::before {
+    content: "*";
+    margin-right: 0.25rem;
+}
+
+.join-form .field.required::before {
+    color: red;
+}
+
+/* Field Label */
+.join-form .field label {
     display: inline-block;
-    width: 12%;
+    width: 20%;
     font-weight: bold;
     margin-bottom: 0;
 }
 
-/* Input fields */
-.field input[type="text"],
-.field input[type="password"],
-.field input[type="tel"],
-.field input[type="email"] {
-    width: calc(100% - 12%);
+/* Field description */
+.join-form .field ~ p {
+    font-size: 0.75rem;
+    margin: 0.5rem 0 1rem 22%;
+}
+
+/* Form input */
+.join-form input[type="text"],
+.join-form input[type="password"],
+.join-form input[type="tel"],
+.join-form input[type="email"] {
+    width: calc(100% - 22%);
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -54,38 +58,37 @@
 }
 
 /* ID wrapper */
-.id-wrapper {
+.join-form .id-wrapper {
     display: flex;
-    align-items: center;
+    gap: 1rem;
+    justify-content: left;
 }
 
-.id-wrapper input[type="text"] {
-    width: calc(100% - 100px);
-    margin-right: 10px;
+.join-form .id-wrapper input[type="text"] {
+    flex: 1;
 }
 
-.id-wrapper input[type="button"] {
+.join-form .id-wrapper input[type="button"] {
     padding: 8px 20px;
     background-color: #333;
-    color: #fff;
-    border: none;
+    color: #F1F1F1;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.id-wrapper input[type="button"]:hover {
+.join-form .id-wrapper input[type="button"]:hover {
     background-color: #555;
 }
 
 /* Button container */
-.btn {
+.join-form .btn {
+    margin-top: 1rem;
     text-align: center;
 }
 
 /* Buttons */
-.btn input[type="button"],
-.btn input[type="submit"] {
+.join-form .btn input {
     padding: 10px 20px;
     margin-right: 10px;
     background-color: #333;
@@ -96,23 +99,6 @@
     transition: background-color 0.3s;
 }
 
-.btn input[type="button"]:hover,
-.btn input[type="submit"]:hover {
+.join-form .btn input:hover {
     background-color: #555;
-}
-
-/* Additional styles */
-.middle {
-    display: flex;
-    flex-direction: column;
-}
-
-.middle p {
-    font-size: 13px;
-}
-
-/* Asterisk */
-.field span {
-    color: red;
-    margin-right: 5px;
 }
