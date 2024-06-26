@@ -7,6 +7,8 @@
     <jsp:attribute name="head">
         <title>마이페이지 :: 회원정보 수정</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/join_form.css"/>">
+        <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script src="<c:url value="/static/script/member/join_form.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
@@ -43,7 +45,10 @@
         </div>
         <div class="field required">
             <label for="address">주소</label>
-            <input type="text" name="address" id="address" value="${account.address}" required/>
+            <div class="input-group">
+                <input type="text" name="address" id="address" value="${account.address}" required/>
+                <input type="button" onclick="searchPostcode()" value="주소 검색">
+            </div>
         </div>
         <div class="btn-container">
             <input type="button" value="이전" onclick="history.back();">
