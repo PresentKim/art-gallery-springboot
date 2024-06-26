@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -51,7 +51,7 @@
                                 <c:when test="${qnaDto.display}">
                                     <i class="qna-icon public"></i>
                                 </c:when>
-                                <c:when test="${account.admin}">
+                                <c:when test="${loginMember.admin}">
                                     <i class="qna-icon admin"></i>
                                 </c:when>
                                 <c:otherwise>

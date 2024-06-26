@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.team4.artgallery.dto.enums.ArtworkCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -43,7 +43,7 @@
 <main class="artwork-list-main">
     <div class="artwork-list-head">
         <h4>검색결과가 총 ${pagination.itemCount}건 입니다</h4>
-        <c:if test="${account.admin}">
+        <c:if test="${loginMember.admin}">
             <a href="<c:url value="/artwork/write"/>" class="artwork-list_btn">예술품 등록</a>
         </c:if>
     </div>

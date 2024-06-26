@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ tag language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -11,7 +11,7 @@
             <a href="#">개인정보처리방침</a>
             <a href="#">저작권정책</a>
             <a href="#">웹 접근성 품질인증</a>
-            <c:if test="${account.admin}">
+            <c:if test="${loginMember.admin}">
                 <a href="<c:url value="/admin"/>">관리자 페이지</a>
             </c:if>
         </div>

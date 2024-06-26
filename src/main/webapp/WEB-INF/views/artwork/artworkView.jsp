@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -19,12 +19,12 @@
             <span>${artworkDto.year}</span>
         </div>
         <div class="artwork-view_btn">
-            <c:if test="${not empty account}">
+            <c:if test="${not empty loginMember}">
                 <div onclick="ajax('/member/mypage/favorite', {aseq: ${artworkDto.aseq}})">
                     관심 예술품 +
                 </div>
 
-                <c:if test="${account.admin}">
+                <c:if test="${loginMember.admin}">
                     <div onclick="ajax('/artwork/toggleArtworkDisplay', {aseq: ${artworkDto.aseq}}, getDisplayAjaxHandler(this))">
                             ${artworkDto.display ? '비공개' : '공개'}로 전환
                     </div>
@@ -50,7 +50,7 @@
             <li><span>재료</span> <span>${artworkDto.material}</span></li>
             <li><span>규격</span> <span>${artworkDto.size}</span></li>
             <li><span>부문</span> <span>${artworkDto.category}</span></li>
-            <c:if test="${account.admin}">
+            <c:if test="${loginMember.admin}">
                 <li><span>전시상태</span> <c:choose>
                     <c:when test="${artworkDto.displayyn.equals('Y')}">
                         <span>공개</span>

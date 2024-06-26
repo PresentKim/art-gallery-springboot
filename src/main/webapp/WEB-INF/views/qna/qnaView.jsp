@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -34,7 +34,7 @@
             <p>
                 <strong>작성자</strong>:
                 <c:choose>
-                    <c:when test="${account.admin}">
+                    <c:when test="${loginMember.admin}">
                         ${qnaDto.email} (${qnaDto.phone})
                     </c:when>
                     <c:otherwise>${qnaDto.email.substring(0, 3)}**** (010-****-****)</c:otherwise>
@@ -48,7 +48,7 @@
     <div class="qna-view_reply">
         <h2>답변</h2>
         <c:choose>
-            <c:when test="${account.admin}">
+            <c:when test="${loginMember.admin}">
                 <form action="<c:url value="/qna/reply"/>" method="post" onsubmit="ajaxSubmit(event)">
                     <input type="hidden" name="qseq" value="${qnaDto.qseq}"/>
                     <label>

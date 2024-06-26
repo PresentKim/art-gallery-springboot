@@ -61,7 +61,7 @@ public class MemberService {
      * @return 세션에 저장된 회원 정보, 없으면 null
      */
     public MemberDto getLoginMember(HttpSession session) {
-        return (MemberDto) session.getAttribute("account");
+        return (MemberDto) session.getAttribute("loginMember");
     }
 
     /**
@@ -71,7 +71,7 @@ public class MemberService {
      * @param memberDto 저장할 회원 정보
      */
     public void setLoginMember(HttpSession session, MemberDto memberDto) {
-        session.setAttribute("account", memberDto);
+        session.setAttribute("loginMember", memberDto);
     }
 
     /**
@@ -124,7 +124,7 @@ public class MemberService {
             return false;
         }
 
-        session.removeAttribute("account");
+        session.removeAttribute("loginMember");
         return true;
     }
 

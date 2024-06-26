@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -24,7 +24,7 @@
     <section class="gallery-list-main">
         <div class="gallery-list-main-title">
             <h4>검색결과가 총 ${pagination.itemCount}건 입니다</h4>
-            <c:if test="${not empty account}">
+            <c:if test="${not empty loginMember}">
                 <a href="<c:url value="/gallery/write"/>" class="gallery-btn">갤러리 등록</a>
             </c:if>
         </div>

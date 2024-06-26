@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.team4.artgallery.dto.enums.NoticeCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,7 +19,7 @@
             <a href="<c:url value="/notice?category=${c.name()}"/>" class="notice-list_btn">${c.name()}</a>
         </c:forEach>
         <div class="writebutton">
-            <c:if test="${account.admin}">
+            <c:if test="${loginMember.admin}">
                 <input type="button" value="게시글 등록" onClick="location.href='/notice/write'"/>
             </c:if>
         </div>

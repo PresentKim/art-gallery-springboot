@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -17,11 +17,11 @@
         <h2>회원정보 수정</h2>
         <div class="field required">
             <label for="name">이름</label>
-            <input type="text" name="name" id="name" value="${account.name}" required/>
+            <input type="text" name="name" id="name" value="${loginMember.name}" required/>
         </div>
         <div class="field">
             <label for="id">아이디</label>
-            <input type="text" name="id" id="id" size="12" value="${account.id}" readonly/>
+            <input type="text" name="id" id="id" size="12" value="${loginMember.id}" readonly/>
         </div>
         <p>아이디는 4자~12자 이내의 영문과 숫자로 공백 없이 입력하시면 됩니다.</p>
         <div class="field">
@@ -36,16 +36,16 @@
         <p>비밀번호를 변경하시려면 새로운 비밀번호를 입력해주세요.</p>
         <div class="field">
             <label for="phone">연락처</label>
-            <input type="tel" name="phone" id="phone" value="${account.phone}" required/>
+            <input type="tel" name="phone" id="phone" value="${loginMember.phone}" required/>
         </div>
         <div class="field required">
             <label for="email">이메일</label>
-            <input type="email" name="email" id="email" value="${account.email}" required/>
+            <input type="email" name="email" id="email" value="${loginMember.email}" required/>
         </div>
         <div class="field required">
             <label for="address">주소</label>
             <div class="input-group">
-                <input type="text" name="address" id="address" value="${account.address}" required/>
+                <input type="text" name="address" id="address" value="${loginMember.address}" required/>
                 <input type="button" onclick="searchPostcode()" value="주소 검색">
             </div>
         </div>

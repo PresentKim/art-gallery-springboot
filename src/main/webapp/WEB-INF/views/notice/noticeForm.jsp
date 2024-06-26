@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.team4.artgallery.dto.enums.NoticeCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -30,7 +30,7 @@
                 <input type="hidden" name="nseq" value="${noticeDto.nseq}">
             </c:if>
             <div class="notice_update_field">
-                <label for="id">작성자</label> <input type="text" name="id" id="id" value="${account.id}" readonly/>
+                <label for="id">작성자</label> <input type="text" name="id" id="id" value="${loginMember.id}" readonly/>
             </div>
             <div class="notice_update_field">
                 <label for="title">제목</label> <input type="text" name="title" id="title" value="${noticeDto.title}"/>

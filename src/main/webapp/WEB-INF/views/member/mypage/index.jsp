@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -16,19 +16,19 @@
     <div class="mypage_info_list">
         <div class="mypage_info_wrapper">
             <div class="mypage_info_label">이름</div>
-            <div class="mypage_info_data">${account.name}</div>
+            <div class="mypage_info_data">${loginMember.name}</div>
         </div>
         <div class="mypage_info_wrapper">
             <div class="mypage_info_label">아이디</div>
-            <div class="mypage_info_data">${account.id}</div>
+            <div class="mypage_info_data">${loginMember.id}</div>
         </div>
         <div class="mypage_info_wrapper">
             <div class="mypage_info_label">연락처</div>
-            <div class="mypage_info_data">${account.phone}</div>
+            <div class="mypage_info_data">${loginMember.phone}</div>
         </div>
         <div class="mypage_info_wrapper">
             <div class="mypage_info_label">이메일</div>
-            <div class="mypage_info_data">${account.email}</div>
+            <div class="mypage_info_data">${loginMember.email}</div>
         </div>
     </div>
     <div class="mypage_button_wrapper">

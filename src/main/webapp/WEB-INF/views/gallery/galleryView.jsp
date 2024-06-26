@@ -1,4 +1,4 @@
-<%--@elvariable id="account" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -36,12 +36,12 @@
             </a>
         </li>
         <li class="gbtn">
-            <c:if test="${account.id eq galleryDto.authorId}">
+            <c:if test="${loginMember.id eq galleryDto.authorId}">
                 <a class="gbtn-update gallery-btn" href="<c:url value="/gallery/update?gseq=${galleryDto.gseq}"/>">
                     수정하기
                 </a>
             </c:if>
-            <c:if test="${account.id eq galleryDto.authorId or account.admin}">
+            <c:if test="${loginMember.id eq galleryDto.authorId or loginMember.admin}">
                 <div class="gbtn-delete gallery-btn" onclick="ajax('/gallery/delete', 'gseq=${galleryDto.gseq}')">
                     삭제하기
                 </div>
