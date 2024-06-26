@@ -13,7 +13,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -120,7 +119,7 @@ public class MemberController {
     @PostMapping("/join")
     public ResponseEntity<?> join(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
-            @Validated(MemberDto.OnForm.class) @ModelAttribute MemberDto memberDto
+            @Validated(MemberDto.OnJoin.class) @ModelAttribute MemberDto memberDto
     ) {
         // 이미 사용중인 아이디라면 에러 결과 반환
         if (memberService.isMember(memberDto.getId())) {
@@ -164,12 +163,17 @@ public class MemberController {
     @CheckLogin()
     @PostMapping("/mypage/edit")
     public ResponseEntity<?> edit(
-            @Validated(MemberDto.OnForm.class) @ModelAttribute MemberDto memberDto,
+            @Validated(MemberDto.OnUpdate.class) @ModelAttribute MemberDto memberDto,
             @LoginMember MemberDto loginMember,
             HttpSession session
     ) {
         // 로그인 회원의 ID 를 수정할 수 없도록 설정
         memberDto.setId(loginMember.getId());
+
+        // 비밀번호가 입력되지 않았다면 기존 비밀번호로 설정
+        if (memberDto.getPwd() == null || memberDto.getPwd().isEmpty()) {
+            memberDto.setPwd(loginMember.getPwd());
+        }
 
         // 회원 정보 수정 실패 시 에러 결과 반환
         if (memberService.updateMember(memberDto) != 1) {
