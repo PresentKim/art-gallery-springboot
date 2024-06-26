@@ -6,9 +6,9 @@ import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,7 +60,7 @@ public class QnaController {
     }
 
     @PostMapping("/write")
-    public ResponseEntity<?> write(@ModelAttribute QnaDto qnaDto) {
+    public ResponseEntity<?> write(@Valid @ModelAttribute QnaDto qnaDto) {
         // 문의글 작성에 실패한 경우 500 에러 반환
         if (qnaService.createInquiry(qnaDto) == 0) {
             return internalServerError("문의 작성에 실패했습니다.");
@@ -90,7 +90,7 @@ public class QnaController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> update(@ModelAttribute QnaDto qnaDto, HttpSession session) {
+    public ResponseEntity<?> update(@Valid @ModelAttribute QnaDto qnaDto, HttpSession session) {
         int qseq = qnaDto.getQseq();
 
         // 문의글 정보가 없는 경우 404 실패 반환
