@@ -9,9 +9,9 @@ import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ajax.ResponseHelper;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -82,7 +82,10 @@ public class NoticeController {
 
     @CheckAdmin
     @PostMapping("/update")
-    public ResponseEntity<?> update(@ModelAttribute NoticeDto noticeDto, @LoginMember MemberDto loginMember) {
+    public ResponseEntity<?> update(
+            @Valid @ModelAttribute NoticeDto noticeDto,
+            @LoginMember MemberDto loginMember
+    ) {
         // 작성자를 로그인 정보로부터 가져와서 소식지 정보에 설정
         noticeDto.setAuthor(loginMember.getId());
 
@@ -103,7 +106,10 @@ public class NoticeController {
 
     @CheckAdmin
     @PostMapping("/write")
-    public ResponseEntity<?> write(@ModelAttribute NoticeDto noticeDto, @LoginMember MemberDto loginMember) {
+    public ResponseEntity<?> write(
+            @Valid @ModelAttribute NoticeDto noticeDto,
+            @LoginMember MemberDto loginMember
+    ) {
         // 작성자를 로그인 정보로부터 가져와서 소식지 정보에 설정
         noticeDto.setAuthor(loginMember.getId());
 
