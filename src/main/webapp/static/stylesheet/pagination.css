@@ -3,7 +3,6 @@
 .pagination {
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 100%;
     margin: 0 auto;
     padding: 1rem 0;
@@ -17,10 +16,10 @@
 .pagination .page-navi {
     display: inline-flex;
     align-items: center;
-    color: #555;
     height: 2rem;
-    border-radius: 0.5rem;
+    color: #4D4D4D;
     text-wrap: nowrap;
+    border-radius: 10px;
 }
 
 .pagination .page-navi:hover {
@@ -40,7 +39,7 @@
     content: '';
     width: 20px;
     height: 20px;
-    background-image: url(../image/ico_pagination_left.svg);
+    background-image: url(/static/image/ico_pagination_left.svg);
 }
 
 .pagination .page-navi.next {
@@ -52,7 +51,7 @@
     content: '';
     width: 20px;
     height: 20px;
-    background-image: url(../image/ico_pagination_right.svg);
+    background-image: url(/static/image/ico_pagination_right.svg);
 }
 
 .pagination .page-links {
@@ -63,41 +62,43 @@
     gap: 0.25rem;
 }
 
-.pagination .page-links .page-link {
+.pagination .page-link {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #555;
-    width: 2rem;
     height: 2rem;
-    border-radius: .6rem;
+    width: 2rem;
+    color: #4D4D4D;
+    text-wrap: nowrap;
+    border-radius: 10px;
 }
 
-.pagination .page-links .page-link:hover {
-    background-color: #E0E0E0;
+.pagination .page-link:hover {
+    color: #1D1D1D;
+    background-color: #E1E1E1;
 }
 
-.pagination .page-links .page-link:active {
-    background-color: #C0C0C0;
+.pagination .page-link:active {
+    background-color: #C1C1C1;
 }
 
-.pagination .page-links .page-link.skip {
+.pagination .page-link.skip {
     background-color: transparent !important;
     user-select: none;
 }
 
-.pagination .page-links .page-link.skip:before {
+.pagination .page-link.skip:before {
     content: '';
     width: 20px;
     height: 20px;
-    background-image: url(../image/ico_pagination_skip.svg);
+    background-image: url(/static/image/ico_pagination_skip.svg);
     background-position: center;
 }
 
-.pagination .page-links .page-link.active {
+.pagination .page-link.active {
     font-weight: bold;
-    color: white;
-    background-color: #223;
+    color: #F1F1F1;
+    background-color: #1D1D2D;
 }
 
 @media ( max-width: 768px) {
@@ -111,7 +112,7 @@
         order: 4;
     }
 
-    .pagination .page-links .page-link.hidable {
+    .pagination .page-link.only-wide {
         width: 0;
     }
 }

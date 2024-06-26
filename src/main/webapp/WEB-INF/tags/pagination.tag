@@ -20,8 +20,8 @@
                 <c:when test="${page == pagination.currentPage}">
                     <span class="page-link active">${page}</span>
                 </c:when>
-                <c:when test="${pagination.isHidable(page)}">
-                    <a class="page-link hidable" href="${pagination.getUrl(page)}">${page}</a>
+                <c:when test="${pagination.isOnlyWide(page)}">
+                    <a class="page-link only-wide" href="${pagination.getUrl(page)}">${page}</a>
                 </c:when>
                 <c:otherwise>
                     <a class="page-link" href="${pagination.getUrl(page)}">${page}</a>

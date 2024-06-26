@@ -137,12 +137,12 @@ public class Pagination {
     }
 
     /**
-     * 페이지가 숨겨질 수 있는지 여부를 반환합니다.
+     * 페이지 링크가 넓은 화면에서만 표시되는 지 여부를 반환합니다.
      *
      * @param page 페이지 번호
-     * @return 숨겨질 수 있는 경우 true
+     * @return 넓은 화면에서만 표시되는 경우 true
      */
-    public boolean isHidable(int page) {
+    public boolean isOnlyWide(int page) {
         if (getMaxPage() < pageRange + 2) { // 말 줄임표가 없는 경우 숨김 처리 불필요
             return false;
         }
