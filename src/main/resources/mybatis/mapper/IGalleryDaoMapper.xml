@@ -8,7 +8,7 @@
         <result column="author_name" property="authorName"/>
     </resultMap>
 
-    <sql id="search">
+    <sql id="where-search">
         <where>
             <if test="search != null and search != ''">
                 OR author_name LIKE CONCAT('%', #{search}, '%')
@@ -31,28 +31,17 @@
         WHERE gseq = #{gseq}
     </select>
 
-    <select id="getGalleries" parameterType="com.team4.artgallery.util.Pagination" resultMap="GalleryResultMap">
+    <select id="getGalleries" resultMap="GalleryResultMap">
         SELECT *
         FROM gallery_view
-        LIMIT #{limit} OFFSET #{offset}
-    </select>
-
-    <select id="searchGalleries" resultMap="GalleryResultMap">
-        SELECT *
-        FROM gallery_view
-        <include refid="search"/>
+        <include refid="where-search"/>
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
 
     <select id="countGalleries" resultType="Integer">
         SELECT COUNT(*)
-        FROM gallery
-    </select>
-
-    <select id="countSearchGalleries" parameterType="String" resultType="Integer">
-        SELECT COUNT(*)
         FROM gallery_view
-        <include refid="search"/>
+        <include refid="where-search"/>
     </select>
 
     <update id="updateGallery" parameterType="com.team4.artgallery.dto.GalleryDto">

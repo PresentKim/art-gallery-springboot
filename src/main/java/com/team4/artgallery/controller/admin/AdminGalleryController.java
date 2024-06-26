@@ -1,7 +1,6 @@
 package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -34,11 +33,15 @@ public class AdminGalleryController {
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
-        // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 갤러리 목록을 가져옵니다.
-        Pagination.Pair<GalleryDto> pair = galleryService.getOrSearchGalleries(page, search, "admin/gallery");
+        // 검색 조건에 따라 갤러리 목록을 가져옵니다.
+        Pagination pagination = new Pagination()
+                .setCurrentPage(page)
+                .setItemCount(galleryService.countGalleries(search))
+                .setUrlTemplate("/admin/gallery?page=%d" + (search == null ? "" : "&search=" + search));
+
         model.addAttribute("search", search);
-        model.addAttribute("pagination", pair.pagination());
-        model.addAttribute("galleryList", pair.list());
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("galleryList", galleryService.getGalleries(search, pagination));
         return "admin/adminGalleryList";
     }
 

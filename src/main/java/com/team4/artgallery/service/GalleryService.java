@@ -2,7 +2,6 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IGalleryDao;
 import com.team4.artgallery.dto.GalleryDto;
-import com.team4.artgallery.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
@@ -54,34 +53,6 @@ public class GalleryService {
         galleryDao.increaseReadCount(gseq);
         session.setAttribute(hashGseq(gseq), true);
     }
-
-    /**
-     * 갤러리 목록을 가져옵니다.
-     *
-     * @param page   페이지 번호
-     * @param search 검색어  (검색어가 비어있으면 전체 갤러리 목록을 가져옵니다)
-     * @param path   페이지 경로
-     * @return 갤러리 목록과 페이지네이션 정보
-     */
-    public Pagination.Pair<GalleryDto> getOrSearchGalleries(int page, String search, String path) {
-        // 검색어가 비어있을 경우 전체 갤러리 목록을 가져옵니다.
-        if (search == null || search.isEmpty()) {
-            Pagination pagination = new Pagination()
-                    .setCurrentPage(page)
-                    .setItemCount(countGalleries())
-                    .setUrlTemplate("/" + path + "?page=%d");
-
-            return pagination.pair(getGalleries(pagination));
-        }
-
-        // 검색 조건이 있을 경우 검색 결과를 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setCurrentPage(page)
-                .setItemCount(countSearchGalleries(search))
-                .setUrlTemplate("/" + path + "?page=%d&search=" + search);
-        return pagination.pair(searchGalleries(search, pagination));
-    }
-
 
     /**
      * 갤러리 이미지를 저장하고 GalleryDto 객체에 이미지 경로를 저장합니다.
