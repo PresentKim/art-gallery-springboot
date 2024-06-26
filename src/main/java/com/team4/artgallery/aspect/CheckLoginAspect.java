@@ -30,9 +30,9 @@ public class CheckLoginAspect {
      */
     @Before(value = "@annotation(checkLogin) || @within(checkLogin)")
     public void checkLogin(JoinPoint joinPoint, CheckLogin checkLogin) {
-        // 어노테이션이 null 인 경우 무시
+        // 어노테이션이 null 인 경우예외 발생
         if (checkLogin == null) {
-            return;
+            throw new NotLoginException();
         }
 
         // 세션이 없거나 로그인하지 않은 경우 예외 발생

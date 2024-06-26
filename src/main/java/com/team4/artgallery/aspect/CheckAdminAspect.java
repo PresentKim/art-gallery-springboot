@@ -20,9 +20,9 @@ public class CheckAdminAspect {
 
     @Before(value = "@annotation(checkAdmin) || @within(checkAdmin)")
     public void checkAdmin(CheckAdmin checkAdmin) {
-        // 어노테이션이 null 인 경우 무시
+        // 어노테이션이 null 인 경우예외 발생
         if (checkAdmin == null) {
-            return;
+            throw new NotAdminException();
         }
 
         // 세션이 없거나 관리자가 아닌 경우 예외 발생
