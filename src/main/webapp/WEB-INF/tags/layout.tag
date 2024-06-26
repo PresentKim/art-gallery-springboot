@@ -21,10 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/reset.css"/>">
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/pagination.css"/>">
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/header.css"/>">
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/footer.css"/>">
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/index.css"/>">
 
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

@@ -84,30 +84,3 @@ input:focus ~ label, input:valid ~ label {
 input:focus ~ span, input:valid ~ span {
     width: 100%;
 }
-
-/* Flow underline anchor link */
-.flow-anchor a, a.flow-anchor {
-    position: relative;
-    display: inline-block;
-    color: #1D1D1D;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-}
-
-.flow-anchor a::after, a.flow-anchor::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: #1D1D1D;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease-in-out;
-}
-
-.flow-anchor a:hover::after, a.flow-anchor:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
