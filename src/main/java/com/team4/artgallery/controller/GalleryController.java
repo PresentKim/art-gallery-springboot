@@ -153,7 +153,7 @@ public class GalleryController {
         return ok("갤러리가 작성되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
-    @CheckLogin("/gallery/write")
+    @CheckLogin()
     @PostMapping("/delete")
     public ResponseEntity<?> delete(@RequestParam(value = "gseq") Integer gseq, @LoginMember MemberDto loginMember) {
         // 갤러리 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
