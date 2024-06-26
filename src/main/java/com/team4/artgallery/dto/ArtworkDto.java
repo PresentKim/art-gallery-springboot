@@ -2,6 +2,7 @@ package com.team4.artgallery.dto;
 
 import com.team4.artgallery.enums.ArtworkCategory;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -57,8 +58,13 @@ public class ArtworkDto {
     @NotBlank(message = "작품설명을 입력해주세요.")
     private String content;
 
+    @Null(message = "이미지는 직접 설정할 수 없습니다.")
     private String image;
+
+    @Null(message = "저장된 파일명은 직접 설정할 수 없습니다.")
     private String savefilename;
+
+    @Null(message = "등록일은 직접 설정할 수 없습니다.")
     private Date indate;
 
     public String getFullSavefilename() {
