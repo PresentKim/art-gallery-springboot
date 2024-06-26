@@ -97,36 +97,6 @@ header nav {
     background: url(../image/header/header_logo.png) no-repeat center/cover;
 }
 
-header a {
-    position: relative;
-    display: inline-block;
-    color: #1D1D1D;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-}
-
-header a:hover {
-    color: #4D4D4D;
-}
-
-header a::after {
-    position: absolute;
-    content: "";
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: #1D1D1D;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease-in-out;
-}
-
-header a:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
 .login_join_box {
     font-size: 1.1rem;
     position: absolute;
@@ -174,34 +144,6 @@ header a:hover::after {
 .header_gnb_list_containner a {
     margin-top: 13px;
     margin-right: 20px;
-    font-family: 'notokr-medium';
-    position: relative;
-    display: inline-block;
-    color: #1D1D1D;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-}
-
-.header_gnb_list_containner a:hover {
-    color: #4D4D4D;
-}
-
-.header_gnb_list_containner a::after {
-    position: absolute;
-    content: "";
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: #1D1D1D;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease-in-out;
-}
-
-.header_gnb_list_containner a:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
 }
 
 .header_gnb_list_containner01 {
@@ -228,65 +170,6 @@ header a:hover::after {
 .header_gnb_list_containner01 a {
     margin-right: 20px;
     margin-top: 13px;
-    font-family: 'notokr-medium';
-    position: relative;
-    display: inline-block;
-    color: #1D1D1D;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-}
-
-.header_gnb_list_containner01 a:hover {
-    color: #4D4D4D;
-}
-
-.header_gnb_list_containner01 a::after {
-    position: absolute;
-    content: "";
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: #1D1D1D;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease-in-out;
-}
-
-.header_gnb_list_containner01 a:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
-.login_join_box span {
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    color: #1D1D1D;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-}
-
-.login_join_box span:hover {
-    color: #4D4D4D;
-}
-
-.login_join_box span::after {
-    position: absolute;
-    content: "";
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: #1D1D1D;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease-in-out;
-}
-
-.login_join_box span:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
 }
 
 

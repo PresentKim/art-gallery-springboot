@@ -2,7 +2,6 @@
 
 footer {
     display: block;
-    box-sizing: border-box;
     width: 100%;
     margin: 0 auto;
     padding: 1.5rem;
@@ -17,36 +16,6 @@ footer {
     border-top: 1px solid #C6C6C6;
 }
 
-footer a {
-    position: relative;
-    display: inline-block;
-    color: #1D1D1D;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-}
-
-footer a:hover {
-    color: #4D4D4D;
-}
-
-footer a::after {
-    position: absolute;
-    content: "";
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: #1D1D1D;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease-in-out;
-}
-
-footer a:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
 .footer_top {
     font-size: 1.7rem;
     font-weight: 700;
@@ -56,10 +25,6 @@ footer a:hover::after {
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid #D8D8D8;
-}
-
-.footer_info address {
-    font-style: normal;
 }
 
 .footer_bottom {

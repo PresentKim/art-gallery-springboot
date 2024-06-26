@@ -4,7 +4,7 @@
 <%@ tag import="com.team4.artgallery.enums.ArtworkCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<header>
+<header class="flow-anchor">
     <div class="header_util">
         <ul class="util-link">
             <li><a href="https://www.museum.go.kr/site/child/home" target="_blank">어린이박물관</a></li>
@@ -105,14 +105,14 @@
         </div>
     </nav>
 </header>
-<div class="header_gnb_list_containner">
+<div class="header_gnb_list_containner flow-anchor">
     <div>
         <c:forEach items="${ArtworkCategory.values()}" var="c">
             <a href="<c:url value="/artwork?category=${c.name()}"/>">${c.name()}</a>
         </c:forEach>
     </div>
 </div>
-<div class="header_gnb_list_containner01">
+<div class="header_gnb_list_containner01 flow-anchor">
     <div>
         <c:forEach items="${NoticeCategory.values()}" var="c">
             <a href="<c:url value="/notice?category=${c.name()}"/>">${c.name()}</a>

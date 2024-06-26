@@ -2,7 +2,7 @@
 <%@ tag language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<footer>
+<footer class="flow-anchor">
     <div class="footer_top">
         <a href="<c:url value="/"/>" class="logo"> HI Art Gallery </a>
     </div>
