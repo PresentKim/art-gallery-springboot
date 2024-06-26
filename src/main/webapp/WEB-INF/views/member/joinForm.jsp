@@ -6,6 +6,7 @@
     <jsp:attribute name="head">
         <title>회원가입 :: 정보 입력</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/join_form.css"/>">
+        <script src="<c:url value="/static/script/member/join_form.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
@@ -21,8 +22,10 @@
         <div class="field required">
             <label for="id">아이디</label>
             <div class="id-wrapper">
-                <input type="text" name="id" id="id" size="12" required/>
-                <input type="button" value="중복 체크" onclick="ajax('/member/idCheck', {id: this.form.id.value})">
+                <input type="text" name="id" id="id" required/>
+                <input type="hidden" name="idCheck" id="idCheck"
+                       data-require-equals="id" data-require-message="아이디 중복 체크를 진행해주세요"/>
+                <input type="button" value="중복 체크" onclick="submitIdCheck(this.form.id.value)">
             </div>
         </div>
         <p>아이디는 4자~12자 이내의 영문과 숫자로 공백 없이 입력하시면 됩니다.</p>
