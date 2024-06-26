@@ -35,12 +35,13 @@ public interface IArtworkDao {
     ArtworkDto getArtwork(int aseq);
 
     /**
-     * 전체 예술품 목록을 가져옵니다.
+     * 검색된 예술품 목록을 가져옵니다.
      *
+     * @param filter     검색 조건
      * @param pagination 페이지네이션 정보
-     * @return 예술품 목록
+     * @return 검색된 예술품 목록
      */
-    List<ArtworkDto> getArtworks(Pagination pagination);
+    List<ArtworkDto> getArtworks(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
 
     /**
      * 랜덤 예술품 목록을 가져옵니다.
@@ -51,28 +52,12 @@ public interface IArtworkDao {
     List<ArtworkDto> getRandomArtworks(int count);
 
     /**
-     * 검색된 예술품 목록을 가져옵니다.
-     *
-     * @param filter     검색 조건
-     * @param pagination 페이지네이션 정보
-     * @return 검색된 예술품 목록
-     */
-    List<ArtworkDto> searchArtworks(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
-
-    /**
-     * 전체 예술품 개수를 가져옵니다.
-     *
-     * @return 전체 예술품 개수
-     */
-    int countArtworks();
-
-    /**
      * 검색된 예술품 개수를 가져옵니다.
      *
      * @param filter 검색 조건
      * @return 검색된 예술품 개수
      */
-    int countSearchArtworks(@Param("filter") Filter filter);
+    int countArtworks(@Param("filter") Filter filter);
 
 
     /* ========== UPDATE =========== */
@@ -135,15 +120,7 @@ public interface IArtworkDao {
             return search != null && !search.isEmpty();
         }
 
-        public boolean isEmpty() {
-            return !hasCategory() && !hasDisplay() && !hasSearch();
-        }
-
         public String toUrlParam(boolean includeDisplay) {
-            if (isEmpty()) {
-                return "";
-            }
-
             List<String> params = new ArrayList<>();
             if (hasCategory()) {
                 params.add("category=" + category);

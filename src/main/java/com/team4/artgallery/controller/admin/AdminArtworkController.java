@@ -2,7 +2,6 @@ package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dao.IArtworkDao;
-import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -32,11 +31,15 @@ public class AdminArtworkController {
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
-        // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 예술품 목록을 가져옵니다.
-        Pagination.Pair<ArtworkDto> pair = artworkService.getOrSearchArtworks(page, filter, "admin/artwork");
+        // 검색 조건에 따라 예술품 목록을 가져옵니다.
+        Pagination pagination = new Pagination()
+                .setCurrentPage(page)
+                .setItemCount(artworkService.countArtworks(filter))
+                .setUrlTemplate("/admin/artwork?page=%d&" + filter.toUrlParam(true));
+
         model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pair.pagination());
-        model.addAttribute("artworkList", pair.list());
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("artworkList", artworkService.getArtworks(filter, pagination));
         return "admin/adminArtworkList";
     }
 
