@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
 
         System.out.println(stringWriter);
 
-        return processResponse(internalServerError(), request);
+        return processResponse(internalServerError(e.getMessage()), request);
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
