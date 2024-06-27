@@ -7,6 +7,7 @@ import com.team4.artgallery.service.helper.ResponseService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public Object handleException(NoResourceFoundException e, HttpServletRequest request) {
         return processResponse(notFound(), request);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public Object handleException(NotFoundException e, HttpServletRequest request) {
+        return processResponse(notFound(e.getMessage()), request);
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
