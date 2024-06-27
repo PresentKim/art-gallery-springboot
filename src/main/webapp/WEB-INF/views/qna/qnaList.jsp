@@ -6,7 +6,7 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>고객센터 :: ${pagination.currentPage}페이지</title>
+        <title>고객센터 :: ${pagination.page}페이지</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_icon.css"/>">
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_list.css"/>">
         <script src="<c:url value="/static/script/qna.js"/>"></script>

@@ -33,7 +33,7 @@ public class AdminGalleryController {
     ) {
         // 검색 조건에 따라 갤러리 목록을 가져옵니다.
         Pagination pagination = new Pagination()
-                .setCurrentPage(page)
+                .setPage(page)
                 .setItemCount(galleryService.countGalleries(filter))
                 .setUrlTemplate("/admin/gallery?page=%d" + filter.toUrlParam());
 

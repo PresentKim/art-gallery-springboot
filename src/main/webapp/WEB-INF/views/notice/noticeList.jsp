@@ -7,7 +7,7 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>소식지 :: ${pagination.currentPage}</title>
+        <title>소식지 :: ${pagination.page}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
     </jsp:attribute>
 

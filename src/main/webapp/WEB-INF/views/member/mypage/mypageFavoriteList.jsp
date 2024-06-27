@@ -4,7 +4,7 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>나의 관심 예술품 :: ${pagination.currentPage} 페이지 </title>
+        <title>나의 관심 예술품 :: ${pagination.page} 페이지 </title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_list.css"/>">
     </jsp:attribute>
 

@@ -37,7 +37,7 @@ public class ArtworkController {
 
         // 검색 조건에 따라 예술품 목록을 가져옵니다.
         Pagination pagination = new Pagination()
-                .setCurrentPage(page)
+                .setPage(page)
                 .setItemCount(artworkService.countArtworks(filter))
                 .setUrlTemplate("/artwork?page=%d" + filter.toUrlParam());
 

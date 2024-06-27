@@ -26,7 +26,7 @@ public class FavoriteService {
      */
     public Pagination.Pair<FavoriteDto> getFavorites(String memberId, int page) {
         Pagination pagination = new Pagination()
-                .setCurrentPage(page)
+                .setPage(page)
                 .setItemCount(countFavorites(memberId))
                 .setUrlTemplate("/mypage/favorite?page=%d");
         return pagination.pair(getFavorites(memberId, pagination));

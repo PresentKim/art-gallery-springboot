@@ -33,7 +33,7 @@ public class AdminQnaController {
     ) {
         // 검색 조건에 따라 문의글 목록을 가져옵니다.
         Pagination pagination = new Pagination()
-                .setCurrentPage(page)
+                .setPage(page)
                 .setItemCount(qnaService.countInquiries(filter))
                 .setUrlTemplate("/admin/qna?page=%d" + filter.toUrlParam());
 

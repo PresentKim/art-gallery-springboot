@@ -12,28 +12,28 @@ import java.util.List;
 public class Pagination {
 
     /**
-     * 페이지네이션에 표시할 아이템의 총 갯수
-     */
-    private int itemCount;
-
-    /**
-     * 한 페이지당 표시할 아이템의 갯수
-     */
-    private int itemsPerPage = 10;
-
-    /**
      * 표시될 페이지 범위
      * <p>
      * 이전/다음과 ...을 제외한 수입니다.
      * <p>
      * e.g. 5일 때 [이전 1 ... 4 5 6 7 8 ... 99 다음]
      */
-    private int pageRange = 5;
+    private static final int PAGE_RANGE = 5;
 
     /**
      * 현재 페이지
      */
-    private int currentPage;
+    private int page;
+
+    /**
+     * 한 페이지당 표시할 아이템의 갯수
+     */
+    private int displayCount = 10;
+
+    /**
+     * 페이지네이션에 표시할 아이템의 총 갯수
+     */
+    private int itemCount;
 
     /**
      * 페이지의 URL 템플릿
@@ -45,8 +45,8 @@ public class Pagination {
      *
      * @return 현재 페이지
      */
-    public int getCurrentPage() {
-        return fitPage(currentPage);
+    public int getPage() {
+        return fitPage(page);
     }
 
     /**
@@ -55,7 +55,7 @@ public class Pagination {
      * @return 현재 페이지의 URL
      */
     public String getUrl() {
-        return getUrl(getCurrentPage());
+        return getUrl(getPage());
     }
 
     /**
@@ -65,7 +65,7 @@ public class Pagination {
      * @return 페이지의 URL
      */
     public String getUrl(int page) {
-        return currentPage == page ? "#" : String.format(urlTemplate, page);
+        return this.page == page ? "#" : String.format(urlTemplate, page);
     }
 
     /**
@@ -93,7 +93,7 @@ public class Pagination {
      * @return 페이지의 총 갯수
      */
     public int getMaxPage() {
-        return (int) Math.ceil((double) itemCount / itemsPerPage);
+        return (int) Math.ceil((double) itemCount / displayCount);
     }
 
     /**
@@ -102,7 +102,7 @@ public class Pagination {
      * @return 페이지 LIMIT 값
      */
     public int getLimit() {
-        return itemsPerPage;
+        return displayCount;
     }
 
     /**
@@ -111,7 +111,7 @@ public class Pagination {
      * @return 페이지 OFFSET 값
      */
     public int getOffset() {
-        return Math.max(0, getCurrentPage() - 1) * itemsPerPage;
+        return Math.max(0, getPage() - 1) * displayCount;
     }
 
     /**
@@ -122,7 +122,7 @@ public class Pagination {
      * @return 페이지 범위의 시작
      */
     public int getBegin() {
-        return fitPage(Math.min(currentPage - pageRange / 2, getMaxPage() - pageRange - 1));
+        return fitPage(Math.min(page - PAGE_RANGE / 2, getMaxPage() - PAGE_RANGE - 1));
     }
 
     /**
@@ -133,7 +133,7 @@ public class Pagination {
      * @return 페이지 범위의 끝
      */
     public int getEnd() {
-        return fitPage(Math.max(currentPage + pageRange / 2, pageRange + 2));
+        return fitPage(Math.max(page + PAGE_RANGE / 2, PAGE_RANGE + 2));
     }
 
     /**
@@ -143,7 +143,7 @@ public class Pagination {
      * @return 넓은 화면에서만 표시되는 경우 true
      */
     public boolean isOnlyWide(int page) {
-        if (getMaxPage() < pageRange + 2) { // 말 줄임표가 없는 경우 숨김 처리 불필요
+        if (getMaxPage() < PAGE_RANGE + 2) { // 말 줄임표가 없는 경우 숨김 처리 불필요
             return false;
         }
 

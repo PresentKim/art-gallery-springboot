@@ -17,7 +17,7 @@
         </c:if>
         <c:forEach begin="${pagination.begin}" end="${pagination.end}" var="page">
             <c:choose>
-                <c:when test="${page == pagination.currentPage}">
+                <c:when test="${page == pagination.page}">
                     <span class="page-link active">${page}</span>
                 </c:when>
                 <c:when test="${pagination.isOnlyWide(page)}">

@@ -27,7 +27,7 @@ public class QnaController {
     @GetMapping({"", "/"})
     public String list(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
         Pagination pagination = new Pagination()
-                .setCurrentPage(page)
+                .setPage(page)
                 .setItemCount(qnaService.countInquiries(null))
                 .setUrlTemplate("/qna?page=%d");
         model.addAttribute("pagination", pagination);

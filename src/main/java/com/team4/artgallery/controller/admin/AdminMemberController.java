@@ -33,7 +33,7 @@ public class AdminMemberController {
     ) {
         // 검색 조건에 따라 회원 목록을 가져옵니다.
         Pagination pagination = new Pagination()
-                .setCurrentPage(page)
+                .setPage(page)
                 .setItemCount(memberService.countMembers(filter))
                 .setUrlTemplate("/admin/member?page=%d" + filter.toUrlParam());
 

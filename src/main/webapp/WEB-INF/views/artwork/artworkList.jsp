@@ -6,7 +6,7 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>예술품 목록 :: ${filter.category} ${pagination.currentPage}페이지</title>
+        <title>예술품 목록 :: ${filter.category} ${pagination.page}페이지</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_list.css"/>">
     </jsp:attribute>
 
