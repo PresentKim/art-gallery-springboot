@@ -8,7 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -94,19 +96,19 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * 예외로부터 생성된 ResponseEntity 를 GET 요청인 경우 ModelAndView 로 변환하여 반환, POST 요청인 경우 그대로 반환
+     * 예외로부터 생성된 ResponseEntity 를 'application/json' 요청인 경우 그대로, 아니면 ModelAndView 로 반환합니다.
      *
      * @param response ResponseEntity 객체
-     * @param request  HttpServletRequest 객체
-     * @return GET 요청인 경우 ModelAndView, POST 요청인 경우 ResponseEntity
+     * @return 'application/json' 요청인 경우 ResponseEntity, 아니면 ModelAndView
      */
     private Object processResponse(ResponseEntity<ResponseBody> response, HttpServletRequest request) {
-        // GET 요청이 아닌 경우에는 그대로 반환
-        if (!"GET".equals(request.getMethod())) {
+        // application/json 요청인 경우 그대로 반환
+        String acceptHeader = request.getHeader(HttpHeaders.ACCEPT);
+        if (acceptHeader != null && acceptHeader.contains(MediaType.APPLICATION_JSON_VALUE)) {
             return response;
         }
 
-        // GET 요청인 경우에는 에러 페이지로 포워딩
+        // application/json 요청이 아닌 경우 ModelAndView 로 변환
         ModelAndView modelAndView = new ModelAndView();
         ResponseBody responseBody = response.getBody();
         if (responseBody != null) {
