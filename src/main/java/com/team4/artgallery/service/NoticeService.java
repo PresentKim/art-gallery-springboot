@@ -1,8 +1,6 @@
 package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.INoticeDao;
-import com.team4.artgallery.dto.NoticeDto;
-import com.team4.artgallery.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
@@ -50,33 +48,6 @@ public class NoticeService {
         // 소식지의 조회수를 증가시키고, 소식지를 읽은 것으로 처리
         noticeDao.increaseReadCount(nseq);
         session.setAttribute(hashNseq(nseq), true);
-    }
-
-    /**
-     * 소식지 목록을 가져옵니다.
-     *
-     * @param page   페이지 번호
-     * @param filter 검색 조건 (검색 조건이 비어있으면 전체 소식지 목록을 가져옵니다)
-     * @param path   페이지 경로
-     * @return 소식지 목록과 페이지네이션 정보
-     */
-    public Pagination.Pair<NoticeDto> getOrSearchNotices(int page, INoticeDao.Filter filter, String path) {
-        // 검색 조건이 없을 경우 전체 소식지 목록을 가져옵니다.
-        if (filter.isEmpty()) {
-            Pagination pagination = new Pagination()
-                    .setCurrentPage(page)
-                    .setItemCount(countNotices())
-                    .setUrlTemplate("/" + path + "?page=%d");
-
-            return pagination.pair(getNotices(pagination));
-        }
-
-        // 검색 조건이 있을 경우 검색 결과를 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setCurrentPage(page)
-                .setItemCount(countSearchNotices(filter))
-                .setUrlTemplate("/" + path + "?page=%d&" + filter.toUrlParam());
-        return pagination.pair(searchNotices(filter, pagination));
     }
 
 }

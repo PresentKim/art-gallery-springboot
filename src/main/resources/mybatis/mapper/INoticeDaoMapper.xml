@@ -3,23 +3,18 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team4.artgallery.dao.INoticeDao">
-    <sql id="search">
-        <where>
-            <if test="filter.hasCategory">
-                AND category = #{filter.category}
-            </if>
-            <if test="filter.hasSearch">
-                AND (title LIKE CONCAT('%', #{filter.search}, '%') OR content LIKE CONCAT('%', #{filter.search}, '%'))
-            </if>
-        </where>
-    </sql>
-
-    <sql id="category_filter">
-        <where>
-            <if test="category != null and category != '' and !category.equals('전체')">
-                category = #{category}
-            </if>
-        </where>
+    <sql id="where-filter">
+        <if test="filter">
+            <where>
+                <if test="filter.hasCategory">
+                    AND category = #{filter.category}
+                </if>
+                <if test="filter.hasSearch">
+                    AND (title LIKE CONCAT('%', #{filter.search}, '%') OR content LIKE CONCAT('%', #{filter.search},
+                    '%'))
+                </if>
+            </where>
+        </if>
     </sql>
 
     <insert id="createNotice" parameterType="com.team4.artgallery.dto.NoticeDto"
@@ -37,15 +32,7 @@
     <select id="getNotices" resultType="com.team4.artgallery.dto.NoticeDto">
         SELECT *
         FROM notice
-        <include refid="category_filter"/>
-        ORDER BY nseq DESC
-        LIMIT #{pagination.limit} OFFSET #{pagination.offset}
-    </select>
-
-    <select id="searchNotices" resultType="com.team4.artgallery.dto.NoticeDto">
-        SELECT *
-        FROM notice
-        <include refid="search"/>
+        <include refid="where-filter"/>
         ORDER BY nseq DESC
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
@@ -53,13 +40,7 @@
     <select id="countNotices" resultType="int">
         SELECT COUNT(*)
         FROM notice
-        <include refid="category_filter"/>
-    </select>
-
-    <select id="countSearchNotices" resultType="int">
-        SELECT COUNT(*)
-        FROM notice
-        <include refid="search"/>
+        <include refid="where-filter"/>
     </select>
 
     <update id="updateNotice" parameterType="com.team4.artgallery.dto.NoticeDto">

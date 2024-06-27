@@ -2,9 +2,9 @@ package com.team4.artgallery.controller;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.annotation.LoginMember;
+import com.team4.artgallery.dao.INoticeDao;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
-import com.team4.artgallery.dto.enums.NoticeCategory;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -29,24 +29,27 @@ public class NoticeController {
 
     @GetMapping({"", "/"})
     public String list(
-            @RequestParam(value = "category", required = false) String category,
+            @ModelAttribute INoticeDao.Filter filter,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
-        // 카테고리가 매거진 혹은 신문인 경우 해당 페이지로 리다이렉트
-        if (NoticeCategory.매거진.name().equals(category)) {
-            return "redirect:/notice/magazine";
-        } else if (NoticeCategory.신문.name().equals(category)) {
-            return "redirect:/notice/newspaper";
+        // 소식지 목록을 가져올 때 카테고리에 따라 다른 페이지로 리다이렉트
+        switch (filter.getCategory()) {
+            case "매거진":
+                return "redirect:/notice/magazine";
+            case "신문":
+                return "redirect:/notice/newspaper";
         }
 
-        // 페이지 정보를 뷰에 전달
+        // 검색 조건에 따라 소식지 목록을 가져옵니다.
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
-                .setItemCount(noticeService.countNotices(category))
-                .setUrlTemplate("/notice?page=%d" + (category == null ? "" : "&category=" + category));
+                .setItemCount(noticeService.countNotices(filter))
+                .setUrlTemplate("/notice?page=%d&" + filter.toUrlParam());
+
+        model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);
-        model.addAttribute("noticeList", noticeService.getNotices(category, pagination));
+        model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
         return "notice/noticeList";
     }
 

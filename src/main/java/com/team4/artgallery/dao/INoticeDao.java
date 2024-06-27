@@ -35,49 +35,13 @@ public interface INoticeDao {
     NoticeDto getNotice(int aseq);
 
     /**
-     * 전체 소식지 목록을 가져옵니다.
-     *
-     * @param pagination 페이지네이션 정보
-     * @return 소식지 목록
-     */
-    default List<NoticeDto> getNotices(Pagination pagination) {
-        return getNotices(null, pagination);
-    }
-
-    /**
-     * 카테고리의 소식지 목록을 가져옵니다.
-     *
-     * @param category   소식지 카테고리
-     * @param pagination 페이지네이션 정보
-     * @return 검색된 소식지 목록
-     */
-    List<NoticeDto> getNotices(@Param("category") String category, @Param("pagination") Pagination pagination);
-
-    /**
      * 검색된 소식지 목록을 가져옵니다.
      *
      * @param filter     검색 조건
      * @param pagination 페이지네이션 정보
      * @return 검색된 소식지 목록
      */
-    List<NoticeDto> searchNotices(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
-
-    /**
-     * 전체 소식지 개수를 가져옵니다.
-     *
-     * @return 전체 소식지 개수
-     */
-    default int countNotices() {
-        return countNotices(null);
-    }
-
-    /**
-     * 카테고리의 소식지 개수를 가져옵니다.
-     *
-     * @param category 소식지 카테고리
-     * @return 검색된 소식지 개수
-     */
-    int countNotices(@Param("category") String category);
+    List<NoticeDto> getNotices(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
 
     /**
      * 검색된 소식지 개수를 가져옵니다.
@@ -85,7 +49,7 @@ public interface INoticeDao {
      * @param filter 검색 조건
      * @return 검색된 소식지 개수
      */
-    int countSearchNotices(@Param("filter") Filter filter);
+    int countNotices(@Param("filter") Filter filter);
 
 
     /* ========== UPDATE =========== */

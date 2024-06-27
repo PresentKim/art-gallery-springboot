@@ -2,7 +2,6 @@ package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dao.INoticeDao;
-import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -32,11 +31,15 @@ public class AdminNoticeController {
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
-        // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 소식지 목록을 가져옵니다.
-        Pagination.Pair<NoticeDto> pair = noticeService.getOrSearchNotices(page, filter, "admin/notice");
+        // 검색 조건에 따라 소식지 목록을 가져옵니다.
+        Pagination pagination = new Pagination()
+                .setCurrentPage(page)
+                .setItemCount(noticeService.countNotices(filter))
+                .setUrlTemplate("/admin/notice?page=%d&" + filter.toUrlParam());
+
         model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pair.pagination());
-        model.addAttribute("noticeList", pair.list());
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
         return "admin/adminNoticeList";
     }
 
