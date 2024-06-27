@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(path = "/artwork", produces = MediaType.TEXT_HTML_VALUE)
 @RequiredArgsConstructor
-public class ArtworkController {
+public class ArtworkViewController {
 
     private final ArtworkService artworkService;
 
