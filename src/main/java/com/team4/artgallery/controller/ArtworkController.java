@@ -122,7 +122,7 @@ public class ArtworkController {
 
     @CheckAdmin
     @GetMapping("/write")
-    public String write() throws Exception {
+    public String write() {
         return "artwork/artworkForm";
     }
 
