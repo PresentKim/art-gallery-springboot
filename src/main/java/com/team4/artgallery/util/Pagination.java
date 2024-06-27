@@ -1,6 +1,5 @@
 package com.team4.artgallery.util;
 
-import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -34,13 +33,11 @@ public class Pagination {
     /**
      * 아이템의 총 갯수
      */
-    @Null(message = "아이템의 총 갯수는 직접 설정할 수 없습니다.")
     private int itemCount;
 
     /**
      * 페이지의 URL 템플릿
      */
-    @Null(message = "페이지의 URL 템플릿은 직접 설정할 수 없습니다.")
     private String urlTemplate = "";
 
     /**
@@ -69,16 +66,6 @@ public class Pagination {
      */
     public String getUrl(int page) {
         return this.page == page ? "#" : String.format(urlTemplate, page);
-    }
-
-    /**
-     * 페이지의 URL 템플릿을 설정합니다.
-     *
-     * @return Pagination 객체
-     */
-    public Pagination setUrlTemplate(String urlTemplate) {
-        this.urlTemplate = urlTemplate;
-        return this;
     }
 
     /**
@@ -216,12 +203,15 @@ public class Pagination {
      *
      * @param list 리스트
      * @param <T>  리스트의 타입
-     * @return Pagination 객체와 리스트를 묶은 Pair 객체
+     * @return {@link Pair} 객체
      */
     public <T> Pair<T> pair(List<T> list) {
         return new Pair<>(this, list);
     }
 
+    /**
+     * Pagination 객체와 리스트를 묶은 Pair 객체
+     */
     public record Pair<T>(
             Pagination pagination,
             List<T> list

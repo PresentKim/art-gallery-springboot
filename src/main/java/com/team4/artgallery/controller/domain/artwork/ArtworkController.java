@@ -12,7 +12,6 @@ import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,19 +27,12 @@ public class ArtworkController {
 
     @GetMapping({"", "/"})
     public String list(
-            @Validated(ArtworkFilter.OnlyDisplay.class) @ModelAttribute ArtworkFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @Valid @ModelAttribute("filter") ArtworkFilter filter,
+            @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
-        // 검색 조건에 따라 예술품 목록을 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setPage(page)
-                .setItemCount(artworkService.countArtworks(filter))
-                .setUrlTemplate("/artwork?page=%d" + filter.setIncludeDisplay(false).toUrlParam());
-
-        model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pagination);
-        model.addAttribute("artworkList", artworkService.getArtworks(filter, pagination));
+        pagination.setUrlTemplate("/artwork?page=%d" + filter.setIncludeDisplay(false).toUrlParam());
+        model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
         return "artwork/artworkList";
     }
 

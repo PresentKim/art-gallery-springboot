@@ -1,7 +1,6 @@
 package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
-import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -27,7 +26,6 @@ public class ArtworkFilter implements IFilter {
      * 예술품 전시 여부
      */
     @FilterField
-    @Null(groups = OnlyDisplay.class, message = "전시 여부는 직접 설정할 수 없습니다.")
     private String displayyn = "Y";
 
     /**
@@ -47,17 +45,6 @@ public class ArtworkFilter implements IFilter {
         }
 
         return true;
-    }
-
-
-    // 그룹 클래스
-
-    /**
-     * 일반 사용자의 예술품 요청에 사용하는 그룹
-     * <p>
-     * {@link #displayyn} 값을 "Y"로 고정합니다.
-     */
-    public interface OnlyDisplay {
     }
 
 }
