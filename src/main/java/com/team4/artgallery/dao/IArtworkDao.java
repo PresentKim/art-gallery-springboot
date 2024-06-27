@@ -1,13 +1,11 @@
 package com.team4.artgallery.dao;
 
 import com.team4.artgallery.dto.ArtworkDto;
+import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.util.Pagination;
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -41,7 +39,7 @@ public interface IArtworkDao {
      * @param pagination 페이지네이션 정보
      * @return 검색된 예술품 목록
      */
-    List<ArtworkDto> getArtworks(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
+    List<ArtworkDto> getArtworks(@Param("filter") ArtworkFilter filter, @Param("pagination") Pagination pagination);
 
     /**
      * 랜덤 예술품 목록을 가져옵니다.
@@ -57,7 +55,7 @@ public interface IArtworkDao {
      * @param filter 검색 조건
      * @return 검색된 예술품 개수
      */
-    int countArtworks(@Param("filter") Filter filter);
+    int countArtworks(@Param("filter") ArtworkFilter filter);
 
 
     /* ========== UPDATE =========== */
@@ -96,47 +94,5 @@ public interface IArtworkDao {
      * @return 삭제된 행의 수
      */
     int deleteArtworks(List<Integer> aseqList);
-
-
-    /* ========== INNER CLASS =========== */
-
-    @Getter
-    @Setter
-    class Filter {
-
-        private String category;
-        private String displayyn;
-        private String search;
-
-        public boolean hasCategory() {
-            return category != null && !category.isEmpty() && !"전체".equals(category);
-        }
-
-        public boolean hasDisplay() {
-            return displayyn != null && !displayyn.isEmpty();
-        }
-
-        public boolean hasSearch() {
-            return search != null && !search.isEmpty();
-        }
-
-        public String toUrlParam(boolean includeDisplay) {
-            List<String> params = new ArrayList<>();
-            if (hasCategory()) {
-                params.add("category=" + category);
-            }
-
-            if (includeDisplay && hasDisplay()) {
-                params.add("displayyn=" + displayyn);
-            }
-
-            if (hasSearch()) {
-                params.add("search=" + search);
-            }
-
-            return String.join("&", params);
-        }
-
-    }
 
 }

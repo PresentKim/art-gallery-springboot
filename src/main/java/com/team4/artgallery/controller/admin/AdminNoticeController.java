@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.dao.INoticeDao;
+import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -27,7 +27,7 @@ public class AdminNoticeController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute INoticeDao.Filter filter,
+            @ModelAttribute NoticeFilter filter,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {

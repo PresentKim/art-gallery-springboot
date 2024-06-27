@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.dao.IArtworkDao;
+import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -27,7 +27,7 @@ public class AdminArtworkController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute IArtworkDao.Filter filter,
+            @ModelAttribute ArtworkFilter filter,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {

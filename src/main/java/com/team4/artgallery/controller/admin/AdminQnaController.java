@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.dao.IQnaDao;
+import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -27,7 +27,7 @@ public class AdminQnaController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute IQnaDao.Filter filter,
+            @ModelAttribute QnaFilter filter,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
