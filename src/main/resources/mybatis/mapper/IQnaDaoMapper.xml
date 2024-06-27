@@ -6,9 +6,9 @@
     <sql id="where-filter">
         <if test="filter">
             <where>
-                <if test="filter.hasReply">
+                <if test="filter.replyyn != null and filter.replyyn != ''">
                     <choose>
-                        <when test="filter.reply()">
+                        <when test="'Y'.equals(filter.replyyn)">
                             AND (reply IS NOT NULL AND reply != '')
                         </when>
                         <otherwise>
@@ -16,7 +16,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                <if test="filter.hasSearch">
+                <if test="filter.keyword != null and filter.keyword != ''">
                     AND (title LIKE CONCAT('%', #{filter.keyword}, '%') OR content LIKE CONCAT('%', #{filter.keyword},
                     '%'))
                 </if>

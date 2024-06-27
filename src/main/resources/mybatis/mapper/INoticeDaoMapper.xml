@@ -6,12 +6,14 @@
     <sql id="where-filter">
         <if test="filter">
             <where>
-                <if test="filter.hasCategory">
+                <if test="filter.category != null and filter.category != ''">
                     AND category = #{filter.category}
                 </if>
-                <if test="filter.hasSearch">
-                    AND (title LIKE CONCAT('%', #{filter.keyword}, '%') OR content LIKE CONCAT('%', #{filter.keyword},
-                    '%'))
+                <if test="filter.keyword != null and filter.keyword != ''">
+                    AND (
+                    title LIKE CONCAT('%', #{filter.keyword}, '%')
+                    OR content LIKE CONCAT('%', #{filter.keyword}, '%')
+                    )
                 </if>
             </where>
         </if>

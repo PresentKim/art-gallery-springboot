@@ -33,12 +33,13 @@ public class ArtworkController {
     ) {
         // 전시 여부는 무시합니다. 항상 전시 중인 예술품만 보여줍니다.
         filter.setDisplayyn("Y");
+        filter.setIncludeDisplay(false);
 
         // 검색 조건에 따라 예술품 목록을 가져옵니다.
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
                 .setItemCount(artworkService.countArtworks(filter))
-                .setUrlTemplate("/artwork?page=%d&" + filter.toUrlParam(false));
+                .setUrlTemplate("/artwork?page=%d" + filter.toUrlParam());
 
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);

@@ -35,7 +35,7 @@ public class AdminArtworkController {
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
                 .setItemCount(artworkService.countArtworks(filter))
-                .setUrlTemplate("/admin/artwork?page=%d&" + filter.toUrlParam(true));
+                .setUrlTemplate("/admin/artwork?page=%d" + filter.toUrlParam());
 
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);

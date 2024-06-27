@@ -6,15 +6,17 @@
     <sql id="where-filter">
         <if test="filter">
             <where>
-                <if test="filter.hasDisplay">
+                <if test="filter.displayyn != null and filter.displayyn != ''">
                     AND displayyn = #{filter.displayyn}
                 </if>
-                <if test="filter.hasCategory">
+                <if test="filter.category != null and filter.category != ''">
                     AND category = #{filter.category}
                 </if>
-                <if test="filter.hasSearch">
-                    AND (name LIKE CONCAT('%', #{filter.keyword}, '%') OR artist LIKE CONCAT('%', #{filter.keyword},
-                    '%'))
+                <if test="filter.keyword != null and filter.keyword != ''">
+                    AND (
+                    name LIKE CONCAT('%', #{filter.keyword}, '%')
+                    OR artist LIKE CONCAT('%', #{filter.keyword}, '%')
+                    )
                 </if>
             </where>
         </if>

@@ -35,7 +35,7 @@ public class AdminQnaController {
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
                 .setItemCount(qnaService.countInquiries(filter))
-                .setUrlTemplate("/admin/qna?page=%d&" + filter.toUrlParam());
+                .setUrlTemplate("/admin/qna?page=%d" + filter.toUrlParam());
 
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);

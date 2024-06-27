@@ -1,46 +1,48 @@
 package com.team4.artgallery.dto.filter;
 
+import com.team4.artgallery.dto.filter.annotation.FilterField;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @Setter
-public class ArtworkFilter {
+public class ArtworkFilter implements IFilter {
 
-    private String category;
-    private String displayyn;
+    /**
+     * 검색어
+     */
+    @FilterField
     private String keyword;
 
-    public boolean hasCategory() {
-        return category != null && !category.isEmpty() && !"전체".equals(category);
-    }
+    /**
+     * 예술품 카테고리
+     */
+    @FilterField
+    private String category;
 
-    public boolean hasDisplay() {
-        return displayyn != null && !displayyn.isEmpty();
-    }
+    /**
+     * 예술품 전시 여부
+     */
+    @FilterField
+    private String displayyn;
 
-    public boolean hasSearch() {
-        return keyword != null && !keyword.isEmpty();
-    }
+    /**
+     * URL 파라미터에 전시 여부를 포함할지 여부
+     */
+    private boolean includeDisplay = true;
 
-    public String toUrlParam(boolean includeDisplay) {
-        List<String> params = new ArrayList<>();
-        if (hasCategory()) {
-            params.add("category=" + category);
+    /**
+     * 주어진 필드 이름을 URL 파라미터로 변환할지 여부를 반환합니다.
+     *
+     * @param fieldName 필드 이름
+     * @return URL 파라미터로 변환할지 여부
+     */
+    public boolean urlParamFilter(String fieldName) {
+        if (fieldName.equals("displayyn")) {
+            return includeDisplay;
         }
 
-        if (includeDisplay && hasDisplay()) {
-            params.add("displayyn=" + displayyn);
-        }
-
-        if (hasSearch()) {
-            params.add("keyword=" + keyword);
-        }
-
-        return String.join("&", params);
+        return true;
     }
 
 }

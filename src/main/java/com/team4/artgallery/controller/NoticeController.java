@@ -45,7 +45,7 @@ public class NoticeController {
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
                 .setItemCount(noticeService.countNotices(filter))
-                .setUrlTemplate("/notice?page=%d&" + filter.toUrlParam());
+                .setUrlTemplate("/notice?page=%d" + filter.toUrlParam());
 
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);
