@@ -14,8 +14,8 @@
     </sql>
 
     <insert id="createMember" parameterType="com.team4.artgallery.dto.MemberDto">
-        INSERT INTO member (id, pwd, name, email, phone)
-        VALUES (#{id}, #{pwd}, #{name}, #{email}, #{phone})
+        INSERT INTO member (id, pwd, name, email, phone, address)
+        VALUES (#{id}, #{pwd}, #{name}, #{email}, #{phone}, #{address})
     </insert>
 
     <select id="getMember" parameterType="String" resultType="com.team4.artgallery.dto.MemberDto">
