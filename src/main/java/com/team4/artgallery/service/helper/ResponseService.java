@@ -1,4 +1,4 @@
-package com.team4.artgallery.service;
+package com.team4.artgallery.service.helper;
 
 import com.team4.artgallery.dto.ResponseBody;
 import org.springframework.http.HttpStatus;

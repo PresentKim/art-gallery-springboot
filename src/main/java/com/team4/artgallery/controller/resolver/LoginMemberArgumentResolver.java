@@ -3,7 +3,7 @@ package com.team4.artgallery.controller.resolver;
 import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.controller.annotation.LoginMember;
 import com.team4.artgallery.service.MemberService;
-import com.team4.artgallery.service.SessionService;
+import com.team4.artgallery.service.helper.SessionService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

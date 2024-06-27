@@ -1,8 +1,8 @@
 package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.service.DataBaseService;
-import com.team4.artgallery.service.ResponseService;
+import com.team4.artgallery.service.helper.ResponseService;
+import com.team4.artgallery.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final DataBaseService dataBaseService;
+    private final AdminService adminService;
 
     @Delegate
     private final ResponseService responseHelper;
@@ -33,7 +33,7 @@ public class AdminController {
     public ResponseEntity<?> reset() {
         // 데이터베이스 초기화 시도
         try {
-            dataBaseService.resetDatabase();
+            adminService.resetDatabase();
         } catch (Exception e) {
             // 오류가 발생한 경우 실패 응답 반환
             System.out.println(Arrays.toString(e.getStackTrace()));

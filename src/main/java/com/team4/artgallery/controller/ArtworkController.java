@@ -4,7 +4,7 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
-import com.team4.artgallery.service.ResponseService;
+import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

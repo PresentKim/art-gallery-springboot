@@ -6,7 +6,7 @@ import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
-import com.team4.artgallery.service.ResponseService;
+import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

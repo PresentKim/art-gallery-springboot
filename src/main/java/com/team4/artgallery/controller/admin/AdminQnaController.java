@@ -3,7 +3,7 @@ package com.team4.artgallery.controller.admin;
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.QnaService;
-import com.team4.artgallery.service.ResponseService;
+import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;

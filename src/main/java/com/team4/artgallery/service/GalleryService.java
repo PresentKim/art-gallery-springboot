@@ -2,6 +2,7 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IGalleryDao;
 import com.team4.artgallery.dto.GalleryDto;
+import com.team4.artgallery.service.helper.MultipartFileService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;

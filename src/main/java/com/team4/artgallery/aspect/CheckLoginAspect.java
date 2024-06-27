@@ -3,7 +3,7 @@ package com.team4.artgallery.aspect;
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.service.MemberService;
-import com.team4.artgallery.service.SessionService;
+import com.team4.artgallery.service.helper.SessionService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;

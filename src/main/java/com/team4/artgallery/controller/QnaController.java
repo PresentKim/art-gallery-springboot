@@ -3,7 +3,7 @@ package com.team4.artgallery.controller;
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.service.QnaService;
-import com.team4.artgallery.service.ResponseService;
+import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

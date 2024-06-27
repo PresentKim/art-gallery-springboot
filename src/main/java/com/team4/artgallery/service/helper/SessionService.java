@@ -1,4 +1,4 @@
-package com.team4.artgallery.service;
+package com.team4.artgallery.service.helper;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;

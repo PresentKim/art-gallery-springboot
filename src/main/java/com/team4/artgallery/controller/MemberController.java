@@ -6,7 +6,7 @@ import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
-import com.team4.artgallery.service.ResponseService;
+import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

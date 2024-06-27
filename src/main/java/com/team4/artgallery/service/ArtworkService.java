@@ -2,6 +2,7 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IArtworkDao;
 import com.team4.artgallery.dto.ArtworkDto;
+import com.team4.artgallery.service.helper.MultipartFileService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.stereotype.Service;

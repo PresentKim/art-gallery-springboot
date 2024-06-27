@@ -3,7 +3,7 @@ package com.team4.artgallery.controller;
 import com.team4.artgallery.aspect.exception.NotAdminException;
 import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.dto.ResponseBody;
-import com.team4.artgallery.service.ResponseService;
+import com.team4.artgallery.service.helper.ResponseService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;

@@ -14,7 +14,7 @@ import java.sql.Statement;
 
 @Service
 @RequiredArgsConstructor
-public class DataBaseService {
+public class AdminService {
 
     private final DataSource dataSource;
 
