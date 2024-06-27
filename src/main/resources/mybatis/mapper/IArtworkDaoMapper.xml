@@ -13,7 +13,8 @@
                     AND category = #{filter.category}
                 </if>
                 <if test="filter.hasSearch">
-                    AND (name LIKE CONCAT('%', #{filter.search}, '%') OR artist LIKE CONCAT('%', #{filter.search}, '%'))
+                    AND (name LIKE CONCAT('%', #{filter.keyword}, '%') OR artist LIKE CONCAT('%', #{filter.keyword},
+                    '%'))
                 </if>
             </where>
         </if>

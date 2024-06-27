@@ -28,7 +28,7 @@
 
             <!-- 검색 기능 -->
             <div class="admin-list-search">
-                <label><input type="text" placeholder="검색어를 입력해주세요" name="search" value="${filter.search}"></label>
+                <label><input type="text" placeholder="검색어를 입력해주세요" name="keyword" value="${filter.keyword}"></label>
                 <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/notice"/>">
             </div>
         </div>

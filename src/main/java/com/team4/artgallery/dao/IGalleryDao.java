@@ -34,19 +34,19 @@ public interface IGalleryDao {
     /**
      * 검색된 갤러리 목록을 가져옵니다.
      *
-     * @param search     검색어
+     * @param keyword    검색어
      * @param pagination 페이지네이션 정보
      * @return 검색된 갤러리 목록
      */
-    List<GalleryDto> getGalleries(@Param("search") String search, @Param("pagination") Pagination pagination);
+    List<GalleryDto> getGalleries(@Param("keyword") String keyword, @Param("pagination") Pagination pagination);
 
     /**
      * 검색된 갤러리 개수를 가져옵니다.
      *
-     * @param search 검색아
+     * @param keyword 검색어
      * @return 검색된 갤러리 개수
      */
-    int countGalleries(@Param("search") String search);
+    int countGalleries(@Param("keyword") String keyword);
 
 
     /* ========== UPDATE =========== */

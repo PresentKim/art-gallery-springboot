@@ -29,19 +29,19 @@ public class GalleryController {
 
     @GetMapping({"", "/"})
     public String list(
-            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
         // 검색 조건에 따라 갤러리 목록을 가져옵니다.
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
-                .setItemCount(galleryService.countGalleries(search))
-                .setUrlTemplate("/gallery?page=%d" + (search == null ? "" : "&search=" + search));
+                .setItemCount(galleryService.countGalleries(keyword))
+                .setUrlTemplate("/gallery?page=%d" + (keyword == null ? "" : "&keyword=" + keyword));
 
-        model.addAttribute("search", search);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("pagination", pagination);
-        model.addAttribute("galleryList", galleryService.getGalleries(search, pagination));
+        model.addAttribute("galleryList", galleryService.getGalleries(keyword, pagination));
         return "gallery/galleryList";
     }
 

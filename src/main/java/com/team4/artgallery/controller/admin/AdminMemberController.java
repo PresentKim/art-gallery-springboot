@@ -30,13 +30,13 @@ public class AdminMemberController {
 
     @GetMapping({"", "/"})
     public String list(
-            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
         // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 갤러리 목록을 가져옵니다.
-        Pagination.Pair<MemberDto> pair = memberService.getOrSearchMembers(page, search);
-        model.addAttribute("search", search);
+        Pagination.Pair<MemberDto> pair = memberService.getOrSearchMembers(page, keyword);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("pagination", pair.pagination());
         model.addAttribute("memberList", pair.list());
         return "admin/adminMemberList";

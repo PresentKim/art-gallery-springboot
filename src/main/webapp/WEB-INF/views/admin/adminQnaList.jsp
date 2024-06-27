@@ -25,7 +25,7 @@
 
             <!-- 검색 기능 -->
             <div class="admin-list-search">
-                <label><input type="text" placeholder="제목 또는 내용 입력하세요" name="search" value="${filter.search}"></label>
+                <label><input type="text" placeholder="제목 또는 내용 입력하세요" name="keyword" value="${filter.keyword}"></label>
                 <input type="submit" value="검색">
             </div>
         </div>

@@ -12,7 +12,7 @@ public class ArtworkFilter {
 
     private String category;
     private String displayyn;
-    private String search;
+    private String keyword;
 
     public boolean hasCategory() {
         return category != null && !category.isEmpty() && !"전체".equals(category);
@@ -23,7 +23,7 @@ public class ArtworkFilter {
     }
 
     public boolean hasSearch() {
-        return search != null && !search.isEmpty();
+        return keyword != null && !keyword.isEmpty();
     }
 
     public String toUrlParam(boolean includeDisplay) {
@@ -37,7 +37,7 @@ public class ArtworkFilter {
         }
 
         if (hasSearch()) {
-            params.add("search=" + search);
+            params.add("keyword=" + keyword);
         }
 
         return String.join("&", params);

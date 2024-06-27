@@ -21,13 +21,13 @@ public class MemberService {
     /**
      * 회원 목록을 가져옵니다.
      *
-     * @param page   페이지 번호
-     * @param search 검색어  (검색어가 비어있으면 전체 회원 목록을 가져옵니다)
+     * @param page    페이지 번호
+     * @param keyword 검색어  (검색어가 비어있으면 전체 회원 목록을 가져옵니다)
      * @return 회원 목록과 페이지네이션 정보
      */
-    public Pagination.Pair<MemberDto> getOrSearchMembers(int page, String search) {
+    public Pagination.Pair<MemberDto> getOrSearchMembers(int page, String keyword) {
         // 검색어가 비어있을 경우 전체 회원 목록을 가져옵니다.
-        if (search == null || search.isEmpty()) {
+        if (keyword == null || keyword.isEmpty()) {
             Pagination pagination = new Pagination()
                     .setCurrentPage(page)
                     .setItemCount(countMembers())
@@ -39,9 +39,9 @@ public class MemberService {
         // 검색 조건이 있을 경우 검색 결과를 가져옵니다.
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
-                .setItemCount(countSearchMembers(search))
-                .setUrlTemplate("/admin/member?page=%d&search=" + search);
-        return pagination.pair(searchMembers(search, pagination));
+                .setItemCount(countSearchMembers(keyword))
+                .setUrlTemplate("/admin/member?page=%d&keyword=" + keyword);
+        return pagination.pair(searchMembers(keyword, pagination));
     }
 
     /**

@@ -18,7 +18,7 @@
         <h1>${galleryDto.title}</h1>
         <li>${galleryDto.content}</li>
         <li>
-            <a href="<c:url value="/gallery?search=${galleryDto.authorName}"/>"> ${galleryDto.authorName}님의 갤러리 </a>
+            <a href="<c:url value="/gallery?keyword=${galleryDto.authorName}"/>"> ${galleryDto.authorName}님의 갤러리 </a>
         </li>
         <li>
             <span>조회수 ${galleryDto.readcount}</span>

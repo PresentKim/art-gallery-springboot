@@ -17,7 +17,7 @@
                     </choose>
                 </if>
                 <if test="filter.hasSearch">
-                    AND (title LIKE CONCAT('%', #{filter.search}, '%') OR content LIKE CONCAT('%', #{filter.search},
+                    AND (title LIKE CONCAT('%', #{filter.keyword}, '%') OR content LIKE CONCAT('%', #{filter.keyword},
                     '%'))
                 </if>
             </where>

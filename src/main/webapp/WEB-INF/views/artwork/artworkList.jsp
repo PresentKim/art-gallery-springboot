@@ -19,8 +19,8 @@
             <input type="hidden" name="displayyn" value="Y">
             <input type="hidden" name="category" value="${filter.category}">
             <label>
-                <input type="text" placeholder="작품명 또는 작가명을 검색하세요" name="search" class="artwork-search-form_input"
-                       value="${filter.search}">
+                <input type="text" placeholder="작품명 또는 작가명을 검색하세요" name="keyword" class="artwork-keyword-form_input"
+                       value="${filter.keyword}">
             </label>
             <input type="submit" value="검색" class="artwork-search-form_btn">
         </div>
@@ -29,11 +29,11 @@
         <c:forEach items="${ArtworkCategory.values()}" var="c">
             <c:choose>
                 <c:when test="${filter.category == c.name() or (empty filter.category and c.name() == '전체')}">
-                    <a href="<c:url value="/artwork?category=${c.name()}&search=${filter.search}"/>"
+                    <a href="<c:url value="/artwork?category=${c.name()}&keyword=${filter.keyword}"/>"
                        class="artwork-list_btn artwork-list_selected-btn">${c.name()}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="<c:url value="/artwork?category=${c.name()}&search=${filter.search}"/>"
+                    <a href="<c:url value="/artwork?category=${c.name()}&keyword=${filter.keyword}"/>"
                        class="artwork-list_btn">${c.name()}</a>
                 </c:otherwise>
             </c:choose>

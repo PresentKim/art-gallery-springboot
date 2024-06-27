@@ -3,12 +3,12 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team4.artgallery.dao.IMemberDao">
-    <sql id="search">
+    <sql id="where-search">
         <where>
-            <if test="search != null and search != ''">
-                id LIKE CONCAT('%', #{search}, '%')
-                OR name LIKE CONCAT('%', #{search}, '%')
-                OR email LIKE CONCAT('%', #{search}, '%')
+            <if test="keyword != null and keyword != ''">
+                id LIKE CONCAT('%', #{keyword}, '%')
+                OR name LIKE CONCAT('%', #{keyword}, '%')
+                OR email LIKE CONCAT('%', #{keyword}, '%')
             </if>
         </where>
     </sql>
@@ -35,7 +35,7 @@
     <select id="searchMembers" resultType="com.team4.artgallery.dto.MemberDto">
         SELECT *
         FROM member
-        <include refid="search"/>
+        <include refid="where-search"/>
         ORDER BY id DESC
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
@@ -48,7 +48,7 @@
     <select id="countSearchMembers" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
         FROM member
-        <include refid="search"/>
+        <include refid="where-search"/>
     </select>
 
     <update id="updateMember" parameterType="com.team4.artgallery.dto.MemberDto">

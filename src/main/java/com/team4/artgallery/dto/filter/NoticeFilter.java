@@ -11,14 +11,14 @@ import java.util.List;
 public class NoticeFilter {
 
     private String category;
-    private String search;
+    private String keyword;
 
     public boolean hasCategory() {
         return category != null && !category.isEmpty() && !"전체".equals(category);
     }
 
     public boolean hasSearch() {
-        return search != null && !search.isEmpty();
+        return keyword != null && !keyword.isEmpty();
     }
 
     public boolean isEmpty() {
@@ -36,7 +36,7 @@ public class NoticeFilter {
         }
 
         if (hasSearch()) {
-            params.add("search=" + search);
+            params.add("keyword=" + keyword);
         }
 
         return String.join("&", params);

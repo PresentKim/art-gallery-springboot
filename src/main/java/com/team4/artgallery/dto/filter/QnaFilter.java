@@ -11,7 +11,7 @@ import java.util.List;
 public class QnaFilter {
 
     private String replyyn;
-    private String search;
+    private String keyword;
 
     public boolean reply() {
         return "Y".equals(replyyn);
@@ -22,7 +22,7 @@ public class QnaFilter {
     }
 
     public boolean hasSearch() {
-        return search != null && !search.isEmpty();
+        return keyword != null && !keyword.isEmpty();
     }
 
     public boolean isEmpty() {
@@ -41,7 +41,7 @@ public class QnaFilter {
         }
 
         if (hasSearch()) {
-            params.add("search=" + search);
+            params.add("keyword=" + keyword);
         }
 
         return String.join("&", params);
