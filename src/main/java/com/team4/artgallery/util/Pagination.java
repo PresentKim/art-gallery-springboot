@@ -1,5 +1,6 @@
 package com.team4.artgallery.util;
 
+import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -23,21 +24,23 @@ public class Pagination {
     /**
      * 현재 페이지
      */
-    private int page;
+    private Integer page = 1;
 
     /**
      * 한 페이지당 표시할 아이템의 갯수
      */
-    private int displayCount = 10;
+    private Integer displayCount = 10;
 
     /**
-     * 페이지네이션에 표시할 아이템의 총 갯수
+     * 아이템의 총 갯수
      */
+    @Null(message = "아이템의 총 갯수는 직접 설정할 수 없습니다.")
     private int itemCount;
 
     /**
      * 페이지의 URL 템플릿
      */
+    @Null(message = "페이지의 URL 템플릿은 직접 설정할 수 없습니다.")
     private String urlTemplate = "";
 
     /**
