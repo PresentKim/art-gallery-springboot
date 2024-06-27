@@ -8,15 +8,17 @@
         <result column="author_name" property="authorName"/>
     </resultMap>
 
-    <sql id="where-search">
-        <where>
-            <if test="keyword != null and keyword != ''">
-                OR author_name LIKE CONCAT('%', #{keyword}, '%')
-                OR author_id LIKE CONCAT('%', #{keyword}, '%')
-                OR title LIKE CONCAT('%', #{keyword}, '%')
-                OR content LIKE CONCAT('%', #{keyword}, '%')
-            </if>
-        </where>
+    <sql id="where-filter">
+        <if test="filter">
+            <where>
+                <if test="filter.keyword != null and filter.keyword != ''">
+                    OR author_name LIKE CONCAT('%', #{filter.keyword}, '%')
+                    OR author_id LIKE CONCAT('%', #{filter.keyword}, '%')
+                    OR title LIKE CONCAT('%', #{filter.keyword}, '%')
+                    OR content LIKE CONCAT('%', #{filter.keyword}, '%')
+                </if>
+            </where>
+        </if>
     </sql>
 
     <insert id="createGallery" parameterType="com.team4.artgallery.dto.GalleryDto"
@@ -34,14 +36,14 @@
     <select id="getGalleries" resultMap="GalleryResultMap">
         SELECT *
         FROM gallery_view
-        <include refid="where-search"/>
+        <include refid="where-filter"/>
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
 
     <select id="countGalleries" resultType="Integer">
         SELECT COUNT(*)
         FROM gallery_view
-        <include refid="where-search"/>
+        <include refid="where-filter"/>
     </select>
 
     <update id="updateGallery" parameterType="com.team4.artgallery.dto.GalleryDto">

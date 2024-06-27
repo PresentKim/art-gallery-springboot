@@ -16,7 +16,7 @@
         <form action="<c:url value="/gallery"/>" method="get" name="searchForm">
             <h1><label for="keyword">갤러리 검색</label></h1>
             <div>
-                <input type="text" placeholder="제목 또는 내용을 검색하세요" name="keyword" id="keyword" value="${keyword}">
+                <input type="text" placeholder="제목 또는 내용을 검색하세요" name="keyword" id="keyword" value="${filter.keyword}">
                 <input type="submit" value="검색" class="gallery-search-form_btn">
             </div>
         </form>

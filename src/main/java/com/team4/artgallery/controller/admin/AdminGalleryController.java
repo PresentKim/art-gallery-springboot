@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -9,10 +10,7 @@ import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,19 +27,19 @@ public class AdminGalleryController {
 
     @GetMapping({"", "/"})
     public String list(
-            @RequestParam(value = "keyword", required = false) String keyword,
+            @ModelAttribute KeywordFilter filter,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
         // 검색 조건에 따라 갤러리 목록을 가져옵니다.
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
-                .setItemCount(galleryService.countGalleries(keyword))
-                .setUrlTemplate("/admin/gallery?page=%d" + (keyword == null ? "" : "&keyword=" + keyword));
+                .setItemCount(galleryService.countGalleries(filter))
+                .setUrlTemplate("/admin/gallery?page=%d" + filter.toUrlParam());
 
-        model.addAttribute("keyword", keyword);
+        model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);
-        model.addAttribute("galleryList", galleryService.getGalleries(keyword, pagination));
+        model.addAttribute("galleryList", galleryService.getGalleries(filter, pagination));
         return "admin/adminGalleryList";
     }
 

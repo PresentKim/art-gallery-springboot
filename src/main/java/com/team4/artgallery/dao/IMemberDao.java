@@ -1,6 +1,7 @@
 package com.team4.artgallery.dao;
 
 import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.util.Pagination;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -34,19 +35,19 @@ public interface IMemberDao {
     /**
      * 검색된 회원 목록을 가져옵니다.
      *
-     * @param keyword    검색어
+     * @param filter     검색 필터
      * @param pagination 페이지네이션 정보
      * @return 회원 목록
      */
-    List<MemberDto> getMembers(@Param("keyword") String keyword, @Param("pagination") Pagination pagination);
+    List<MemberDto> getMembers(@Param("filter") KeywordFilter filter, @Param("pagination") Pagination pagination);
 
     /**
      * 검색된 회원 수를 가져옵니다.
      *
-     * @param keyword 검색어
+     * @param filter 검색 필터
      * @return 검색된 회원 수
      */
-    int countMembers(@Param("keyword") String keyword);
+    int countMembers(@Param("filter") KeywordFilter filter);
 
 
     /* ========== UPDATE =========== */

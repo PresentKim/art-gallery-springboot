@@ -4,6 +4,7 @@ import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.annotation.LoginMember;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -29,19 +30,19 @@ public class GalleryController {
 
     @GetMapping({"", "/"})
     public String list(
-            @RequestParam(value = "keyword", required = false) String keyword,
+            @ModelAttribute KeywordFilter filter,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
         // 검색 조건에 따라 갤러리 목록을 가져옵니다.
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
-                .setItemCount(galleryService.countGalleries(keyword))
-                .setUrlTemplate("/gallery?page=%d" + (keyword == null ? "" : "&keyword=" + keyword));
+                .setItemCount(galleryService.countGalleries(filter))
+                .setUrlTemplate("/gallery?page=%d" + filter.toUrlParam());
 
-        model.addAttribute("keyword", keyword);
+        model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);
-        model.addAttribute("galleryList", galleryService.getGalleries(keyword, pagination));
+        model.addAttribute("galleryList", galleryService.getGalleries(filter, pagination));
         return "gallery/galleryList";
     }
 

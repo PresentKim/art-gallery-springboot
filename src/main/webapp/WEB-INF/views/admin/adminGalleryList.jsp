@@ -25,7 +25,9 @@
 
             <!-- 검색 기능 -->
             <div class="admin-list-search">
-                <label><input type="text" placeholder="ID 또는 이름을 입력하세요" name="keyword" value="${keyword}"></label>
+                <label>
+                    <input type="text" placeholder="ID 또는 이름을 입력하세요" name="keyword" value="${filter.keyword}">
+                </label>
                 <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/gallery"/>">
             </div>
         </div>
