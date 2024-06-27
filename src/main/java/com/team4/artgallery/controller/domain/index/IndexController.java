@@ -1,4 +1,4 @@
-package com.team4.artgallery.controller;
+package com.team4.artgallery.controller.domain.index;
 
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.service.ArtworkService;
@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
-public class RootController {
+public class IndexController {
 
     private final NoticeService noticeService;
 

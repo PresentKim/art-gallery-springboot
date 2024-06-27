@@ -1,4 +1,4 @@
-package com.team4.artgallery.controller;
+package com.team4.artgallery.controller.domain.notice;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.annotation.LoginMember;

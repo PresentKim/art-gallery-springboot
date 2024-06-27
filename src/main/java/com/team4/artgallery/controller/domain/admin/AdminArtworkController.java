@@ -1,4 +1,4 @@
-package com.team4.artgallery.controller.admin;
+package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dto.filter.ArtworkFilter;

@@ -1,4 +1,4 @@
-package com.team4.artgallery.controller;
+package com.team4.artgallery.controller.domain.member;
 
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.annotation.LoginMember;
