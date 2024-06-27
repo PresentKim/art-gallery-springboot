@@ -231,6 +231,32 @@ public class ResponseService {
     }
 
     /**
+     * UNSUPPORTED_MEDIA_TYPE(415) 요청된 미디어 타입이 지원되지 않음을 나타내는 코드를 반환
+     */
+    public ResponseEntity<ResponseBody> unsupportedMediaType() {
+        return unsupportedMediaType("지원되지 않는 미디어 타입입니다");
+    }
+
+    /**
+     * UNSUPPORTED_MEDIA_TYPE(415) 요청된 미디어 타입이 지원되지 않음을 나타내는 코드를 반환
+     *
+     * @param message 응답 메시지 (alert 메시지)
+     */
+    public ResponseEntity<ResponseBody> unsupportedMediaType(String message) {
+        return unsupportedMediaType(message, "");
+    }
+
+    /**
+     * UNSUPPORTED_MEDIA_TYPE(415) 요청된 미디어 타입이 지원되지 않음을 나타내는 코드를 반환
+     *
+     * @param message 응답 메시지 (alert 메시지)
+     * @param url     이동할 URL
+     */
+    public ResponseEntity<ResponseBody> unsupportedMediaType(String message, String url) {
+        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(new ResponseBody(message, url));
+    }
+
+    /**
      * INTERNAL_SERVER_ERROR(500) 요청이 서버 오류로 실패했음을 나타내는 코드를 반환
      */
     public ResponseEntity<ResponseBody> internalServerError() {

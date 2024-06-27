@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -92,6 +93,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Object handleException(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
         return processResponse(methodNotAllowed(), request);
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public Object handleException(HttpMediaTypeNotSupportedException e, HttpServletRequest request) {
+        return processResponse(unsupportedMediaType("지원하지 않는 미디어 타입입니다. : " + e.getContentType()), request);
     }
 
 
