@@ -26,12 +26,6 @@ function sendHttpRequest(xhr, requestBody, ajaxHandler) {
             return;
         }
 
-        // HTML 문서 응답이면 페이지 갱신
-        if (xhr.responseText.trim().startsWith("<!DOCTYPE html>")) {
-            document.children[0].innerHTML = xhr.responseText;
-            return;
-        }
-
         // 응답 완료 시 ajaxHandler() 실행
         ajaxHandler(xhr.status, JSON.parse(xhr.responseText));
 
@@ -49,11 +43,13 @@ function sendHttpRequest(xhr, requestBody, ajaxHandler) {
  * @param {function} [ajaxHandler] - 응답 처리 함수, 생략 시 기본 처리 함수 사용
  */
 function ajax(requestUrl, requestBody, ajaxHandler) {
-    // requestBody 값이 없으면 빈 객체로 초기화
+    // requestBody 값이 없으면 빈 값으로 설정
     if (requestBody === undefined || requestBody === null) {
-        requestBody = {};
+        requestBody = "";
     } else if (typeof requestBody === 'object') {
         // requestBody 값이 리터럴 객체인 경우 문자열로 변환
+        // `application/json` 타입은 컨트롤러에서 @RequestBody 로 받아야하기 때문에 복잡해짐.
+        // 때문에 JSON 문자열 대신 쿼리 문자열로 전송
         requestBody = Object
             .entries(requestBody)
             .filter(([, value]) => value !== null && value !== undefined)
@@ -64,6 +60,7 @@ function ajax(requestUrl, requestBody, ajaxHandler) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", requestUrl, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("Accept", "application/json");
 
     // POST 요청 전송
     sendHttpRequest(xhr, requestBody, ajaxHandler);
@@ -119,12 +116,11 @@ function ajaxSubmit(event, ajaxHandler) {
     // requestUrl 값으로 POST 요청 객체 생성
     const xhr = new XMLHttpRequest();
     xhr.open("POST", requestUrl, true);
+    // "Content-Type" 값은 브라우저가 자동 설정
+    xhr.setRequestHeader("Accept", "application/json");
 
     // POST 요청 전송
-    sendHttpRequest(
-        xhr,
-        new FormData(form),
-        ajaxHandler);
+    sendHttpRequest(xhr, new FormData(form), ajaxHandler);
 }
 
 /**
