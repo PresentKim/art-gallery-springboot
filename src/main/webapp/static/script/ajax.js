@@ -1,80 +1,92 @@
 var lastAjaxRequest = null;
 
 /**
- * XMLHttpRequest 객체를 사용하여 POST 요청을 전송하는 함수
+ * XMLHttpRequest 객체를 사용하여 요청을 전송하는 함수
  *
- * @param xhr - XMLHttpRequest 객체
- * @param requestBody - POST 요청 바디
- * @param ajaxHandler - 응답 처리 함수
+ * @param {string} url - 요청 URL
+ * @param {FormData|Object} [body] - 요청 바디
+ * @param {Object} [option] - 옵션 객체
+ * @param {string} [option.method] - 요청 메소드, 기본값은 'POST'
+ * @param {string} [option.accept] - Accept 헤더 값, 기본값은 'application/json'
+ * @param {string} [option.contentType] - Content-Type 헤더 값
+ *
+ * @returns {Promise<{status: number, body: Object}>} - 응답 객체를 반환하는 Promise 객체
  */
-function sendHttpRequest(xhr, requestBody, ajaxHandler) {
-    // 마지막 요청 취소 후 갱신
+function sendHttpRequest(url, body = {}, option = {}) {
+    // 마지막 요청 취소
     if (lastAjaxRequest) {
         lastAjaxRequest.abort();
     }
-    lastAjaxRequest = xhr;
 
-    // ajaxHandler 값이 유효하지 않으면 `defaultAjaxHandler`를 사용
-    if (!ajaxHandler) {
-        ajaxHandler = defaultAjaxHandler;
-    }
+    return new Promise((resolve, reject) => {
+        // XMLHttpRequest 객체 생성
+        const xhr = new XMLHttpRequest();
 
-    // POST 응답 이벤트 핸들러 등록
-    xhr.onload = function () {
-        // abort()로 취소된 요청은 무시
-        if (xhr.status === 0) {
-            return;
+        // XHR 요청 설정
+        xhr.open(option.method || 'POST', url, true);
+        xhr.setRequestHeader('Accept', option.accept || 'application/json');
+        if (option.contentType) {
+            xhr.setRequestHeader('Content-Type', option.contentType);
         }
 
-        // 응답 완료 시 ajaxHandler() 실행
-        ajaxHandler(xhr.status, JSON.parse(xhr.responseText));
+        // XHR 응답 이벤트 핸들러 등록
+        xhr.onload = function () {
+            // abort()로 취소된 요청은 무시
+            if (xhr.status === 0) {
+                reject();
+            }
 
-    };
+            resolve({status: xhr.status, body: JSON.parse(xhr.responseText)});
+        };
 
-    // requestBody 그대로 POST 요청 전송
-    xhr.send(requestBody);
+        // XHR 에러 이벤트 핸들러 등록
+        xhr.onerror = reject;
+
+        // body 값이 리터럴 객체인 경우 문자열로 변환
+        // `application/json` 타입은 컨트롤러에서 @RequestBody 로 받아야하기 때문에 복잡해짐.
+        // 때문에 JSON 문자열 대신 쿼리 문자열로 전송
+        if (!(body instanceof FormData)) {
+            body = Object
+                .entries(body)
+                .filter(([, value]) => value !== null && value !== undefined)
+                .map(([key, value]) => `${key}=${value}`).join('&');
+        }
+
+        // XHR 요청 전송
+        xhr.send(body);
+    });
 }
 
 /**
- * AJAX 요청을 전송하는 함수 (requestBody 값이 객체인 경우 쿼리스트링으로 변환)
+ * AJAX 요청을 전송하는 함수 (body 값이 객체인 경우 쿼리스트링으로 변환)
  *
- * @param {string} requestUrl - 요청 URL
- * @param {Object} [requestBody] - 요청 바디 객체
- * @param {function} [ajaxHandler] - 응답 처리 함수, 생략 시 기본 처리 함수 사용
+ * @param {string} url - 요청 URL
+ * @param {Object} [body] - 요청 바디 객체
+ * @param {string} [method] - 요청 메소드, 기본값 'POST'
+ *
+ * @returns {Promise<{status: number, body: Object}>} - 응답 객체를 반환하는 Promise 객체
  */
-function ajax(requestUrl, requestBody, ajaxHandler) {
-    // requestBody 값이 없으면 빈 값으로 설정
-    if (requestBody === undefined || requestBody === null) {
-        requestBody = "";
-    } else if (typeof requestBody === 'object') {
-        // requestBody 값이 리터럴 객체인 경우 문자열로 변환
-        // `application/json` 타입은 컨트롤러에서 @RequestBody 로 받아야하기 때문에 복잡해짐.
-        // 때문에 JSON 문자열 대신 쿼리 문자열로 전송
-        requestBody = Object
-            .entries(requestBody)
-            .filter(([, value]) => value !== null && value !== undefined)
-            .map(([key, value]) => `${key}=${value}`).join('&');
-    }
-
-    // requestUrl 값으로 POST 요청 객체 생성
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", requestUrl, true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.setRequestHeader("Accept", "application/json");
-
-    // POST 요청 전송
-    sendHttpRequest(xhr, requestBody, ajaxHandler);
+function ajax(url, body = {}, method = 'POST') {
+    // 요청 전송
+    return sendHttpRequest(url, body, {
+        method: method,
+        accept: 'application/json',
+        contentType: 'application/x-www-form-urlencoded'
+    });
 }
 
 /**
  * Form 전송 시 요소 유효성 검사 후 AJAX 요청을 처리하는 함수
  * onsubmit 이벤트 핸들러로 사용 (사용 시 이벤트가 취소됨)
+ *
+ * @param {SubmitEvent} event - 이벤트 객체
+ * @param {function} [ajaxHandler] - AJAX 응답 처리 함수
  */
-function ajaxSubmit(event, ajaxHandler) {
-    var form = event.target;
+function ajaxSubmit(event, ajaxHandler = defaultAjaxHandler) {
+    const form = event.target;
 
     // form 요소 유효성 검사
-    for (var input of form.elements) {
+    for (const input of form.elements) {
         if (input.required && input.value.trim() === "") {
             alert(getInputName(input) + "을(를) 입력해 주세요.");
             input.focus();
@@ -85,10 +97,10 @@ function ajaxSubmit(event, ajaxHandler) {
         }
 
         // data-require-equals 속성이 있는 경우 값 비교
-        var requireEquals = input.dataset.requireEquals;
+        const requireEquals = input.dataset.requireEquals;
         if (requireEquals) {
             // 대상 요소가 존재하고 값이 다른 경우 경고 메시지 출력
-            var target = form.elements[requireEquals];
+            const target = form.elements[requireEquals];
             if (target && input.value !== target.value) {
                 // data-require-message 속성이 있는 경우 메시지 출력
                 alert(input.dataset.requireMessage || getInputName(target) + "와(과) " + getInputName(input) + "이(가) 일치하지 않습니다.");
@@ -102,8 +114,8 @@ function ajaxSubmit(event, ajaxHandler) {
     }
 
     // 요청 메소드가 GET 인 경우 그대로 전송
-    var requestMethod = event.submitter.getAttribute("formmethod") || form.method;
-    if (requestMethod.toUpperCase() === "GET") {
+    const method = event.submitter.getAttribute("formmethod") || form.method;
+    if (method.toUpperCase() === "GET") {
         return;
     }
 
@@ -111,16 +123,16 @@ function ajaxSubmit(event, ajaxHandler) {
     event.preventDefault();
 
     // submitter 버튼의 formaction 속성 또는 form 요소의 action 속성으로 요청 URL 결정
-    var requestUrl = event.submitter.getAttribute("formaction") || form.action;
+    const url = event.submitter.getAttribute("formaction") || form.action;
 
-    // requestUrl 값으로 POST 요청 객체 생성
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", requestUrl, true);
-    // "Content-Type" 값은 브라우저가 자동 설정
-    xhr.setRequestHeader("Accept", "application/json");
+    // FormData 객체 생성
+    const body = new FormData(form);
 
-    // POST 요청 전송
-    sendHttpRequest(xhr, new FormData(form), ajaxHandler);
+    // 요청 전송
+    sendHttpRequest(url, body, {
+        method: method,
+        accept: 'application/json',
+    }).then(ajaxHandler);
 }
 
 /**
@@ -130,59 +142,32 @@ function ajaxSubmit(event, ajaxHandler) {
  *
  * .then() 메서드로 체이닝하여 응답 처리 함수를 확장할 수 있음
  *
- * @param status
- * @param response
+ * @param {number} response.status - 응답 상태 코드
+ * @param {Object} response.body - 응답 객체
+ *
+ * @returns {{status: number, body: Object}|undefined} - 응답 객체를 반환
  */
-var defaultAjaxHandler = (function () {
-    var handlers = [];
+function defaultAjaxHandler(response) {
+    if (response === undefined || response === null) {
+        return;
+    }
 
-    function executeHandlers(status, response) {
-        for (var i = 0; i < handlers.length; i++) {
-            var handler = handlers[i];
-            // 상태코드가 일치하거나 상태코드 기대값이 없으면 ajaxHandler() 실행
-            if (
-                (handler.expectStatus === undefined || handler.expectStatus === status)
-                && handler.ajaxHandler(status, response) === false
-            ) {
-                // ajaxHandler()가 false 를 반환하면 처리 중단
-                return;
-            }
-        }
+    const body = response.body;
 
-        // 기본 응답 처리
-        if (response.message) alert(response.message);
-        if (response.url) {
-            if (response.url === ':back') {
-                history.back();
-            } else if (response.url === ':reload') {
-                location.reload();
-            } else {
-                location.href = response.url;
-            }
+    // 기본 응답 처리
+    if (body.message) alert(body.message);
+    if (body.url) {
+        if (body.url === ':back') {
+            history.back();
+        } else if (body.url === ':reload') {
+            location.reload();
+        } else {
+            location.href = body.url;
         }
     }
 
-    var mainHandler = function (status, response) {
-        executeHandlers(status, response);
-    };
-
-    /**
-     *
-     * AJAX 응답 처리 함수를 확장하는 함수
-     *
-     * @param ajaxHandler - 응답 처리 함수, status, response 를 인자로 받음, false 를 반환하면 처리 중단
-     * @param expectStatus - 기대 응답 상태 코드, 생략 시 모든 상태 코드 처리
-     */
-    mainHandler.then = function (ajaxHandler, expectStatus) {
-        handlers.push({
-            ajaxHandler: ajaxHandler,
-            expectStatus: expectStatus
-        });
-        return mainHandler; // 체이닝을 위해 mainHandler 를 반환
-    };
-
-    return mainHandler;
-})();
+    return response;
+}
 
 function getInputName(input) {
     return (input.labels && input.labels[0] && input.labels[0].innerText) || input.name || input.id;

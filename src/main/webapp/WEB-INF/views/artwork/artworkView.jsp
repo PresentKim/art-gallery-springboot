@@ -25,7 +25,7 @@
                 </div>
 
                 <c:if test="${loginMember.admin}">
-                    <div onclick="ajax('/artwork/toggleArtworkDisplay', {aseq: ${artworkDto.aseq}}, getDisplayAjaxHandler(this))">
+                    <div onclick="toggleArtworkDisplay(this, ${artworkDto.aseq})">
                             ${artworkDto.display ? '비공개' : '공개'}로 전환
                     </div>
                     <a href="<c:url value="/artwork/update?aseq=${artworkDto.aseq}"/>">수정</a>
