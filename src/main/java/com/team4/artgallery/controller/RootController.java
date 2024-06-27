@@ -24,7 +24,7 @@ public class RootController {
     @GetMapping("/")
     public String root(Model model) {
         // 최근 공지사항 5개를 가져옵니다.
-        model.addAttribute("noticeList", noticeService.getNotices(new Pagination().setItemsPerPage(5)));
+        model.addAttribute("noticeList", noticeService.getNotices(null, new Pagination().setItemsPerPage(5)));
 
         // 랜덤 예술품 목록을 가져와 4개의 그룹으로 나눕니다.
         List<ArtworkDto> randomArtworkList = artworkService.getRandomArtworks(24);
