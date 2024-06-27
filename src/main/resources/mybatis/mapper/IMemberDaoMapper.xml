@@ -24,15 +24,7 @@
         WHERE id = #{id}
     </select>
 
-    <select id="getMembers" parameterType="com.team4.artgallery.util.Pagination"
-            resultType="com.team4.artgallery.dto.MemberDto">
-        SELECT *
-        FROM member
-        ORDER BY id DESC
-        LIMIT #{limit} OFFSET #{offset}
-    </select>
-
-    <select id="searchMembers" resultType="com.team4.artgallery.dto.MemberDto">
+    <select id="getMembers" resultType="com.team4.artgallery.dto.MemberDto">
         SELECT *
         FROM member
         <include refid="where-search"/>
@@ -40,12 +32,7 @@
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
 
-    <select id="countMembers" resultType="Integer">
-        SELECT COUNT(*)
-        FROM member
-    </select>
-
-    <select id="countSearchMembers" parameterType="String" resultType="Integer">
+    <select id="countMembers" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
         FROM member
         <include refid="where-search"/>

@@ -32,28 +32,13 @@ public interface IMemberDao {
     MemberDto getMember(String memberId);
 
     /**
-     * 전체 회원 목록을 가져옵니다.
-     *
-     * @param pagination 페이지네이션 정보
-     * @return 회원 목록
-     */
-    List<MemberDto> getMembers(Pagination pagination);
-
-    /**
      * 검색된 회원 목록을 가져옵니다.
      *
      * @param keyword    검색어
      * @param pagination 페이지네이션 정보
      * @return 회원 목록
      */
-    List<MemberDto> searchMembers(@Param("keyword") String keyword, @Param("pagination") Pagination pagination);
-
-    /**
-     * 전체 회원 수를 가져옵니다.
-     *
-     * @return 전체 회원 수
-     */
-    int countMembers();
+    List<MemberDto> getMembers(@Param("keyword") String keyword, @Param("pagination") Pagination pagination);
 
     /**
      * 검색된 회원 수를 가져옵니다.
@@ -61,7 +46,7 @@ public interface IMemberDao {
      * @param keyword 검색어
      * @return 검색된 회원 수
      */
-    int countSearchMembers(@Param("keyword") String keyword);
+    int countMembers(@Param("keyword") String keyword);
 
 
     /* ========== UPDATE =========== */
