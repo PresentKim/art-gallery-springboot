@@ -4,6 +4,7 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
+import com.team4.artgallery.dto.enums.NoticeCategory;
 import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.service.helper.ResponseService;
@@ -34,11 +35,11 @@ public class NoticeController {
             Model model
     ) {
         // 소식지 목록을 가져올 때 카테고리에 따라 다른 페이지로 리다이렉트
-        switch (filter.getCategory()) {
-            case "매거진":
-                return "redirect:/notice/magazine";
-            case "신문":
-                return "redirect:/notice/newspaper";
+        String category = filter.getCategory();
+        if (NoticeCategory.매거진.name().equals(category)) {
+            return "redirect:/notice/magazine";
+        } else if (NoticeCategory.신문.name().equals(category)) {
+            return "redirect:/notice/newspaper";
         }
 
         // 검색 조건에 따라 소식지 목록을 가져옵니다.
