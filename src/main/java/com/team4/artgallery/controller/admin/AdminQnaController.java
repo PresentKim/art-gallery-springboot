@@ -2,7 +2,6 @@ package com.team4.artgallery.controller.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dao.IQnaDao;
-import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.service.ResponseService;
 import com.team4.artgallery.util.Pagination;
@@ -32,11 +31,15 @@ public class AdminQnaController {
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             Model model
     ) {
-        // 검색 조건이 있을 경우 검색 결과를, 없을 경우 전체 문의글 목록을 가져옵니다.
-        Pagination.Pair<QnaDto> pair = qnaService.getOrSearchInquiries(page, filter, "admin/qna");
+        // 검색 조건에 따라 문의글 목록을 가져옵니다.
+        Pagination pagination = new Pagination()
+                .setCurrentPage(page)
+                .setItemCount(qnaService.countInquiries(filter))
+                .setUrlTemplate("/admin/qna?page=%d&" + filter.toUrlParam());
+
         model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pair.pagination());
-        model.addAttribute("qnaList", pair.list());
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("qnaList", qnaService.getInquiries(filter, pagination));
         return "admin/adminQnaList";
     }
 

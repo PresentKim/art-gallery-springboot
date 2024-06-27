@@ -28,10 +28,10 @@ public class QnaController {
     public String list(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
         Pagination pagination = new Pagination()
                 .setCurrentPage(page)
-                .setItemCount(qnaService.countInquiries())
+                .setItemCount(qnaService.countInquiries(null))
                 .setUrlTemplate("/qna?page=%d");
         model.addAttribute("pagination", pagination);
-        model.addAttribute("qnaList", qnaService.getInquiries(pagination));
+        model.addAttribute("qnaList", qnaService.getInquiries(null, pagination));
         return "qna/qnaList";
     }
 

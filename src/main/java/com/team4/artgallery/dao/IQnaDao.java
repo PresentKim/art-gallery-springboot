@@ -35,28 +35,13 @@ public interface IQnaDao {
     QnaDto getInquiry(int qseq);
 
     /**
-     * 전체 문의글 목록을 가져옵니다
-     *
-     * @param pagination 페이지네이션 정보
-     * @return 문의글 목록
-     */
-    List<QnaDto> getInquiries(Pagination pagination);
-
-    /**
      * 검색된 문의글 목록을 가져옵니다
      *
      * @param filter     검색 조건
      * @param pagination 페이지네이션 정보
      * @return 검색된 문의글 목록
      */
-    List<QnaDto> searchInquiries(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
-
-    /**
-     * 전체 문의글 수를 가져옵니다
-     *
-     * @return 전체 문의글 수
-     */
-    int countInquiries();
+    List<QnaDto> getInquiries(@Param("filter") Filter filter, @Param("pagination") Pagination pagination);
 
     /**
      * 검색된 문의글 수를 가져옵니다
@@ -64,7 +49,7 @@ public interface IQnaDao {
      * @param filter 검색 조건
      * @return 검색된 문의글 수
      */
-    int countSearchInquiries(@Param("filter") Filter filter);
+    int countInquiries(@Param("filter") Filter filter);
 
 
     /* ========== UPDATE =========== */
