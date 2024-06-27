@@ -25,7 +25,8 @@ public class ArtworkController {
             @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
-        pagination.setUrlTemplate("/artwork?page=%d" + filter.setIncludeDisplay(false).toUrlParam());
+        filter.setIncludeDisplay(false);
+        pagination.setUrlTemplate("/artwork?page=%d" + filter.toUrlParam());
         model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
         return "artwork/artworkList";
     }
