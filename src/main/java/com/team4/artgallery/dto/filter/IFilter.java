@@ -49,7 +49,6 @@ public interface IFilter {
         }
 
         // 필터를 반환합니다.
-        System.out.println("filters = " + filters);
         return filters;
     }
 
