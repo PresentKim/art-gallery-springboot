@@ -135,7 +135,7 @@ public class ArtworkService {
      * @param file       이미지 파일
      * @param artworkDto 예술품 정보
      */
-    public boolean saveImage(MultipartFile file, ArtworkDto artworkDto) {
+    private boolean saveImage(MultipartFile file, ArtworkDto artworkDto) {
         // 이미지 파일을 저장하고 저장된 파일 이름을 ArtworkDto 객체에 저장합니다.
         MultipartFileService.FileNamePair pair = fileService.saveFile(file, "/static/image/artwork");
         if (pair != null) {
