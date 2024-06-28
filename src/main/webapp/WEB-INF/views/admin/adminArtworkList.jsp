@@ -48,10 +48,10 @@
             <li>
                 <label for="category"></label>
                 <select name="category" id="category" class="admin-select" onchange="this.form.submit();">
-                    <option value="">전체</option>
-                    <c:forEach items="${ArtworkCategory.validValues()}" var="c">
-                        <option value="${c.name()}"
-                                <c:if test="${c.name().equals(filter.category)}">selected</c:if>>${c.name()}</option>
+                    <c:forEach items="${ArtworkCategory.values()}" var="c">
+                        <%--@elvariable id="c" type="com.team4.artgallery.dto.enums.ArtworkCategory"--%>
+                        <option value="${c.value}"
+                                <c:if test="${c.isEquals(filter.category)}">selected</c:if>>${c.korName}</option>
                     </c:forEach>
                 </select>
             </li>

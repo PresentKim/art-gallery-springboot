@@ -66,8 +66,9 @@
                             <option value="" disabled selected>카테고리를 선택하세요</option>
                         </c:if>
                         <c:forEach items="${ArtworkCategory.validValues()}" var="c">
-                            <option value="${c.name()}"
-                                    <c:if test="${c.name().equals(artworkDto.category)}">selected</c:if>>${c.name()}</option>
+                            <%--@elvariable id="c" type="com.team4.artgallery.dto.enums.ArtworkCategory"--%>
+                            <option value="${c.value}"
+                                    <c:if test="${c.isEquals(artworkDto.category)}">selected</c:if>>${c.korName}</option>
                         </c:forEach>
                     </select>
                 </li>

@@ -26,16 +26,11 @@
     </form>
     <div class="category-btn-container">
         <c:forEach items="${ArtworkCategory.values()}" var="c">
-            <c:choose>
-                <c:when test="${filter.category == c.name() or (empty filter.category and c.name() == '전체')}">
-                    <a href="<c:url value="/artwork?category=${c.name()}&keyword=${filter.keyword}"/>"
-                       class="artwork-list_btn artwork-list_selected-btn">${c.name()}</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="<c:url value="/artwork?category=${c.name()}&keyword=${filter.keyword}"/>"
-                       class="artwork-list_btn">${c.name()}</a>
-                </c:otherwise>
-            </c:choose>
+            <%--@elvariable id="c" type="com.team4.artgallery.dto.enums.ArtworkCategory"--%>
+            <a href="<c:url value="/artwork?category=${c.value}&keyword=${filter.keyword}"/>"
+               class="artwork-list_btn <c:if test="${c.isEquals(filter.category)}">artwork-list_selected-btn</c:if>">
+                    ${c.korName}
+            </a>
         </c:forEach>
     </div>
 </section>
