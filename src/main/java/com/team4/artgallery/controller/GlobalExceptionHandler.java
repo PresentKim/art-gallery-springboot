@@ -66,6 +66,11 @@ public class GlobalExceptionHandler {
         return processResponse(badRequest("파라미터 " + e.getParameterName() + "이(가) 누락되었습니다."), request);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public Object handleException(IllegalArgumentException e, HttpServletRequest request) {
+        return processResponse(badRequest(e.getMessage()), request);
+    }
+
     @ExceptionHandler(MissingRequestValueException.class)
     public Object handleException(MissingRequestValueException e, HttpServletRequest request) {
         return processResponse(badRequest(e.getMessage()), request);
