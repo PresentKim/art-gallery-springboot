@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -63,6 +64,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public Object handleException(MissingServletRequestParameterException e, HttpServletRequest request) {
         return processResponse(badRequest("파라미터 " + e.getParameterName() + "이(가) 누락되었습니다."), request);
+    }
+
+    @ExceptionHandler(MissingRequestValueException.class)
+    public Object handleException(MissingRequestValueException e, HttpServletRequest request) {
+        return processResponse(badRequest(e.getMessage()), request);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
