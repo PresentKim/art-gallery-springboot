@@ -116,7 +116,8 @@
 <div class="header_gnb_list_containner01 flow-anchor">
     <div>
         <c:forEach items="${NoticeCategory.values()}" var="c">
-            <a href="<c:url value="/notice?category=${c.name()}"/>">${c.name()}</a>
+            <%--@elvariable id="c" type="com.team4.artgallery.dto.enums.NoticeCategory"--%>
+            <a href="<c:url value="/notice?category=${c.value}"/>">${c.korName}</a>
         </c:forEach>
     </div>
 </div>

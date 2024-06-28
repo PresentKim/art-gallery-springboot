@@ -39,7 +39,8 @@
             <div class="notice_content">
                 <div class="notice_tabBtn">
                     <c:forEach items="${NoticeCategory.values()}" var="c">
-                        <a class="btn" href="<c:url value="/notice?category=${c.name()}"/>">${c.name()}</a>
+                        <%--@elvariable id="c" type="com.team4.artgallery.dto.enums.NoticeCategory"--%>
+                        <a class="btn" href="<c:url value="/notice?category=${c.value}"/>">${c.korName}</a>
                     </c:forEach>
                 </div>
                 <div class="notice_inner">

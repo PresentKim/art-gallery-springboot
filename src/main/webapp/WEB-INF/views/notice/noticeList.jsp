@@ -16,7 +16,8 @@
 <div class="notice_box">
     <div class="notice_header_box">
         <c:forEach items="${NoticeCategory.values()}" var="c">
-            <a href="<c:url value="/notice?category=${c.name()}"/>" class="notice-list_btn">${c.name()}</a>
+            <%--@elvariable id="c" type="com.team4.artgallery.dto.enums.NoticeCategory"--%>
+            <a href="<c:url value="/notice?category=${c.value}"/>" class="notice-list_btn">${c.korName}</a>
         </c:forEach>
         <div class="writebutton">
             <c:if test="${loginMember.admin}">

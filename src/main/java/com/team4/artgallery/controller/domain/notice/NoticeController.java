@@ -36,9 +36,9 @@ public class NoticeController {
     ) {
         // 소식지 목록을 가져올 때 카테고리에 따라 다른 페이지로 리다이렉트
         String category = filter.getCategory();
-        if (NoticeCategory.매거진.name().equals(category)) {
+        if (NoticeCategory.MAGAZINE.isEquals(category)) {
             return "redirect:/notice/magazine";
-        } else if (NoticeCategory.신문.name().equals(category)) {
+        } else if (NoticeCategory.NEWSPAPER.isEquals(category)) {
             return "redirect:/notice/newspaper";
         }
 

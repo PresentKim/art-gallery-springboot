@@ -46,8 +46,9 @@
                         <option value="" disabled selected>카테고리를 선택하세요</option>
                     </c:if>
                     <c:forEach items="${NoticeCategory.writableValues()}" var="c">
-                        <option value="${c.name()}"
-                                <c:if test="${c.name().equals(noticeDto.category)}">selected</c:if>>${c.name()}</option>
+                        <%--@elvariable id="c" type="com.team4.artgallery.dto.enums.NoticeCategory"--%>
+                        <option value="${c.value}"
+                                <c:if test="${c.isEquals(noticeDto.category)}">selected</c:if>>${c.korName}</option>
                     </c:forEach>
                 </select>
             </div>
