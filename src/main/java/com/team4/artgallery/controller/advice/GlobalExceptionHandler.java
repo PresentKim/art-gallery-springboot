@@ -1,4 +1,4 @@
-package com.team4.artgallery.controller;
+package com.team4.artgallery.controller.advice;
 
 import com.team4.artgallery.aspect.exception.NotAdminException;
 import com.team4.artgallery.aspect.exception.NotLoginException;
