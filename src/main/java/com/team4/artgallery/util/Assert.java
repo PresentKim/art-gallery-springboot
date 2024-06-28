@@ -78,7 +78,7 @@ public class Assert {
      * @param message 예외 메시지
      * @throws T 값의 길이가 1이 아닌 경우 예외 발생
      */
-    public <T extends Throwable> void notSingle(Object value, String message, Function<String, T> throwableConstructor) throws T {
+    public <T extends Throwable> void isSingle(Object value, String message, Function<String, T> throwableConstructor) throws T {
         isTrue(getSize(value) == 1, message, throwableConstructor);
     }
 
