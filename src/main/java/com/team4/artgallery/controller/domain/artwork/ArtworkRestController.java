@@ -27,6 +27,7 @@ public class ArtworkRestController {
             @Valid @ModelAttribute Pagination pagination
     ) {
         filter.setIncludeDisplay(false);
+        filter.setDisplayyn("Y");
         pagination.setUrlTemplate("/artwork?page=%d" + filter.toUrlParam());
         return artworkService.getArtworksPair(filter, pagination);
     }

@@ -16,7 +16,6 @@
     <form action="<c:url value="/artwork"/>" method="get" name="searchForm" class="artwork-search-form">
         <h1>예술품 검색</h1>
         <div>
-            <input type="hidden" name="displayyn" value="Y">
             <input type="hidden" name="category" value="${filter.category}">
             <label>
                 <input type="text" placeholder="작품명 또는 작가명을 검색하세요" name="keyword" class="artwork-keyword-form_input"
