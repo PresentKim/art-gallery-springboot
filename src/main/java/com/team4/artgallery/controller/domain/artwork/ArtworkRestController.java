@@ -5,9 +5,11 @@ import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.ResponseBody;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
+import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Delegate;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class ArtworkRestController {
 
     private final ArtworkService artworkService;
+
+    @Delegate
+    private final ResponseService responseService;
 
     @GetMapping({"", "/"})
     public Pagination.Pair<ArtworkDto> list(
@@ -45,13 +50,15 @@ public class ArtworkRestController {
             @Valid @ModelAttribute ArtworkDto artworkDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile
     ) throws Exception {
-        return artworkService.updateArtwork(artworkDto, imageFile);
+        artworkService.updateArtwork(artworkDto, imageFile);
+        return ok("예술품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @CheckAdmin
     @PostMapping("/toggleArtworkDisplay")
     public ResponseEntity<ResponseBody> toggleArtworkDisplay(@RequestParam(value = "aseq") Integer aseq) throws Exception {
-        return artworkService.toggleArtworkDisplay(aseq);
+        artworkService.toggleArtworkDisplay(aseq);
+        return ok("전시 여부가 변경되었습니다.");
     }
 
     @CheckAdmin
@@ -60,13 +67,15 @@ public class ArtworkRestController {
             @Valid @ModelAttribute ArtworkDto artworkDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile
     ) throws Exception {
-        return artworkService.createArtwork(artworkDto, imageFile);
+        artworkService.createArtwork(artworkDto, imageFile);
+        return ok("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @CheckAdmin
     @PostMapping("/delete")
     public ResponseEntity<ResponseBody> delete(@RequestParam(value = "aseq") Integer aseq) throws Exception {
-        return artworkService.deleteArtwork(aseq);
+        artworkService.deleteArtwork(aseq);
+        return ok("예술품이 삭제되었습니다.", "/artwork");
     }
 
 }

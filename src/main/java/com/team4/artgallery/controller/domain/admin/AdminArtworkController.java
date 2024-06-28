@@ -24,7 +24,7 @@ public class AdminArtworkController {
     private final ArtworkService artworkService;
 
     @Delegate
-    private final ResponseService responseHelper;
+    private final ResponseService responseService;
 
     @GetMapping({"", "/"})
     public String list(
@@ -59,7 +59,7 @@ public class AdminArtworkController {
 
         // 예술품 정보 제거에 성공한 경우 성공 결과 반환 (페이지 새로고침)
         // TODO: 새고로침 없이 HTML 요소를 변경하는 방법으로 수정
-        return ok("예술품 정보를 제거했습니다", ":reload");
+        return ok("예술품이 삭제되었습니다.", "/artwork");
     }
 
 }
