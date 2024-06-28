@@ -1,9 +1,11 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.dto.ResponseBody;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.service.helper.ResponseService;
+import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,18 +41,10 @@ public class AdminArtworkController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> edit(@RequestParam(value = "aseqs", required = false) List<Integer> aseqs) {
-        // aseqs 값이 없는 경우 요청 거부 결과 반환
-        if (aseqs == null || aseqs.isEmpty()) {
-            return badRequest("예술품을 선택해주세요");
-        }
+    public ResponseEntity<ResponseBody> edit(@RequestParam(value = "aseqs", required = false) List<Integer> aseqs) throws Exception {
+        Assert.notEmpty(aseqs, "예술품을 선택해주세요", MissingRequestValueException::new);
+        Assert.isSingle(aseqs, "예술품을 하나만 선택해주세요", IllegalArgumentException::new);
 
-        // aseqs 값이 두개 이상인 경우 요청 거부 결과 반환
-        if (aseqs.size() > 1) {
-            return badRequest("예술품을 하나만 선택해주세요");
-        }
-
-        // 예술품 정보 수정 페이지로 리다이렉트
         return ok("", "/artwork/update?aseq=" + aseqs.get(0));
     }
 
