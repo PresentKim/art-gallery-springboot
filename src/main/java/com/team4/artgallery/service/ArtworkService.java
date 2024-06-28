@@ -4,6 +4,7 @@ import com.team4.artgallery.dao.IArtworkDao;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.helper.MultipartFileService;
+import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
@@ -31,20 +32,9 @@ public class ArtworkService {
      * @throws SQLException        예술품 등록에 실패한 경우 예외 발생
      */
     public void createArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws Exception {
-        // 이미지 파일이 없을 경우 오류 결과 반환
-        if (imageFile == null || imageFile.isEmpty()) {
-            throw new FileUploadException("이미지 파일을 업로드해주세요.");
-        }
-
-        // 이미지 저장에 실패하면 오류 결과 반환
-        if (!saveImage(imageFile, artworkDto)) {
-            throw new FileUploadException("이미지 저장에 실패했습니다.");
-        }
-
-        // 예술품 등록 실패 시 오류 결과 반환
-        if (artworkDao.createArtwork(artworkDto) != 1) {
-            throw new SQLException("예술품 등록에 실패했습니다.");
-        }
+        Assert.notEmpty(imageFile, "이미지 파일을 업로드해주세요.", FileUploadException::new);
+        Assert.isTrue(saveImage(imageFile, artworkDto), "이미지 저장에 실패했습니다.", FileUploadException::new);
+        Assert.notZero(artworkDao.createArtwork(artworkDto), "예술품 등록에 실패했습니다.", SQLException::new);
     }
 
     /**
@@ -69,9 +59,7 @@ public class ArtworkService {
      */
     public ArtworkDto getArtwork(int aseq) throws NotFoundException {
         ArtworkDto artworkDto = artworkDao.getArtwork(aseq);
-        if (artworkDto == null) {
-            throw new NotFoundException("예술품 정보를 찾을 수 없습니다.");
-        }
+        Assert.notNull(artworkDto, "예술품 정보를 찾을 수 없습니다.", NotFoundException::new);
 
         return artworkDto;
     }
@@ -95,25 +83,18 @@ public class ArtworkService {
      * @throws SQLException        예술품 수정에 실패한 경우 예외 발생
      */
     public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws Exception {
-        // 기존 정보가 있어야 UPDATE 쿼리를 실행할 수 있습니다.
         ArtworkDto oldArtwork = getArtwork(artworkDto.getAseq());
+        Assert.notNull(oldArtwork, "예술품 정보를 찾을 수 없습니다.", NotFoundException::new);
 
-        // 이미지 파일이 있을 경우 이미지 저장
         if (imageFile != null && !imageFile.isEmpty()) {
-            if (!saveImage(imageFile, artworkDto)) {
-                // 이미지 저장에 실패하면 오류 결과 반환
-                throw new FileUploadException("이미지 저장에 실패했습니다.");
-            }
+            Assert.isTrue(saveImage(imageFile, artworkDto), "이미지 저장에 실패했습니다.", FileUploadException::new);
         } else {
             // 이미지 파일이 없을 경우 기존 이미지 파일 정보를 가져옵니다.
             artworkDto.setImage(oldArtwork.getImage());
             artworkDto.setSavefilename(oldArtwork.getSavefilename());
         }
 
-        // 예술품 수정 실패 시 오류 결과 반환
-        if (artworkDao.updateArtwork(artworkDto) != 1) {
-            throw new SQLException("예술품 수정에 실패했습니다.");
-        }
+        Assert.notZero(artworkDao.updateArtwork(artworkDto), "예술품 수정에 실패했습니다.", SQLException::new);
     }
 
     /**
@@ -124,15 +105,8 @@ public class ArtworkService {
      * @throws SQLException      전시 여부 변경에 실패한 경우 예외 발생
      */
     public void toggleArtworkDisplay(int aseq) throws Exception {
-        // 예술품 정보 존재 여부 확인
-        if (artworkDao.getArtwork(aseq) == null) {
-            throw new NotFoundException("예술품 정보를 찾을 수 없습니다.");
-        }
-
-        // 전시 여부 변경 실패 시 오류 결과 반환
-        if (artworkDao.toggleArtworkDisplay(aseq) != 1) {
-            throw new SQLException("전시 여부 변경에 실패했습니다.");
-        }
+        Assert.notNull(artworkDao.getArtwork(aseq), "예술품 정보를 찾을 수 없습니다.", NotFoundException::new);
+        Assert.notZero(artworkDao.toggleArtworkDisplay(aseq), "전시 여부 변경에 실패했습니다.", SQLException::new);
     }
 
     /**
@@ -142,10 +116,7 @@ public class ArtworkService {
      * @throws SQLException 예술품 삭제에 실패한 경우 예외 발생
      */
     public void deleteArtwork(List<Integer> aseqList) throws SQLException {
-        // 예술품 삭제 실패 시 오류 결과 반환
-        if (artworkDao.deleteArtworks(aseqList) != 1) {
-            throw new SQLException("예술품 삭제에 실패했습니다.");
-        }
+        Assert.notZero(aseqList.size(), "예술품을 선택해주세요.", SQLException::new);
     }
 
     /**
@@ -155,10 +126,7 @@ public class ArtworkService {
      * @throws SQLException 예술품 삭제에 실패한 경우 예외 발생
      */
     public void deleteArtwork(int aseq) throws SQLException {
-        // 예술품 삭제 실패 시 오류 결과 반환
-        if (artworkDao.deleteArtwork(aseq) != 1) {
-            throw new SQLException("예술품 삭제에 실패했습니다.");
-        }
+        Assert.notZero(artworkDao.deleteArtwork(aseq), "예술품 삭제에 실패했습니다.", SQLException::new);
     }
 
     /**
