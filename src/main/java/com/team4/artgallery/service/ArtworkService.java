@@ -8,7 +8,6 @@ import com.team4.artgallery.service.helper.MultipartFileService;
 import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.Delegate;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArtworkService {
 
-    @Delegate
     private final IArtworkDao artworkDao;
 
     private final MultipartFileService fileService;
@@ -49,7 +47,7 @@ public class ArtworkService {
         }
 
         // 예술품 등록 실패 시 오류 결과 반환
-        if (createArtwork(artworkDto) != 1) {
+        if (artworkDao.createArtwork(artworkDto) != 1) {
             throw new SQLException("예술품 등록에 실패했습니다.");
         }
 
@@ -66,8 +64,8 @@ public class ArtworkService {
      */
     public Pagination.Pair<ArtworkDto> getArtworksPair(ArtworkFilter filter, Pagination pagination) {
         return pagination
-                .setItemCount(countArtworks(filter))
-                .pair(getArtworks(filter, pagination));
+                .setItemCount(artworkDao.countArtworks(filter))
+                .pair(artworkDao.getArtworks(filter, pagination));
     }
 
     /**
@@ -84,6 +82,16 @@ public class ArtworkService {
         }
 
         return artworkDto;
+    }
+
+    /**
+     * 랜덤 예술품 목록을 가져옵니다.
+     *
+     * @param count 가져올 예술품 개수
+     * @return 랜덤 예술품 목록
+     */
+    public List<ArtworkDto> getRandomArtworks(int count) {
+        return artworkDao.getRandomArtworks(count);
     }
 
     /**
@@ -111,7 +119,7 @@ public class ArtworkService {
         }
 
         // 예술품 수정 실패 시 오류 결과 반환
-        if (updateArtwork(artworkDto) != 1) {
+        if (artworkDao.updateArtwork(artworkDto) != 1) {
             throw new SQLException("예술품 수정에 실패했습니다.");
         }
 
