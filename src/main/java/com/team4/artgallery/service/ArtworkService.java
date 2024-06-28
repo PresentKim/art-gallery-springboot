@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -138,6 +139,21 @@ public class ArtworkService {
         return responseService.ok("전시 여부가 변경되었습니다.");
     }
 
+    /**
+     * 예술품 정보를 삭제합니다.
+     *
+     * @param aseqList 예술품 번호 목록
+     * @throws SQLException 예술품 삭제에 실패한 경우 예외 발생
+     */
+    public ResponseEntity<ResponseBody> deleteArtwork(List<Integer> aseqList) throws SQLException {
+        // 예술품 삭제 실패 시 오류 결과 반환
+        if (artworkDao.deleteArtworks(aseqList) != 1) {
+            throw new SQLException("예술품 삭제에 실패했습니다.");
+        }
+
+        // 예술품 삭제 성공 시 성공 결과 반환
+        return responseService.ok("예술품이 삭제되었습니다.", "/artwork");
+    }
 
     /**
      * 예술품 정보를 삭제합니다.

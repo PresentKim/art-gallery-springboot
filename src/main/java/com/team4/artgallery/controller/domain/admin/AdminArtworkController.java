@@ -5,6 +5,7 @@ import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
@@ -27,20 +28,13 @@ public class AdminArtworkController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute ArtworkFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @Valid @ModelAttribute("filter") ArtworkFilter filter,
+            @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
-        // 검색 조건에 따라 예술품 목록을 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setPage(page)
-                .setItemCount(artworkService.countArtworks(filter))
-                .setUrlTemplate("/admin/artwork?page=%d" + filter.toUrlParam());
-
-        model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pagination);
-        model.addAttribute("artworkList", artworkService.getArtworks(filter, pagination));
-        return "admin/adminArtworkList";
+        pagination.setUrlTemplate("/admin/artwork?page=%d" + filter.toUrlParam());
+        model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
+        return "artwork/artworkList";
     }
 
     @PostMapping("/update")
@@ -60,16 +54,8 @@ public class AdminArtworkController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> delete(@RequestParam(value = "aseqs", required = false) List<Integer> aseqs) {
-        // aseqs 값이 없는 경우 요청 거부 결과 반환
-        if (aseqs == null || aseqs.isEmpty()) {
-            return badRequest("예술품을 선택해주세요");
-        }
-
-        // 예술품 정보 제거에 실패한 경우 실패 결과 반환
-        if (artworkService.deleteArtworks(aseqs) == 0) {
-            return badRequest("예술품 정보 제거에 실패했습니다");
-        }
+    public ResponseEntity<?> delete(@RequestParam(value = "aseqs", required = false) List<Integer> aseqs) throws Exception {
+        artworkService.deleteArtwork(aseqs);
 
         // 예술품 정보 제거에 성공한 경우 성공 결과 반환 (페이지 새로고침)
         // TODO: 새고로침 없이 HTML 요소를 변경하는 방법으로 수정
