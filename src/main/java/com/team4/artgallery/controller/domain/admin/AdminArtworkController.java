@@ -37,7 +37,7 @@ public class AdminArtworkController {
     ) {
         pagination.setUrlTemplate("/admin/artwork?page=%d" + filter.toUrlParam());
         model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
-        return "artwork/artworkList";
+        return "admin/adminArtworkList";
     }
 
     @PostMapping("/update")
