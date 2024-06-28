@@ -27,7 +27,7 @@ public class ArtworkViewController {
     ) {
         filter.setIncludeDisplay(false);
         filter.setDisplayyn("Y");
-        pagination.setUrlTemplate("/artwork?page=%d" + filter.toUrlParam());
+        pagination.setUrlTemplate("/artwork?page=%d" + filter.getUrlParam());
         model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
         return "artwork/artworkList";
     }

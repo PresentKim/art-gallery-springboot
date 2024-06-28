@@ -35,7 +35,7 @@ public class AdminNoticeController {
         Pagination pagination = new Pagination()
                 .setPage(page)
                 .setItemCount(noticeService.countNotices(filter))
-                .setUrlTemplate("/admin/notice?page=%d" + filter.toUrlParam());
+                .setUrlTemplate("/admin/notice?page=%d" + filter.getUrlParam());
 
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);

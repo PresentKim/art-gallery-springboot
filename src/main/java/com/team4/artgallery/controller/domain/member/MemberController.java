@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.member;
 
 import com.team4.artgallery.aspect.annotation.CheckLogin;
-import com.team4.artgallery.controller.annotation.LoginMember;
+import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.FavoriteService;

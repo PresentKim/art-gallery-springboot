@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 
+/**
+ * MultipartFile 객체를 다루는 서비스
+ */
 @Service
 @RequiredArgsConstructor
 final public class MultipartFileService {
@@ -18,9 +21,6 @@ final public class MultipartFileService {
 
     /**
      * 요청으로 받은 파일을 저장하고 저장된 파일 이름을 반환합니다.
-     *
-     * @param file          이미지 파일
-     * @param uploadDirName 저장할 디렉토리
      */
     public FileNamePair saveFile(MultipartFile file, String uploadDirName) {
         // 파일 이름이 비어있으면 중단

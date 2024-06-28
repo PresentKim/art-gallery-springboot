@@ -35,7 +35,7 @@ public class AdminArtworkController {
             @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
-        pagination.setUrlTemplate("/admin/artwork?page=%d" + filter.toUrlParam());
+        pagination.setUrlTemplate("/admin/artwork?page=%d" + filter.getUrlParam());
         model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
         return "admin/adminArtworkList";
     }

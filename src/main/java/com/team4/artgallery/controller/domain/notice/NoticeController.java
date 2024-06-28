@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.notice;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.controller.annotation.LoginMember;
+import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.enums.NoticeCategory;
@@ -46,7 +46,7 @@ public class NoticeController {
         Pagination pagination = new Pagination()
                 .setPage(page)
                 .setItemCount(noticeService.countNotices(filter))
-                .setUrlTemplate("/notice?page=%d" + filter.toUrlParam());
+                .setUrlTemplate("/notice?page=%d" + filter.getUrlParam());
 
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);

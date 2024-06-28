@@ -16,7 +16,11 @@ public class Pagination {
      * <p>
      * 이전/다음과 ...을 제외한 수입니다.
      * <p>
-     * e.g. 5일 때 [이전 1 ... 4 5 6 7 8 ... 99 다음]
+     *
+     * <blockquote><pre>
+     * e.g. 5일 때
+     * [이전 1 ... 4 5 6 7 8 ... 99 다음]
+     * </pre></blockquote>
      */
     private static final int PAGE_RANGE = 5;
 

@@ -35,7 +35,7 @@ public class AdminGalleryController {
         Pagination pagination = new Pagination()
                 .setPage(page)
                 .setItemCount(galleryService.countGalleries(filter))
-                .setUrlTemplate("/admin/gallery?page=%d" + filter.toUrlParam());
+                .setUrlTemplate("/admin/gallery?page=%d" + filter.getUrlParam());
 
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);

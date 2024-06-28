@@ -33,12 +33,6 @@ public class ArtworkFilter implements IFilter {
      */
     private boolean includeDisplay = true;
 
-    /**
-     * 주어진 필드 이름을 URL 파라미터로 변환할지 여부를 반환합니다.
-     *
-     * @param fieldName 필드 이름
-     * @return URL 파라미터로 변환할지 여부
-     */
     public boolean urlParamFilter(String fieldName) {
         if (fieldName.equals("displayyn")) {
             return includeDisplay;

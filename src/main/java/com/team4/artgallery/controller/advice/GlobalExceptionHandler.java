@@ -29,6 +29,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.Logger;
 
+/**
+ * 전역 예외 처리 클래스
+ */
 @ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
@@ -117,12 +120,18 @@ public class GlobalExceptionHandler {
         return processResponse(unsupportedMediaType("지원하지 않는 미디어 타입입니다. : " + e.getContentType()), request);
     }
 
-
     /**
-     * 예외로부터 생성된 ResponseEntity 를 'application/json' 요청인 경우 그대로, 아니면 ModelAndView 로 반환합니다.
+     * 콘텐츠 협상 처리를 위해 요청 헤더의 ACCEPT 값을 확인하여 {@code application/json}인 경우
+     * {@link ResponseEntity} 객체 그대로, 아니면 {@link ModelAndView} 객체로 변환하여 반환합니다.
      *
-     * @param response ResponseEntity 객체
      * @return 'application/json' 요청인 경우 ResponseEntity, 아니면 ModelAndView
+     * @implNote 요청 메소드는 단순히 기능의 분류를 의미하고, 응답의 종류를 결정할 때는 요청 헤더의 ACCEPT 값을 참조해야합니다.
+     * <p>
+     * 따라서 기존 구현된 {@code GET} 요청엔 HTML, {@code POST} 요청엔 JSON을 반환하는 방식은 잘못된 방식입니다.
+     * <p>
+     * @see <a href="https://developer.mozilla.org/ko/docs/Web/HTTP/Methods">HTTP 요청 메서드</a>
+     * @see <a href="https://developer.mozilla.org/ko/docs/Web/HTTP/Content_negotiation">콘텐츠 협상</a>
+     * @see <a href="https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Accept">Accept 요청 HTTP 헤더</a>
      */
     private Object processResponse(ResponseEntity<ResponseBody> response, HttpServletRequest request) {
         // application/json 요청인 경우 그대로 반환

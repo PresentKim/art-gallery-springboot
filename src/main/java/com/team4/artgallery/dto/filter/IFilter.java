@@ -9,9 +9,11 @@ import java.util.Map;
 public interface IFilter {
 
     /**
-     * 필터를 Map 형태로 반환합니다.
+     * 클래스의 {@link FilterField} 어노테이션이 있는 필드를 찾아서 필터 맵을 생성해 반환합니다.
      *
-     * @return 필터 Map
+     * @return 필터 맵
+     * @implNote 리플렉션을 사용하여 모든 필드를 읽어와 필드 맵을 생성합니다.
+     * @implSpec 필터 맵은 필드 이름과 필드 값으로 구성되어 있습니다.
      */
     default Map<String, Object> getFilters() {
         Map<String, Object> filters = new HashMap<>();
@@ -62,11 +64,11 @@ public interface IFilter {
     }
 
     /**
-     * URL 파라미터 형식으로 변환합니다.
+     * 필터 맵을 URL 파라미터 문자열로 변환합니다.
      *
      * @return URL 파라미터 문자열
      */
-    default String toUrlParam() {
+    default String getUrlParam() {
         Map<String, Object> filters = getFilters();
         if (filters.isEmpty()) {
             return "";
@@ -84,8 +86,8 @@ public interface IFilter {
     /**
      * 주어진 필드 이름을 URL 파라미터로 변환할지 여부를 반환합니다.
      *
-     * @param fieldName 필드 이름
      * @return URL 파라미터로 변환할지 여부
+     * @hidden 이 메서드는 {@link #getUrlParam()} 메서드에서 사용됩니다.
      */
     default boolean urlParamFilter(String fieldName) {
         return true;

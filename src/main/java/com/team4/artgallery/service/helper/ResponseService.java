@@ -1,6 +1,7 @@
 package com.team4.artgallery.service.helper;
 
 import com.team4.artgallery.dto.ResponseBody;
+import lombok.experimental.Delegate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,22 @@ import java.util.Objects;
 
 import static jakarta.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 
+/**
+ * 응답 코드와 메시지, URL를 반환하기 위해 {@link ResponseEntity}를 생성하는 메소드를 제공하는 서비스
+ *
+ * @apiNote REST API에서 응답 코드와 메시지, URL을 반환하기 위해 사용합니다.
+ * <blockquote><pre>
+ * {@code @Delegate}
+ * private final ResponseService responseHelper;
+ *
+ * public ResponseEntity<?> example(@RequestParam(value = "ex") Integer ex) {
+ *    if (ex < 1) return badRequest("ex는 1 이상이어야 합니다");
+ *    return ok("", "/example?ex=" + ex);
+ * }
+ * </pre></blockquote>
+ * <p>
+ * 위처럼 {@link Delegate} 어노테이션을 사용하면 {@link ResponseService}의 메소드를 더 간단하게 사용할 수 있습니다.
+ */
 @Service
 public class ResponseService {
 

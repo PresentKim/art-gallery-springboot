@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.gallery;
 
 import com.team4.artgallery.aspect.annotation.CheckLogin;
-import com.team4.artgallery.controller.annotation.LoginMember;
+import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
@@ -38,7 +38,7 @@ public class GalleryController {
         Pagination pagination = new Pagination()
                 .setPage(page)
                 .setItemCount(galleryService.countGalleries(filter))
-                .setUrlTemplate("/gallery?page=%d" + filter.toUrlParam());
+                .setUrlTemplate("/gallery?page=%d" + filter.getUrlParam());
 
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);

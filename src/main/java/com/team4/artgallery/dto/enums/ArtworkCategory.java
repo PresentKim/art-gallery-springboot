@@ -26,10 +26,10 @@ public enum ArtworkCategory {
     }
 
     /**
-     * 입력된 문자열이 해당 카테고리의 값과 일치하는지 확인합니다.
+     * 입력된 문자열이 카테고리의 값 혹은 한글 이름과 일치하는지 확인합니다.
      *
-     * @param str 문자열
      * @return 일치 여부
+     * @apiNote ALL 카테고리는 null 값도 일치한다고 판단합니다.
      */
     public boolean isEquals(String str) {
         return korName.equals(str) || value.equals(str) || this == ALL && str == null;

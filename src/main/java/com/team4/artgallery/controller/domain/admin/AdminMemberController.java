@@ -35,7 +35,7 @@ public class AdminMemberController {
         Pagination pagination = new Pagination()
                 .setPage(page)
                 .setItemCount(memberService.countMembers(filter))
-                .setUrlTemplate("/admin/member?page=%d" + filter.toUrlParam());
+                .setUrlTemplate("/admin/member?page=%d" + filter.getUrlParam());
 
         model.addAttribute("filter", filter);
         model.addAttribute("pagination", pagination);
