@@ -13,6 +13,7 @@ import lombok.experimental.Delegate;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,11 +29,10 @@ public class ArtworkRestController {
 
     @GetMapping({"", "/"})
     public Pagination.Pair<ArtworkDto> list(
-            @Valid @ModelAttribute ArtworkFilter filter,
+            @Validated(ArtworkFilter.ExcludeDisplay.class) ArtworkFilter filter,
             @Valid @ModelAttribute Pagination pagination
     ) {
         filter.setIncludeDisplay(false);
-        filter.setDisplayyn("Y");
         pagination.setUrlTemplate("/artwork?page=%d" + filter.getUrlParam());
         return artworkService.getArtworksPair(filter, pagination);
     }

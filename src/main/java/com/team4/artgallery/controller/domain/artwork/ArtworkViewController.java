@@ -10,6 +10,7 @@ import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -21,12 +22,11 @@ public class ArtworkViewController {
 
     @GetMapping({"", "/"})
     public String list(
-            @Valid @ModelAttribute("filter") ArtworkFilter filter,
+            @Validated(ArtworkFilter.ExcludeDisplay.class) @ModelAttribute("filter") ArtworkFilter filter,
             @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
         filter.setIncludeDisplay(false);
-        filter.setDisplayyn("Y");
         pagination.setUrlTemplate("/artwork?page=%d" + filter.getUrlParam());
         model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
         return "artwork/artworkList";

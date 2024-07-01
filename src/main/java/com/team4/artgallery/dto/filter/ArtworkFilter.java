@@ -1,6 +1,7 @@
 package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -26,6 +27,7 @@ public class ArtworkFilter implements IFilter {
      * 예술품 전시 여부
      */
     @FilterField
+    @Pattern(regexp = "Y", message = "잘못된 파라미터가 전달되었습니다", groups = ExcludeDisplay.class) // 요청의 파라미터에서 설정될 수 없도록 설정
     private String displayyn = "Y";
 
     /**
@@ -39,6 +41,15 @@ public class ArtworkFilter implements IFilter {
         }
 
         return true;
+    }
+
+
+    // 그룹 클래스
+
+    /**
+     * {@link #displayyn} 필드를 요청의 파라미터에서 설정될 수 없도록 설정
+     */
+    public interface ExcludeDisplay {
     }
 
 }
