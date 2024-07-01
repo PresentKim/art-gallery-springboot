@@ -17,10 +17,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 @Controller
@@ -53,7 +54,7 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<?> login(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
-            @Validated(MemberDto.OnLogin.class) @ModelAttribute MemberDto loginForm,
+            @Validated(MemberDto.OnLogin.class) MemberDto loginForm,
             HttpSession session
     ) {
         // 이미 로그인 상태라면 에러 결과와 함께 returnUrl 로 리다이렉트
@@ -104,14 +105,15 @@ public class MemberController {
     @GetMapping("/join")
     public String join(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
-            Model model,
-            HttpSession session
+            HttpSession session,
+            Model model
     ) {
         // 이미 로그인 상태라면 returnUrl 로 리다이렉트
         if (memberService.isLogin(session)) {
             return "redirect:" + returnUrl;
         }
 
+        // 회원가입 페이지로 이동 (returnUrl 전달)
         model.addAttribute("returnUrl", returnUrl);
         return "member/joinForm";
     }
@@ -119,7 +121,7 @@ public class MemberController {
     @PostMapping("/join")
     public ResponseEntity<?> join(
             @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
-            @Validated(MemberDto.OnJoin.class) @ModelAttribute MemberDto memberDto
+            @Validated(MemberDto.OnJoin.class) MemberDto memberDto
     ) {
         // 이미 사용중인 아이디라면 에러 결과 반환
         if (memberService.isMember(memberDto.getId())) {
@@ -132,7 +134,7 @@ public class MemberController {
         }
 
         // 회원가입 성공 시 성공 결과와 돌아갈 URL 반환 (로그인 페이지로 이동)
-        return ok("회원가입에 성공하였습니다.", "/member/login?returnUrl=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8));
+        return ok("회원가입에 성공하였습니다.", memberService.getRedirectToLogin(returnUrl));
     }
 
     @PostMapping("/idCheck")
@@ -163,7 +165,7 @@ public class MemberController {
     @CheckLogin()
     @PostMapping("/mypage/edit")
     public ResponseEntity<?> edit(
-            @Validated(MemberDto.OnUpdate.class) @ModelAttribute MemberDto memberDto,
+            @Validated(MemberDto.OnUpdate.class) MemberDto memberDto,
             @LoginMember MemberDto loginMember,
             HttpSession session
     ) {

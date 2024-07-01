@@ -5,6 +5,7 @@ import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +28,14 @@ public class AdminNoticeController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute NoticeFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @ModelAttribute("filter") NoticeFilter filter,
+            @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
         // 검색 조건에 따라 소식지 목록을 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setPage(page)
-                .setItemCount(noticeService.countNotices(filter))
+        pagination.setItemCount(noticeService.countNotices(filter))
                 .setUrlTemplate("/admin/notice?page=%d" + filter.getUrlParam());
 
-        model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pagination);
         model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
         return "admin/adminNoticeList";
     }

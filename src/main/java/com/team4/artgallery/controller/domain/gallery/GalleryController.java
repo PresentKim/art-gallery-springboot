@@ -30,18 +30,14 @@ public class GalleryController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute KeywordFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @ModelAttribute("filter") KeywordFilter filter,
+            @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
         // 검색 조건에 따라 갤러리 목록을 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setPage(page)
-                .setItemCount(galleryService.countGalleries(filter))
+        pagination.setItemCount(galleryService.countGalleries(filter))
                 .setUrlTemplate("/gallery?page=%d" + filter.getUrlParam());
 
-        model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pagination);
         model.addAttribute("galleryList", galleryService.getGalleries(filter, pagination));
         return "gallery/galleryList";
     }
@@ -85,7 +81,7 @@ public class GalleryController {
     @CheckLogin()
     @PostMapping("/update")
     public ResponseEntity<?> update(
-            @Valid @ModelAttribute GalleryDto galleryDto,
+            @Valid GalleryDto galleryDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             @LoginMember MemberDto loginMember
     ) {
@@ -132,7 +128,7 @@ public class GalleryController {
     @CheckLogin()
     @PostMapping("/write")
     public ResponseEntity<?> write(
-            @Valid @ModelAttribute GalleryDto galleryDto,
+            @Valid GalleryDto galleryDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             @LoginMember MemberDto loginMember
     ) {

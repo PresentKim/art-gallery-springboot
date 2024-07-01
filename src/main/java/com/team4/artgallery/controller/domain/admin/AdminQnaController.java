@@ -5,6 +5,7 @@ import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +28,14 @@ public class AdminQnaController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute QnaFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @ModelAttribute("filter") QnaFilter filter,
+            @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
         // 검색 조건에 따라 문의글 목록을 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setPage(page)
-                .setItemCount(qnaService.countInquiries(filter))
+        pagination.setItemCount(qnaService.countInquiries(filter))
                 .setUrlTemplate("/admin/qna?page=%d" + filter.getUrlParam());
 
-        model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pagination);
         model.addAttribute("qnaList", qnaService.getInquiries(filter, pagination));
         return "admin/adminQnaList";
     }

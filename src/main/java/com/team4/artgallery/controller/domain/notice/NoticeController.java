@@ -30,8 +30,8 @@ public class NoticeController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute NoticeFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @ModelAttribute("filter") NoticeFilter filter,
+            @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
         // 소식지 목록을 가져올 때 카테고리에 따라 다른 페이지로 리다이렉트
@@ -43,13 +43,9 @@ public class NoticeController {
         }
 
         // 검색 조건에 따라 소식지 목록을 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setPage(page)
-                .setItemCount(noticeService.countNotices(filter))
+        pagination.setItemCount(noticeService.countNotices(filter))
                 .setUrlTemplate("/notice?page=%d" + filter.getUrlParam());
 
-        model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pagination);
         model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
         return "notice/noticeList";
     }
@@ -87,7 +83,7 @@ public class NoticeController {
     @CheckAdmin
     @PostMapping("/update")
     public ResponseEntity<?> update(
-            @Valid @ModelAttribute NoticeDto noticeDto,
+            @Valid NoticeDto noticeDto,
             @LoginMember MemberDto loginMember
     ) {
         // 작성자를 로그인 정보로부터 가져와서 소식지 정보에 설정
@@ -111,7 +107,7 @@ public class NoticeController {
     @CheckAdmin
     @PostMapping("/write")
     public ResponseEntity<?> write(
-            @Valid @ModelAttribute NoticeDto noticeDto,
+            @Valid NoticeDto noticeDto,
             @LoginMember MemberDto loginMember
     ) {
         // 작성자를 로그인 정보로부터 가져와서 소식지 정보에 설정

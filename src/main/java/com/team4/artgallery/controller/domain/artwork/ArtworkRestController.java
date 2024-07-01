@@ -30,7 +30,7 @@ public class ArtworkRestController {
     @GetMapping({"", "/"})
     public Pagination.Pair<ArtworkDto> list(
             @Validated(ArtworkFilter.ExcludeDisplay.class) ArtworkFilter filter,
-            @Valid @ModelAttribute Pagination pagination
+            @Valid Pagination pagination
     ) {
         filter.setIncludeDisplay(false);
         pagination.setUrlTemplate("/artwork?page=%d" + filter.getUrlParam());
@@ -47,7 +47,7 @@ public class ArtworkRestController {
     @CheckAdmin
     @PostMapping("/update")
     public ResponseEntity<ResponseBody> update(
-            @Valid @ModelAttribute ArtworkDto artworkDto,
+            @Valid ArtworkDto artworkDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile
     ) throws Exception {
         artworkService.updateArtwork(artworkDto, imageFile);
@@ -64,7 +64,7 @@ public class ArtworkRestController {
     @CheckAdmin
     @PostMapping("/write")
     public ResponseEntity<ResponseBody> write(
-            @Valid @ModelAttribute ArtworkDto artworkDto,
+            @Valid ArtworkDto artworkDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile
     ) throws Exception {
         artworkService.createArtwork(artworkDto, imageFile);

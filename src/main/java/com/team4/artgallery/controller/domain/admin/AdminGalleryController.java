@@ -5,6 +5,7 @@ import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +28,14 @@ public class AdminGalleryController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute KeywordFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @ModelAttribute("filter") KeywordFilter filter,
+            @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
         // 검색 조건에 따라 갤러리 목록을 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setPage(page)
-                .setItemCount(galleryService.countGalleries(filter))
+        pagination.setItemCount(galleryService.countGalleries(filter))
                 .setUrlTemplate("/admin/gallery?page=%d" + filter.getUrlParam());
 
-        model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pagination);
         model.addAttribute("galleryList", galleryService.getGalleries(filter, pagination));
         return "admin/adminGalleryList";
     }

@@ -5,6 +5,7 @@ import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +28,14 @@ public class AdminMemberController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute KeywordFilter filter,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @ModelAttribute("filter") KeywordFilter filter,
+            @Valid @ModelAttribute("pagination") Pagination pagination,
             Model model
     ) {
         // 검색 조건에 따라 회원 목록을 가져옵니다.
-        Pagination pagination = new Pagination()
-                .setPage(page)
-                .setItemCount(memberService.countMembers(filter))
+        pagination.setItemCount(memberService.countMembers(filter))
                 .setUrlTemplate("/admin/member?page=%d" + filter.getUrlParam());
 
-        model.addAttribute("filter", filter);
-        model.addAttribute("pagination", pagination);
         model.addAttribute("memberList", memberService.getMembers(filter, pagination));
         return "admin/adminMemberList";
     }

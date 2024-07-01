@@ -25,12 +25,13 @@ public class QnaController {
     private final ResponseService responseHelper;
 
     @GetMapping({"", "/"})
-    public String list(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
-        Pagination pagination = new Pagination()
-                .setPage(page)
-                .setItemCount(qnaService.countInquiries(null))
+    public String list(
+            @Valid @ModelAttribute("pagination") Pagination pagination,
+            Model model
+    ) {
+        pagination.setItemCount(qnaService.countInquiries(null))
                 .setUrlTemplate("/qna?page=%d");
-        model.addAttribute("pagination", pagination);
+
         model.addAttribute("qnaList", qnaService.getInquiries(null, pagination));
         return "qna/qnaList";
     }
@@ -60,7 +61,7 @@ public class QnaController {
     }
 
     @PostMapping("/write")
-    public ResponseEntity<?> write(@Valid @ModelAttribute QnaDto qnaDto) {
+    public ResponseEntity<?> write(@Valid QnaDto qnaDto) {
         // 문의글 작성에 실패한 경우 500 에러 반환
         if (qnaService.createInquiry(qnaDto) == 0) {
             return internalServerError("문의 작성에 실패했습니다.");
@@ -90,7 +91,7 @@ public class QnaController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> update(@Valid @ModelAttribute QnaDto qnaDto, HttpSession session) {
+    public ResponseEntity<?> update(@Valid QnaDto qnaDto, HttpSession session) {
         int qseq = qnaDto.getQseq();
 
         // 문의글 정보가 없는 경우 404 실패 반환
