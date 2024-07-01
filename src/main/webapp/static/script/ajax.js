@@ -19,11 +19,30 @@ function sendHttpRequest(url, body = {}, option = {}) {
     }
 
     return new Promise((resolve, reject) => {
+        // body 값이 리터럴 객체인 경우 문자열로 변환
+        // `application/json` 타입은 컨트롤러에서 @RequestBody 로 받아야하기 때문에 복잡해짐.
+        // 때문에 JSON 문자열 대신 쿼리 문자열로 전송
+        if (!(body instanceof FormData)) {
+            console.log(body);
+            body = Object
+                .entries(body)
+                .filter(([, value]) => value !== null && value !== undefined)
+                .map(([key, value]) => `${key}=${value}`).join('&');
+            console.log(body);
+        }
+
+        // 요청 메소드가 GET 인 경우 쿼리스트링으로 변환
+        const method = option.method || 'POST';
+        if (method === 'GET') {
+            url += '?' + body;
+            body = null;
+        }
+
         // XMLHttpRequest 객체 생성
         const xhr = new XMLHttpRequest();
 
         // XHR 요청 설정
-        xhr.open(option.method || 'POST', url, true);
+        xhr.open(method, url, true);
         xhr.setRequestHeader('Accept', option.accept || 'application/json');
         if (option.contentType) {
             xhr.setRequestHeader('Content-Type', option.contentType);
@@ -41,16 +60,6 @@ function sendHttpRequest(url, body = {}, option = {}) {
 
         // XHR 에러 이벤트 핸들러 등록
         xhr.onerror = reject;
-
-        // body 값이 리터럴 객체인 경우 문자열로 변환
-        // `application/json` 타입은 컨트롤러에서 @RequestBody 로 받아야하기 때문에 복잡해짐.
-        // 때문에 JSON 문자열 대신 쿼리 문자열로 전송
-        if (!(body instanceof FormData)) {
-            body = Object
-                .entries(body)
-                .filter(([, value]) => value !== null && value !== undefined)
-                .map(([key, value]) => `${key}=${value}`).join('&');
-        }
 
         // XHR 요청 전송
         xhr.send(body);
