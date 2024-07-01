@@ -1,5 +1,6 @@
 package com.team4.artgallery.util;
 
+import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -37,12 +38,14 @@ public class Pagination {
     /**
      * 아이템의 총 갯수
      */
-    private int itemCount;
+    @Null(message = "잘못된 파라미터가 전달되었습니다") // 요청의 파라미터에서 설정될 수 없도록 설정
+    private Integer itemCount;
 
     /**
      * 페이지의 URL 템플릿
      */
-    private String urlTemplate = "";
+    @Null(message = "잘못된 파라미터가 전달되었습니다") // 요청의 파라미터에서 설정될 수 없도록 설정
+    private String urlTemplate;
 
     /**
      * 현재 페이지를 반환합니다.
@@ -51,15 +54,6 @@ public class Pagination {
      */
     public int getPage() {
         return fitPage(page);
-    }
-
-    /**
-     * 현재 페이지의 URL을 반환합니다.
-     *
-     * @return 현재 페이지의 URL
-     */
-    public String getUrl() {
-        return getUrl(getPage());
     }
 
     /**
