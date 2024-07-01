@@ -7,6 +7,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- CSS -->
+    <link rel="stylesheet" href="<c:url value="/static/stylesheet/index.css"/>">
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="<c:url value="/static/script/ajax.js"/>"></script>
+    <script src="https://unpkg.com/aos@2.2/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.drawsvg/1/jquery.drawsvg.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/vivus/0.2.1/vivus.min.js"></script>
+    <script src="<c:url value="/static/script/header.js"/>"></script>
+
     <c:if test="${not empty head and not empty head.toString().trim()}">
         <!-- Custom head -->
         <jsp:invoke fragment="head"/>
@@ -19,18 +31,6 @@
     <!-- Meta -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="<c:url value="/static/stylesheet/index.css"/>">
-
-    <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="<c:url value="/static/script/ajax.js"/>"></script>
-    <script src="https://unpkg.com/aos@2.2/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.drawsvg/1/jquery.drawsvg.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
-    <script src="http://cdn.jsdelivr.net/vivus/0.2.1/vivus.min.js"></script>
-    <script src="<c:url value="/static/script/header.js"/>"></script>
 </head>
 <body>
 <t:header/>
