@@ -7,7 +7,6 @@ import com.team4.artgallery.service.helper.ResponseService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -49,14 +49,14 @@ public class GlobalExceptionHandler {
         return processResponse(internalServerError(e.getMessage()), request);
     }
 
+    @ExceptionHandler(ResponseStatusException.class)
+    public Object handleException(ResponseStatusException e, HttpServletRequest request) {
+        return processResponse(ResponseEntity.status(e.getStatusCode()).body(new ResponseBody(e.getReason(), "")), request);
+    }
+
     @ExceptionHandler(NoResourceFoundException.class)
     public Object handleException(NoResourceFoundException e, HttpServletRequest request) {
         return processResponse(notFound(), request);
-    }
-
-    @ExceptionHandler(NotFoundException.class)
-    public Object handleException(NotFoundException e, HttpServletRequest request) {
-        return processResponse(notFound(e.getMessage()), request);
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
@@ -67,16 +67,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public Object handleException(MissingServletRequestParameterException e, HttpServletRequest request) {
         return processResponse(badRequest("파라미터 " + e.getParameterName() + "이(가) 누락되었습니다."), request);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public Object handleException(IllegalArgumentException e, HttpServletRequest request) {
-        return processResponse(badRequest(e.getMessage()), request);
-    }
-
-    @ExceptionHandler(MissingRequestValueException.class)
-    public Object handleException(MissingRequestValueException e, HttpServletRequest request) {
-        return processResponse(badRequest(e.getMessage()), request);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
