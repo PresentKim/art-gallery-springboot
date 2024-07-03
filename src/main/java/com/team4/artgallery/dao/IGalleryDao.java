@@ -1,5 +1,6 @@
 package com.team4.artgallery.dao;
 
+import com.team4.artgallery.aspect.annotation.QueryApplied;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.util.Pagination;
@@ -19,6 +20,7 @@ public interface IGalleryDao {
      * @param galleryDto 갤러리 정보
      * @return 추가된 행의 수
      */
+    @QueryApplied("갤러리 정보를 추가하는 중 오류가 발생했습니다.")
     int createGallery(GalleryDto galleryDto);
 
 
@@ -58,6 +60,7 @@ public interface IGalleryDao {
      * @param galleryDto 수정할 갤러리 정보
      * @return 수정된 행의 수
      */
+    @QueryApplied("갤러리 정보를 수정하는 중 오류가 발생했습니다.")
     int updateGallery(GalleryDto galleryDto);
 
     /**
@@ -66,6 +69,7 @@ public interface IGalleryDao {
      * @param gseq 갤러리 번호
      * @return 수정된 행의 수
      */
+    @QueryApplied("갤러리 조회수를 변경하는 중 오류가 발생했습니다.")
     int increaseReadCount(int gseq);
 
 
@@ -77,6 +81,7 @@ public interface IGalleryDao {
      * @param gseq 갤러리 번호
      * @return 삭제된 행의 수
      */
+    @QueryApplied("갤러리 정보를 삭제하는 중 오류가 발생했습니다.")
     int deleteGallery(int gseq);
 
     /**
@@ -85,6 +90,7 @@ public interface IGalleryDao {
      * @param gseqList 갤러리 번호 목록
      * @return 삭제된 행의 수
      */
+    @QueryApplied("갤러리 정보를 삭제하는 중 오류가 발생했습니다.")
     int deleteGalleries(List<Integer> gseqList);
 
 }

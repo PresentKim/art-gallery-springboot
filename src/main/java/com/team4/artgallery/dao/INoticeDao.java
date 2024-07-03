@@ -1,5 +1,6 @@
 package com.team4.artgallery.dao;
 
+import com.team4.artgallery.aspect.annotation.QueryApplied;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.util.Pagination;
@@ -19,6 +20,7 @@ public interface INoticeDao {
      * @param noticeDto 소식지 정보
      * @return 추가된 행의 수
      */
+    @QueryApplied("소식지 정보를 추가하는 중 오류가 발생했습니다.")
     int createNotice(NoticeDto noticeDto);
 
 
@@ -58,6 +60,7 @@ public interface INoticeDao {
      * @param noticeDto 수정할 소식지 정보
      * @return 수정된 행의 수
      */
+    @QueryApplied("소식지 정보를 수정하는 중 오류가 발생했습니다.")
     int updateNotice(NoticeDto noticeDto);
 
     /**
@@ -66,6 +69,7 @@ public interface INoticeDao {
      * @param nseq 소식지 번호
      * @return 수정된 행의 수
      */
+    @QueryApplied("소식지 조회수를 변경하는 중 오류가 발생했습니다.")
     int increaseReadCount(int nseq);
 
 
@@ -77,6 +81,7 @@ public interface INoticeDao {
      * @param nseq 소식지 번호
      * @return 삭제된 행의 수
      */
+    @QueryApplied("소식지 정보를 삭제하는 중 오류가 발생했습니다.")
     int deleteNotice(int nseq);
 
     /**
@@ -85,6 +90,7 @@ public interface INoticeDao {
      * @param aseqList 소식지 번호 목록
      * @return 삭제된 행의 수
      */
+    @QueryApplied("소식지 정보를 삭제하는 중 오류가 발생했습니다.")
     int deleteNotices(List<Integer> aseqList);
 
 }
