@@ -19,6 +19,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.server.ResponseStatusException;
@@ -78,6 +79,11 @@ public class GlobalExceptionHandler {
     public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
         FieldError fieldError = Objects.requireNonNull(e.getBindingResult().getFieldError());
         return processResponse(badRequest("파라미터 " + fieldError.getField() + "이(가) 올바르지 않습니다."), request);
+    }
+
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public Object handleHandlerMethodValidationException(HandlerMethodValidationException e, HttpServletRequest request) {
+        return processResponse(badRequest(e.getAllErrors().get(0).getDefaultMessage()), request);
     }
 
     @ExceptionHandler(NotLoginException.class)
