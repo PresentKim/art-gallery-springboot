@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 /**
  * 로그인 여부을 확인하는 Aspect 클래스
  *
- * @apiNote {@link CheckLogin} 어노테이션이 붙은 메서드나 클래스의 메소드가 호출될 때 로인 여부를 확인합니다.
+ * @apiNote {@link CheckLogin} 어노테이션이 붙은 메서드나 클래스의 메소드가 호출될 때 로그인 여부를 확인합니다.
  * <p>
  * 세션 정보가 없거나 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
  */
@@ -31,11 +31,10 @@ public class CheckLoginAspect {
      * {@code @annotation}을 통해 메서드에 붙은 {@link CheckLogin} 어노테이션을 받아
      * {@link #checkLogin(JoinPoint, CheckLogin)} 메서드에 전달합니다.
      *
-     * @implNote {@code @annotation}은 메서드에 붙은 어노테이션을 찾아내는데 사용됩니다.
+     * @param joinPoint AOP가 적용된 메서드의 정보
+     * @implNote {@link Before} 어노테이션으로 메서드 실행 전에 로직을 추가할 수 있습니다.
      * <p>
-     * {@link Before} 어노테이션으로 메서드 실행 전에 로직을 추가할 수 있습니다.
-     * <p>
-     * {@link JoinPoint}는 AOP가 적용된 메서드의 정보를 담고 있습니다. 이를 통해 메서드의 파라미터 등을 가져올 수 있습니다.
+     * {@code value}값의 {@code @annotation}은 메서드에 붙은 어노테이션을 찾아내는데 사용됩니다.
      */
     @Before(value = "@annotation(annotation)")
     public void onAnnotation(JoinPoint joinPoint, CheckLogin annotation) {
@@ -46,11 +45,10 @@ public class CheckLoginAspect {
      * {@code @within}을 통해 클래스에 붙은 {@link CheckLogin} 어노테이션을 받아
      * {@link #checkLogin(JoinPoint, CheckLogin)} 메서드에 전달합니다.
      *
-     * @implNote {@code @within}은 클래스에 붙은 어노테이션을 찾아내는데 사용됩니다.
+     * @param joinPoint AOP가 적용된 메서드의 정보
+     * @implNote {@link Before} 어노테이션으로 메서드 실행 전에 로직을 추가할 수 있습니다.
      * <p>
-     * {@link Before} 어노테이션으로 메서드 실행 전에 로직을 추가할 수 있습니다.
-     * <p>
-     * {@link JoinPoint}는 AOP가 적용된 메서드의 정보를 담고 있습니다. 이를 통해 메서드의 파라미터 등을 가져올 수 있습니다.
+     * {@code value}값의 {@code @within}은 클래스에 붙은 어노테이션을 찾아내는데 사용됩니다.
      */
     @Before(value = "@within(annotation)")
     public void onWithin(JoinPoint joinPoint, CheckLogin annotation) {

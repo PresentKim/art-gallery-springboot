@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * 로그인 여부 확인은 {@link CheckLoginAspect}에서 처리하며, 로그인하지 않은 경우 {@link NotLoginException} 예외가 발생합니다.
  * {@link NotLoginException#getReturnUrl}에는 {@link CheckLogin}의 {@link #returnUrl} 또는 {@link #value}로 설정한 URL이 저장됩니다.
  * <p>
- * 최종적으로 예외 핸들링 및 응답 처리는 {@link GlobalExceptionHandler#handleException(NotLoginException, HttpServletRequest)}에서 처리됩니다.
+ * 최종적으로 예외 핸들링 및 응답 처리는 {@link GlobalExceptionHandler#handleNotLoginException(NotLoginException, HttpServletRequest)}에서 처리됩니다.
  * <p>
  */
 @Retention(RetentionPolicy.RUNTIME)
