@@ -4,61 +4,27 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.service.helper.ResponseService;
-import com.team4.artgallery.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/qna")
+@RestController
+@RequestMapping(path = "/qna", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class QnaController {
+public class QnaRestController {
 
     private final QnaService qnaService;
 
     @Delegate
     private final ResponseService responseHelper;
-
-    @GetMapping({"", "/"})
-    public String list(
-            @Valid @ModelAttribute("pagination") Pagination pagination,
-            Model model
-    ) {
-        pagination.setItemCount(qnaService.countInquiries(null))
-                .setUrlTemplate("/qna?page=%d");
-
-        model.addAttribute("qnaList", qnaService.getInquiries(null, pagination));
-        return "qna/qnaList";
-    }
-
-    @GetMapping({"/{qseq}", "/view/{qseq}"})
-    public String view(@PathVariable(value = "qseq") Integer qseq, Model model, HttpSession session) {
-        // 문의글 정보가 없는 경우 404 페이지로 이동
-        QnaDto qnaDto = qnaService.getInquiry(qseq);
-        if (qnaDto == null) {
-            return "util/404";
-        }
-
-        // 접근 권한이 없는 경우 오류 메시지 출력
-        if (!qnaService.authorizeForRestrict(session, qseq)) {
-            model.addAttribute("message", "잘못된 접근입니다.");
-            return "util/alert";
-        }
-
-        // 문의글 조회 페이지로 이동
-        model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
-        return "qna/qnaView";
-    }
-
-    @GetMapping("/write")
-    public String write() {
-        return "qna/qnaForm";
-    }
 
     @PostMapping("/write")
     public ResponseEntity<?> write(@Valid QnaDto qnaDto) {
@@ -69,25 +35,6 @@ public class QnaController {
 
         // 문의글 작성에 성공한 경우 200 성공 반환
         return ok("문의 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
-    }
-
-    @GetMapping("/update")
-    public String update(@RequestParam(value = "qseq") Integer qseq, Model model, HttpSession session) {
-        // 문의글 정보가 없는 경우 404 페이지로 이동
-        QnaDto qnaDto = qnaService.getInquiry(qseq);
-        if (qnaDto == null) {
-            return "util/404";
-        }
-
-        // 접근 권한이 없는 경우 오류 메시지 출력
-        if (!qnaService.authorizeForPersonal(session, qseq)) {
-            model.addAttribute("message", "잘못된 접근입니다.");
-            return "util/alert";
-        }
-
-        // 문의글 수정 페이지로 이동
-        model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
-        return "qna/qnaForm";
     }
 
     @PostMapping("/update")
