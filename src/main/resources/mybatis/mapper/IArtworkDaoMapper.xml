@@ -22,22 +22,20 @@
         </if>
     </sql>
 
-    <insert id="createArtwork" parameterType="com.team4.artgallery.dto.ArtworkDto"
-            useGeneratedKeys="true" keyProperty="aseq">
+    <insert id="createArtwork" parameterType="ArtworkDto" useGeneratedKeys="true" keyProperty="aseq">
         INSERT INTO artwork
         (name, category, artist, year, material, size, displayyn, content, image, savefilename)
         VALUES (#{name}, #{category}, #{artist}, #{year}, #{material},
                 #{size}, #{displayyn}, #{content}, #{image}, #{savefilename})
     </insert>
 
-    <select id="getArtwork" parameterType="int" resultType="com.team4.artgallery.dto.ArtworkDto">
+    <select id="getArtwork" parameterType="int" resultType="ArtworkDto">
         SELECT *
         FROM artwork
         WHERE aseq = #{aseq}
     </select>
 
-    <select id="getArtworks" parameterType="com.team4.artgallery.util.Pagination"
-            resultType="com.team4.artgallery.dto.ArtworkDto">
+    <select id="getArtworks" parameterType="com.team4.artgallery.util.Pagination" resultType="ArtworkDto">
         SELECT *
         FROM artwork
         <include refid="where-filter"/>
@@ -45,7 +43,7 @@
         LIMIT #{pagination.limit} OFFSET #{pagination.offset}
     </select>
 
-    <select id="getRandomArtworks" parameterType="int" resultType="com.team4.artgallery.dto.ArtworkDto">
+    <select id="getRandomArtworks" parameterType="int" resultType="ArtworkDto">
         SELECT *
         FROM artwork
         ORDER BY RAND()
@@ -58,7 +56,7 @@
         <include refid="where-filter"/>
     </select>
 
-    <update id="updateArtwork" parameterType="com.team4.artgallery.dto.ArtworkDto">
+    <update id="updateArtwork" parameterType="ArtworkDto">
         UPDATE artwork
         SET name        = #{name},
             category    = #{category},

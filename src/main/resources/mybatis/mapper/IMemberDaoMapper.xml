@@ -15,18 +15,18 @@
         </if>
     </sql>
 
-    <insert id="createMember" parameterType="com.team4.artgallery.dto.MemberDto">
+    <insert id="createMember" parameterType="MemberDto">
         INSERT INTO member (id, pwd, name, email, phone, address)
         VALUES (#{id}, #{pwd}, #{name}, #{email}, #{phone}, #{address})
     </insert>
 
-    <select id="getMember" parameterType="String" resultType="com.team4.artgallery.dto.MemberDto">
+    <select id="getMember" parameterType="String" resultType="MemberDto">
         SELECT *
         FROM member
         WHERE id = #{id}
     </select>
 
-    <select id="getMembers" resultType="com.team4.artgallery.dto.MemberDto">
+    <select id="getMembers" resultType="MemberDto">
         SELECT *
         FROM member
         <include refid="where-filter"/>
@@ -40,7 +40,7 @@
         <include refid="where-filter"/>
     </select>
 
-    <update id="updateMember" parameterType="com.team4.artgallery.dto.MemberDto">
+    <update id="updateMember" parameterType="MemberDto">
         UPDATE member
         SET pwd   = #{pwd},
             name  = #{name},

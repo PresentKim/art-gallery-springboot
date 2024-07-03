@@ -11,7 +11,7 @@
                         AND aseq = #{aseq})
     </select>
 
-    <select id="getFavorites" resultType="com.team4.artgallery.dto.FavoriteDto">
+    <select id="getFavorites" resultType="FavoriteDto">
         SELECT *
         FROM favorite_view
         WHERE member_id = #{memberId}

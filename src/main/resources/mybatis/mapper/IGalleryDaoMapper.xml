@@ -3,7 +3,7 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team4.artgallery.dao.IGalleryDao">
-    <resultMap id="GalleryResultMap" type="com.team4.artgallery.dto.GalleryDto">
+    <resultMap id="GalleryResultMap" type="GalleryDto">
         <result column="author_id" property="authorId"/>
         <result column="author_name" property="authorName"/>
     </resultMap>
@@ -21,8 +21,7 @@
         </if>
     </sql>
 
-    <insert id="createGallery" parameterType="com.team4.artgallery.dto.GalleryDto"
-            useGeneratedKeys="true" keyProperty="gseq">
+    <insert id="createGallery" parameterType="GalleryDto" useGeneratedKeys="true" keyProperty="gseq">
         INSERT INTO gallery (author, title, content, image, savefilename)
         VALUES (#{authorId}, #{title}, #{content}, #{image}, #{savefilename})
     </insert>
@@ -46,7 +45,7 @@
         <include refid="where-filter"/>
     </select>
 
-    <update id="updateGallery" parameterType="com.team4.artgallery.dto.GalleryDto">
+    <update id="updateGallery" parameterType="GalleryDto">
         UPDATE gallery
         SET author       = #{author},
             title        = #{title},

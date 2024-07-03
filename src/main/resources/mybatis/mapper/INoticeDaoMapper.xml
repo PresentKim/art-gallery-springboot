@@ -19,19 +19,18 @@
         </if>
     </sql>
 
-    <insert id="createNotice" parameterType="com.team4.artgallery.dto.NoticeDto"
-            useGeneratedKeys="true" keyProperty="nseq">
+    <insert id="createNotice" parameterType="NoticeDto" useGeneratedKeys="true" keyProperty="nseq">
         INSERT INTO notice (title, author, content, category)
         VALUES (#{title}, #{author}, #{content}, #{category})
     </insert>
 
-    <select id="getNotice" parameterType="int" resultType="com.team4.artgallery.dto.NoticeDto">
+    <select id="getNotice" parameterType="int" resultType="NoticeDto">
         SELECT *
         FROM notice
         WHERE nseq = #{nseq}
     </select>
 
-    <select id="getNotices" resultType="com.team4.artgallery.dto.NoticeDto">
+    <select id="getNotices" resultType="NoticeDto">
         SELECT *
         FROM notice
         <include refid="where-filter"/>
@@ -45,7 +44,7 @@
         <include refid="where-filter"/>
     </select>
 
-    <update id="updateNotice" parameterType="com.team4.artgallery.dto.NoticeDto">
+    <update id="updateNotice" parameterType="NoticeDto">
         UPDATE notice
         SET title    = #{title},
             author   = #{author},
