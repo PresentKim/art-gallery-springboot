@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
-public class IndexController {
+public class IndexViewController {
 
     private final NoticeService noticeService;
 

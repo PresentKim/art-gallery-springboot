@@ -5,27 +5,22 @@ import com.team4.artgallery.service.AdminService;
 import com.team4.artgallery.service.helper.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/admin")
+@RestController
+@RequestMapping(path = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckAdmin
 @RequiredArgsConstructor
-public class AdminController {
+public class AdminRestController {
 
     private final AdminService adminService;
 
     @Delegate
     private final ResponseService responseHelper;
-
-    @GetMapping({"", "/"})
-    public String root() {
-        return "admin/adminMain";
-    }
 
     @PostMapping("/reset")
     public ResponseEntity<?> reset() throws Exception {
