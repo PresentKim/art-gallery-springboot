@@ -33,6 +33,8 @@ public class CheckLoginAspect {
      *
      * @implNote {@code @annotation}은 메서드에 붙은 어노테이션을 찾아내는데 사용됩니다.
      * <p>
+     * {@link Before} 어노테이션으로 메서드 실행 전에 로직을 추가할 수 있습니다.
+     * <p>
      * {@link JoinPoint}는 AOP가 적용된 메서드의 정보를 담고 있습니다. 이를 통해 메서드의 파라미터 등을 가져올 수 있습니다.
      */
     @Before(value = "@annotation(annotation)")
@@ -45,6 +47,10 @@ public class CheckLoginAspect {
      * {@link #checkLogin(JoinPoint, CheckLogin)} 메서드에 전달합니다.
      *
      * @implNote {@code @within}은 클래스에 붙은 어노테이션을 찾아내는데 사용됩니다.
+     * <p>
+     * {@link Before} 어노테이션으로 메서드 실행 전에 로직을 추가할 수 있습니다.
+     * <p>
+     * {@link JoinPoint}는 AOP가 적용된 메서드의 정보를 담고 있습니다. 이를 통해 메서드의 파라미터 등을 가져올 수 있습니다.
      */
     @Before(value = "@within(annotation)")
     public void onWithin(JoinPoint joinPoint, CheckLogin annotation) {

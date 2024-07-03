@@ -31,6 +31,8 @@ public class CheckAdminAspect {
      *
      * @implNote {@code @annotation} 은 클래스에 붙은 어노테이션을 찾아내는데 사용됩니다.
      * <p>
+     * {@link Before} 어노테이션으로 메서드 실행 전에 로직을 추가할 수 있습니다.
+     * <p>
      * <blockquote><pre>@Before(value = "@annotation(com.team4.artgallery.aspect.annotation.CheckAdmin)")</pre></blockquote>
      * <p>
      * 위와 같은 방식으로 직접 클래스를 작성해도 되지만, "어노테이션 매개변수" 방식을 통해 사용할 수 있습니다.
@@ -46,6 +48,8 @@ public class CheckAdminAspect {
      * {@link #checkAdmin(CheckAdmin)} 메서드에 전달합니다.
      *
      * @implNote {@code @within} 은 클래스에 붙은 어노테이션을 찾아내는데 사용됩니다.
+     * <p>
+     * {@link Before} 어노테이션으로 메서드 실행 전에 로직을 추가할 수 있습니다.
      */
     @Before(value = "@within(annotation)")
     public void onWithin(CheckAdmin annotation) {
