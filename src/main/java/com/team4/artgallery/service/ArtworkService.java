@@ -1,5 +1,6 @@
 package com.team4.artgallery.service;
 
+import com.team4.artgallery.controller.exception.FileException;
 import com.team4.artgallery.dao.IArtworkDao;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
@@ -78,16 +79,16 @@ public class ArtworkService {
      * 예술품 정보를 수정합니다
      *
      * @param artworkDto 예술품 정보
-     * @throws NotFoundException   예술품 정보를 찾을 수 없는 경우 예외 발생
-     * @throws FileUploadException 이미지 저장에 실패한 경우 예외 발생
-     * @throws SQLException        예술품 수정에 실패한 경우 예외 발생
+     * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
+     * @throws FileException     이미지 저장에 실패한 경우 예외 발생
+     * @throws SqlException      예술품 수정에 실패한 경우 예외 발생
      */
     public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws Exception {
         ArtworkDto oldArtwork = getArtwork(artworkDto.getAseq());
         Assert.notNull(oldArtwork, "예술품 정보를 찾을 수 없습니다.", NotFoundException::new);
 
         if (imageFile != null && !imageFile.isEmpty()) {
-            Assert.isTrue(saveImage(imageFile, artworkDto), "이미지 저장에 실패했습니다.", FileUploadException::new);
+            saveImage(imageFile, artworkDto);
         } else {
             // 이미지 파일이 없을 경우 기존 이미지 파일 정보를 가져옵니다.
             artworkDto.setImage(oldArtwork.getImage());
@@ -134,17 +135,14 @@ public class ArtworkService {
      *
      * @param file       이미지 파일
      * @param artworkDto 예술품 정보
+     * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      */
-    private boolean saveImage(MultipartFile file, ArtworkDto artworkDto) {
+    private void saveImage(MultipartFile file, ArtworkDto artworkDto) throws FileException {
         // 이미지 파일을 저장하고 저장된 파일 이름을 ArtworkDto 객체에 저장합니다.
         MultipartFileService.FileNamePair pair = fileService.saveFile(file, "/static/image/artwork");
-        if (pair != null) {
-            artworkDto.setImage(pair.fileName());
-            artworkDto.setSavefilename(pair.saveFileName());
-            return true;
-        }
 
-        return false;
+        artworkDto.setImage(pair.fileName());
+        artworkDto.setSavefilename(pair.saveFileName());
     }
 
 }

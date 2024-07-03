@@ -48,10 +48,7 @@ public class GalleryRestController {
 
         // 이미지 파일이 있을 경우 이미지 저장
         if (imageFile != null && !imageFile.isEmpty()) {
-            if (!galleryService.saveImage(imageFile, galleryDto)) {
-                // 이미지 저장에 실패하면 오류 결과 반환
-                return internalServerError("이미지 저장에 실패했습니다.");
-            }
+            galleryService.saveImage(imageFile, galleryDto);
         } else {
             // 이미지 파일이 없을 경우 기존 이미지 파일 정보를 가져옵니다.
             galleryDto.setImage(oldGallery.getImage());
@@ -78,11 +75,7 @@ public class GalleryRestController {
         if (imageFile == null || imageFile.isEmpty()) {
             return badRequest("이미지 파일을 업로드해주세요.");
         }
-
-        // 이미지 저장에 실패하면 오류 결과 반환
-        if (!galleryService.saveImage(imageFile, galleryDto)) {
-            return internalServerError("이미지 저장에 실패했습니다.");
-        }
+        galleryService.saveImage(imageFile, galleryDto);
 
         // 작성자 ID 를 설정
         galleryDto.setAuthorId(loginMember.getId());

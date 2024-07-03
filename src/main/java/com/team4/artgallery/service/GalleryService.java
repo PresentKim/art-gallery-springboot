@@ -1,5 +1,6 @@
 package com.team4.artgallery.service;
 
+import com.team4.artgallery.controller.exception.FileException;
 import com.team4.artgallery.dao.IGalleryDao;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.service.helper.MultipartFileService;
@@ -60,17 +61,14 @@ public class GalleryService {
      *
      * @param file       이미지 파일
      * @param galleryDto 갤러리 정보
+     * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      */
-    public boolean saveImage(MultipartFile file, GalleryDto galleryDto) {
+    public void saveImage(MultipartFile file, GalleryDto galleryDto) throws FileException {
         // 이미지 파일을 저장하고 저장된 파일 이름을 GalleryDto 객체에 저장합니다.
         MultipartFileService.FileNamePair pair = fileService.saveFile(file, "/static/image/gallery");
-        if (pair != null) {
-            galleryDto.setImage(pair.fileName());
-            galleryDto.setSavefilename(pair.saveFileName());
-            return true;
-        }
 
-        return false;
+        galleryDto.setImage(pair.fileName());
+        galleryDto.setSavefilename(pair.saveFileName());
     }
 
 }
