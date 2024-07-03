@@ -3,11 +3,6 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team4.artgallery.dao.IGalleryDao">
-    <resultMap id="GalleryResultMap" type="GalleryDto">
-        <result column="author_id" property="authorId"/>
-        <result column="author_name" property="authorName"/>
-    </resultMap>
-
     <sql id="where-filter">
         <if test="filter">
             <where>
@@ -26,13 +21,13 @@
         VALUES (#{authorId}, #{title}, #{content}, #{image}, #{savefilename})
     </insert>
 
-    <select id="getGallery" parameterType="int" resultMap="GalleryResultMap">
+    <select id="getGallery" parameterType="int" resultType="GalleryDto">
         SELECT *
         FROM gallery_view
         WHERE gseq = #{gseq}
     </select>
 
-    <select id="getGalleries" resultMap="GalleryResultMap">
+    <select id="getGalleries" resultType="GalleryDto">
         SELECT *
         FROM gallery_view
         <include refid="where-filter"/>
