@@ -7,7 +7,6 @@ import com.team4.artgallery.service.helper.ResponseService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +28,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 /**
  * 전역 예외 처리 클래스
@@ -63,15 +61,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public Object handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, HttpServletRequest request) {
-        MethodParameter parameter = e.getParameter();
-        Object value = e.getValue();
-        String valueString = value == null ? "null" : value + "(" + value.getClass().getName() + ")";
-        Logger.getGlobal().warning(
-                "파라미터 " + e.getPropertyName() + "은(는) "
-                        + parameter.getParameterType().getName() + " 타입이어야 합니다."
-                        + " 주어진 값은 " + valueString + "이므로 처리할 수 없습니다."
-        );
-
         return processResponse(badRequest("파라미터 " + e.getPropertyName() + "이(가) 올바르지 않습니다."), request);
     }
 
