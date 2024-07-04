@@ -35,7 +35,8 @@ public class AroundResponseStringConversionAspect {
      * <p>
      * {@link ProceedingJoinPoint} 객체는 메서드의 정보를 담고 있습니다. 이를 통해 메서드의 실행을 직접 제어할 수 있습니다.
      */
-    @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping) || " +
+    @Around("@annotation(org.springframework.web.bind.annotation.GetMapping) || " +
+            "@annotation(org.springframework.web.bind.annotation.PostMapping) || " +
             "@annotation(org.springframework.web.bind.annotation.ExceptionHandler)")
     public Object onAnnotation(ProceedingJoinPoint joinPoint) throws Throwable {
         // 메서드 실행
