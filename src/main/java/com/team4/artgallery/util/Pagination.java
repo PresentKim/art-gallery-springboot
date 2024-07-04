@@ -1,5 +1,6 @@
 package com.team4.artgallery.util;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,11 +29,13 @@ public class Pagination {
     /**
      * 현재 페이지
      */
+    @NotNull(message = "잘못된 page 값입니다")
     private Integer page = 1;
 
     /**
      * 한 페이지당 표시할 아이템의 갯수
      */
+    @NotNull(message = "잘못된 displayCount 값입니다")
     private Integer displayCount = 10;
 
     /**
