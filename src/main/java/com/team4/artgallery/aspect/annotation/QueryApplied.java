@@ -3,7 +3,6 @@ package com.team4.artgallery.aspect.annotation;
 import com.team4.artgallery.aspect.QueryAppliedAspect;
 import com.team4.artgallery.controller.advice.GlobalExceptionHandler;
 import com.team4.artgallery.controller.exception.SqlException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,7 +29,7 @@ import java.lang.annotation.Target;
  * 쿼리 결과 확인은 {@link QueryAppliedAspect}에서 처리하며, 쿼리 결과 값이 0인 경우 {@link SqlException} 예외가 발생합니다.
  * {@link SqlException#reason}에는 {@link QueryApplied}의 {@link #message} 또는 {@link #value}로 설정한 URL이 저장됩니다.
  * <p>
- * 최종적으로 예외 핸들링 및 응답 처리는 {@link GlobalExceptionHandler#handleResponseStatusException(ResponseStatusException, HttpServletRequest)}에서 처리됩니다.
+ * 최종적으로 예외 핸들링 및 응답 처리는 {@link GlobalExceptionHandler#handleResponseStatusException(ResponseStatusException)}에서 처리됩니다.
  * <p>
  */
 @Retention(RetentionPolicy.RUNTIME)
