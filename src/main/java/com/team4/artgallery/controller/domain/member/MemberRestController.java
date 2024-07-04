@@ -37,14 +37,7 @@ public class MemberRestController {
             @Validated(MemberDto.OnLogin.class)
             MemberDto loginForm
     ) throws BadRequestException, UnauthorizedException, URISyntaxException {
-        Assert.isFalse(memberService.isLogin(), "이미 로그인 상태입니다.", BadRequestException::new);
-
-        Assert.trueOrUnauthorized(
-                memberService.login(loginForm.getId(), loginForm.getPwd()),
-                "ID 혹은 비밀번호가 일치하지 않습니다."
-        );
-
-        // 로그인 성공은 메시지 없이 returnUrl 로 리다이렉트
+        memberService.login(loginForm.getId(), loginForm.getPwd());
         return new URI(returnUrl);
     }
 
@@ -53,7 +46,7 @@ public class MemberRestController {
     public ResponseDto logout(
             @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl
-    ) {
+    ) throws UnauthorizedException {
         memberService.logout();
         return new ResponseDto("로그아웃에 성공하였습니다", returnUrl);
     }
@@ -120,11 +113,7 @@ public class MemberRestController {
             @LoginMember
             MemberDto loginMember
     ) throws BadRequestException, UnauthorizedException, SqlException {
-        Assert.isTrue(loginMember.getPwd().equals(pwd), "ID 혹은 비밀번호가 일치하지 않습니다.", BadRequestException::new);
-        Assert.trueOrUnauthorized(memberService.logout(), "로그아웃에 실패하였습니다.");
-
-        memberService.deleteMember(loginMember.getId());
-
+        memberService.withdraw(pwd, loginMember);
         return new ResponseDto("회원 탈퇴에 성공하였습니다.", "/");
     }
 

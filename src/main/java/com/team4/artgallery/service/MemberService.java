@@ -1,8 +1,12 @@
 package com.team4.artgallery.service;
 
+import com.team4.artgallery.controller.exception.BadRequestException;
+import com.team4.artgallery.controller.exception.SqlException;
+import com.team4.artgallery.controller.exception.UnauthorizedException;
 import com.team4.artgallery.dao.IMemberDao;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.helper.SessionProvider;
+import com.team4.artgallery.util.Assert;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.stereotype.Service;
@@ -71,30 +75,42 @@ public class MemberService {
      *
      * @param id  로그인 시도할 ID
      * @param pwd 로그인 시도할 비밀번호
-     * @return 로그인 성공 시 true, 그렇지 않으면 false
+     * @throws BadRequestException   이미 로그인 상태인 경우 예외 발생
+     * @throws UnauthorizedException ID 혹은 비밀번호가 일치하지 않는 경우 예외 발생
      */
-    public boolean login(String id, String pwd) {
+    public void login(String id, String pwd) throws BadRequestException, UnauthorizedException {
+        Assert.isFalse(isLogin(), "이미 로그인 상태입니다.", BadRequestException::new);
+
         MemberDto memberDto = memberDao.getMember(id);
-        if (memberDto == null || !memberDto.getPwd().equals(pwd)) {
-            return false;
-        }
+        Assert.trueOrUnauthorized(memberDto != null && memberDto.getPwd().equals(pwd), "ID 혹은 비밀번호가 일치하지 않습니다.");
 
         setLoginMember(memberDto);
-        return true;
     }
 
     /**
      * 로그아웃을 시도한다.
      *
-     * @return 로그아웃 성공 시 true, 그렇지 않으면 false
+     * @throws UnauthorizedException 로그인 상태가 아닌 경우 예외 발생
      */
-    public boolean logout() {
-        if (!isLogin()) {
-            return false;
-        }
-
+    public void logout() throws UnauthorizedException {
+        Assert.trueOrUnauthorized(isLogin(), "로그인 상태가 아닙니다.");
         sessionProvider.getSession().removeAttribute("loginMember");
-        return true;
+    }
+
+    /**
+     * 회원 탈퇴를 시도합니다.
+     *
+     * @param pwd         비밀번호
+     * @param loginMember 로그인한 회원 정보
+     * @throws BadRequestException   비밀번호가 일치하지 않는 경우 예외 발생
+     * @throws UnauthorizedException 로그인 상태가 아닌 경우 예외 발생
+     * @throws SqlException          회원 정보 삭제 중 오류가 발생한 경우 예외 발생
+     */
+    public void withdraw(String pwd, MemberDto loginMember) throws BadRequestException, UnauthorizedException, SqlException {
+        Assert.isTrue(pwd.equals(loginMember.getPwd()), "ID 혹은 비밀번호가 일치하지 않습니다.", BadRequestException::new);
+
+        memberDao.deleteMember(loginMember.getId());
+        logout();
     }
 
     /**

@@ -2,16 +2,17 @@ package com.team4.artgallery.controller.domain.member;
 
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
-import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Pagination;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -98,16 +99,15 @@ public class MemberViewController {
     @CheckLogin("/member/mypage/favorite")
     @GetMapping("/mypage/favorite")
     public String favorite(
-            @RequestParam(name = "page", defaultValue = "1")
-            Integer page,
+            @Valid
+            @ModelAttribute("pagination")
+            Pagination pagination,
 
             @LoginMember
             MemberDto loginMember,
             Model model
     ) {
-        Pagination.Pair<FavoriteDto> pair = favoriteService.getFavorites(loginMember.getId(), page);
-        model.addAttribute("artworkList", pair.list());
-        model.addAttribute("pagination", pair.pagination());
+        model.addAttribute("artworkList", favoriteService.getFavorites(loginMember.getId(), pagination).list());
         return "member/mypage/mypageFavoriteList";
     }
 
