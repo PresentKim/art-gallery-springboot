@@ -56,9 +56,9 @@ public class ArtworkService {
      * @return 예술품 정보
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      */
-    public ArtworkDto getArtwork(int aseq) throws NotFoundException {
+    public ArtworkDto getArtwork(int aseq) {
         ArtworkDto artworkDto = artworkDao.getArtwork(aseq);
-        Assert.notNull(artworkDto, "예술품 정보를 찾을 수 없습니다.", NotFoundException::new);
+        Assert.exists(artworkDto, "예술품 정보를 찾을 수 없습니다.");
 
         return artworkDto;
     }
@@ -81,9 +81,9 @@ public class ArtworkService {
      * @throws FileException     이미지 저장에 실패한 경우 예외 발생
      * @throws SqlException      예술품 수정에 실패한 경우 예외 발생
      */
-    public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws Exception {
+    public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) {
         ArtworkDto oldArtwork = getArtwork(artworkDto.getAseq());
-        Assert.notNull(oldArtwork, "예술품 정보를 찾을 수 없습니다.", NotFoundException::new);
+        Assert.exists(oldArtwork, "예술품 정보를 찾을 수 없습니다.");
 
         if (imageFile != null && !imageFile.isEmpty()) {
             saveImage(imageFile, artworkDto);
@@ -103,8 +103,8 @@ public class ArtworkService {
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      * @throws SqlException      전시 여부 변경에 실패한 경우 예외 발생
      */
-    public void toggleArtworkDisplay(int aseq) throws Exception {
-        Assert.notNull(artworkDao.getArtwork(aseq), "예술품 정보를 찾을 수 없습니다.", NotFoundException::new);
+    public void toggleArtworkDisplay(int aseq) {
+        Assert.exists(artworkDao.getArtwork(aseq), "예술품 정보를 찾을 수 없습니다.");
         artworkDao.toggleArtworkDisplay(aseq);
     }
 
@@ -114,8 +114,8 @@ public class ArtworkService {
      * @param aseqList 예술품 번호 목록
      * @throws SqlException 예술품 삭제에 실패한 경우 예외 발생
      */
-    public void deleteArtwork(List<Integer> aseqList) throws SQLException {
-        Assert.notZero(aseqList.size(), "예술품을 선택해주세요.", SQLException::new);
+    public void deleteArtwork(List<Integer> aseqList) {
+        artworkDao.deleteArtworks(aseqList);
     }
 
     /**
