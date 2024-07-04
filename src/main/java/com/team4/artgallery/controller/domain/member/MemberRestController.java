@@ -6,7 +6,7 @@ import com.team4.artgallery.controller.exception.ConflictException;
 import com.team4.artgallery.controller.exception.InternalServerErrorException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Assert;
@@ -51,19 +51,19 @@ public class MemberRestController {
 
     @CheckLogin
     @PostMapping("/logout")
-    public ResponseBody logout(
+    public ResponseDto logout(
             @RequestParam(value = "returnUrl", defaultValue = "/")
             String returnUrl,
 
             HttpSession session
     ) {
         memberService.logout(session);
-        return new ResponseBody("로그아웃에 성공하였습니다", returnUrl);
+        return new ResponseDto("로그아웃에 성공하였습니다", returnUrl);
     }
 
     @PostMapping("/join")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody join(
+    public ResponseDto join(
             @RequestParam(value = "returnUrl", defaultValue = "/")
             String returnUrl,
             @Validated(MemberDto.OnJoin.class)
@@ -73,7 +73,7 @@ public class MemberRestController {
 
         memberService.createMember(memberDto);
 
-        return new ResponseBody("회원가입에 성공하였습니다.", memberService.getRedirectToLogin(returnUrl));
+        return new ResponseDto("회원가입에 성공하였습니다.", memberService.getRedirectToLogin(returnUrl));
     }
 
     @PostMapping("/idCheck")
@@ -91,7 +91,7 @@ public class MemberRestController {
     @CheckLogin
     @PostMapping("/mypage/edit")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody edit(
+    public ResponseDto edit(
             @Validated(MemberDto.OnUpdate.class)
             MemberDto memberDto,
 
@@ -109,13 +109,13 @@ public class MemberRestController {
 
         memberService.updateMember(memberDto);
         memberService.setLoginMember(session, memberDto);
-        return new ResponseBody("회원정보 수정에 성공하였습니다.", "/member/mypage");
+        return new ResponseDto("회원정보 수정에 성공하였습니다.", "/member/mypage");
     }
 
     @CheckLogin
     @PostMapping("/withdraw")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseBody withdraw(
+    public ResponseDto withdraw(
             @Valid
             @NotBlank(message = "비밀번호를 입력해주세요")
             @RequestParam(name = "pwd")
@@ -130,7 +130,7 @@ public class MemberRestController {
 
         memberService.deleteMember(loginMember.getId());
 
-        return new ResponseBody("회원 탈퇴에 성공하였습니다.", "/");
+        return new ResponseDto("회원 탈퇴에 성공하였습니다.", "/");
     }
 
     @CheckLogin("/artwork/${aseq}")

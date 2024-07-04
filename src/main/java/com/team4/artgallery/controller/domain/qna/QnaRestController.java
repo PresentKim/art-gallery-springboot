@@ -3,7 +3,7 @@ package com.team4.artgallery.controller.domain.qna;
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.dto.QnaDto;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Assert;
 import jakarta.servlet.http.HttpSession;
@@ -24,7 +24,7 @@ public class QnaRestController {
 
     @PostMapping("/write")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody write(
+    public ResponseDto write(
             @Valid
             QnaDto qnaDto,
 
@@ -32,12 +32,12 @@ public class QnaRestController {
     ) {
         qnaService.createInquiry(qnaDto);
         qnaService.authorize(session, qnaDto.getQseq());
-        return new ResponseBody("문의글 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
+        return new ResponseDto("문의글 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
     }
 
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody update(
+    public ResponseDto update(
             @Valid
             QnaDto qnaDto,
 
@@ -48,7 +48,7 @@ public class QnaRestController {
         Assert.trueOrUnauthorized(qnaService.authorizeForPersonal(session, qseq), "접근 권한이 없습니다.");
 
         qnaService.updateInquiry(qnaDto);
-        return new ResponseBody("문의 수정이 완료되었습니다.", "/qna/" + qseq);
+        return new ResponseDto("문의 수정이 완료되었습니다.", "/qna/" + qseq);
     }
 
     @CheckAdmin
@@ -86,7 +86,7 @@ public class QnaRestController {
             case "delete":
                 if (qnaService.authorizeForPrivilege(session, qseq)) {
                     qnaService.deleteInquiry(qseq);
-                    return new ResponseBody("문의글이 삭제되었습니다.", "/qna");
+                    return new ResponseDto("문의글이 삭제되었습니다.", "/qna");
                 }
                 break;
             case "update":

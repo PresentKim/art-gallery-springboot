@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Pagination;
@@ -43,13 +43,13 @@ public class AdminQnaController {
 
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseBody delete(
+    public ResponseDto delete(
             @Valid
             @NotEmpty(message = "문의글을 선택해주세요")
             @RequestParam(value = "qseqs", required = false) List<Integer> qseqs
     ) {
         qnaService.deleteInquiries(qseqs);
-        return new ResponseBody("문의글 정보를 제거했습니다", ":reload");
+        return new ResponseDto("문의글 정보를 제거했습니다", ":reload");
     }
 
 }

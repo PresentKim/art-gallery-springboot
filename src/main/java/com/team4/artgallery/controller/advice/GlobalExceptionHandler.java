@@ -5,7 +5,7 @@ import com.team4.artgallery.aspect.CheckLoginAspect;
 import com.team4.artgallery.aspect.ContentNegotiationExceptionHandlerAspect;
 import com.team4.artgallery.aspect.exception.NotAdminException;
 import com.team4.artgallery.aspect.exception.NotLoginException;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ResponseStatusException.class)
     public Object handleResponseStatusException(ResponseStatusException e) {
-        return ResponseEntity.status(e.getStatusCode()).body(new ResponseBody(e.getReason(), ""));
+        return ResponseEntity.status(e.getStatusCode()).body(new ResponseDto(e.getReason(), ""));
     }
 
     /**
@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotLoginException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public Object handleNotLoginException(NotLoginException e) {
-        return new ResponseBody("로그인이 필요합니다", e.getReturnUrl());
+        return new ResponseDto("로그인이 필요합니다", e.getReturnUrl());
     }
 
     /**

@@ -4,7 +4,7 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.NoticeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class NoticeRestController {
     @CheckAdmin
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody update(
+    public ResponseDto update(
             @Valid
             NoticeDto noticeDto,
 
@@ -31,13 +31,13 @@ public class NoticeRestController {
     ) {
         noticeDto.setAuthor(loginMember.getId());
         noticeService.updateNotice(noticeDto);
-        return new ResponseBody("소식지 수정이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
+        return new ResponseDto("소식지 수정이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
     }
 
     @CheckAdmin
     @PostMapping("/write")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody write(
+    public ResponseDto write(
             @Valid
             NoticeDto noticeDto,
 
@@ -46,18 +46,18 @@ public class NoticeRestController {
     ) {
         noticeDto.setAuthor(loginMember.getId());
         noticeService.createNotice(noticeDto);
-        return new ResponseBody("소식지 작성이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
+        return new ResponseDto("소식지 작성이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
     }
 
     @CheckAdmin
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseBody delete(
+    public ResponseDto delete(
             @RequestParam(value = "nseq")
             Integer nseq
     ) {
         noticeService.deleteNotice(nseq);
-        return new ResponseBody("소식지가 삭제되었습니다.", "/notice");
+        return new ResponseDto("소식지가 삭제되었습니다.", "/notice");
     }
 
 }

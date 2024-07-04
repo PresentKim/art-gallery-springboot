@@ -2,7 +2,7 @@ package com.team4.artgallery.controller.domain.artwork;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.dto.ArtworkDto;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
@@ -45,14 +45,14 @@ public class ArtworkRestController {
     @CheckAdmin
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody update(
+    public ResponseDto update(
             @Valid
             ArtworkDto artworkDto,
             @RequestParam(value = "imageFile", required = false)
             MultipartFile imageFile
     ) {
         artworkService.updateArtwork(artworkDto, imageFile);
-        return new ResponseBody("예술품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
+        return new ResponseDto("예술품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @CheckAdmin
@@ -69,7 +69,7 @@ public class ArtworkRestController {
     @CheckAdmin
     @PostMapping("/write")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody write(
+    public ResponseDto write(
             @Valid
             ArtworkDto artworkDto,
             @Valid
@@ -78,18 +78,18 @@ public class ArtworkRestController {
             MultipartFile imageFile
     ) {
         artworkService.createArtwork(artworkDto, imageFile);
-        return new ResponseBody("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
+        return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @CheckAdmin
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseBody delete(
+    public ResponseDto delete(
             @RequestParam(value = "aseq")
             Integer aseq
     ) {
         artworkService.deleteArtwork(aseq);
-        return new ResponseBody("예술품이 삭제되었습니다.", "/artwork");
+        return new ResponseDto("예술품이 삭제되었습니다.", "/artwork");
     }
 
 }

@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.util.Pagination;
@@ -43,14 +43,14 @@ public class AdminGalleryController {
 
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseBody delete(
+    public ResponseDto delete(
             @Valid
             @NotEmpty(message = "갤러리를 선택해주세요")
             @RequestParam(value = "gseqs", required = false)
             List<Integer> gseqs
     ) {
         galleryService.deleteGalleries(gseqs);
-        return new ResponseBody("갤러리 정보를 제거했습니다", ":reload");
+        return new ResponseDto("갤러리 정보를 제거했습니다", ":reload");
     }
 
 }

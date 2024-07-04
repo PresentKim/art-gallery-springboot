@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
@@ -55,14 +55,14 @@ public class AdminArtworkController {
 
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseBody delete(
+    public ResponseDto delete(
             @Valid
             @NotEmpty(message = "예술품을 선택해주세요.")
             @RequestParam(value = "aseqs", required = false)
             List<Integer> aseqs
     ) {
         artworkService.deleteArtwork(aseqs);
-        return new ResponseBody("예술품이 삭제되었습니다.", "/artwork");
+        return new ResponseDto("예술품이 삭제되었습니다.", "/artwork");
     }
 
 }

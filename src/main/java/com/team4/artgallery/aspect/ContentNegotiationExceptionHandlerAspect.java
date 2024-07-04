@@ -1,6 +1,6 @@
 package com.team4.artgallery.aspect;
 
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.helper.RequestService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -71,9 +71,9 @@ public class ContentNegotiationExceptionHandlerAspect {
         // application/json 요청이 아닌 경우 ModelAndView 로 변환
         ModelAndView modelAndView = new ModelAndView();
         System.out.println("result: " + result);
-        if (result instanceof ResponseBody responseBody) {
-            String url = responseBody.getUrl();
-            modelAndView.addObject("message", responseBody.getMessage());
+        if (result instanceof ResponseDto responseDto) {
+            String url = responseDto.getUrl();
+            modelAndView.addObject("message", responseDto.getMessage());
             modelAndView.addObject("url", url);
 
             // url 값이 존재하는 경우 alert 페이지로 포워딩

@@ -4,7 +4,7 @@ import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.MemberDto;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.util.Assert;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class GalleryRestController {
     @CheckLogin
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody update(
+    public ResponseDto update(
             @Valid
             GalleryDto galleryDto,
             @RequestParam(value = "imageFile", required = false)
@@ -48,13 +48,13 @@ public class GalleryRestController {
 
         galleryService.updateGallery(galleryDto);
 
-        return new ResponseBody("갤러리가 수정되었습니다.", "/gallery/" + galleryDto.getGseq());
+        return new ResponseDto("갤러리가 수정되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
     @CheckLogin
     @PostMapping("/write")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody write(
+    public ResponseDto write(
             @Valid
             GalleryDto galleryDto,
             @Valid
@@ -71,13 +71,13 @@ public class GalleryRestController {
         galleryDto.setAuthorId(loginMember.getId());
         galleryService.createGallery(galleryDto);
 
-        return new ResponseBody("갤러리가 작성되었습니다.", "/gallery/" + galleryDto.getGseq());
+        return new ResponseDto("갤러리가 작성되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
     @CheckLogin
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseBody delete(
+    public ResponseDto delete(
             @RequestParam(value = "gseq")
             Integer gseq,
 
@@ -94,7 +94,7 @@ public class GalleryRestController {
 
         galleryService.deleteGallery(gseq);
 
-        return new ResponseBody("갤러리가 삭제되었습니다.", "/gallery");
+        return new ResponseDto("갤러리가 삭제되었습니다.", "/gallery");
     }
 
 }

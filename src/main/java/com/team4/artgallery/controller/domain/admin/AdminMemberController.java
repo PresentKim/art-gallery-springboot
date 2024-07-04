@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.dto.ResponseBody;
+import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Pagination;
@@ -43,38 +43,38 @@ public class AdminMemberController {
 
     @PostMapping("/grant")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody grant(
+    public ResponseDto grant(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
             @RequestParam(value = "memberIds", required = false)
             List<String> memberIds
     ) {
         memberService.grantAdminMembers(memberIds);
-        return new ResponseBody("관리자 권한을 부여했습니다", ":reload");
+        return new ResponseDto("관리자 권한을 부여했습니다", ":reload");
     }
 
     @PostMapping("/revoke")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseBody revoke(
+    public ResponseDto revoke(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
             @RequestParam(value = "memberIds", required = false)
             List<String> memberIds
     ) {
         memberService.revokeAdminMembers(memberIds);
-        return new ResponseBody("관리자 권한을 제거했습니다", ":reload");
+        return new ResponseDto("관리자 권한을 제거했습니다", ":reload");
     }
 
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseBody delete(
+    public ResponseDto delete(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
             @RequestParam(value = "memberIds", required = false)
             List<String> memberIds
     ) {
         memberService.deleteMembers(memberIds);
-        return new ResponseBody("회원 정보를 제거했습니다", ":reload");
+        return new ResponseDto("회원 정보를 제거했습니다", ":reload");
     }
 
 }
