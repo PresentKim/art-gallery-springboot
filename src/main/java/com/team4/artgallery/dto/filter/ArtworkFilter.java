@@ -27,7 +27,7 @@ public class ArtworkFilter implements IFilter {
      * 예술품 전시 여부
      */
     @FilterField
-    @Pattern(regexp = "Y", message = "잘못된 파라미터가 전달되었습니다", groups = ExcludeDisplay.class) // 요청의 파라미터에서 설정될 수 없도록 설정
+    @Pattern(regexp = "Y", message = "displayyn 값은 설정할 수 없습니다", groups = ExcludeDisplay.class) // 요청 파라미터의 바인딩을 방지
     private String displayyn = "Y";
 
     /**
@@ -47,7 +47,7 @@ public class ArtworkFilter implements IFilter {
     // 그룹 클래스
 
     /**
-     * {@link #displayyn} 필드를 요청의 파라미터에서 설정될 수 없도록 설정
+     * {@link #displayyn} 필드를 요청 파라미터에서 설정될 수 없도록 설정
      */
     public interface ExcludeDisplay {
     }
