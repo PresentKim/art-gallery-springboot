@@ -93,7 +93,7 @@ public class ArtworkService {
             artworkDto.setSavefilename(oldArtwork.getSavefilename());
         }
 
-        Assert.notZero(artworkDao.updateArtwork(artworkDto), "예술품 수정에 실패했습니다.", SQLException::new);
+        artworkDao.updateArtwork(artworkDto);
     }
 
     /**
@@ -101,18 +101,18 @@ public class ArtworkService {
      *
      * @param aseq 예술품 번호 (artwork sequence)
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
-     * @throws SQLException      전시 여부 변경에 실패한 경우 예외 발생
+     * @throws SqlException      전시 여부 변경에 실패한 경우 예외 발생
      */
     public void toggleArtworkDisplay(int aseq) throws Exception {
         Assert.notNull(artworkDao.getArtwork(aseq), "예술품 정보를 찾을 수 없습니다.", NotFoundException::new);
-        Assert.notZero(artworkDao.toggleArtworkDisplay(aseq), "전시 여부 변경에 실패했습니다.", SQLException::new);
+        artworkDao.toggleArtworkDisplay(aseq);
     }
 
     /**
      * 예술품 정보를 삭제합니다.
      *
      * @param aseqList 예술품 번호 목록
-     * @throws SQLException 예술품 삭제에 실패한 경우 예외 발생
+     * @throws SqlException 예술품 삭제에 실패한 경우 예외 발생
      */
     public void deleteArtwork(List<Integer> aseqList) throws SQLException {
         Assert.notZero(aseqList.size(), "예술품을 선택해주세요.", SQLException::new);
@@ -122,10 +122,10 @@ public class ArtworkService {
      * 예술품 정보를 삭제합니다.
      *
      * @param aseq 예술품 번호 (artwork sequence)
-     * @throws SQLException 예술품 삭제에 실패한 경우 예외 발생
+     * @throws SqlException 예술품 삭제에 실패한 경우 예외 발생
      */
-    public void deleteArtwork(int aseq) throws SQLException {
-        Assert.notZero(artworkDao.deleteArtwork(aseq), "예술품 삭제에 실패했습니다.", SQLException::new);
+    public void deleteArtwork(int aseq) {
+        artworkDao.deleteArtwork(aseq);
     }
 
     /**
