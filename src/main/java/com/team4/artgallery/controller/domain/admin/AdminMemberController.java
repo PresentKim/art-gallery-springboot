@@ -8,6 +8,7 @@ import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class AdminMemberController {
     }
 
     @PostMapping("/grant")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseBody grant(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
@@ -52,6 +54,7 @@ public class AdminMemberController {
     }
 
     @PostMapping("/revoke")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseBody revoke(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
@@ -63,6 +66,7 @@ public class AdminMemberController {
     }
 
     @PostMapping("/delete")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseBody delete(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")

@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,7 @@ public class AdminNoticeController {
     }
 
     @PostMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
     public Object edit(
             @Valid
             @NotEmpty(message = "소식지를 선택해주세요.")
@@ -54,6 +56,7 @@ public class AdminNoticeController {
     }
 
     @PostMapping("/delete")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseBody delete(
             @Valid
             @NotEmpty(message = "소식지를 선택해주세요")
