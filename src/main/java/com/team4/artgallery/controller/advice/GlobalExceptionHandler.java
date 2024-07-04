@@ -30,6 +30,13 @@ import java.util.Objects;
 
 /**
  * 전역 예외 처리 클래스
+ * <p>
+ * 프로젝트 내에서 발생하는 예외와 스프링 프레임워크에서 발생하는 예외를 처리하는 핸들러 메소드를 가지고 있습니다.
+ *
+ * @implNote {@link ControllerAdvice} 어노테이션을 사용하면 여러 컨트롤러에 걸쳐 있는 공통의 예외 처리, 데이터 바인딩, 모델 작업 등을 한 곳에서 관리할 수 있습니다.
+ * 이를 통해 코드의 중복을 줄이고, 애플리케이션 전반에 걸친 예외 처리 및 데이터 전처리 로직을 효율적으로 관리할 수 있습니다.
+ * <p>
+ * 이 클래스에선 {@link ExceptionHandler} 어노테이션을 사용하여 예외 처리를 위한 메소드를 정의합니다.
  */
 @ControllerAdvice
 @RequiredArgsConstructor
