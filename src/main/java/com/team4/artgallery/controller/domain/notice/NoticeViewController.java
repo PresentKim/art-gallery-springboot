@@ -1,11 +1,11 @@
 package com.team4.artgallery.controller.domain.notice;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.dto.NoticeDto;
+import com.team4.artgallery.controller.exception.NotFoundException;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.enums.NoticeCategory;
 import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
-import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +42,8 @@ public class NoticeViewController {
             return "redirect:/notice/newspaper";
         }
 
-        pagination.setItemCount(noticeService.countNotices(filter)).setUrlTemplate("/notice?page=%d" + filter.getUrlParam());
-        model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
+        pagination.setUrlTemplate("/notice?page=%d" + filter.getUrlParam());
+        model.addAttribute("noticeList", noticeService.getNoticesPair(filter, pagination).list());
         return "notice/noticeList";
     }
 
@@ -53,13 +53,9 @@ public class NoticeViewController {
             Integer nseq,
 
             Model model
-    ) {
-        NoticeDto noticeDto = noticeService.getNotice(nseq);
-        Assert.exists(noticeDto, "소식지 정보를 찾을 수 없습니다.");
-
+    ) throws NotFoundException, SqlException {
         noticeService.markAsRead(nseq);
-
-        model.addAttribute("noticeDto", noticeDto);
+        model.addAttribute("noticeDto", noticeService.getNotice(nseq));
         return "notice/noticeView";
     }
 
@@ -70,11 +66,8 @@ public class NoticeViewController {
             Integer nseq,
 
             Model model
-    ) {
-        NoticeDto noticeDto = noticeService.getNotice(nseq);
-        Assert.exists(noticeDto, "소식지 정보를 찾을 수 없습니다.");
-
-        model.addAttribute("noticeDto", noticeDto);
+    ) throws NotFoundException {
+        model.addAttribute("noticeDto", noticeService.getNotice(nseq));
         return "notice/noticeForm";
     }
 

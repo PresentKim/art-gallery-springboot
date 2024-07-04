@@ -30,8 +30,7 @@ public class NoticeRestController {
             @LoginMember
             MemberDto loginMember
     ) throws SqlException {
-        noticeDto.setAuthor(loginMember.getId());
-        noticeService.updateNotice(noticeDto);
+        noticeService.updateNotice(noticeDto, loginMember);
         return new ResponseDto("소식지 수정이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
     }
 
@@ -45,8 +44,7 @@ public class NoticeRestController {
             @LoginMember
             MemberDto loginMember
     ) throws SqlException {
-        noticeDto.setAuthor(loginMember.getId());
-        noticeService.createNotice(noticeDto);
+        noticeService.createNotice(noticeDto, loginMember);
         return new ResponseDto("소식지 작성이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
     }
 

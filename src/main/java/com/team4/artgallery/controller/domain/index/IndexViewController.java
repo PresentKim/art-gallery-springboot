@@ -3,7 +3,6 @@ package com.team4.artgallery.controller.domain.index;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.service.NoticeService;
-import com.team4.artgallery.util.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +23,7 @@ public class IndexViewController {
     @GetMapping("/")
     public String root(Model model) {
         // 최근 공지사항 5개를 가져옵니다.
-        model.addAttribute(
-                "noticeList",
-                noticeService.getNotices(null, new Pagination().setItemCount(0).setDisplayCount(5))
-        );
+        model.addAttribute("noticeList", noticeService.getRecentNotices(5));
 
         // 랜덤 예술품 목록을 가져와 4개의 그룹으로 나눕니다.
         List<ArtworkDto> randomArtworkList = artworkService.getRandomArtworks(24);

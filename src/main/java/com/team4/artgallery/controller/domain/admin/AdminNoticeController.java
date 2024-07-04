@@ -37,11 +37,9 @@ public class AdminNoticeController {
             Pagination pagination,
 
             Model model
-    ) throws SqlException {
-        pagination.setItemCount(noticeService.countNotices(filter))
-                .setUrlTemplate("/admin/notice?page=%d" + filter.getUrlParam());
-
-        model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
+    ) {
+        pagination.setUrlTemplate("/admin/notice?page=%d" + filter.getUrlParam());
+        model.addAttribute("noticeList", noticeService.getNoticesPair(filter, pagination).list());
         return "admin/adminNoticeList";
     }
 
@@ -66,7 +64,7 @@ public class AdminNoticeController {
             @RequestParam(name = "nseqs", required = false)
             List<Integer> nseqs
     ) throws SqlException {
-        noticeService.deleteNotices(nseqs);
+        noticeService.deleteNotice(nseqs);
         return new ResponseDto("소식지 정보를 제거했습니다", ":reload");
     }
 
