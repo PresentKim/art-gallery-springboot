@@ -137,7 +137,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
         FieldError fieldError = Objects.requireNonNull(e.getBindingResult().getFieldError());
-        return processResponse(badRequest("파라미터 " + fieldError.getField() + "이(가) 올바르지 않습니다."), request);
+        return processResponse(badRequest(fieldError.getDefaultMessage()), request);
     }
 
     /**
