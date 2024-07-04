@@ -34,7 +34,7 @@ public class ArtworkRestController {
         return artworkService.getArtworksPair(filter, pagination);
     }
 
-    @GetMapping({"/{aseq}", "/view/{aseq}"})
+    @GetMapping("/{aseq}")
     public ArtworkDto view(
             @PathVariable(value = "aseq")
             Integer aseq

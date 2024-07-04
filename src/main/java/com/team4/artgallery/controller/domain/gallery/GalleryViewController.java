@@ -40,7 +40,7 @@ public class GalleryViewController {
         return "gallery/galleryList";
     }
 
-    @GetMapping({"/{gseq}", "/view/{gseq}"})
+    @GetMapping("/{gseq}")
     public String view(
             @PathVariable(value = "gseq")
             Integer gseq,

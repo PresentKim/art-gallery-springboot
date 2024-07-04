@@ -45,7 +45,7 @@ public class NoticeViewController {
         return "notice/noticeList";
     }
 
-    @GetMapping({"/{nseq}", "/view/{nseq}"})
+    @GetMapping("/{nseq}")
     public String view(
             @PathVariable(value = "nseq")
             Integer nseq,

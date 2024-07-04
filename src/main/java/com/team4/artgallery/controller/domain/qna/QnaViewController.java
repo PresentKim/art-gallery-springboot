@@ -32,7 +32,7 @@ public class QnaViewController {
         return "qna/qnaList";
     }
 
-    @GetMapping({"/{qseq}", "/view/{qseq}"})
+    @GetMapping("/{qseq}")
     public String view(
             @PathVariable(value = "qseq")
             Integer qseq,

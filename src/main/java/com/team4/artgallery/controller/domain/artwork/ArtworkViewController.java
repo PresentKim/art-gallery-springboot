@@ -37,7 +37,7 @@ public class ArtworkViewController {
         return "artwork/artworkList";
     }
 
-    @GetMapping({"/{aseq}", "/view/{aseq}"})
+    @GetMapping("/{aseq}")
     public String view(
             @PathVariable("aseq")
             Integer aseq,
