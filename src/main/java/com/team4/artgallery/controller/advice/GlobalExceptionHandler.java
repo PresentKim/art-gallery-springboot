@@ -1,10 +1,11 @@
 package com.team4.artgallery.controller.advice;
 
+import com.team4.artgallery.aspect.CheckAdminAspect;
+import com.team4.artgallery.aspect.CheckLoginAspect;
 import com.team4.artgallery.aspect.ExceptionHandlerContentNegotiationAspect;
 import com.team4.artgallery.aspect.exception.NotAdminException;
 import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.dto.ResponseBody;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -39,7 +41,7 @@ public class GlobalExceptionHandler {
      * {@link ResponseStatusException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link ResponseStatusException} 예외는 의도적으로 발생시킨 예외로, 예외 메시지와 상태 코드를 가지고 있습니다.
+     * @implNote 프로젝트 내에서 의도적으로 발생시킨 예외로, 예외 메시지와 상태 코드를 가지고 있습니다.
      */
     @ExceptionHandler(ResponseStatusException.class)
     public Object handleResponseStatusException(ResponseStatusException e) {
@@ -50,7 +52,7 @@ public class GlobalExceptionHandler {
      * {@link NotLoginException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link NotLoginException} 예외는 로그인이 필요한 페이지에 로그인하지 않은 상태로 접근했을 때 발생합니다.
+     * @implNote {@link CheckLoginAspect}에서 발생시키는 예외로, 로그인이 필요한 페이지에 로그인하지 않은 상태로 접근했을 때 발생합니다.
      */
     @ExceptionHandler(NotLoginException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
@@ -62,11 +64,11 @@ public class GlobalExceptionHandler {
      * {@link NotAdminException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link NotAdminException} 예외는 관리자가 아닌 사용자가 관리자 기능에 접근하려고 할 때 발생합니다.
+     * @implNote {@link CheckAdminAspect}에서 발생시키는 예외로, 관리자가 아닌 사용자가 관리자 기능에 접근하려고 할 때 발생합니다.
      */
     @ExceptionHandler(NotAdminException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Object handleNotAdminException(HttpServletRequest request) {
+    public Object handleNotAdminException() {
         // 보안을 위해 관리자가 아닌 경우 해당 페이지 혹은 기능이 존재하지 않는 것처럼 처리합니다
         // (브루트 포스 공격을 방지하기 위함)
         return "요청하신 리소스를 찾을 수 없습니다.";
@@ -79,11 +81,11 @@ public class GlobalExceptionHandler {
      * {@link NoResourceFoundException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link NoResourceFoundException} 예외는 스프링에서 클라이언트가 요청한 리소스가 서버에 존재하지 않을 때 발생합니다.
+     * @implNote 스프링에서 클라이언트가 요청한 리소스가 서버에 존재하지 않을 때 발생합니다.
      */
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Object handleNoResourceFoundException(HttpServletRequest request) {
+    public Object handleNoResourceFoundException() {
         return "요청하신 리소스를 찾을 수 없습니다.";
     }
 
@@ -91,7 +93,7 @@ public class GlobalExceptionHandler {
      * {@link MaxUploadSizeExceededException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link MaxUploadSizeExceededException} 예외는 파일 업로드 시 파일 크기가 제한을 초과했을 때 발생합니다.
+     * @implNote 업로드 파일 크기가 제한을 초과했을 때 발생합니다.
      * <p>
      * 파일 크기 제한은 {@code application.properties} 파일에서 설정할 수 있습니다.
      */
@@ -105,8 +107,7 @@ public class GlobalExceptionHandler {
      * {@link MissingServletRequestParameterException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link MissingServletRequestParameterException} 예외는 스프링에서
-     * {@code @RequestParam} 어노테이션을 사용하여 필수로 지정된 요청 파라미터가 요청에 포함되지 않았을 경우에 발생합니다.
+     * @implNote 스프링에서 {@link RequestParam} 어노테이션으로 요구된 파라미터가 요청에 포함되지 않았을 경우에 발생합니다.
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -118,8 +119,7 @@ public class GlobalExceptionHandler {
      * {@link MethodArgumentTypeMismatchException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link MethodArgumentTypeMismatchException} 예외는 스프링에서
-     * 요청의 파라미터 타입이 컨트롤러에서 기대하는 메소드의 파라미터 타입과 일치하지 않을 때 발생합니다.
+     * @implNote 스프링에서 요청의 파라미터 타입이 컨트롤러에서 기대하는 메소드의 파라미터 타입과 일치하지 않을 때 발생합니다.
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -131,8 +131,7 @@ public class GlobalExceptionHandler {
      * {@link MethodArgumentNotValidException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link MethodArgumentNotValidException} 예외는 스프링에서
-     * 객체 필드의 검증(Validation) 과정에서 요구사항을 만족하지 못하는 파라미터가 있을 때 발생합니다.
+     * @implNote 스프링에서 객체 필드의 검증(Validation) 과정에서 요구사항을 만족하지 못하는 파라미터가 있을 때 발생합니다.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -145,8 +144,7 @@ public class GlobalExceptionHandler {
      * {@link HandlerMethodValidationException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link HandlerMethodValidationException} 예외는 스프링에서
-     * 메소드 파라미터의 검증(Validation) 과정에서 요구사항을 만족하지 못하는 파라미터가 있을 때 발생합니다.
+     * @implNote 스프링에서 메소드 파라미터의 검증(Validation) 과정에서 요구사항을 만족하지 못하는 파라미터가 있을 때 발생합니다.
      */
     @ExceptionHandler(HandlerMethodValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -158,8 +156,7 @@ public class GlobalExceptionHandler {
      * {@link HttpRequestMethodNotSupportedException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link HttpRequestMethodNotSupportedException} 예외는 스프링에서
-     * HTTP 요청 메소드가 컨트롤러에서 지원하지 않는 경우에 발생합니다.
+     * @implNote 스프링에서 HTTP 요청 메소드가 컨트롤러에서 지원하지 않는 경우에 발생합니다.
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -171,8 +168,7 @@ public class GlobalExceptionHandler {
      * {@link HttpMediaTypeException} 예외를 처리하는 핸들러 메소드
      *
      * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
-     * @implNote {@link HttpMediaTypeException} 예외는 스프링에서
-     * HTTP 요청의 ACCEPT 헤더 값을 컨트롤러에서 지원하지 않는 경우에 발생합니다.
+     * @implNote 스프링에서 HTTP 요청의 ACCEPT 헤더 값을 컨트롤러에서 지원하지 않는 경우에 발생합니다.
      */
     @ExceptionHandler(HttpMediaTypeException.class)
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
