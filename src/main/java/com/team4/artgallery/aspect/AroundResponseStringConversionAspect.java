@@ -4,8 +4,10 @@ import com.team4.artgallery.dto.ResponseBody;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,11 +22,12 @@ import java.net.URI;
  * <li>{@code URI} : 반환 값을 {@code url}값으로 {@link ResponseBody} 객체를 생성해 반환</li>
  */
 @Aspect
+@Order(1)
 @Component
 public class AroundResponseStringConversionAspect {
 
     /**
-     * {@link RequestMapping} 어노테이션이 달린 메소드가 문자열을 반환하면 {@link ResponseBody} 객체로 감싸 반환합니다.
+     * {@link RequestMapping} 혹은 {@link ExceptionHandler} 어노테이션이 달린 메소드가 문자열을 반환하면 {@link ResponseBody} 객체로 감싸 반환합니다.
      *
      * @implNote {@link Around} 어노테이션으로 메서드 실행 전후에 로직을 추가할 수 있습니다.
      * <p>
@@ -32,7 +35,8 @@ public class AroundResponseStringConversionAspect {
      * <p>
      * {@link ProceedingJoinPoint} 객체는 메서드의 정보를 담고 있습니다. 이를 통해 메서드의 실행을 직접 제어할 수 있습니다.
      */
-    @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping) || " +
+            "@annotation(org.springframework.web.bind.annotation.ExceptionHandler)")
     public Object onAnnotation(ProceedingJoinPoint joinPoint) throws Throwable {
         // 메서드 실행
         Object result = joinPoint.proceed();
