@@ -2,7 +2,7 @@ package com.team4.artgallery.controller.advice;
 
 import com.team4.artgallery.aspect.CheckAdminAspect;
 import com.team4.artgallery.aspect.CheckLoginAspect;
-import com.team4.artgallery.aspect.ExceptionHandlerContentNegotiationAspect;
+import com.team4.artgallery.aspect.ContentNegotiationExceptionHandlerAspect;
 import com.team4.artgallery.aspect.exception.NotAdminException;
 import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.dto.ResponseBody;
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link ResponseStatusException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 프로젝트 내에서 의도적으로 발생시킨 예외로, 예외 메시지와 상태 코드를 가지고 있습니다.
      */
     @ExceptionHandler(ResponseStatusException.class)
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link NotLoginException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote {@link CheckLoginAspect}에서 발생시키는 예외로, 로그인이 필요한 페이지에 로그인하지 않은 상태로 접근했을 때 발생합니다.
      */
     @ExceptionHandler(NotLoginException.class)
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link NotAdminException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote {@link CheckAdminAspect}에서 발생시키는 예외로, 관리자가 아닌 사용자가 관리자 기능에 접근하려고 할 때 발생합니다.
      */
     @ExceptionHandler(NotAdminException.class)
@@ -87,7 +87,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link NoResourceFoundException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 스프링에서 클라이언트가 요청한 리소스가 서버에 존재하지 않을 때 발생합니다.
      */
     @ExceptionHandler(NoResourceFoundException.class)
@@ -99,7 +99,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link MaxUploadSizeExceededException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 업로드 파일 크기가 제한을 초과했을 때 발생합니다.
      * <p>
      * 파일 크기 제한은 {@code application.properties} 파일에서 설정할 수 있습니다.
@@ -113,7 +113,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link MissingServletRequestParameterException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 스프링에서 {@link RequestParam} 어노테이션으로 요구된 파라미터가 요청에 포함되지 않았을 경우에 발생합니다.
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
@@ -125,7 +125,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link MethodArgumentTypeMismatchException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 스프링에서 요청의 파라미터 타입이 컨트롤러에서 기대하는 메소드의 파라미터 타입과 일치하지 않을 때 발생합니다.
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -137,7 +137,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link MethodArgumentNotValidException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 스프링에서 객체 필드의 검증(Validation) 과정에서 요구사항을 만족하지 못하는 파라미터가 있을 때 발생합니다.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -150,7 +150,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link HandlerMethodValidationException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 스프링에서 메소드 파라미터의 검증(Validation) 과정에서 요구사항을 만족하지 못하는 파라미터가 있을 때 발생합니다.
      */
     @ExceptionHandler(HandlerMethodValidationException.class)
@@ -162,7 +162,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link HttpRequestMethodNotSupportedException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 스프링에서 HTTP 요청 메소드가 컨트롤러에서 지원하지 않는 경우에 발생합니다.
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -174,7 +174,7 @@ public class GlobalExceptionHandler {
     /**
      * {@link HttpMediaTypeException} 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 스프링에서 HTTP 요청의 ACCEPT 헤더 값을 컨트롤러에서 지원하지 않는 경우에 발생합니다.
      */
     @ExceptionHandler(HttpMediaTypeException.class)
@@ -186,7 +186,7 @@ public class GlobalExceptionHandler {
     /**
      * 처리되지 않은 예외를 처리하는 핸들러 메소드
      *
-     * @return {@link ExceptionHandlerContentNegotiationAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
+     * @return {@link ContentNegotiationExceptionHandlerAspect} 클래스에서 응답을 자동으로 적절한 객체로 변환
      * @implNote 처리되지 않은 모든 예외는 이 핸들러 메소드에서 처리됩니다.
      */
     @ExceptionHandler(Exception.class)

@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Order(-1)
 @Component
 @RequiredArgsConstructor
-public class ExceptionHandlerContentNegotiationAspect {
+public class ContentNegotiationExceptionHandlerAspect {
 
     private final RequestService requestService;
 
