@@ -96,7 +96,7 @@ public class Assert {
      */
     private int getSize(Object value) {
         if (value instanceof String v) {
-            return v.length();
+            return v.strip().length();
         } else if (value instanceof Collection<?> v) {
             return v.size();
         } else if (value instanceof Map<?, ?> v) {
