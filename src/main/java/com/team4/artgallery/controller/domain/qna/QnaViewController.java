@@ -1,6 +1,6 @@
 package com.team4.artgallery.controller.domain.qna;
 
-import com.team4.artgallery.dto.QnaDto;
+import com.team4.artgallery.controller.exception.UnauthorizedException;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
@@ -29,8 +29,8 @@ public class QnaViewController {
 
             Model model
     ) {
-        pagination.setItemCount(qnaService.countInquiries(null)).setUrlTemplate("/qna?page=%d");
-        model.addAttribute("qnaList", qnaService.getInquiries(null, pagination));
+        pagination.setUrlTemplate("/qna?page=%d");
+        model.addAttribute("qnaList", qnaService.getInquiriesPair(null, pagination).list());
         return "qna/qnaList";
     }
 
@@ -40,11 +40,8 @@ public class QnaViewController {
             Integer qseq,
 
             Model model
-    ) {
-        QnaDto qnaDto = qnaService.getInquiry(qseq);
-        Assert.exists(qnaDto, "문의글 정보를 찾을 수 없습니다.");
+    ) throws UnauthorizedException {
         Assert.trueOrUnauthorized(qnaService.authorizeForRestrict(qseq), "잘못된 접근입니다.");
-
         model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         return "qna/qnaView";
     }
@@ -60,11 +57,8 @@ public class QnaViewController {
             Integer qseq,
 
             Model model
-    ) {
-        QnaDto qnaDto = qnaService.getInquiry(qseq);
-        Assert.exists(qnaDto, "문의글 정보를 찾을 수 없습니다.");
+    ) throws UnauthorizedException {
         Assert.trueOrUnauthorized(qnaService.authorizeForPersonal(qseq), "잘못된 접근입니다.");
-
         model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         return "qna/qnaForm";
     }

@@ -35,10 +35,8 @@ public class AdminQnaController {
 
             Model model
     ) throws SqlException {
-        pagination.setItemCount(qnaService.countInquiries(filter))
-                .setUrlTemplate("/admin/qna?page=%d" + filter.getUrlParam());
-
-        model.addAttribute("qnaList", qnaService.getInquiries(filter, pagination));
+        pagination.setUrlTemplate("/admin/qna?page=%d" + filter.getUrlParam());
+        model.addAttribute("qnaList", qnaService.getInquiriesPair(filter, pagination).list());
         return "admin/adminQnaList";
     }
 
@@ -50,7 +48,7 @@ public class AdminQnaController {
             @NotEmpty(message = "문의글을 선택해주세요")
             @RequestParam(name = "qseqs", required = false) List<Integer> qseqs
     ) throws SqlException {
-        qnaService.deleteInquiries(qseqs);
+        qnaService.deleteInquiry(qseqs);
         return new ResponseDto("문의글 정보를 제거했습니다", ":reload");
     }
 
