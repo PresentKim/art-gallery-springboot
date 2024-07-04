@@ -26,9 +26,12 @@ public class QnaRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseBody write(
             @Valid
-            QnaDto qnaDto
+            QnaDto qnaDto,
+
+            HttpSession session
     ) {
         qnaService.createInquiry(qnaDto);
+        qnaService.authorize(session, qnaDto.getQseq());
         return new ResponseBody("문의글 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
     }
 

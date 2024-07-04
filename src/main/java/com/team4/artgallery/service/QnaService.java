@@ -31,8 +31,19 @@ public class QnaService {
         return session.getAttribute(hashQseq(qseq)) != null;
     }
 
+
     /**
-     * 문의글에 대한 인증을 처리합니다
+     * 문의글에 대한 인증 결과를 세션에 저장합니다
+     *
+     * @param session 세션 객체
+     * @param qseq    문의글 번호
+     */
+    public void authorize(HttpSession session, int qseq) {
+        session.setAttribute(hashQseq(qseq), true);
+    }
+
+    /**
+     * 비밀번호를 이용해 문의글에 대한 인증을 처리합니다
      *
      * @param session 세션 객체
      * @param qseq    문의글 번호
@@ -49,7 +60,7 @@ public class QnaService {
             return false;
         }
 
-        session.setAttribute(hashQseq(qseq), true);
+        authorize(session, qseq);
         return true;
     }
 
