@@ -7,25 +7,16 @@
 <t:layout>
     <jsp:attribute name="head">
         <title>${empty artworkDto ? '예술품 등록' : '예술품 수정 :: '}${artworkDto.aseq}</title>
-        <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_form.css"/>">
-        <script src="<c:url value="/static/script/artwork/artwork_form.js"/>"></script>
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_write.css"/>">
+        <script src="<c:url value="/static/script/artwork/artwork_write.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
 <h2 class="artwork-form-header">${empty artworkDto ? '예술품 등록' : '예술품 수정'}</h2>
 <section class="artwork-form-main">
-    <form class="artwork-form"
-          method="post" enctype="multipart/form-data" onsubmit="ajaxSubmit(event)"
-            <c:choose>
-                <c:when test="${empty artworkDto}">
-                    action="<c:url value="/artwork/write"/>"
-                </c:when>
-                <c:otherwise>
-                    action="<c:url value="/artwork/update"/>"
-                </c:otherwise>
-            </c:choose>
-    >
+    <form class="artwork-form" method="post" action="<c:url value="/artwork/write"/>" enctype="multipart/form-data"
+          onsubmit="ajaxSubmit(event)">
         <c:if test="${not empty artworkDto}">
             <input type="hidden" name="aseq" value="${artworkDto.aseq}">
         </c:if>

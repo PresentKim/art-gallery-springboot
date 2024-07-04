@@ -28,7 +28,7 @@
                     <div onclick="toggleArtworkDisplay(this, ${artworkDto.aseq})">
                             ${artworkDto.display ? '비공개' : '공개'}로 전환
                     </div>
-                    <a href="<c:url value="/artwork/update/${artworkDto.aseq}"/>">수정</a>
+                    <a href="<c:url value="/artwork/write?aseq=${artworkDto.aseq}"/>">수정</a>
                     <div onclick="ajax('/artwork/delete', {aseq: ${artworkDto.aseq}}).then(defaultAjaxHandler)">
                         삭제
                     </div>

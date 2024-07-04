@@ -25,11 +25,11 @@ public class ArtworkService {
     private final MultipartFileService fileService;
 
     /**
-     * 예술품 정보를 수정합니다
+     * 예술품 정보를 추가합니다
      *
      * @param artworkDto 예술품 정보
      * @throws FileException 이미지 저장에 실패한 경우 예외 발생
-     * @throws SqlException  예술품 등록에 실패한 경우 예외 발생
+     * @throws SqlException  예술품 정보 추가에 실패한 경우 예외 발생
      */
     public void createArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws ResponseStatusException {
         saveImage(imageFile, artworkDto);
@@ -79,7 +79,7 @@ public class ArtworkService {
      * @param artworkDto 예술품 정보
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      * @throws FileException     이미지 저장에 실패한 경우 예외 발생
-     * @throws SqlException      예술품 수정에 실패한 경우 예외 발생
+     * @throws SqlException      예술품 정보 수정에 실패한 경우 예외 발생
      */
     public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws ResponseStatusException {
         ArtworkDto oldArtwork = getArtwork(artworkDto.getAseq());

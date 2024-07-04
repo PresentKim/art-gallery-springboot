@@ -10,7 +10,6 @@ import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,16 +45,21 @@ public class ArtworkRestController {
     }
 
     @CheckAdmin
-    @PostMapping("/update")
+    @PostMapping("/write")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto update(
+    public ResponseDto write(
             @Valid
             ArtworkDto artworkDto,
+            @Valid
             @RequestParam(name = "imageFile", required = false)
             MultipartFile imageFile
-    ) throws SqlException, FileException {
-        artworkService.updateArtwork(artworkDto, imageFile);
-        return new ResponseDto("예술품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
+    ) throws NotFoundException, SqlException, FileException {
+        if (artworkDto.getAseq() == null) {
+            artworkService.createArtwork(artworkDto, imageFile);
+        } else {
+            artworkService.updateArtwork(artworkDto, imageFile);
+        }
+        return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @CheckAdmin
@@ -67,21 +71,6 @@ public class ArtworkRestController {
     ) throws SqlException {
         artworkService.toggleArtworkDisplay(aseq);
         return "전시 여부가 변경되었습니다.";
-    }
-
-    @CheckAdmin
-    @PostMapping("/write")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto write(
-            @Valid
-            ArtworkDto artworkDto,
-            @Valid
-            @NotNull(message = "이미지 파일을 업로드해주세요.")
-            @RequestParam(name = "imageFile", required = false)
-            MultipartFile imageFile
-    ) throws SqlException, FileException {
-        artworkService.createArtwork(artworkDto, imageFile);
-        return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
     @CheckAdmin

@@ -45,14 +45,14 @@ public class AdminArtworkController {
 
     @PostMapping("/update")
     @ResponseBody
-    public Object edit(
+    public Object update(
             @Valid
             @NotEmpty(message = "예술품을 선택해주세요.")
             @Size(max = 1, message = "한 번에 하나의 예술품만 수정할 수 있습니다.")
             @RequestParam(name = "aseqs")
             List<Integer> aseqs
     ) throws URISyntaxException {
-        return new URI("/artwork/update/" + aseqs.get(0));
+        return new URI("/artwork/write?aseq=" + aseqs.get(0));
     }
 
     @PostMapping("/delete")
