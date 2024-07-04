@@ -1,5 +1,6 @@
 package com.team4.artgallery.service;
 
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dao.IFavoriteDao;
 import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.util.Pagination;
@@ -38,8 +39,9 @@ public class FavoriteService {
      * @param memberId 회원 ID
      * @param aseq     예술품 번호 (artwork sequence)
      * @return 관심 예술품을 추가한 경우엔 true, 제거한 경우엔 false
+     * @throws SqlException 관심 예술품 정보 변경에 실패한 경우 예외 발생
      */
-    public Boolean toggleFavorite(String memberId, int aseq) {
+    public Boolean toggleFavorite(String memberId, int aseq) throws SqlException {
         // 파라미터 맵 생성 (memberId, aseq, result)
         Map<String, Object> params = new HashMap<>();
         params.put("memberId", memberId);

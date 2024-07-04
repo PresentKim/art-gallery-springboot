@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.GalleryService;
@@ -49,7 +50,7 @@ public class AdminGalleryController {
             @NotEmpty(message = "갤러리를 선택해주세요")
             @RequestParam(name = "gseqs", required = false)
             List<Integer> gseqs
-    ) {
+    ) throws SqlException {
         galleryService.deleteGalleries(gseqs);
         return new ResponseDto("갤러리 정보를 제거했습니다", ":reload");
     }

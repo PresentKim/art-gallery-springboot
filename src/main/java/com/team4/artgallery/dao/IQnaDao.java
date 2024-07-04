@@ -1,6 +1,7 @@
 package com.team4.artgallery.dao;
 
 import com.team4.artgallery.aspect.annotation.QueryApplied;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.util.Pagination;
@@ -19,6 +20,7 @@ public interface IQnaDao {
      *
      * @param qnaDto 문의글 정보
      * @return 저장된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("문의글 정보를 추가하는 중 오류가 발생했습니다.")
     int createInquiry(QnaDto qnaDto);
@@ -59,6 +61,7 @@ public interface IQnaDao {
      *
      * @param qnaDto 문의글 정보
      * @return 수정된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("문의글 정보를 수정하는 중 오류가 발생했습니다.")
     int updateInquiry(QnaDto qnaDto);
@@ -69,6 +72,7 @@ public interface IQnaDao {
      * @param qseq  문의글 번호
      * @param reply 답변 내용
      * @return 수정된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("문의글 답변을 수정하는 중 오류가 발생했습니다.")
     int updateReply(@Param("qseq") int qseq, @Param("updateReply") String reply);
@@ -89,6 +93,7 @@ public interface IQnaDao {
      *
      * @param qseqList 문의글 번호 목록
      * @return 삭제된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("문의글 정보를 삭체하는 중 오류가 발생했습니다.")
     int deleteInquiries(List<Integer> qseqList);

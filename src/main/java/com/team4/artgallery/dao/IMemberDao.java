@@ -1,6 +1,7 @@
 package com.team4.artgallery.dao;
 
 import com.team4.artgallery.aspect.annotation.QueryApplied;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.util.Pagination;
@@ -19,6 +20,7 @@ public interface IMemberDao {
      *
      * @param dto 회원 정보
      * @return 저장된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("회원 정보를 추가하는 중 오류가 발생했습니다.")
     int createMember(MemberDto dto);
@@ -59,6 +61,7 @@ public interface IMemberDao {
      *
      * @param dto 회원 정보
      * @return 수정된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("회원 정보를 수정하는 중 오류가 발생했습니다.")
     int updateMember(MemberDto dto);
@@ -68,6 +71,7 @@ public interface IMemberDao {
      *
      * @param memberIds 회원 ID 목록
      * @return 수정된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("회원 정보를 수정하는 중 오류가 발생했습니다.")
     int grantAdminMembers(List<String> memberIds);
@@ -77,6 +81,7 @@ public interface IMemberDao {
      *
      * @param memberIds 회원 ID 목록
      * @return 수정된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("회원 정보를 수정하는 중 오류가 발생했습니다.")
     int revokeAdminMembers(List<String> memberIds);
@@ -89,6 +94,7 @@ public interface IMemberDao {
      *
      * @param memberId 회원 ID
      * @return 삭제된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("회원 정보를 삭제하는 중 오류가 발생했습니다.")
     int deleteMember(String memberId);
@@ -98,6 +104,7 @@ public interface IMemberDao {
      *
      * @param memberIdList 회원 ID 목록
      * @return 삭제된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("회원 정보를 삭제하는 중 오류가 발생했습니다.")
     int deleteMembers(List<String> memberIdList);

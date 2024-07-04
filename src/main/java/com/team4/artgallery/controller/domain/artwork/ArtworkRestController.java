@@ -1,6 +1,9 @@
 package com.team4.artgallery.controller.domain.artwork;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.exception.FileException;
+import com.team4.artgallery.controller.exception.NotFoundException;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
@@ -38,7 +41,7 @@ public class ArtworkRestController {
     public ArtworkDto view(
             @PathVariable(name = "aseq")
             Integer aseq
-    ) {
+    ) throws NotFoundException {
         return artworkService.getArtwork(aseq);
     }
 
@@ -50,7 +53,7 @@ public class ArtworkRestController {
             ArtworkDto artworkDto,
             @RequestParam(name = "imageFile", required = false)
             MultipartFile imageFile
-    ) {
+    ) throws SqlException, FileException {
         artworkService.updateArtwork(artworkDto, imageFile);
         return new ResponseDto("예술품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
@@ -61,7 +64,7 @@ public class ArtworkRestController {
     public Object toggleArtworkDisplay(
             @RequestParam(name = "aseq")
             Integer aseq
-    ) {
+    ) throws SqlException {
         artworkService.toggleArtworkDisplay(aseq);
         return "전시 여부가 변경되었습니다.";
     }
@@ -76,7 +79,7 @@ public class ArtworkRestController {
             @NotNull(message = "이미지 파일을 업로드해주세요.")
             @RequestParam(name = "imageFile", required = false)
             MultipartFile imageFile
-    ) {
+    ) throws SqlException, FileException {
         artworkService.createArtwork(artworkDto, imageFile);
         return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
@@ -87,7 +90,7 @@ public class ArtworkRestController {
     public ResponseDto delete(
             @RequestParam(name = "aseq")
             Integer aseq
-    ) {
+    ) throws SqlException {
         artworkService.deleteArtwork(aseq);
         return new ResponseDto("예술품이 삭제되었습니다.", "/artwork");
     }

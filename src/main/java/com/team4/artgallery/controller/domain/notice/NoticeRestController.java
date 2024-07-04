@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller.domain.notice;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
@@ -28,7 +29,7 @@ public class NoticeRestController {
 
             @LoginMember
             MemberDto loginMember
-    ) {
+    ) throws SqlException {
         noticeDto.setAuthor(loginMember.getId());
         noticeService.updateNotice(noticeDto);
         return new ResponseDto("소식지 수정이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
@@ -43,7 +44,7 @@ public class NoticeRestController {
 
             @LoginMember
             MemberDto loginMember
-    ) {
+    ) throws SqlException {
         noticeDto.setAuthor(loginMember.getId());
         noticeService.createNotice(noticeDto);
         return new ResponseDto("소식지 작성이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
@@ -55,7 +56,7 @@ public class NoticeRestController {
     public ResponseDto delete(
             @RequestParam(name = "nseq")
             Integer nseq
-    ) {
+    ) throws SqlException {
         noticeService.deleteNotice(nseq);
         return new ResponseDto("소식지가 삭제되었습니다.", "/notice");
     }

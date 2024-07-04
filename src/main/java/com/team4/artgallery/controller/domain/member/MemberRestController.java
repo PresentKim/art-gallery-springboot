@@ -3,7 +3,8 @@ package com.team4.artgallery.controller.domain.member;
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.ConflictException;
-import com.team4.artgallery.controller.exception.InternalServerErrorException;
+import com.team4.artgallery.controller.exception.SqlException;
+import com.team4.artgallery.controller.exception.UnauthorizedException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.ResponseDto;
@@ -19,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping(path = "/member", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +36,7 @@ public class MemberRestController {
             String returnUrl,
             @Validated(MemberDto.OnLogin.class)
             MemberDto loginForm
-    ) throws Exception {
+    ) throws BadRequestException, UnauthorizedException, URISyntaxException {
         Assert.isFalse(memberService.isLogin(), "이미 로그인 상태입니다.", BadRequestException::new);
 
         Assert.trueOrUnauthorized(
@@ -63,7 +65,7 @@ public class MemberRestController {
             String returnUrl,
             @Validated(MemberDto.OnJoin.class)
             MemberDto memberDto
-    ) {
+    ) throws ConflictException, SqlException {
         Assert.isFalse(memberService.isMember(memberDto.getId()), "이미 사용중인 아이디입니다.", ConflictException::new);
 
         memberService.createMember(memberDto);
@@ -77,7 +79,7 @@ public class MemberRestController {
             @NotBlank(message = "아이디를 입력해주세요")
             @RequestParam(name = "id")
             String id
-    ) {
+    ) throws ConflictException {
         Assert.isFalse(memberService.isMember(id), "이미 사용중인 아이디입니다.", ConflictException::new);
 
         return "사용 가능한 아이디입니다.";
@@ -92,7 +94,7 @@ public class MemberRestController {
 
             @LoginMember
             MemberDto loginMember
-    ) {
+    ) throws SqlException {
         // 로그인 회원의 ID 를 수정할 수 없도록 설정
         memberDto.setId(loginMember.getId());
 
@@ -117,9 +119,9 @@ public class MemberRestController {
 
             @LoginMember
             MemberDto loginMember
-    ) {
-        Assert.trueOrUnauthorized(loginMember.getPwd().equals(pwd), "ID 혹은 비밀번호가 일치하지 않습니다.");
-        Assert.isTrue(memberService.logout(), "로그아웃에 실패하였습니다.", InternalServerErrorException::new);
+    ) throws BadRequestException, UnauthorizedException, SqlException {
+        Assert.isTrue(loginMember.getPwd().equals(pwd), "ID 혹은 비밀번호가 일치하지 않습니다.", BadRequestException::new);
+        Assert.trueOrUnauthorized(memberService.logout(), "로그아웃에 실패하였습니다.");
 
         memberService.deleteMember(loginMember.getId());
 
@@ -135,7 +137,7 @@ public class MemberRestController {
 
             @LoginMember
             MemberDto loginMember
-    ) {
+    ) throws SqlException {
         boolean result = favoriteService.toggleFavorite(loginMember.getId(), aseq);
         return "관심 예술품 목록에 " + (result ? "추가" : "삭제") + "되었습니다.";
     }

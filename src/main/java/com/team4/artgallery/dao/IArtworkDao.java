@@ -1,6 +1,7 @@
 package com.team4.artgallery.dao;
 
 import com.team4.artgallery.aspect.annotation.QueryApplied;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.util.Pagination;
@@ -19,6 +20,7 @@ public interface IArtworkDao {
      *
      * @param artworkDto 예술품 정보
      * @return 추가된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("예술품 정보를 추가하는 중 오류가 발생했습니다.")
     int createArtwork(ArtworkDto artworkDto);
@@ -67,6 +69,7 @@ public interface IArtworkDao {
      *
      * @param artworkDto 수정할 예술품 정보
      * @return 수정된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("예술품 정보를 수정하는 중 오류가 발생했습니다.")
     int updateArtwork(ArtworkDto artworkDto);
@@ -76,6 +79,7 @@ public interface IArtworkDao {
      *
      * @param aseq 예술품 번호
      * @return 수정된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("예술품 전시 여부를 변경하는 중 오류가 발생했습니다.")
     int toggleArtworkDisplay(int aseq);
@@ -88,6 +92,7 @@ public interface IArtworkDao {
      *
      * @param aseq 예술품 번호
      * @return 삭제된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("예술품 정보를 삭제하는 중 오류가 발생했습니다.")
     int deleteArtwork(int aseq);
@@ -97,6 +102,7 @@ public interface IArtworkDao {
      *
      * @param aseqList 예술품 번호 목록
      * @return 삭제된 행의 수
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("예술품 정보를 삭제하는 중 오류가 발생했습니다.")
     int deleteArtworks(List<Integer> aseqList);

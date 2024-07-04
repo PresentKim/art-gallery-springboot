@@ -58,7 +58,7 @@ public class CheckAdminAspect {
      * <p>
      * 관리자가 아닌 경우 {@link NotAdminException} 예외를 발생시킵니다.
      */
-    private void checkAdmin(CheckAdmin annotation) {
+    private void checkAdmin(CheckAdmin annotation) throws NotAdminException {
         if (!memberService.isAdmin()) {
             throw new NotAdminException();
         }

@@ -1,6 +1,8 @@
 package com.team4.artgallery.controller.domain.gallery;
 
 import com.team4.artgallery.aspect.annotation.CheckLogin;
+import com.team4.artgallery.controller.exception.FileException;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.MemberDto;
@@ -33,7 +35,7 @@ public class GalleryRestController {
 
             @LoginMember
             MemberDto loginMember
-    ) {
+    ) throws SqlException, FileException {
         GalleryDto oldGallery = galleryService.getGallery(galleryDto.getGseq());
         Assert.exists(oldGallery, "갤러리 정보를 찾을 수 없습니다.");
         Assert.trueOrForbidden(loginMember.getId().equals(oldGallery.getAuthorId()), "작성자만 수정할 수 있습니다.");
@@ -64,7 +66,7 @@ public class GalleryRestController {
 
             @LoginMember
             MemberDto loginMember
-    ) {
+    ) throws SqlException, FileException {
         galleryService.saveImage(imageFile, galleryDto);
 
         // 작성자 아이디를 로그인 멤버 아이디로 설정
@@ -83,7 +85,7 @@ public class GalleryRestController {
 
             @LoginMember
             MemberDto loginMember
-    ) {
+    ) throws SqlException {
         GalleryDto oldGallery = galleryService.getGallery(gseq);
         Assert.exists(oldGallery, "갤러리 정보를 찾을 수 없습니다.");
 

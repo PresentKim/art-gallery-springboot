@@ -8,6 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Controller
 @RequestMapping("/admin")
 @CheckAdmin
@@ -24,7 +27,7 @@ public class AdminController {
     @PostMapping(path = "/reset", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public Object reset() throws Exception {
+    public Object reset() throws SQLException, IOException {
         adminService.resetDatabase();
         return "데이터베이스가 초기화되었습니다.";
     }

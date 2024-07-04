@@ -57,7 +57,7 @@ public class CheckLoginAspect {
      * <p>
      * 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
      */
-    private void checkLogin(JoinPoint joinPoint, CheckLogin annotation) {
+    private void checkLogin(JoinPoint joinPoint, CheckLogin annotation) throws NotLoginException {
         if (!memberService.isLogin()) {
             // 동적인 returnUrl을 생성하기 위해 파라미터 이름과 값을 가져옵니다.
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();

@@ -34,7 +34,7 @@ public class QueryAppliedAspect {
      * {@code returning}값은 현재 처리중인 메서드의 반환 값을 해당 이름의 매개변수로 받을 수 있도록 합니다.
      */
     @AfterReturning(value = "@annotation(annotation)", returning = "result")
-    public void onAfterReturning(QueryApplied annotation, Object result) {
+    public void onAfterReturning(QueryApplied annotation, Object result) throws SqlException {
         // 반환 값이 Integer 타입이 아닌 경우 예외 발생
         if (!(result instanceof Integer)) {
             throw new RuntimeException("반환 타입이 Integer 타입이 아닌 메서드에 @QueryApplied 어노테이션을 사용할 수 없습니다.");

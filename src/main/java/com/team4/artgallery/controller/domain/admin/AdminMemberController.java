@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.MemberService;
@@ -62,7 +63,7 @@ public class AdminMemberController {
             @NotEmpty(message = "회원을 선택해주세요")
             @RequestParam(name = "memberIds", required = false)
             List<String> memberIds
-    ) {
+    ) throws SqlException {
         memberService.revokeAdminMembers(memberIds);
         return new ResponseDto("관리자 권한을 제거했습니다", ":reload");
     }
@@ -75,7 +76,7 @@ public class AdminMemberController {
             @NotEmpty(message = "회원을 선택해주세요")
             @RequestParam(name = "memberIds", required = false)
             List<String> memberIds
-    ) {
+    ) throws SqlException {
         memberService.deleteMembers(memberIds);
         return new ResponseDto("회원 정보를 제거했습니다", ":reload");
     }

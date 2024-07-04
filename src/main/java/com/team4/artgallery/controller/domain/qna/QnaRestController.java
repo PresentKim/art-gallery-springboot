@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.qna;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
-import com.team4.artgallery.controller.exception.BadRequestException;
+import com.team4.artgallery.controller.exception.*;
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.QnaService;
@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping(path = "/qna", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -26,7 +27,7 @@ public class QnaRestController {
     public ResponseDto write(
             @Valid
             QnaDto qnaDto
-    ) {
+    ) throws SqlException {
         qnaService.createInquiry(qnaDto);
         qnaService.authorize(qnaDto.getQseq());
         return new ResponseDto("문의글 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
@@ -37,7 +38,7 @@ public class QnaRestController {
     public ResponseDto update(
             @Valid
             QnaDto qnaDto
-    ) {
+    ) throws NotFoundException, UnauthorizedException, SqlException {
         int qseq = qnaDto.getQseq();
         Assert.exists(qnaService.getInquiry(qseq), "문의글 정보를 찾을 수 없습니다.");
         Assert.trueOrUnauthorized(qnaService.authorizeForPersonal(qseq), "접근 권한이 없습니다.");
@@ -54,7 +55,7 @@ public class QnaRestController {
             Integer qseq,
             @RequestParam(name = "reply")
             String reply
-    ) {
+    ) throws NotFoundException, SqlException {
         Assert.exists(qnaService.getInquiry(qseq), "문의글 정보를 찾을 수 없습니다.");
 
         qnaService.updateReply(qseq, reply);
@@ -69,7 +70,7 @@ public class QnaRestController {
             String mode,
             @RequestParam(name = "pwd", required = false)
             String pwd
-    ) throws Exception {
+    ) throws UnauthorizedException, BadRequestException, URISyntaxException {
         switch (mode) {
             case "view":
                 if (qnaService.authorizeForRestrict(qseq)) {
@@ -88,7 +89,7 @@ public class QnaRestController {
                 }
                 break;
             default:
-                throw new BadRequestException("잘못된 요청입니다.");
+                throw new NotImplementsException("지원하지 않는 모드입니다.");
         }
 
         Assert.trueOrUnauthorized(pwd != null && !pwd.trim().isEmpty(), "비밀번호를 입력해주세요.");

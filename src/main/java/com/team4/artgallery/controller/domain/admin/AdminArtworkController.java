@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
@@ -62,7 +63,7 @@ public class AdminArtworkController {
             @NotEmpty(message = "예술품을 선택해주세요.")
             @RequestParam(name = "aseqs", required = false)
             List<Integer> aseqs
-    ) {
+    ) throws SqlException {
         artworkService.deleteArtwork(aseqs);
         return new ResponseDto("예술품이 삭제되었습니다.", "/artwork");
     }

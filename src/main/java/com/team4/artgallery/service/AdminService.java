@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public class AdminService {
      * 데이터베이스를 초기화합니다.
      */
     @Transactional(rollbackFor = Exception.class)
-    public void resetDatabase() throws Exception {
+    public void resetDatabase() throws SQLException, IOException {
         // DB 초기화를 위해 SQL 파일을 실행
         executeSqlFile("/database/init.sql");
         executeSqlFile("/database/init_view.sql");
@@ -34,7 +35,7 @@ public class AdminService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void executeSqlFile(String sqlFilePath) throws Exception {
+    public void executeSqlFile(String sqlFilePath) throws SQLException, IOException {
         try ( // try-with-resources 구문을 사용하여 자동으로 close() 메서드를 호출
               Connection conn = dataSource.getConnection();
               BufferedReader reader = new BufferedReader(new InputStreamReader(

@@ -32,7 +32,6 @@ public class QnaService {
         return sessionProvider.getSession().getAttribute(hashQseq(qseq)) != null;
     }
 
-
     /**
      * 문의글에 대한 인증 결과를 세션에 저장합니다
      *

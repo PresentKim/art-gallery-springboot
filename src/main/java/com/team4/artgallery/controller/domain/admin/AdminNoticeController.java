@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
@@ -36,7 +37,7 @@ public class AdminNoticeController {
             Pagination pagination,
 
             Model model
-    ) {
+    ) throws SqlException {
         pagination.setItemCount(noticeService.countNotices(filter))
                 .setUrlTemplate("/admin/notice?page=%d" + filter.getUrlParam());
 
@@ -64,7 +65,7 @@ public class AdminNoticeController {
             @NotEmpty(message = "소식지를 선택해주세요")
             @RequestParam(name = "nseqs", required = false)
             List<Integer> nseqs
-    ) {
+    ) throws SqlException {
         noticeService.deleteNotices(nseqs);
         return new ResponseDto("소식지 정보를 제거했습니다", ":reload");
     }

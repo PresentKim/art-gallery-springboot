@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.QnaService;
@@ -33,7 +34,7 @@ public class AdminQnaController {
             Pagination pagination,
 
             Model model
-    ) {
+    ) throws SqlException {
         pagination.setItemCount(qnaService.countInquiries(filter))
                 .setUrlTemplate("/admin/qna?page=%d" + filter.getUrlParam());
 
@@ -48,7 +49,7 @@ public class AdminQnaController {
             @Valid
             @NotEmpty(message = "문의글을 선택해주세요")
             @RequestParam(name = "qseqs", required = false) List<Integer> qseqs
-    ) {
+    ) throws SqlException {
         qnaService.deleteInquiries(qseqs);
         return new ResponseDto("문의글 정보를 제거했습니다", ":reload");
     }
