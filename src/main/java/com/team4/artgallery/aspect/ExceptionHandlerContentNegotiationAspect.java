@@ -51,7 +51,6 @@ public class ExceptionHandlerContentNegotiationAspect {
     public Object onAnnotation(ProceedingJoinPoint joinPoint) throws Throwable {
         // 메서드 실행 후 반환값을 가져옴
         Object result = joinPoint.proceed();
-        System.out.println("ExceptionHandlerContentNegotiationAspect: " + result);
 
         // 응답 상태 코드를 가져오기 위해 ResponseStatus 어노테이션 확인
         ResponseStatus statusAnnotation = ((MethodSignature) joinPoint.getSignature()).getMethod().getAnnotation(ResponseStatus.class);
