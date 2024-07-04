@@ -21,10 +21,7 @@ public class AdminRestController {
     @PostMapping("/reset")
     @ResponseStatus(HttpStatus.CREATED)
     public Object reset() throws Exception {
-        // 데이터베이스 초기화
         adminService.resetDatabase();
-
-        // 데이터베이스 초기화에 성공한 경우 성공 응답 반환
         return "데이터베이스가 초기화되었습니다.";
     }
 

@@ -2,6 +2,7 @@ package com.team4.artgallery.controller.domain.qna;
 
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.service.QnaService;
+import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -20,31 +21,29 @@ public class QnaViewController {
 
     @GetMapping({"", "/"})
     public String list(
-            @Valid @ModelAttribute("pagination") Pagination pagination,
+            @Valid
+            @ModelAttribute("pagination")
+            Pagination pagination,
+
             Model model
     ) {
-        pagination.setItemCount(qnaService.countInquiries(null))
-                .setUrlTemplate("/qna?page=%d");
-
+        pagination.setItemCount(qnaService.countInquiries(null)).setUrlTemplate("/qna?page=%d");
         model.addAttribute("qnaList", qnaService.getInquiries(null, pagination));
         return "qna/qnaList";
     }
 
     @GetMapping({"/{qseq}", "/view/{qseq}"})
-    public String view(@PathVariable(value = "qseq") Integer qseq, Model model, HttpSession session) {
-        // 문의글 정보가 없는 경우 404 페이지로 이동
+    public String view(
+            @PathVariable(value = "qseq")
+            Integer qseq,
+
+            Model model,
+            HttpSession session
+    ) {
         QnaDto qnaDto = qnaService.getInquiry(qseq);
-        if (qnaDto == null) {
-            return "util/404";
-        }
+        Assert.exists(qnaDto, "문의글 정보를 찾을 수 없습니다.");
+        Assert.trueOrUnauthorized(qnaService.authorizeForRestrict(session, qseq), "잘못된 접근입니다.");
 
-        // 접근 권한이 없는 경우 오류 메시지 출력
-        if (!qnaService.authorizeForRestrict(session, qseq)) {
-            model.addAttribute("message", "잘못된 접근입니다.");
-            return "util/alert";
-        }
-
-        // 문의글 조회 페이지로 이동
         model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         return "qna/qnaView";
     }
@@ -55,20 +54,17 @@ public class QnaViewController {
     }
 
     @GetMapping("/update")
-    public String update(@RequestParam(value = "qseq") Integer qseq, Model model, HttpSession session) {
-        // 문의글 정보가 없는 경우 404 페이지로 이동
+    public String update(
+            @RequestParam(value = "qseq")
+            Integer qseq,
+
+            Model model,
+            HttpSession session
+    ) {
         QnaDto qnaDto = qnaService.getInquiry(qseq);
-        if (qnaDto == null) {
-            return "util/404";
-        }
+        Assert.exists(qnaDto, "문의글 정보를 찾을 수 없습니다.");
+        Assert.trueOrUnauthorized(qnaService.authorizeForPersonal(session, qseq), "잘못된 접근입니다.");
 
-        // 접근 권한이 없는 경우 오류 메시지 출력
-        if (!qnaService.authorizeForPersonal(session, qseq)) {
-            model.addAttribute("message", "잘못된 접근입니다.");
-            return "util/alert";
-        }
-
-        // 문의글 수정 페이지로 이동
         model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         return "qna/qnaForm";
     }

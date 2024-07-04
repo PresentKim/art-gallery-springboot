@@ -22,8 +22,13 @@ public class ArtworkViewController {
 
     @GetMapping({"", "/"})
     public String list(
-            @Validated(ArtworkFilter.ExcludeDisplay.class) @ModelAttribute("filter") ArtworkFilter filter,
-            @Valid @ModelAttribute("pagination") Pagination pagination,
+            @Validated(ArtworkFilter.ExcludeDisplay.class)
+            @ModelAttribute("filter")
+            ArtworkFilter filter,
+            @Valid
+            @ModelAttribute("pagination")
+            Pagination pagination,
+
             Model model
     ) {
         filter.setIncludeDisplay(false);
@@ -33,14 +38,24 @@ public class ArtworkViewController {
     }
 
     @GetMapping({"/{aseq}", "/view/{aseq}"})
-    public String view(@PathVariable("aseq") int aseq, Model model) throws NotFoundException {
+    public String view(
+            @PathVariable("aseq")
+            Integer aseq,
+
+            Model model
+    ) throws NotFoundException {
         model.addAttribute("artworkDto", artworkService.getArtwork(aseq));
         return "artwork/artworkView";
     }
 
     @CheckAdmin
     @GetMapping("/update")
-    public String update(@RequestParam("aseq") Integer aseq, Model model) throws NotFoundException {
+    public String update(
+            @RequestParam("aseq")
+            Integer aseq,
+
+            Model model
+    ) throws NotFoundException {
         model.addAttribute("artworkDto", artworkService.getArtwork(aseq));
         return "artwork/artworkForm";
     }

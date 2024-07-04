@@ -4,17 +4,15 @@ import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.dto.ResponseBody;
 import com.team4.artgallery.service.GalleryService;
-import com.team4.artgallery.service.helper.ResponseService;
+import com.team4.artgallery.util.Assert;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.Delegate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -24,92 +22,79 @@ public class GalleryRestController {
 
     private final GalleryService galleryService;
 
-    @Delegate
-    private final ResponseService responseHelper;
-
     @CheckLogin
     @PostMapping("/update")
-    public ResponseEntity<?> update(
-            @Valid GalleryDto galleryDto,
-            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-            @LoginMember MemberDto loginMember
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseBody update(
+            @Valid
+            GalleryDto galleryDto,
+            @RequestParam(value = "imageFile", required = false)
+            MultipartFile imageFile,
+
+            @LoginMember
+            MemberDto loginMember
     ) {
-        // 갤러리 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
-        // 기존 정보가 있어야 UPDATE 쿼리를 실행할 수 있습니다.
         GalleryDto oldGallery = galleryService.getGallery(galleryDto.getGseq());
-        if (oldGallery == null) {
-            return notFound();
-        }
+        Assert.exists(oldGallery, "갤러리 정보를 찾을 수 없습니다.");
+        Assert.trueOrForbidden(loginMember.getId().equals(oldGallery.getAuthorId()), "작성자만 수정할 수 있습니다.");
 
-        // 작성자가 아닌 경우 요청 거부 결과 반환
-        if (!loginMember.getId().equals(oldGallery.getAuthorId())) {
-            return forbidden();
-        }
-
-        // 이미지 파일이 있을 경우 이미지 저장
+        // 이미지 파일이 있을 경우 이미지 저장, 이미지 파일이 없을 경우 기존 이미지 파일 정보를 가져옵니다.
         if (imageFile != null && !imageFile.isEmpty()) {
             galleryService.saveImage(imageFile, galleryDto);
         } else {
-            // 이미지 파일이 없을 경우 기존 이미지 파일 정보를 가져옵니다.
             galleryDto.setImage(oldGallery.getImage());
             galleryDto.setSavefilename(oldGallery.getSavefilename());
         }
 
-        // 갤러리 수정 실패 시 오류 결과 반환
-        if (galleryService.updateGallery(galleryDto) != 1) {
-            return internalServerError("갤러리 수정에 실패했습니다.");
-        }
+        galleryService.updateGallery(galleryDto);
 
-        // 갤러리 수정 성공 시 성공 결과 반환
-        return ok("갤러리가 수정되었습니다.", "/gallery/" + galleryDto.getGseq());
+        return new ResponseBody("갤러리가 수정되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
     @CheckLogin
     @PostMapping("/write")
-    public ResponseEntity<?> write(
-            @Valid GalleryDto galleryDto,
-            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-            @LoginMember MemberDto loginMember
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseBody write(
+            @Valid
+            GalleryDto galleryDto,
+            @Valid
+            @NotNull(message = "이미지 파일을 업로드해주세요.")
+            @RequestParam(value = "imageFile", required = false)
+            MultipartFile imageFile,
+
+            @LoginMember
+            MemberDto loginMember
     ) {
-        // 이미지 파일이 없을 경우 오류 결과 반환
-        if (imageFile == null || imageFile.isEmpty()) {
-            return badRequest("이미지 파일을 업로드해주세요.");
-        }
         galleryService.saveImage(imageFile, galleryDto);
 
-        // 작성자 ID 를 설정
+        // 작성자 아이디를 로그인 멤버 아이디로 설정
         galleryDto.setAuthorId(loginMember.getId());
+        galleryService.createGallery(galleryDto);
 
-        // 갤러리 작성 실패 시 오류 결과 반환
-        if (galleryService.createGallery(galleryDto) != 1) {
-            return internalServerError("갤러리 작성에 실패했습니다.");
-        }
-
-        // 갤러리 작성 성공 시 성공 결과 반환
-        return ok("갤러리가 작성되었습니다.", "/gallery/" + galleryDto.getGseq());
+        return new ResponseBody("갤러리가 작성되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
     @CheckLogin
     @PostMapping("/delete")
-    public ResponseEntity<?> delete(@RequestParam(value = "gseq") Integer gseq, @LoginMember MemberDto loginMember) {
-        // 갤러리 정보를 가져올 수 없는 경우 NOT FOUND 결과 반환
-        GalleryDto galleryDto = galleryService.getGallery(gseq);
-        if (galleryDto == null) {
-            return notFound();
-        }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseBody delete(
+            @RequestParam(value = "gseq")
+            Integer gseq,
 
-        // 작성자 혹은 관리자가 아닌 경우 요청 거부 결과 반환
-        if (!loginMember.getId().equals(galleryDto.getAuthorId()) && !loginMember.isAdmin()) {
-            return forbidden();
-        }
+            @LoginMember
+            MemberDto loginMember
+    ) {
+        GalleryDto oldGallery = galleryService.getGallery(gseq);
+        Assert.exists(oldGallery, "갤러리 정보를 찾을 수 없습니다.");
 
-        // 갤러리 삭제 실패 시 오류 결과 반환
-        if (galleryService.deleteGallery(gseq) != 1) {
-            return badRequest("갤러리 삭제에 실패했습니다.");
-        }
+        Assert.trueOrForbidden(
+                loginMember.getId().equals(oldGallery.getAuthorId()) || loginMember.isAdmin(),
+                "작성자 혹은 관리자만 삭제할 수 있습니다."
+        );
 
-        // 갤러리 삭제 성공 시 성공 결과 반환
-        return ok("갤러리가 삭제되었습니다.", "/gallery");
+        galleryService.deleteGallery(gseq);
+
+        return new ResponseBody("갤러리가 삭제되었습니다.", "/gallery");
     }
 
 }

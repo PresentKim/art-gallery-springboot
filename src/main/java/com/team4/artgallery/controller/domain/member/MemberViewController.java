@@ -26,7 +26,9 @@ public class MemberViewController {
 
     @GetMapping("/login")
     public String login(
-            @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
+            @RequestParam(value = "returnUrl", defaultValue = "/")
+            String returnUrl,
+
             HttpSession session,
             Model model
     ) {
@@ -35,14 +37,15 @@ public class MemberViewController {
             return "redirect:" + returnUrl;
         }
 
-        // 로그인 페이지로 이동 (returnUrl 전달)
         model.addAttribute("returnUrl", returnUrl);
         return "member/loginForm";
     }
 
     @GetMapping("/contract")
     public String contract(
-            @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
+            @RequestParam(value = "returnUrl", defaultValue = "/")
+            String returnUrl,
+
             HttpSession session,
             Model model
     ) {
@@ -51,14 +54,15 @@ public class MemberViewController {
             return "redirect:" + returnUrl;
         }
 
-        // 이용약관 페이지로 이동 (returnUrl 전달)
         model.addAttribute("returnUrl", returnUrl);
         return "member/contract";
     }
 
     @GetMapping("/join")
     public String join(
-            @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
+            @RequestParam(value = "returnUrl", defaultValue = "/")
+            String returnUrl,
+
             HttpSession session,
             Model model
     ) {
@@ -67,7 +71,6 @@ public class MemberViewController {
             return "redirect:" + returnUrl;
         }
 
-        // 회원가입 페이지로 이동 (returnUrl 전달)
         model.addAttribute("returnUrl", returnUrl);
         return "member/joinForm";
     }
@@ -75,24 +78,23 @@ public class MemberViewController {
     @CheckLogin("/member/mypage")
     @GetMapping("/mypage")
     public String mypage() {
-        // 마이페이지로 이동
         return "member/mypage/index";
     }
 
     @CheckLogin("/member/mypage/edit")
     @GetMapping("/mypage/edit")
     public String mypageEdit() {
-        // 회원 정보 수정 페이지로 이동
         return "member/mypage/mypageEditForm";
     }
 
     @CheckLogin("/member/withdraw")
     @GetMapping("/withdraw")
     public String withdraw(
-            @RequestParam(value = "returnUrl", defaultValue = "/") String returnUrl,
+            @RequestParam(value = "returnUrl", defaultValue = "/")
+            String returnUrl,
+
             Model model
     ) {
-        // 회원 탈퇴 페이지로 이동 (returnUrl 전달)
         model.addAttribute("returnUrl", returnUrl);
         return "member/mypage/withdrawForm";
     }
@@ -100,11 +102,13 @@ public class MemberViewController {
     @CheckLogin("/member/mypage/favorite")
     @GetMapping("/mypage/favorite")
     public String favorite(
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
-            @LoginMember MemberDto loginMember,
+            @RequestParam(value = "page", defaultValue = "1")
+            Integer page,
+
+            @LoginMember
+            MemberDto loginMember,
             Model model
     ) {
-        // 관심 예술품 페이지로 이동
         Pagination.Pair<FavoriteDto> pair = favoriteService.getFavorites(loginMember.getId(), page);
         model.addAttribute("artworkList", pair.list());
         model.addAttribute("pagination", pair.pagination());

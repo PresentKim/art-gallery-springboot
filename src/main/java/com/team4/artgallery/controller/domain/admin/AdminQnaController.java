@@ -6,6 +6,7 @@ import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.service.helper.ResponseService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +29,15 @@ public class AdminQnaController {
 
     @GetMapping({"", "/"})
     public String list(
-            @ModelAttribute("filter") QnaFilter filter,
-            @Valid @ModelAttribute("pagination") Pagination pagination,
+            @Valid
+            @ModelAttribute("filter")
+            QnaFilter filter,
+            @Valid
+            @ModelAttribute("pagination")
+            Pagination pagination,
+
             Model model
     ) {
-        // 검색 조건에 따라 문의글 목록을 가져옵니다.
         pagination.setItemCount(qnaService.countInquiries(filter))
                 .setUrlTemplate("/admin/qna?page=%d" + filter.getUrlParam());
 
@@ -41,19 +46,12 @@ public class AdminQnaController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> delete(@RequestParam(value = "qseqs", required = false) List<Integer> qseqs) {
-        // qseqs 값이 없는 경우 요청 거부 결과 반환
-        if (qseqs == null || qseqs.isEmpty()) {
-            return badRequest("문의글을 선택해주세요");
-        }
-
-        // 문의글 정보 제거에 실패한 경우 실패 결과 반환
-        if (qnaService.deleteInquiries(qseqs) == 0) {
-            return badRequest("문의글 정보 제거에 실패했습니다");
-        }
-
-        // 문의글 정보 제거에 성공한 경우 성공 결과 반환 (페이지 새로고침)
-        // TODO: 새고로침 없이 HTML 요소를 변경하는 방법으로 수정
+    public ResponseEntity<?> delete(
+            @Valid
+            @NotEmpty(message = "문의글을 선택해주세요")
+            @RequestParam(value = "qseqs", required = false) List<Integer> qseqs
+    ) {
+        qnaService.deleteInquiries(qseqs);
         return ok("문의글 정보를 제거했습니다", ":reload");
     }
 
