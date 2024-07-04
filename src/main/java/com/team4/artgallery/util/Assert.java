@@ -1,5 +1,8 @@
 package com.team4.artgallery.util;
 
+import com.team4.artgallery.controller.exception.ForbiddenException;
+import com.team4.artgallery.controller.exception.NotFoundException;
+import com.team4.artgallery.controller.exception.UnauthorizedException;
 import lombok.experimental.UtilityClass;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +12,39 @@ import java.util.function.Function;
 
 @UtilityClass
 public class Assert {
+
+    /**
+     * 값이 true가 아닌 경우 {@link ForbiddenException} 예외를 발생시킵니다.
+     *
+     * @param message 예외 메시지
+     * @throws ForbiddenException 값이 true가 아닌 경우 예외 발생
+     * @see #isTrue(boolean, String, Function)
+     */
+    public void trueOrForbidden(boolean value, String message) throws ForbiddenException {
+        isTrue(value, message, ForbiddenException::new);
+    }
+
+    /**
+     * 값이 true가 아닌 경우 {@link UnauthorizedException} 예외를 발생시킵니다.
+     *
+     * @param message 예외 메시지
+     * @throws UnauthorizedException 값이 true가 아닌 경우 예외 발생
+     * @see #isTrue(boolean, String, Function)
+     */
+    public void trueOrUnauthorized(boolean value, String message) throws UnauthorizedException {
+        isTrue(value, message, UnauthorizedException::new);
+    }
+
+    /**
+     * 값이 비어있는 경우 {@link NotFoundException} 예외를 발생시킵니다.
+     *
+     * @param message 예외 메시지
+     * @throws NotFoundException 값이 비어있는 경우 예외 발생
+     * @see #notEmpty(Object, String, Function)
+     */
+    public void exists(Object value, String message) throws NotFoundException {
+        notEmpty(value, message, NotFoundException::new);
+    }
 
     /**
      * 값이 false가 아닌 경우 주어진 예외를 발생시킵니다.
