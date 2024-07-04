@@ -1,6 +1,8 @@
 package com.team4.artgallery.service;
 
 import com.team4.artgallery.controller.exception.FileException;
+import com.team4.artgallery.controller.exception.NotFoundException;
+import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dao.IArtworkDao;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
@@ -8,12 +10,9 @@ import com.team4.artgallery.service.helper.MultipartFileService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.javassist.NotFoundException;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -28,14 +27,13 @@ public class ArtworkService {
      * 예술품 정보를 수정합니다
      *
      * @param artworkDto 예술품 정보
-     * @throws NotFoundException   예술품 정보를 찾을 수 없는 경우 예외 발생
-     * @throws FileUploadException 이미지 저장에 실패한 경우 예외 발생
-     * @throws SQLException        예술품 등록에 실패한 경우 예외 발생
+     * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
+     * @throws FileException     이미지 저장에 실패한 경우 예외 발생
+     * @throws SqlException      예술품 등록에 실패한 경우 예외 발생
      */
-    public void createArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws Exception {
-        Assert.notEmpty(imageFile, "이미지 파일을 업로드해주세요.", FileUploadException::new);
-        Assert.isTrue(saveImage(imageFile, artworkDto), "이미지 저장에 실패했습니다.", FileUploadException::new);
-        Assert.notZero(artworkDao.createArtwork(artworkDto), "예술품 등록에 실패했습니다.", SQLException::new);
+    public void createArtwork(ArtworkDto artworkDto, MultipartFile imageFile) {
+        saveImage(imageFile, artworkDto);
+        artworkDao.createArtwork(artworkDto);
     }
 
     /**
@@ -140,7 +138,6 @@ public class ArtworkService {
     private void saveImage(MultipartFile file, ArtworkDto artworkDto) throws FileException {
         // 이미지 파일을 저장하고 저장된 파일 이름을 ArtworkDto 객체에 저장합니다.
         MultipartFileService.FileNamePair pair = fileService.saveFile(file, "/static/image/artwork");
-
         artworkDto.setImage(pair.fileName());
         artworkDto.setSavefilename(pair.saveFileName());
     }
