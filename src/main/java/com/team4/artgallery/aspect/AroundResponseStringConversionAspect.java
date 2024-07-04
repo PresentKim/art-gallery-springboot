@@ -18,8 +18,9 @@ import java.net.URI;
  *
  * @apiNote {@link RestController} 어노테이션이 달린 메소드가 호출될 때 반환 값을 변환해 반환합니다.
  * <ul>
- * <li>{@code String} : 반환 값을 {@code message}값으로 {@link ResponseBody} 객체를 생성해 반환</li>
- * <li>{@code URI} : 반환 값을 {@code url}값으로 {@link ResponseBody} 객체를 생성해 반환</li>
+ *     <li>{@code String} : 반환 값을 {@code message}값으로 {@link ResponseBody} 객체를 생성해 반환</li>
+ *     <li>{@code URI} : 반환 값을 {@code url}값으로 {@link ResponseBody} 객체를 생성해 반환</li>
+ * </ul>
  */
 @Aspect
 @Order(1)
