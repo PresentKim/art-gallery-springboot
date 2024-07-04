@@ -5,7 +5,6 @@ import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.helper.SessionService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
@@ -20,7 +19,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  *
  * @implNote {@link LoginMember} 어노테이션이 붙은 매개변수에 로그인한 회원 정보를 주입합니다.
  * <p>
- * 세션이 없거나 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
+ * 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
  */
 @Component
 @RequiredArgsConstructor
@@ -46,7 +45,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
      *
      * @implNote 로그인 정보가 존재하는 경우 로그인한 회원 정보{@link MemberDto}를 반환합니다.
      * <p>
-     * 세션이 없거나 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
+     * 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
      */
     @Override
     public Object resolveArgument(
@@ -55,14 +54,13 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
             @NonNull NativeWebRequest webRequest,
             WebDataBinderFactory binderFactory
     ) {
-        // 세션이 없거나 로그인하지 않은 경우 NotLoginException 예외 발생
-        HttpSession session = sessionService.getSession();
-        if (session == null || !memberService.isLogin(session)) {
+        // 로그인하지 않은 경우 NotLoginException 예외 발생
+        if (!memberService.isLogin()) {
             throw new NotLoginException();
         }
 
         // 로그인한 회원 정보를 반환합니다.
-        return memberService.getLoginMember(session);
+        return memberService.getLoginMember();
     }
 
 }

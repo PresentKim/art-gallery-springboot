@@ -3,8 +3,6 @@ package com.team4.artgallery.aspect;
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.service.MemberService;
-import com.team4.artgallery.service.helper.SessionService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,7 +23,6 @@ import org.springframework.stereotype.Component;
 public class CheckLoginAspect {
 
     private final MemberService memberService;
-    private final SessionService sessionService;
 
     /**
      * {@code @annotation}을 통해 메서드에 붙은 {@link CheckLogin} 어노테이션을 받아
@@ -58,11 +55,10 @@ public class CheckLoginAspect {
     /**
      * CheckLogin 어노테이션을 처리하는 메서드입니다.
      * <p>
-     * 세션이 없거나 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
+     * 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
      */
     private void checkLogin(JoinPoint joinPoint, CheckLogin annotation) {
-        HttpSession session = sessionService.getSession();
-        if (session == null || !memberService.isLogin(session)) {
+        if (!memberService.isLogin()) {
             // 동적인 returnUrl을 생성하기 위해 파라미터 이름과 값을 가져옵니다.
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             String[] paramNames = signature.getParameterNames();

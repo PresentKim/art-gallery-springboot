@@ -2,7 +2,7 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IQnaDao;
 import com.team4.artgallery.dto.QnaDto;
-import jakarta.servlet.http.HttpSession;
+import com.team4.artgallery.service.helper.SessionService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,8 @@ public class QnaService {
 
     private final MemberService memberService;
 
+    private final SessionService sessionService;
+
     private String hashQseq(int qseq) {
         return "qnaHash" + qseq;
     }
@@ -23,35 +25,32 @@ public class QnaService {
     /**
      * 문의글에 대한 인증 결과가 세션에 저장되어 있는지 확인합니다.
      *
-     * @param session 세션 객체
-     * @param qseq    문의글 번호
+     * @param qseq 문의글 번호
      * @return 인증 결과가 세션에 저장되어 있으면 true, 그렇지 않으면 false
      */
-    public boolean isAuthorized(HttpSession session, int qseq) {
-        return session.getAttribute(hashQseq(qseq)) != null;
+    public boolean isAuthorized(int qseq) {
+        return sessionService.getSession().getAttribute(hashQseq(qseq)) != null;
     }
 
 
     /**
      * 문의글에 대한 인증 결과를 세션에 저장합니다
      *
-     * @param session 세션 객체
-     * @param qseq    문의글 번호
+     * @param qseq 문의글 번호
      */
-    public void authorize(HttpSession session, int qseq) {
-        session.setAttribute(hashQseq(qseq), true);
+    public void authorize(int qseq) {
+        sessionService.getSession().setAttribute(hashQseq(qseq), true);
     }
 
     /**
      * 비밀번호를 이용해 문의글에 대한 인증을 처리합니다
      *
-     * @param session 세션 객체
-     * @param qseq    문의글 번호
-     * @param pwd     문의글 비밀번호
+     * @param qseq 문의글 번호
+     * @param pwd  문의글 비밀번호
      * @return 인증 성공 시 true, 실패 시 false
      */
-    public boolean authorizeWithPwd(HttpSession session, int qseq, String pwd) {
-        if (isAuthorized(session, qseq)) {
+    public boolean authorizeWithPwd(int qseq, String pwd) {
+        if (isAuthorized(qseq)) {
             return true;
         }
 
@@ -60,7 +59,7 @@ public class QnaService {
             return false;
         }
 
-        authorize(session, qseq);
+        authorize(qseq);
         return true;
     }
 
@@ -69,8 +68,8 @@ public class QnaService {
      * <p>
      * PERSONAL(개인) : 작성자만 접근 가능
      */
-    public boolean authorizeForPersonal(HttpSession session, int qseq) {
-        return isAuthorized(session, qseq);
+    public boolean authorizeForPersonal(int qseq) {
+        return isAuthorized(qseq);
     }
 
     /**
@@ -78,8 +77,8 @@ public class QnaService {
      * <p>
      * PRIVILEGE(허가) : 작성자 및 관리자만 접근 가능
      */
-    public boolean authorizeForPrivilege(HttpSession session, int qseq) {
-        return authorizeForPersonal(session, qseq) || memberService.isAdmin(session);
+    public boolean authorizeForPrivilege(int qseq) {
+        return authorizeForPersonal(qseq) || memberService.isAdmin();
     }
 
     /**
@@ -87,8 +86,8 @@ public class QnaService {
      * <p>
      * RESTRICT(제한) : 공개글이거나 작성자 및 관리자만 접근 가능
      */
-    public boolean authorizeForRestrict(HttpSession session, int qseq) {
-        return authorizeForPrivilege(session, qseq) || qnaDao.getInquiry(qseq).isDisplay();
+    public boolean authorizeForRestrict(int qseq) {
+        return authorizeForPrivilege(qseq) || qnaDao.getInquiry(qseq).isDisplay();
     }
 
 }

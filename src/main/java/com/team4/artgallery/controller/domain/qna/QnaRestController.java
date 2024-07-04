@@ -6,7 +6,6 @@ import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Assert;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,12 +25,10 @@ public class QnaRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDto write(
             @Valid
-            QnaDto qnaDto,
-
-            HttpSession session
+            QnaDto qnaDto
     ) {
         qnaService.createInquiry(qnaDto);
-        qnaService.authorize(session, qnaDto.getQseq());
+        qnaService.authorize(qnaDto.getQseq());
         return new ResponseDto("문의글 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
     }
 
@@ -39,13 +36,11 @@ public class QnaRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDto update(
             @Valid
-            QnaDto qnaDto,
-
-            HttpSession session
+            QnaDto qnaDto
     ) {
         int qseq = qnaDto.getQseq();
         Assert.exists(qnaService.getInquiry(qseq), "문의글 정보를 찾을 수 없습니다.");
-        Assert.trueOrUnauthorized(qnaService.authorizeForPersonal(session, qseq), "접근 권한이 없습니다.");
+        Assert.trueOrUnauthorized(qnaService.authorizeForPersonal(qseq), "접근 권한이 없습니다.");
 
         qnaService.updateInquiry(qnaDto);
         return new ResponseDto("문의 수정이 완료되었습니다.", "/qna/" + qseq);
@@ -73,24 +68,22 @@ public class QnaRestController {
             @RequestParam(name = "mode")
             String mode,
             @RequestParam(name = "pwd", required = false)
-            String pwd,
-
-            HttpSession session
+            String pwd
     ) throws Exception {
         switch (mode) {
             case "view":
-                if (qnaService.authorizeForRestrict(session, qseq)) {
+                if (qnaService.authorizeForRestrict(qseq)) {
                     return new URI("/qna/" + qseq);
                 }
                 break;
             case "delete":
-                if (qnaService.authorizeForPrivilege(session, qseq)) {
+                if (qnaService.authorizeForPrivilege(qseq)) {
                     qnaService.deleteInquiry(qseq);
                     return new ResponseDto("문의글이 삭제되었습니다.", "/qna");
                 }
                 break;
             case "update":
-                if (qnaService.authorizeForPersonal(session, qseq)) {
+                if (qnaService.authorizeForPersonal(qseq)) {
                     return new URI("/qna/update/" + qseq);
                 }
                 break;
@@ -99,9 +92,9 @@ public class QnaRestController {
         }
 
         Assert.trueOrUnauthorized(pwd != null && !pwd.trim().isEmpty(), "비밀번호를 입력해주세요.");
-        Assert.isTrue(qnaService.authorizeWithPwd(session, qseq, pwd), "비밀번호가 일치하지 않습니다.", BadRequestException::new);
+        Assert.isTrue(qnaService.authorizeWithPwd(qseq, pwd), "비밀번호가 일치하지 않습니다.", BadRequestException::new);
 
-        return authorize(qseq, mode, null, session);
+        return authorize(qseq, mode, null);
     }
 
 }

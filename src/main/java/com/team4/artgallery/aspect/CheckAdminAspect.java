@@ -3,8 +3,6 @@ package com.team4.artgallery.aspect;
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.aspect.exception.NotAdminException;
 import com.team4.artgallery.service.MemberService;
-import com.team4.artgallery.service.helper.SessionService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -23,7 +21,6 @@ import org.springframework.stereotype.Component;
 public class CheckAdminAspect {
 
     private final MemberService memberService;
-    private final SessionService sessionService;
 
     /**
      * {@code @annotation}을 통해 메서드에 붙은 {@link CheckAdmin} 어노테이션을 받아
@@ -59,11 +56,10 @@ public class CheckAdminAspect {
     /**
      * {@link CheckAdmin} 어노테이션을 처리하는 메서드입니다.
      * <p>
-     * 세션이 없거나 관리자가 아닌 경우 {@link NotAdminException} 예외를 발생시킵니다.
+     * 관리자가 아닌 경우 {@link NotAdminException} 예외를 발생시킵니다.
      */
     private void checkAdmin(CheckAdmin annotation) {
-        HttpSession session = sessionService.getSession();
-        if (session == null || !memberService.isAdmin(session)) {
+        if (!memberService.isAdmin()) {
             throw new NotAdminException();
         }
     }

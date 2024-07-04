@@ -10,7 +10,6 @@ import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Assert;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -34,14 +33,12 @@ public class MemberRestController {
             @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
             @Validated(MemberDto.OnLogin.class)
-            MemberDto loginForm,
-
-            HttpSession session
+            MemberDto loginForm
     ) throws Exception {
-        Assert.isFalse(memberService.isLogin(session), "이미 로그인 상태입니다.", BadRequestException::new);
+        Assert.isFalse(memberService.isLogin(), "이미 로그인 상태입니다.", BadRequestException::new);
 
         Assert.trueOrUnauthorized(
-                memberService.login(session, loginForm.getId(), loginForm.getPwd()),
+                memberService.login(loginForm.getId(), loginForm.getPwd()),
                 "ID 혹은 비밀번호가 일치하지 않습니다."
         );
 
@@ -53,11 +50,9 @@ public class MemberRestController {
     @PostMapping("/logout")
     public ResponseDto logout(
             @RequestParam(name = "returnUrl", defaultValue = "/")
-            String returnUrl,
-
-            HttpSession session
+            String returnUrl
     ) {
-        memberService.logout(session);
+        memberService.logout();
         return new ResponseDto("로그아웃에 성공하였습니다", returnUrl);
     }
 
@@ -96,8 +91,7 @@ public class MemberRestController {
             MemberDto memberDto,
 
             @LoginMember
-            MemberDto loginMember,
-            HttpSession session
+            MemberDto loginMember
     ) {
         // 로그인 회원의 ID 를 수정할 수 없도록 설정
         memberDto.setId(loginMember.getId());
@@ -108,7 +102,7 @@ public class MemberRestController {
         }
 
         memberService.updateMember(memberDto);
-        memberService.setLoginMember(session, memberDto);
+        memberService.setLoginMember(memberDto);
         return new ResponseDto("회원정보 수정에 성공하였습니다.", "/member/mypage");
     }
 
@@ -122,11 +116,10 @@ public class MemberRestController {
             String pwd,
 
             @LoginMember
-            MemberDto loginMember,
-            HttpSession session
+            MemberDto loginMember
     ) {
         Assert.trueOrUnauthorized(loginMember.getPwd().equals(pwd), "ID 혹은 비밀번호가 일치하지 않습니다.");
-        Assert.isTrue(memberService.logout(session), "로그아웃에 실패하였습니다.", InternalServerErrorException::new);
+        Assert.isTrue(memberService.logout(), "로그아웃에 실패하였습니다.", InternalServerErrorException::new);
 
         memberService.deleteMember(loginMember.getId());
 

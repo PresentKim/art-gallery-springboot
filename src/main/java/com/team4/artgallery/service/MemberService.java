@@ -2,7 +2,7 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IMemberDao;
 import com.team4.artgallery.dto.MemberDto;
-import jakarta.servlet.http.HttpSession;
+import com.team4.artgallery.service.helper.SessionService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,8 @@ public class MemberService {
     @Delegate
     private final IMemberDao memberDao;
 
+    private final SessionService sessionService;
+
     /**
      * 주어진 ID에 해당하는 회원이 존재하는지 확인한다.
      *
@@ -30,74 +32,68 @@ public class MemberService {
     /**
      * 세션에 저장된 회원 정보를 반환한다.
      *
-     * @param session 세션 객체
      * @return 세션에 저장된 회원 정보, 없으면 null
      */
-    public MemberDto getLoginMember(HttpSession session) {
-        return (MemberDto) session.getAttribute("loginMember");
+    public MemberDto getLoginMember() {
+        return (MemberDto) sessionService.getSession().getAttribute("loginMember");
     }
 
     /**
      * 세션에 회원 정보를 저장한다.
      *
-     * @param session   세션 객체
      * @param memberDto 저장할 회원 정보
      */
-    public void setLoginMember(HttpSession session, MemberDto memberDto) {
-        session.setAttribute("loginMember", memberDto);
+    public void setLoginMember(MemberDto memberDto) {
+        sessionService.getSession().setAttribute("loginMember", memberDto);
     }
 
     /**
      * 세션에 저장된 회원 정보가 있는지 확인한다.
      *
-     * @param session 세션 객체
      * @return 로그인 상태이면 true, 그렇지 않으면 false
      */
-    public boolean isLogin(HttpSession session) {
-        return getLoginMember(session) != null;
+    public boolean isLogin() {
+        return getLoginMember() != null;
     }
 
     /**
      * 세션에 저장된 회원 정보가 관리자인지 확인한다.
      *
-     * @param session 세션 객체
      * @return 관리자이면 true, 그렇지 않으면 false
      */
-    public boolean isAdmin(HttpSession session) {
-        MemberDto memberDto = getLoginMember(session);
+    public boolean isAdmin() {
+        MemberDto memberDto = getLoginMember();
         return memberDto != null && memberDto.isAdmin();
     }
 
     /**
      * 주어진 ID와 비밀번호로 로그인을 시도한다.
      *
-     * @param session 세션 객체
-     * @param id      로그인 시도할 ID
-     * @param pwd     로그인 시도할 비밀번호
+     * @param id  로그인 시도할 ID
+     * @param pwd 로그인 시도할 비밀번호
      * @return 로그인 성공 시 true, 그렇지 않으면 false
      */
-    public boolean login(HttpSession session, String id, String pwd) {
+    public boolean login(String id, String pwd) {
         MemberDto memberDto = memberDao.getMember(id);
         if (memberDto == null || !memberDto.getPwd().equals(pwd)) {
             return false;
         }
 
-        setLoginMember(session, memberDto);
+        setLoginMember(memberDto);
         return true;
     }
 
     /**
      * 로그아웃을 시도한다.
      *
-     * @param session 세션 객체
      * @return 로그아웃 성공 시 true, 그렇지 않으면 false
      */
-    public boolean logout(HttpSession session) {
-        if (!isLogin(session)) {
+    public boolean logout() {
+        if (!isLogin()) {
             return false;
         }
 
-        session.removeAttribute("loginMember");
+        sessionService.getSession().removeAttribute("loginMember");
         return true;
     }
 

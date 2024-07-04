@@ -7,7 +7,6 @@ import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -53,13 +52,12 @@ public class NoticeViewController {
             @PathVariable(name = "nseq")
             Integer nseq,
 
-            HttpSession session,
             Model model
     ) {
         NoticeDto noticeDto = noticeService.getNotice(nseq);
         Assert.exists(noticeDto, "소식지 정보를 찾을 수 없습니다.");
 
-        noticeService.markAsRead(session, nseq);
+        noticeService.markAsRead(nseq);
 
         model.addAttribute("noticeDto", noticeDto);
         return "notice/noticeView";

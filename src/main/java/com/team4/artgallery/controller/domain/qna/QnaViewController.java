@@ -4,7 +4,6 @@ import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -40,12 +39,11 @@ public class QnaViewController {
             @PathVariable(name = "qseq")
             Integer qseq,
 
-            Model model,
-            HttpSession session
+            Model model
     ) {
         QnaDto qnaDto = qnaService.getInquiry(qseq);
         Assert.exists(qnaDto, "문의글 정보를 찾을 수 없습니다.");
-        Assert.trueOrUnauthorized(qnaService.authorizeForRestrict(session, qseq), "잘못된 접근입니다.");
+        Assert.trueOrUnauthorized(qnaService.authorizeForRestrict(qseq), "잘못된 접근입니다.");
 
         model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         return "qna/qnaView";
@@ -61,12 +59,11 @@ public class QnaViewController {
             @PathVariable(name = "qseq")
             Integer qseq,
 
-            Model model,
-            HttpSession session
+            Model model
     ) {
         QnaDto qnaDto = qnaService.getInquiry(qseq);
         Assert.exists(qnaDto, "문의글 정보를 찾을 수 없습니다.");
-        Assert.trueOrUnauthorized(qnaService.authorizeForPersonal(session, qseq), "잘못된 접근입니다.");
+        Assert.trueOrUnauthorized(qnaService.authorizeForPersonal(qseq), "잘못된 접근입니다.");
 
         model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         return "qna/qnaForm";

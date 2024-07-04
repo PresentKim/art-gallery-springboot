@@ -8,7 +8,6 @@ import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -48,13 +47,12 @@ public class GalleryViewController {
             @PathVariable(name = "gseq")
             Integer gseq,
 
-            HttpSession session,
             Model model
     ) {
         GalleryDto galleryDto = galleryService.getGallery(gseq);
         Assert.exists(galleryDto, "갤러리 정보를 찾을 수 없습니다.");
 
-        galleryService.markAsRead(session, gseq);
+        galleryService.markAsRead(gseq);
 
         model.addAttribute("galleryDto", galleryDto);
         return "gallery/galleryView";

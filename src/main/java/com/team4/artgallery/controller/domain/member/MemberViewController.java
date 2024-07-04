@@ -7,7 +7,6 @@ import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Pagination;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -29,11 +28,10 @@ public class MemberViewController {
             @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
 
-            HttpSession session,
             Model model
     ) {
         // 이미 로그인 상태라면 returnUrl 으로 리다이렉트
-        if (memberService.isLogin(session)) {
+        if (memberService.isLogin()) {
             return "redirect:" + returnUrl;
         }
 
@@ -46,11 +44,10 @@ public class MemberViewController {
             @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
 
-            HttpSession session,
             Model model
     ) {
         // 이미 로그인 상태라면 returnUrl 로 리다이렉트
-        if (memberService.isLogin(session)) {
+        if (memberService.isLogin()) {
             return "redirect:" + returnUrl;
         }
 
@@ -63,11 +60,10 @@ public class MemberViewController {
             @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
 
-            HttpSession session,
             Model model
     ) {
         // 이미 로그인 상태라면 returnUrl 로 리다이렉트
-        if (memberService.isLogin(session)) {
+        if (memberService.isLogin()) {
             return "redirect:" + returnUrl;
         }
 
