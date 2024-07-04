@@ -1,7 +1,7 @@
 package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.INoticeDao;
-import com.team4.artgallery.service.helper.SessionService;
+import com.team4.artgallery.service.helper.SessionProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ public class NoticeService {
     @Delegate
     private final INoticeDao noticeDao;
 
-    private final SessionService sessionService;
+    private final SessionProvider sessionProvider;
 
     private String hashNseq(int nseq) {
         return "noticeHash" + nseq;
@@ -26,7 +26,7 @@ public class NoticeService {
      * @return 조회 기록이세션에 저장되어 있으면 true, 그렇지 않으면 false
      */
     public boolean checkReadStatus(int nseq) {
-        return sessionService.getSession().getAttribute(hashNseq(nseq)) != null;
+        return sessionProvider.getSession().getAttribute(hashNseq(nseq)) != null;
     }
 
     /**
@@ -47,7 +47,7 @@ public class NoticeService {
 
         // 소식지의 조회수를 증가시키고, 소식지를 읽은 것으로 처리
         noticeDao.increaseReadCount(nseq);
-        sessionService.getSession().setAttribute(hashNseq(nseq), true);
+        sessionProvider.getSession().setAttribute(hashNseq(nseq), true);
     }
 
 }

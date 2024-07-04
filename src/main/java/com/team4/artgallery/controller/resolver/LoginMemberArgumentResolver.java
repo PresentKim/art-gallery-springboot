@@ -4,7 +4,7 @@ import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.MemberService;
-import com.team4.artgallery.service.helper.SessionService;
+import com.team4.artgallery.service.helper.SessionProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
@@ -26,7 +26,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final MemberService memberService;
-    private final SessionService sessionService;
+    private final SessionProvider sessionProvider;
 
     /**
      * 주어진 메소드 매개변수가 이 리졸버에서 지원되는지 여부를 반환

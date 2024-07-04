@@ -2,7 +2,7 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IQnaDao;
 import com.team4.artgallery.dto.QnaDto;
-import com.team4.artgallery.service.helper.SessionService;
+import com.team4.artgallery.service.helper.SessionProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class QnaService {
 
     private final MemberService memberService;
 
-    private final SessionService sessionService;
+    private final SessionProvider sessionProvider;
 
     private String hashQseq(int qseq) {
         return "qnaHash" + qseq;
@@ -29,7 +29,7 @@ public class QnaService {
      * @return 인증 결과가 세션에 저장되어 있으면 true, 그렇지 않으면 false
      */
     public boolean isAuthorized(int qseq) {
-        return sessionService.getSession().getAttribute(hashQseq(qseq)) != null;
+        return sessionProvider.getSession().getAttribute(hashQseq(qseq)) != null;
     }
 
 
@@ -39,7 +39,7 @@ public class QnaService {
      * @param qseq 문의글 번호
      */
     public void authorize(int qseq) {
-        sessionService.getSession().setAttribute(hashQseq(qseq), true);
+        sessionProvider.getSession().setAttribute(hashQseq(qseq), true);
     }
 
     /**

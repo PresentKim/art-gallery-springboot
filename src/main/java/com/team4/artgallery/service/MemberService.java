@@ -2,7 +2,7 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.dao.IMemberDao;
 import com.team4.artgallery.dto.MemberDto;
-import com.team4.artgallery.service.helper.SessionService;
+import com.team4.artgallery.service.helper.SessionProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class MemberService {
     @Delegate
     private final IMemberDao memberDao;
 
-    private final SessionService sessionService;
+    private final SessionProvider sessionProvider;
 
     /**
      * 주어진 ID에 해당하는 회원이 존재하는지 확인한다.
@@ -35,7 +35,7 @@ public class MemberService {
      * @return 세션에 저장된 회원 정보, 없으면 null
      */
     public MemberDto getLoginMember() {
-        return (MemberDto) sessionService.getSession().getAttribute("loginMember");
+        return (MemberDto) sessionProvider.getSession().getAttribute("loginMember");
     }
 
     /**
@@ -44,7 +44,7 @@ public class MemberService {
      * @param memberDto 저장할 회원 정보
      */
     public void setLoginMember(MemberDto memberDto) {
-        sessionService.getSession().setAttribute("loginMember", memberDto);
+        sessionProvider.getSession().setAttribute("loginMember", memberDto);
     }
 
     /**
@@ -93,7 +93,7 @@ public class MemberService {
             return false;
         }
 
-        sessionService.getSession().removeAttribute("loginMember");
+        sessionProvider.getSession().removeAttribute("loginMember");
         return true;
     }
 

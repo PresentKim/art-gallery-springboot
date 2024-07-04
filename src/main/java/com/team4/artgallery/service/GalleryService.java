@@ -4,7 +4,7 @@ import com.team4.artgallery.controller.exception.FileException;
 import com.team4.artgallery.dao.IGalleryDao;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.service.helper.MultipartFileService;
-import com.team4.artgallery.service.helper.SessionService;
+import com.team4.artgallery.service.helper.SessionProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class GalleryService {
 
     private final MultipartFileService fileService;
 
-    private final SessionService sessionService;
+    private final SessionProvider sessionProvider;
 
     private String hashGseq(int gseq) {
         return "galleryHash" + gseq;
@@ -32,7 +32,7 @@ public class GalleryService {
      * @return 조회 기록이세션에 저장되어 있으면 true, 그렇지 않으면 false
      */
     public boolean checkReadStatus(int gseq) {
-        return sessionService.getSession().getAttribute(hashGseq(gseq)) != null;
+        return sessionProvider.getSession().getAttribute(hashGseq(gseq)) != null;
     }
 
     /**
@@ -53,7 +53,7 @@ public class GalleryService {
 
         // 갤러리의 조회수를 증가시키고, 갤러리를 읽은 것으로 처리
         galleryDao.increaseReadCount(gseq);
-        sessionService.getSession().setAttribute(hashGseq(gseq), true);
+        sessionProvider.getSession().setAttribute(hashGseq(gseq), true);
     }
 
     /**
