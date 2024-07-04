@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @see <a href="https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Accept">Accept 요청 HTTP 헤더</a>
  */
 @Aspect
-@Order(999)
+@Order(-1)
 @Component
 @RequiredArgsConstructor
 public class ExceptionHandlerContentNegotiationAspect {
@@ -70,6 +70,7 @@ public class ExceptionHandlerContentNegotiationAspect {
 
         // application/json 요청이 아닌 경우 ModelAndView 로 변환
         ModelAndView modelAndView = new ModelAndView();
+        System.out.println("result: " + result);
         if (result instanceof ResponseBody responseBody) {
             String url = responseBody.getUrl();
             modelAndView.addObject("message", responseBody.getMessage());
