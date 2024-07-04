@@ -27,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
  * <p>{@link Autowired}를 통해 요청 객체를 주입받아 사용할 수 있지만,
  * 그냥 사용하면 동일한 요청 객체가 여러 요청에서 공유될 수 있습니다.
  * <p>
- * 이를 해결하기 위해 {@link RequestService} 클래스를 요청 스코프로 설정할 수 있습니다.
+ * 이를 해결하기 위해 {@link RequestProvider} 클래스를 요청 스코프로 설정할 수 있습니다.
  * 이렇게 하면 각 요청마다 새로운 인스턴스가 생성되고, 각 인스턴스는 고유한 객체를 가집니다.
  * <p>
  * 요청 스코프의 빈을 싱글톤 스코프의 빈에 주입하려면 {@link Scope#proxyMode} 값을 {@link ScopedProxyMode#TARGET_CLASS}로 설정해야 합니다.
@@ -38,7 +38,7 @@ import org.springframework.web.context.WebApplicationContext;
 @Scope(scopeName = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Getter
 @RequiredArgsConstructor
-public class RequestService {
+public class RequestProvider {
 
     private final HttpServletRequest request;
 

@@ -1,7 +1,7 @@
 package com.team4.artgallery.aspect;
 
 import com.team4.artgallery.dto.ResponseDto;
-import com.team4.artgallery.service.helper.RequestService;
+import com.team4.artgallery.service.helper.RequestProvider;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -31,7 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class ContentNegotiationExceptionHandlerAspect {
 
-    private final RequestService requestService;
+    private final RequestProvider requestProvider;
 
     /**
      * {@link ExceptionHandler} 어노테이션이 붙은 메소드가 호출될 때 요청 헤더의 ACCEPT 값에 따라 적절한 객체로 변환하여 반환합니다.
@@ -63,7 +63,7 @@ public class ContentNegotiationExceptionHandlerAspect {
         }
 
         // application/json 요청인 경우 그대로 반환
-        String acceptHeader = requestService.getRequest().getHeader(HttpHeaders.ACCEPT);
+        String acceptHeader = requestProvider.getRequest().getHeader(HttpHeaders.ACCEPT);
         if (acceptHeader != null && acceptHeader.contains(MediaType.APPLICATION_JSON_VALUE)) {
             return statusCode == null ? result : ResponseEntity.status(statusCode).body(result);
         }
