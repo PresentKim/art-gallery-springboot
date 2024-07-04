@@ -14,7 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(path = "/gallery", produces = MediaType.TEXT_HTML_VALUE)
@@ -57,10 +60,10 @@ public class GalleryViewController {
         return "gallery/galleryView";
     }
 
-    @CheckLogin("/gallery/update?gseq=${gseq}")
-    @GetMapping("/update")
+    @CheckLogin("/gallery/update/${gseq}")
+    @GetMapping("/update/{gseq}")
     public String update(
-            @RequestParam(value = "gseq")
+            @PathVariable(value = "gseq")
             Integer gseq,
 
             @LoginMember

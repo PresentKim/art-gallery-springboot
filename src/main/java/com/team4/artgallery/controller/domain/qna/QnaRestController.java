@@ -91,7 +91,7 @@ public class QnaRestController {
                 break;
             case "update":
                 if (qnaService.authorizeForPersonal(session, qseq)) {
-                    return new URI("/qna/update?qseq=" + qseq);
+                    return new URI("/qna/update/" + qseq);
                 }
                 break;
             default:

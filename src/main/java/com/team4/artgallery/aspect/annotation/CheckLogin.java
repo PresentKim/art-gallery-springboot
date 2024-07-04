@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * @apiNote 아래와 같이 로그인한 사용자만 접근 가능한 기능에 사용해 해당 요청을 로그인한 사용자만 사용할 수 있도록 합니다.
  * <blockquote><pre>
  * {@code @RequestMapping("/gallery/update")}
- * {@code @CheckLogin("/gallery/update?gseq=${gseq}")}
+ * {@code @CheckLogin("/gallery/update/${gseq}")}
  * public String update()
  * </pre></blockquote>
  * <p>

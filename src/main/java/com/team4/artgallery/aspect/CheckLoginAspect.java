@@ -69,7 +69,7 @@ public class CheckLoginAspect {
             Object[] args = joinPoint.getArgs();
 
             // CheckLogin 어노테이션 객체의 returnUrl 값을 가져와 ${파라미터 이름} 형식으로 작성된 파라미터 값으로 치환합니다.
-            // ex) /gallery/update?gseq=${gseq} -> /gallery/update?gseq=1
+            // ex) /gallery/update/${gseq} -> /gallery/update/1
             String returnUrl = annotation.value();
             for (int i = 0; i < paramNames.length; i++) {
                 String replacement = "${" + paramNames[i] + "}";

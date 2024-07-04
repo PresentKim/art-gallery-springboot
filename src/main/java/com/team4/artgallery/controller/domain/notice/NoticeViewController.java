@@ -13,7 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(path = "/notice", produces = MediaType.TEXT_HTML_VALUE)
@@ -63,9 +66,9 @@ public class NoticeViewController {
     }
 
     @CheckAdmin
-    @GetMapping("/update")
+    @GetMapping("/update/{nseq}")
     public String update(
-            @RequestParam(value = "nseq")
+            @PathVariable(value = "nseq")
             Integer nseq,
 
             Model model

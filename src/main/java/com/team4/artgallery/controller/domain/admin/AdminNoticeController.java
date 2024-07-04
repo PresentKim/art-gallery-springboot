@@ -53,7 +53,7 @@ public class AdminNoticeController {
             @Size(max = 1, message = "한 번에 하나의 소식지만 수정할 수 있습니다.")
             @RequestParam(value = "nseqs") List<Integer> nseqs
     ) throws URISyntaxException {
-        return new URI("/notice/update?nseq=" + nseqs.get(0));
+        return new URI("/notice/update/" + nseqs.get(0));
     }
 
     @PostMapping("/delete")

@@ -51,7 +51,7 @@ public class AdminArtworkController {
             @RequestParam(value = "aseqs")
             List<Integer> aseqs
     ) throws URISyntaxException {
-        return new URI("/artwork/update?aseq=" + aseqs.get(0));
+        return new URI("/artwork/update/" + aseqs.get(0));
     }
 
     @PostMapping("/delete")
