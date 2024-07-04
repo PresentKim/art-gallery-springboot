@@ -5,21 +5,25 @@ import com.team4.artgallery.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping(path = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
+@Controller
+@RequestMapping("/admin")
 @CheckAdmin
 @RequiredArgsConstructor
-public class AdminRestController {
+public class AdminController {
 
     private final AdminService adminService;
 
-    @PostMapping("/reset")
+    @GetMapping({"", "/"})
+    public String root() {
+        return "admin/adminMain";
+    }
+
+    @PostMapping(path = "/reset", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
     public Object reset() throws Exception {
         adminService.resetDatabase();
         return "데이터베이스가 초기화되었습니다.";
