@@ -38,13 +38,13 @@ public class Pagination {
     /**
      * 아이템의 총 갯수
      */
-    @Null(message = "잘못된 파라미터가 전달되었습니다") // 요청의 파라미터에서 설정될 수 없도록 설정
+    @Null(message = "itemCount 값은 설정할 수 없습니다") // 요청 파라미터의 바인딩을 방지
     private Integer itemCount;
 
     /**
      * 페이지의 URL 템플릿
      */
-    @Null(message = "잘못된 파라미터가 전달되었습니다") // 요청의 파라미터에서 설정될 수 없도록 설정
+    @Null(message = "urlTemplate 값은 설정할 수 없습니다") // 요청 파라미터의 바인딩을 방지
     private String urlTemplate;
 
     /**
