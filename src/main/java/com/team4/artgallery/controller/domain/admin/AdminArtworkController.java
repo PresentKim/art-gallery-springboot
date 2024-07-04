@@ -48,7 +48,7 @@ public class AdminArtworkController {
             @Valid
             @NotEmpty(message = "예술품을 선택해주세요.")
             @Size(max = 1, message = "한 번에 하나의 예술품만 수정할 수 있습니다.")
-            @RequestParam(value = "aseqs")
+            @RequestParam(name = "aseqs")
             List<Integer> aseqs
     ) throws URISyntaxException {
         return new URI("/artwork/update/" + aseqs.get(0));
@@ -60,7 +60,7 @@ public class AdminArtworkController {
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "예술품을 선택해주세요.")
-            @RequestParam(value = "aseqs", required = false)
+            @RequestParam(name = "aseqs", required = false)
             List<Integer> aseqs
     ) {
         artworkService.deleteArtwork(aseqs);

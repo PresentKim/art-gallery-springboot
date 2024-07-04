@@ -31,7 +31,7 @@ public class MemberRestController {
 
     @PostMapping("/login")
     public Object login(
-            @RequestParam(value = "returnUrl", defaultValue = "/")
+            @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
             @Validated(MemberDto.OnLogin.class)
             MemberDto loginForm,
@@ -52,7 +52,7 @@ public class MemberRestController {
     @CheckLogin
     @PostMapping("/logout")
     public ResponseDto logout(
-            @RequestParam(value = "returnUrl", defaultValue = "/")
+            @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
 
             HttpSession session
@@ -64,7 +64,7 @@ public class MemberRestController {
     @PostMapping("/join")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDto join(
-            @RequestParam(value = "returnUrl", defaultValue = "/")
+            @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
             @Validated(MemberDto.OnJoin.class)
             MemberDto memberDto
@@ -137,7 +137,7 @@ public class MemberRestController {
     @PostMapping("/mypage/favorite")
     @ResponseStatus(HttpStatus.CREATED)
     public Object favorite(
-            @RequestParam(value = "aseq")
+            @RequestParam(name = "aseq")
             Integer aseq,
 
             @LoginMember

@@ -36,7 +36,7 @@ public class ArtworkRestController {
 
     @GetMapping("/{aseq}")
     public ArtworkDto view(
-            @PathVariable(value = "aseq")
+            @PathVariable(name = "aseq")
             Integer aseq
     ) {
         return artworkService.getArtwork(aseq);
@@ -48,7 +48,7 @@ public class ArtworkRestController {
     public ResponseDto update(
             @Valid
             ArtworkDto artworkDto,
-            @RequestParam(value = "imageFile", required = false)
+            @RequestParam(name = "imageFile", required = false)
             MultipartFile imageFile
     ) {
         artworkService.updateArtwork(artworkDto, imageFile);
@@ -59,7 +59,7 @@ public class ArtworkRestController {
     @PostMapping("/toggleArtworkDisplay")
     @ResponseStatus(HttpStatus.CREATED)
     public Object toggleArtworkDisplay(
-            @RequestParam(value = "aseq")
+            @RequestParam(name = "aseq")
             Integer aseq
     ) {
         artworkService.toggleArtworkDisplay(aseq);
@@ -74,7 +74,7 @@ public class ArtworkRestController {
             ArtworkDto artworkDto,
             @Valid
             @NotNull(message = "이미지 파일을 업로드해주세요.")
-            @RequestParam(value = "imageFile", required = false)
+            @RequestParam(name = "imageFile", required = false)
             MultipartFile imageFile
     ) {
         artworkService.createArtwork(artworkDto, imageFile);
@@ -85,7 +85,7 @@ public class ArtworkRestController {
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseDto delete(
-            @RequestParam(value = "aseq")
+            @RequestParam(name = "aseq")
             Integer aseq
     ) {
         artworkService.deleteArtwork(aseq);

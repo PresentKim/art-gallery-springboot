@@ -36,7 +36,7 @@ public class CheckLoginAspect {
      * <p>
      * {@code value}값의 {@code @annotation}은 메서드에 붙은 어노테이션을 찾아내는데 사용됩니다.
      */
-    @Before(value = "@annotation(annotation)")
+    @Before("@annotation(annotation)")
     public void onAnnotation(JoinPoint joinPoint, CheckLogin annotation) {
         checkLogin(joinPoint, annotation);
     }
@@ -50,7 +50,7 @@ public class CheckLoginAspect {
      * <p>
      * {@code value}값의 {@code @within}은 클래스에 붙은 어노테이션을 찾아내는데 사용됩니다.
      */
-    @Before(value = "@within(annotation)")
+    @Before("@within(annotation)")
     public void onWithin(JoinPoint joinPoint, CheckLogin annotation) {
         checkLogin(joinPoint, annotation);
     }

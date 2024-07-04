@@ -37,7 +37,7 @@ public class QnaViewController {
 
     @GetMapping("/{qseq}")
     public String view(
-            @PathVariable(value = "qseq")
+            @PathVariable(name = "qseq")
             Integer qseq,
 
             Model model,
@@ -58,7 +58,7 @@ public class QnaViewController {
 
     @GetMapping("/update/{qseq}")
     public String update(
-            @PathVariable(value = "qseq")
+            @PathVariable(name = "qseq")
             Integer qseq,
 
             Model model,

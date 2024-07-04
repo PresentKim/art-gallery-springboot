@@ -45,7 +45,7 @@ public class GalleryViewController {
 
     @GetMapping("/{gseq}")
     public String view(
-            @PathVariable(value = "gseq")
+            @PathVariable(name = "gseq")
             Integer gseq,
 
             HttpSession session,
@@ -63,7 +63,7 @@ public class GalleryViewController {
     @CheckLogin("/gallery/update/${gseq}")
     @GetMapping("/update/{gseq}")
     public String update(
-            @PathVariable(value = "gseq")
+            @PathVariable(name = "gseq")
             Integer gseq,
 
             @LoginMember

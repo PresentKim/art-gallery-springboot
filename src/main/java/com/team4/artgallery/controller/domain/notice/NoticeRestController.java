@@ -53,7 +53,7 @@ public class NoticeRestController {
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseDto delete(
-            @RequestParam(value = "nseq")
+            @RequestParam(name = "nseq")
             Integer nseq
     ) {
         noticeService.deleteNotice(nseq);

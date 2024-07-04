@@ -55,9 +55,9 @@ public class QnaRestController {
     @PostMapping("/reply")
     @ResponseStatus(HttpStatus.CREATED)
     public Object reply(
-            @RequestParam(value = "qseq")
+            @RequestParam(name = "qseq")
             Integer qseq,
-            @RequestParam(value = "reply")
+            @RequestParam(name = "reply")
             String reply
     ) {
         Assert.exists(qnaService.getInquiry(qseq), "문의글 정보를 찾을 수 없습니다.");
@@ -68,11 +68,11 @@ public class QnaRestController {
 
     @PostMapping("/authorize")
     public Object authorize(
-            @RequestParam(value = "qseq")
+            @RequestParam(name = "qseq")
             Integer qseq,
-            @RequestParam(value = "mode")
+            @RequestParam(name = "mode")
             String mode,
-            @RequestParam(value = "pwd", required = false)
+            @RequestParam(name = "pwd", required = false)
             String pwd,
 
             HttpSession session

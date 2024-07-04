@@ -51,7 +51,7 @@ public class AdminNoticeController {
             @Valid
             @NotEmpty(message = "소식지를 선택해주세요.")
             @Size(max = 1, message = "한 번에 하나의 소식지만 수정할 수 있습니다.")
-            @RequestParam(value = "nseqs") List<Integer> nseqs
+            @RequestParam(name = "nseqs") List<Integer> nseqs
     ) throws URISyntaxException {
         return new URI("/notice/update/" + nseqs.get(0));
     }
@@ -62,7 +62,7 @@ public class AdminNoticeController {
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "소식지를 선택해주세요")
-            @RequestParam(value = "nseqs", required = false)
+            @RequestParam(name = "nseqs", required = false)
             List<Integer> nseqs
     ) {
         noticeService.deleteNotices(nseqs);

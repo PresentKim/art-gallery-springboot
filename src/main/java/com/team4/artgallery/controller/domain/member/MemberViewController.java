@@ -26,7 +26,7 @@ public class MemberViewController {
 
     @GetMapping("/login")
     public String login(
-            @RequestParam(value = "returnUrl", defaultValue = "/")
+            @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
 
             HttpSession session,
@@ -43,7 +43,7 @@ public class MemberViewController {
 
     @GetMapping("/contract")
     public String contract(
-            @RequestParam(value = "returnUrl", defaultValue = "/")
+            @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
 
             HttpSession session,
@@ -60,7 +60,7 @@ public class MemberViewController {
 
     @GetMapping("/join")
     public String join(
-            @RequestParam(value = "returnUrl", defaultValue = "/")
+            @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
 
             HttpSession session,
@@ -90,7 +90,7 @@ public class MemberViewController {
     @CheckLogin("/member/withdraw")
     @GetMapping("/withdraw")
     public String withdraw(
-            @RequestParam(value = "returnUrl", defaultValue = "/")
+            @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
 
             Model model
@@ -102,7 +102,7 @@ public class MemberViewController {
     @CheckLogin("/member/mypage/favorite")
     @GetMapping("/mypage/favorite")
     public String favorite(
-            @RequestParam(value = "page", defaultValue = "1")
+            @RequestParam(name = "page", defaultValue = "1")
             Integer page,
 
             @LoginMember

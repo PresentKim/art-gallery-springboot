@@ -50,7 +50,7 @@ public class NoticeViewController {
 
     @GetMapping("/{nseq}")
     public String view(
-            @PathVariable(value = "nseq")
+            @PathVariable(name = "nseq")
             Integer nseq,
 
             HttpSession session,
@@ -68,7 +68,7 @@ public class NoticeViewController {
     @CheckAdmin
     @GetMapping("/update/{nseq}")
     public String update(
-            @PathVariable(value = "nseq")
+            @PathVariable(name = "nseq")
             Integer nseq,
 
             Model model

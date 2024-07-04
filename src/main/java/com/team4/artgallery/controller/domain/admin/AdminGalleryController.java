@@ -47,7 +47,7 @@ public class AdminGalleryController {
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "갤러리를 선택해주세요")
-            @RequestParam(value = "gseqs", required = false)
+            @RequestParam(name = "gseqs", required = false)
             List<Integer> gseqs
     ) {
         galleryService.deleteGalleries(gseqs);

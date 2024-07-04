@@ -47,7 +47,7 @@ public class AdminMemberController {
     public ResponseDto grant(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
-            @RequestParam(value = "memberIds", required = false)
+            @RequestParam(name = "memberIds", required = false)
             List<String> memberIds
     ) {
         memberService.grantAdminMembers(memberIds);
@@ -60,7 +60,7 @@ public class AdminMemberController {
     public ResponseDto revoke(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
-            @RequestParam(value = "memberIds", required = false)
+            @RequestParam(name = "memberIds", required = false)
             List<String> memberIds
     ) {
         memberService.revokeAdminMembers(memberIds);
@@ -73,7 +73,7 @@ public class AdminMemberController {
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
-            @RequestParam(value = "memberIds", required = false)
+            @RequestParam(name = "memberIds", required = false)
             List<String> memberIds
     ) {
         memberService.deleteMembers(memberIds);

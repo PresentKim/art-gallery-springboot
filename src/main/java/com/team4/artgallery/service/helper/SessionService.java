@@ -35,7 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-factory-scopes"> 스프링 프레임워크 - Bean Scopes </a>
  */
 @Service
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope(scopeName = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Getter
 @RequiredArgsConstructor
 public class SessionService {

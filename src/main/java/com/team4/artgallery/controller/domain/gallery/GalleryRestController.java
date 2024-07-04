@@ -28,7 +28,7 @@ public class GalleryRestController {
     public ResponseDto update(
             @Valid
             GalleryDto galleryDto,
-            @RequestParam(value = "imageFile", required = false)
+            @RequestParam(name = "imageFile", required = false)
             MultipartFile imageFile,
 
             @LoginMember
@@ -59,7 +59,7 @@ public class GalleryRestController {
             GalleryDto galleryDto,
             @Valid
             @NotNull(message = "이미지 파일을 업로드해주세요.")
-            @RequestParam(value = "imageFile", required = false)
+            @RequestParam(name = "imageFile", required = false)
             MultipartFile imageFile,
 
             @LoginMember
@@ -78,7 +78,7 @@ public class GalleryRestController {
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseDto delete(
-            @RequestParam(value = "gseq")
+            @RequestParam(name = "gseq")
             Integer gseq,
 
             @LoginMember
