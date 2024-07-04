@@ -1,12 +1,12 @@
 package com.team4.artgallery.controller.domain.gallery;
 
 import com.team4.artgallery.aspect.annotation.CheckLogin;
+import com.team4.artgallery.controller.exception.ForbiddenException;
+import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
-import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.GalleryService;
-import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +36,8 @@ public class GalleryViewController {
 
             Model model
     ) {
-        pagination.setItemCount(galleryService.countGalleries(filter))
-                .setUrlTemplate("/gallery?page=%d" + filter.getUrlParam());
-        model.addAttribute("galleryList", galleryService.getGalleries(filter, pagination));
+        pagination.setUrlTemplate("/gallery?page=%d" + filter.getUrlParam());
+        model.addAttribute("galleryList", galleryService.getGalleriesPair(filter, pagination).list());
         return "gallery/galleryList";
     }
 
@@ -49,12 +48,8 @@ public class GalleryViewController {
 
             Model model
     ) {
-        GalleryDto galleryDto = galleryService.getGallery(gseq);
-        Assert.exists(galleryDto, "갤러리 정보를 찾을 수 없습니다.");
-
         galleryService.markAsRead(gseq);
-
-        model.addAttribute("galleryDto", galleryDto);
+        model.addAttribute("galleryDto", galleryService.getGallery(gseq));
         return "gallery/galleryView";
     }
 
@@ -67,13 +62,8 @@ public class GalleryViewController {
             @LoginMember
             MemberDto loginMember,
             Model model
-    ) {
-        GalleryDto galleryDto = galleryService.getGallery(gseq);
-        Assert.exists(galleryDto, "갤러리 정보를 찾을 수 없습니다.");
-
-        Assert.trueOrForbidden(loginMember.getId().equals(galleryDto.getAuthorId()), "작성자만 수정할 수 있습니다.");
-
-        model.addAttribute("galleryDto", galleryDto);
+    ) throws NotFoundException, ForbiddenException {
+        model.addAttribute("galleryDto", galleryService.getGalleryOnlyAuthor(gseq, loginMember));
         return "gallery/galleryForm";
     }
 

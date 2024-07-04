@@ -35,10 +35,8 @@ public class AdminGalleryController {
 
             Model model
     ) {
-        pagination.setItemCount(galleryService.countGalleries(filter))
-                .setUrlTemplate("/admin/gallery?page=%d" + filter.getUrlParam());
-
-        model.addAttribute("galleryList", galleryService.getGalleries(filter, pagination));
+        pagination.setUrlTemplate("/gallery?page=%d" + filter.getUrlParam());
+        model.addAttribute("galleryList", galleryService.getGalleriesPair(filter, pagination).list());
         return "admin/adminGalleryList";
     }
 
@@ -51,7 +49,7 @@ public class AdminGalleryController {
             @RequestParam(name = "gseqs", required = false)
             List<Integer> gseqs
     ) throws SqlException {
-        galleryService.deleteGalleries(gseqs);
+        galleryService.deleteGallery(gseqs);
         return new ResponseDto("갤러리 정보를 제거했습니다", ":reload");
     }
 
