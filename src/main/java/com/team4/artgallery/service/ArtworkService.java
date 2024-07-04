@@ -56,7 +56,7 @@ public class ArtworkService {
      * @return 예술품 정보
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      */
-    public ArtworkDto getArtwork(int aseq) {
+    public ArtworkDto getArtwork(int aseq) throws NotFoundException {
         ArtworkDto artworkDto = artworkDao.getArtwork(aseq);
         Assert.exists(artworkDto, "예술품 정보를 찾을 수 없습니다.");
 
