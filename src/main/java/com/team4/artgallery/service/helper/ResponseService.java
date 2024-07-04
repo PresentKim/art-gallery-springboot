@@ -5,11 +5,6 @@ import lombok.experimental.Delegate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.Errors;
-
-import java.util.Objects;
-
-import static jakarta.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 
 /**
  * 응답 코드와 메시지, URL를 반환하기 위해 {@link ResponseEntity}를 생성하는 메소드를 제공하는 서비스
@@ -122,15 +117,6 @@ public class ResponseService {
      */
     public ResponseEntity<ResponseBody> badRequest(String message) {
         return badRequest(message, "");
-    }
-
-    /**
-     * BAD_REQUEST(400) 잘못된 요청이나 잘못된 매개변수가 전달되었음을 나타내는 코드를 반환
-     *
-     * @param errors 에러 객체
-     */
-    public ResponseEntity<ResponseBody> badRequest(Errors errors) {
-        return badRequest(Objects.requireNonNull(errors.getFieldError()).getDefaultMessage());
     }
 
     /**
@@ -322,6 +308,6 @@ public class ResponseService {
      * @param url     이동할 URL
      */
     public ResponseEntity<ResponseBody> notImplemented(String message, String url) {
-        return ResponseEntity.status(SC_NOT_IMPLEMENTED).body(new ResponseBody(message, url));
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseBody(message, url));
     }
 }
