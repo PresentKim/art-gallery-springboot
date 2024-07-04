@@ -26,10 +26,10 @@ import java.net.URI;
 @Aspect
 @Order(1)
 @Component
-public class AroundResponseStringConversionAspect {
+public class RestResponseWrapperAspect {
 
     /**
-     * {@link RestController} 어노테이션이 달린  클래스의 메소드 혹은 {@link ExceptionHandler} 어노테이션이 달린 메소드가
+     * {@link RestController} 어노테이션이 달린 클래스의 메소드 혹은 {@link ExceptionHandler} 어노테이션이 달린 메소드가
      * 문자열을 반환하면 {@link ResponseBody} 객체로 감싸 반환합니다.
      *
      * @implNote {@link Around} 어노테이션으로 메서드 실행 전후에 로직을 추가할 수 있습니다.
