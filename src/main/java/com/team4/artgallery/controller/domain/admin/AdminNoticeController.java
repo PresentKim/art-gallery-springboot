@@ -46,6 +46,7 @@ public class AdminNoticeController {
 
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
     public Object edit(
             @Valid
             @NotEmpty(message = "소식지를 선택해주세요.")
@@ -57,6 +58,7 @@ public class AdminNoticeController {
 
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "소식지를 선택해주세요")

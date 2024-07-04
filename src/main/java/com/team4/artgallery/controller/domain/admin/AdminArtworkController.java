@@ -43,6 +43,7 @@ public class AdminArtworkController {
     }
 
     @PostMapping("/update")
+    @ResponseBody
     public Object edit(
             @Valid
             @NotEmpty(message = "예술품을 선택해주세요.")
@@ -55,6 +56,7 @@ public class AdminArtworkController {
 
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "예술품을 선택해주세요.")

@@ -43,6 +43,7 @@ public class AdminMemberController {
 
     @PostMapping("/grant")
     @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
     public ResponseDto grant(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
@@ -55,6 +56,7 @@ public class AdminMemberController {
 
     @PostMapping("/revoke")
     @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
     public ResponseDto revoke(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")
@@ -67,6 +69,7 @@ public class AdminMemberController {
 
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "회원을 선택해주세요")

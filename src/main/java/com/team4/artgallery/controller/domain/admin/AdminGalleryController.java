@@ -43,6 +43,7 @@ public class AdminGalleryController {
 
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "갤러리를 선택해주세요")

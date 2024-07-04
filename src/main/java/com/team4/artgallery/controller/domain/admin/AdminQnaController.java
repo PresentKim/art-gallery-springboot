@@ -43,6 +43,7 @@ public class AdminQnaController {
 
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "문의글을 선택해주세요")
