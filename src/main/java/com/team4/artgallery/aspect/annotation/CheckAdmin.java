@@ -3,7 +3,6 @@ package com.team4.artgallery.aspect.annotation;
 import com.team4.artgallery.aspect.CheckAdminAspect;
 import com.team4.artgallery.aspect.exception.NotAdminException;
 import com.team4.artgallery.controller.advice.GlobalExceptionHandler;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -27,7 +26,7 @@ import java.lang.annotation.Target;
  * <p>
  * 관리자 권한 확인은 {@link CheckAdminAspect}에서 처리하며, 관리자 권한이 없는 경우 {@link NotAdminException} 예외가 발생합니다.
  * <p>
- * 최종적으로 예외 핸들링 및 응답 처리는 {@link GlobalExceptionHandler#handleNotAdminException(HttpServletRequest)}에서 처리됩니다.
+ * 최종적으로 예외 핸들링 및 응답 처리는 {@link GlobalExceptionHandler#handleNotAdminException()}에서 처리됩니다.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
