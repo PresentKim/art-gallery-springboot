@@ -43,8 +43,11 @@ public interface IFilter {
                     continue;
                 }
 
-                // 필터에 추가합니다.
-                filters.put(field.getName(), value);
+                // 필드 이름이 Url 파라미터에 포함되는 경우 필터에 추가합니다.
+                String fieldName = field.getName();
+                if (isFieldIncludedAsUrlParam(fieldName)) {
+                    filters.put(fieldName, value);
+                }
             } catch (IllegalAccessException e) {
                 throw new RuntimeException("Failed to access field " + field.getName(), e);
             }
@@ -68,7 +71,6 @@ public interface IFilter {
         return "&" + String.join(
                 "&",
                 filters.entrySet().stream()
-                        .filter(e -> urlParamFilter(e.getKey()))
                         .map(e -> e.getKey() + "=" + e.getValue())
                         .toList()
         );
