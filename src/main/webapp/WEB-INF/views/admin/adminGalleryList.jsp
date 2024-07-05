@@ -46,7 +46,7 @@
         </ul>
         <c:forEach items="${galleryList}" var="galleryDto" varStatus="status">
             <c:set var="previewId" value="preview-${galleryDto.gseq}-${status.index}"/>
-            <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
+            <ul class="admin-list-main admin-artwork-list" onclick="checkChildCheckbox(this)">
                 <li>
                     <label><input name="gseq" type="checkbox" value="${galleryDto.gseq}" class="check-box"></label>
                 </li>

@@ -47,7 +47,7 @@
             <li>작성일</li>
         </ul>
         <c:forEach items="${qnaList}" var="qnaDto">
-            <ul class="admin-list-main admin-qna-list" onclick="go_check(event)">
+            <ul class="admin-list-main admin-qna-list" onclick="checkChildCheckbox(this)">
                 <li>
                     <label><input name="qseq" type="checkbox" value="${qnaDto.qseq}" class="check-box"></label>
                 </li>

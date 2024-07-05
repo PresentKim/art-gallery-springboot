@@ -42,7 +42,7 @@
             <li>휴대번호</li>
         </ul>
         <c:forEach items="${memberList}" var="memberDto">
-            <ul class="admin-list-main admin-member-list" onclick="go_check(event)">
+            <ul class="admin-list-main admin-member-list" onclick="checkChildCheckbox(this)">
                 <li>
                     <label><input name="memberIds" type="checkbox" value="${memberDto.id}" class="check-box"></label>
                 </li>

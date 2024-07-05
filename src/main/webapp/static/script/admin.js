@@ -11,3 +11,13 @@ function checkAll() {
         checkBox.checked = isChecked;
     });
 }
+
+function checkChildCheckbox($ul) {
+    const $checkbox = $ul.querySelector('input[type="checkbox"]');
+    if (!$checkbox) {
+        alert('체크박스를 찾을 수 없습니다.');
+        return;
+    }
+
+    $checkbox.checked = !$checkbox.checked;
+}

@@ -65,7 +65,7 @@
         </ul>
         <c:forEach items="${artworkList}" var="artworkDto" varStatus="status">
             <c:set var="previewId" value="preview-${artworkDto.aseq}-${status.index}"/>
-            <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
+            <ul class="admin-list-main admin-artwork-list" onclick="checkChildCheckbox(this)">
                 <li>
                     <label><input name="aseq" type="checkbox" value="${artworkDto.aseq}" class="check-box"></label>
                 </li>

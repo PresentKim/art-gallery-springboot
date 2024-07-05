@@ -55,7 +55,7 @@
             <li>조회수</li>
         </ul>
         <c:forEach items="${noticeList}" var="noticeDto">
-            <ul class="admin-list-main admin-notice-list" onclick="go_check(event)">
+            <ul class="admin-list-main admin-notice-list" onclick="checkChildCheckbox(this)">
                 <li>
                     <label><input name="nseq" type="checkbox" value="${noticeDto.nseq}" class="check-box"></label>
                 </li>
