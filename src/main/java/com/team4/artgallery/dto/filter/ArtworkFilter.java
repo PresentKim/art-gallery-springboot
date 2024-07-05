@@ -35,7 +35,7 @@ public class ArtworkFilter implements IFilter {
      */
     private boolean includeDisplay = true;
 
-    public boolean urlParamFilter(String fieldName) {
+    public boolean isFieldIncludedAsUrlParam(String fieldName) {
         if (fieldName.equals("displayyn")) {
             return includeDisplay;
         }
