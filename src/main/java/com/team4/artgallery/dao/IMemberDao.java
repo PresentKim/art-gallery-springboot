@@ -1,6 +1,6 @@
 package com.team4.artgallery.dao;
 
-import com.team4.artgallery.aspect.annotation.QueryApplied;
+import com.team4.artgallery.aspect.annotation.NotEmptyReturn;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.MemberDto;
@@ -21,9 +21,9 @@ public interface IMemberDao {
      *
      * @param dto 회원 정보
      * @return 저장된 행의 수
-     * @throws SqlException 추가된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws SqlException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied("회원 정보를 추가하는 중 오류가 발생했습니다.")
+    @NotEmptyReturn(value = "회원 정보를 추가하는 중 오류가 발생했습니다.", exception = SqlException.class)
     int createMember(MemberDto dto) throws SqlException;
 
 
@@ -62,9 +62,9 @@ public interface IMemberDao {
      *
      * @param dto 회원 정보
      * @return 수정된 행의 수
-     * @throws SqlException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws SqlException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied("회원 정보를 수정하는 중 오류가 발생했습니다.")
+    @NotEmptyReturn(value = "회원 정보를 수정하는 중 오류가 발생했습니다.", exception = SqlException.class)
     int updateMember(MemberDto dto) throws SqlException;
 
     /**
@@ -72,9 +72,9 @@ public interface IMemberDao {
      *
      * @param memberIds 회원 ID 목록
      * @return 수정된 행의 수
-     * @throws NotFoundException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "회원 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "회원 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int grantAdminMembers(List<String> memberIds) throws NotFoundException;
 
     /**
@@ -82,9 +82,9 @@ public interface IMemberDao {
      *
      * @param memberIds 회원 ID 목록
      * @return 수정된 행의 수
-     * @throws NotFoundException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "회원 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "회원 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int revokeAdminMembers(List<String> memberIds) throws NotFoundException;
 
 
@@ -95,9 +95,9 @@ public interface IMemberDao {
      *
      * @param memberId 회원 ID
      * @return 삭제된 행의 수
-     * @throws NotFoundException 삭제된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "회원 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "회원 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int deleteMember(String memberId) throws NotFoundException;
 
     /**
@@ -105,9 +105,9 @@ public interface IMemberDao {
      *
      * @param memberIdList 회원 ID 목록
      * @return 삭제된 행의 수
-     * @throws NotFoundException 삭제된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "회원 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "회원 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int deleteMembers(List<String> memberIdList) throws NotFoundException;
 
 }

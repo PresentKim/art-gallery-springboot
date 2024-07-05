@@ -79,9 +79,8 @@ public class ArtworkService {
      * @param artworkDto 예술품 정보
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      * @throws FileException     이미지 저장에 실패한 경우 예외 발생
-     * @throws SqlException      예술품 정보 수정에 실패한 경우 예외 발생
      */
-    public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws SqlException {
+    public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws NotFoundException {
         ArtworkDto oldArtwork = getArtwork(artworkDto.getAseq());
         Assert.exists(oldArtwork, "예술품 정보를 찾을 수 없습니다.");
 
@@ -101,10 +100,8 @@ public class ArtworkService {
      *
      * @param aseq 예술품 번호 (artwork sequence)
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
-     * @throws NotFoundException 전시 여부 변경에 실패한 경우 예외 발생
      */
     public void toggleArtworkDisplay(int aseq) throws NotFoundException {
-        Assert.exists(artworkDao.getArtwork(aseq), "예술품 정보를 찾을 수 없습니다.");
         artworkDao.toggleArtworkDisplay(aseq);
     }
 

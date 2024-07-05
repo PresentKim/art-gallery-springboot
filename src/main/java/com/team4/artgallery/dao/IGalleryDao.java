@@ -1,6 +1,6 @@
 package com.team4.artgallery.dao;
 
-import com.team4.artgallery.aspect.annotation.QueryApplied;
+import com.team4.artgallery.aspect.annotation.NotEmptyReturn;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.GalleryDto;
@@ -21,9 +21,9 @@ public interface IGalleryDao {
      *
      * @param galleryDto 갤러리 정보
      * @return 추가된 행의 수
-     * @throws SqlException 추가된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws SqlException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied("갤러리 정보를 추가하는 중 오류가 발생했습니다.")
+    @NotEmptyReturn(value = "갤러리 정보를 추가하는 중 오류가 발생했습니다.", exception = SqlException.class)
     int createGallery(GalleryDto galleryDto) throws SqlException;
 
 
@@ -62,19 +62,19 @@ public interface IGalleryDao {
      *
      * @param galleryDto 수정할 갤러리 정보
      * @return 수정된 행의 수
-     * @throws SqlException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied("갤러리 정보를 수정하는 중 오류가 발생했습니다.")
-    int updateGallery(GalleryDto galleryDto) throws SqlException;
+    @NotEmptyReturn(value = "갤러리 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
+    int updateGallery(GalleryDto galleryDto) throws NotFoundException;
 
     /**
      * 갤러리 조회수를 증가시킵니다.
      *
      * @param gseq 갤러리 번호
      * @return 수정된 행의 수
-     * @throws NotFoundException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "갤러리 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "갤러리 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int increaseReadCount(int gseq) throws NotFoundException;
 
 
@@ -85,9 +85,9 @@ public interface IGalleryDao {
      *
      * @param gseq 갤러리 번호
      * @return 삭제된 행의 수
-     * @throws NotFoundException 삭제된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "갤러리 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "갤러리 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int deleteGallery(int gseq) throws NotFoundException;
 
     /**
@@ -95,9 +95,9 @@ public interface IGalleryDao {
      *
      * @param gseqList 갤러리 번호 목록
      * @return 삭제된 행의 수
-     * @throws NotFoundException 삭제된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "갤러리 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "갤러리 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int deleteGalleries(List<Integer> gseqList) throws NotFoundException;
 
 }

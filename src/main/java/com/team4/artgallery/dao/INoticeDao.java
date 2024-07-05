@@ -1,6 +1,6 @@
 package com.team4.artgallery.dao;
 
-import com.team4.artgallery.aspect.annotation.QueryApplied;
+import com.team4.artgallery.aspect.annotation.NotEmptyReturn;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.NoticeDto;
@@ -21,9 +21,9 @@ public interface INoticeDao {
      *
      * @param noticeDto 소식지 정보
      * @return 추가된 행의 수
-     * @throws SqlException 추가된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws SqlException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied("소식지 정보를 추가하는 중 오류가 발생했습니다.")
+    @NotEmptyReturn(value = "소식지 정보를 추가하는 중 오류가 발생했습니다.", exception = SqlException.class)
     int createNotice(NoticeDto noticeDto) throws SqlException;
 
 
@@ -62,9 +62,9 @@ public interface INoticeDao {
      *
      * @param noticeDto 수정할 소식지 정보
      * @return 수정된 행의 수
-     * @throws NotFoundException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "소식지 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "소식지 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int updateNotice(NoticeDto noticeDto) throws NotFoundException;
 
     /**
@@ -72,9 +72,9 @@ public interface INoticeDao {
      *
      * @param nseq 소식지 번호
      * @return 수정된 행의 수
-     * @throws NotFoundException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "소식지 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "소식지 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int increaseReadCount(int nseq) throws NotFoundException;
 
 
@@ -85,9 +85,9 @@ public interface INoticeDao {
      *
      * @param nseq 소식지 번호
      * @return 삭제된 행의 수
-     * @throws NotFoundException 삭제된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "소식지 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "소식지 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int deleteNotice(int nseq) throws NotFoundException;
 
     /**
@@ -95,9 +95,9 @@ public interface INoticeDao {
      *
      * @param aseqList 소식지 번호 목록
      * @return 삭제된 행의 수
-     * @throws NotFoundException 삭제된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied(value = "소식지 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    @NotEmptyReturn(value = "소식지 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int deleteNotices(List<Integer> aseqList) throws NotFoundException;
 
 }

@@ -1,6 +1,6 @@
 package com.team4.artgallery.dao;
 
-import com.team4.artgallery.aspect.annotation.QueryApplied;
+import com.team4.artgallery.aspect.annotation.NotEmptyReturn;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.util.Pagination;
@@ -49,9 +49,9 @@ public interface IFavoriteDao {
      *
      * @param params 파라미터 맵 (memberId, aseq, result)
      * @return 수정된 행의 수
-     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
-    @QueryApplied("관심 예술품 정보를 변경하는 중 오류가 발생했습니다.")
+    @NotEmptyReturn(value = "관심 예술품 정보를 변경하는 중 오류가 발생했습니다.", exception = SqlException.class)
     int toggleFavorite(Map<String, Object> params) throws SqlException;
 
 }
