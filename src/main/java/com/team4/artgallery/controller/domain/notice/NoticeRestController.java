@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller.domain.notice;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
@@ -21,20 +22,6 @@ public class NoticeRestController {
     private final NoticeService noticeService;
 
     @CheckAdmin
-    @PostMapping("/update")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto update(
-            @Valid
-            NoticeDto noticeDto,
-
-            @LoginMember
-            MemberDto loginMember
-    ) throws SqlException {
-        noticeService.updateNotice(noticeDto, loginMember);
-        return new ResponseDto("소식지 수정이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
-    }
-
-    @CheckAdmin
     @PostMapping("/write")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDto write(
@@ -43,8 +30,12 @@ public class NoticeRestController {
 
             @LoginMember
             MemberDto loginMember
-    ) throws SqlException {
-        noticeService.createNotice(noticeDto, loginMember);
+    ) throws SqlException, NotFoundException {
+        if (noticeDto.getNseq() == null) {
+            noticeService.createNotice(noticeDto, loginMember);
+        } else {
+            noticeService.updateNotice(noticeDto, loginMember);
+        }
         return new ResponseDto("소식지 작성이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
     }
 
