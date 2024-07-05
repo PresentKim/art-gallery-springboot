@@ -55,15 +55,6 @@ public interface IFilter {
     }
 
     /**
-     * 모든 필터가 비어있는지 확인합니다.
-     *
-     * @return 모든 필터가 비어있으면 true, 아니면 false
-     */
-    default boolean isEmpty() {
-        return getFilters().isEmpty();
-    }
-
-    /**
      * 필터 맵을 URL 파라미터 문자열로 변환합니다.
      *
      * @return URL 파라미터 문자열
