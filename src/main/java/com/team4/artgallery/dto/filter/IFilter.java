@@ -63,17 +63,15 @@ public interface IFilter {
      * @return URL 파라미터 문자열
      */
     default String getUrlParam() {
-        Map<String, Object> filters = getFilters();
-        if (filters.isEmpty()) {
-            return "";
+        StringBuilder urlParam = new StringBuilder();
+        for (Map.Entry<String, Object> entry : getFilters().entrySet()) {
+            urlParam.append("&")
+                    .append(entry.getKey())
+                    .append("=")
+                    .append(entry.getValue());
         }
 
-        return "&" + String.join(
-                "&",
-                filters.entrySet().stream()
-                        .map(e -> e.getKey() + "=" + e.getValue())
-                        .toList()
-        );
+        return urlParam.toString();
     }
 
     /**
