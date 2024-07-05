@@ -121,18 +121,17 @@ public class GalleryService {
     /**
      * 갤러리 정보를 삭제합니다.
      *
-     * @param gseq        갤러리 번호 (gallery sequence)
+     * @param gseqList    갤러리 번호 목록
      * @param loginMember 로그인 멤버 정보
      * @throws NotFoundException  갤러리 정보를 찾을 수 없는 경우 예외 발생
-     * @throws ForbiddenException 작성자 혹은 관리자가 아닌 경우 예외 발생
+     * @throws ForbiddenException 작성자가 아닌 경우 예외 발생
      */
-    public void deleteGallery(int gseq, MemberDto loginMember) throws NotFoundException, ForbiddenException {
-        GalleryDto oldGallery = galleryDao.getGallery(gseq);
-        Assert.trueOrForbidden(
-                loginMember.getId().equals(oldGallery.getAuthorId()) || loginMember.isAdmin(),
-                "작성자 혹은 관리자만 삭제할 수 있습니다."
-        );
-        galleryDao.deleteGallery(gseq);
+    public void deleteGallery(List<Integer> gseqList, MemberDto loginMember) throws NotFoundException, ForbiddenException {
+        String memberId = loginMember.getId();
+        gseqList.forEach(gseq -> {
+            GalleryDto oldGallery = galleryDao.getGallery(gseq);
+            Assert.trueOrForbidden(memberId.equals(oldGallery.getAuthorId()), "작성자만 삭제할 수 있습니다.");
+        });
     }
 
     /**

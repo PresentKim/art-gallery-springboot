@@ -10,12 +10,15 @@ import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/artwork", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -78,8 +81,10 @@ public class ArtworkRestController {
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto delete(
-            @RequestParam(name = "aseq")
-            Integer aseq
+            @Valid
+            @NotEmpty(message = "예술품을 선택해주세요.")
+            @RequestParam(name = "aseq", required = false)
+            List<Integer> aseq
     ) throws SqlException {
         artworkService.deleteArtwork(aseq);
         return new ResponseDto("예술품이 삭제되었습니다.", "/artwork");

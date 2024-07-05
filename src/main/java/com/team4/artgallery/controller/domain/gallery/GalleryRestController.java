@@ -11,11 +11,14 @@ import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.GalleryService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/gallery", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,13 +52,19 @@ public class GalleryRestController {
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto delete(
-            @RequestParam(name = "gseq")
-            Integer gseq,
+            @Valid
+            @NotEmpty(message = "갤러리를 선택해주세요")
+            @RequestParam(name = "gseq", required = false)
+            List<Integer> gseq,
 
             @LoginMember
             MemberDto loginMember
     ) throws NotFoundException, ForbiddenException, SqlException {
-        galleryService.deleteGallery(gseq, loginMember);
+        if (loginMember.isAdmin()) {
+            galleryService.deleteGallery(gseq);
+        } else {
+            galleryService.deleteGallery(gseq, loginMember);
+        }
         return new ResponseDto("갤러리가 삭제되었습니다.", "/gallery");
     }
 

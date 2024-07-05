@@ -9,10 +9,13 @@ import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.NoticeService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/notice", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,8 +46,10 @@ public class NoticeRestController {
     @PostMapping("/delete")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto delete(
-            @RequestParam(name = "nseq")
-            Integer nseq
+            @Valid
+            @NotEmpty(message = "소식지를 선택해주세요")
+            @RequestParam(name = "nseq", required = false)
+            List<Integer> nseq
     ) throws SqlException {
         noticeService.deleteNotice(nseq);
         return new ResponseDto("소식지가 삭제되었습니다.", "/notice");

@@ -20,7 +20,7 @@
 
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
-                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/admin/gallery/delete"/>">
+                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/gallery/delete"/>">
             </div>
 
             <!-- 검색 기능 -->

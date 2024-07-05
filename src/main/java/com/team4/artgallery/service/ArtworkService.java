@@ -110,16 +110,6 @@ public class ArtworkService {
     }
 
     /**
-     * 예술품 정보를 삭제합니다.
-     *
-     * @param aseq 예술품 번호 (artwork sequence)
-     * @throws NotFoundException 예술품 삭제에 실패한 경우 예외 발생
-     */
-    public void deleteArtwork(int aseq) throws NotFoundException {
-        artworkDao.deleteArtwork(aseq);
-    }
-
-    /**
      * 예술품 이미지를 저장하고 ArtworkDto 객체에 이미지 경로를 저장합니다.
      *
      * @param file       이미지 파일

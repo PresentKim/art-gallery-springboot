@@ -23,7 +23,7 @@
             <div class="admin-list-func-btn">
                 <input type="submit" value="등록" formmethod="get" formaction="<c:url value="/notice/write"/>">
                 <input type="submit" value="수정" formmethod="post" formaction="<c:url value="/admin/notice/update"/>">
-                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/admin/notice/delete"/>">
+                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/notice/delete"/>">
             </div>
 
             <!-- 검색 기능 -->

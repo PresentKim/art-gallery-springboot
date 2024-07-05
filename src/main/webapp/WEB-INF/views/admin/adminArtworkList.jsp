@@ -22,8 +22,8 @@
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
                 <input type="submit" value="등록" formmethod="get" formaction="<c:url value="/artwork/write"/>">
-                <input type="submit" value="수정" formmethod="post" formaction="<c:url value="/admin/artwork/update"/>">
-                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/admin/artwork/delete"/>">
+                <input type="submit" value="수정" formmethod="post" formaction="<c:url value="/admin/artwork/updates"/>">
+                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/artwork/delete"/>">
             </div>
 
             <!-- 검색 기능 -->

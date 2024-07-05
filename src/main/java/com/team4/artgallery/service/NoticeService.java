@@ -91,16 +91,6 @@ public class NoticeService {
     }
 
     /**
-     * 소식지 정보를 삭제합니다.
-     *
-     * @param nseq 소식지 번호 (notice sequence)
-     * @throws NotFoundException 소식지 삭제에 실패한 경우 예외 발생
-     */
-    public void deleteNotice(int nseq) throws NotFoundException {
-        noticeDao.deleteNotice(nseq);
-    }
-
-    /**
      * 소식지를 읽은 것으로 처리합니다.
      *
      * @param nseq 소식지 번호 (notice sequence)
