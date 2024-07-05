@@ -21,3 +21,23 @@ function checkChildCheckbox($ul) {
 
     $checkbox.checked = !$checkbox.checked;
 }
+
+function previewImage($img) {
+    const PREVIEW_ID = 'image-full-preview';
+    if (document.getElementById(PREVIEW_ID) !== null) {
+        return;
+    }
+
+    const $preview = document.createElement('div');
+    $preview.id = PREVIEW_ID;
+    $preview.onclick = function () {
+        document.body.removeChild($preview);
+    };
+
+    const $previewImage = document.createElement('img');
+    $previewImage.src = $img.src;
+    $previewImage.alt = '미리보기 이미지';
+
+    $preview.appendChild($previewImage);
+    document.body.appendChild($preview);
+}

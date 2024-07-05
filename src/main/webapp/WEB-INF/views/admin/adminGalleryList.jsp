@@ -45,7 +45,6 @@
             <li>미리보기</li>
         </ul>
         <c:forEach items="${galleryList}" var="galleryDto" varStatus="status">
-            <c:set var="previewId" value="preview-${galleryDto.gseq}-${status.index}"/>
             <ul class="admin-list-main admin-artwork-list" onclick="checkChildCheckbox(this)">
                 <li>
                     <label><input name="gseq" type="checkbox" value="${galleryDto.gseq}" class="check-box"></label>
@@ -60,14 +59,9 @@
                 <li>${galleryDto.writedate}</li>
                 <li>${galleryDto.readcount}</li>
                 <li>
-                    <img alt="artwork-img" src="${galleryDto.imageSrc}"
-                         onmouseover="previewImg('${previewId}')"
-                         onmouseleave="previewImg('${previewId}')">
+                    <img alt="artwork-img" src="${galleryDto.imageSrc}" onclick="previewImage(this)">
                 </li>
             </ul>
-            <div id="${previewId}" class="preview hidden">
-                <img alt="artwork-img" src="${galleryDto.imageSrc}">
-            </div>
         </c:forEach>
     </form>
     <t:pagination/>

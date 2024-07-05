@@ -64,7 +64,6 @@
             <li>미리보기</li>
         </ul>
         <c:forEach items="${artworkList}" var="artworkDto" varStatus="status">
-            <c:set var="previewId" value="preview-${artworkDto.aseq}-${status.index}"/>
             <ul class="admin-list-main admin-artwork-list" onclick="checkChildCheckbox(this)">
                 <li>
                     <label><input name="aseq" type="checkbox" value="${artworkDto.aseq}" class="check-box"></label>
@@ -79,14 +78,9 @@
                 <li>${artworkDto.size}</li>
                 <li>${artworkDto.indate}</li>
                 <li>
-                    <img alt="artwork-img" src="${artworkDto.imageSrc}"
-                         onmouseover="previewImg('${previewId}')"
-                         onmouseleave="previewImg('${previewId}')">
+                    <img alt="artwork-img" src="${artworkDto.imageSrc}" onclick="previewImage(this)">
                 </li>
             </ul>
-            <div id="${previewId}" class="preview hidden">
-                <img alt="artwork-img" src="${artworkDto.imageSrc}">
-            </div>
         </c:forEach>
     </form>
     <t:pagination/>

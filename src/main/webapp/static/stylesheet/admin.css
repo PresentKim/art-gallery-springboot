@@ -230,15 +230,26 @@
     outline: none;
 }
 
-.hidden {
-    display: none;
+/* image-full-preview 요소 스타일 ==============> */
+#image-full-preview {
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background-color: #0008;
+    cursor: pointer;
+    user-select: none;
 }
 
-.preview {
-    width: 80%;
-    text-align: center;
+#image-full-preview img {
+    max-width: 90%;
+    max-height: 90%;
 }
 
-.preview img {
-    max-width: 100%;
+html:has(#image-full-preview) {
+    overflow: hidden;
 }
