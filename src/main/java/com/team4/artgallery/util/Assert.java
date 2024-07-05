@@ -4,10 +4,8 @@ import com.team4.artgallery.controller.exception.ForbiddenException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
 import lombok.experimental.UtilityClass;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collection;
-import java.util.Map;
+import java.lang.reflect.Array;
 import java.util.function.Function;
 
 @UtilityClass
@@ -75,38 +73,32 @@ public class Assert {
      * @throws T 값이 비어있는 경우 예외 발생
      */
     public <T extends Throwable> void notEmpty(Object value, String message, Function<String, T> throwableConstructor) throws T {
-        System.out.println(value + " : " + getSize(value));
-        isTrue(getSize(value) > 0, message, throwableConstructor);
+        isFalse(checkIsEmpty(value), message, throwableConstructor);
     }
 
     /**
-     * 객체로부터 길이를 가져옵니다.
-     *
-     * @param value 객체
-     *              - String: 문자열 길이
-     *              - Collection: 컬렉션 크기
-     *              - Map: 맵 크기
-     *              - Object[]: 배열 길이
-     *              - MultipartFile: 파일이 비어있는지 여부
-     *              - 그 외: 0
-     * @return 길이
+     * 값이 비어있는지 확인합니다.
      */
-    private int getSize(Object value) {
+    public boolean checkIsEmpty(Object value) {
+        if (value == null) return true;
+
         if (value instanceof String v) {
-            return v.strip().length();
-        } else if (value instanceof Collection<?> v) {
-            return v.size();
-        } else if (value instanceof Map<?, ?> v) {
-            return v.size();
-        } else if (value instanceof Object[] v) {
-            return v.length;
-        } else if (value instanceof MultipartFile v) {
-            return v.isEmpty() ? 0 : 1;
-        } else if (value instanceof Object) {
-            return 1;
+            return v.isBlank();
         }
 
-        return 0;
+        if (value instanceof Number v) {
+            return v.doubleValue() == 0;
+        }
+
+        if (value instanceof Iterable<?> v) {
+            return !v.iterator().hasNext();
+        }
+
+        if (value.getClass().isArray()) {
+            return Array.getLength(value) == 0;
+        }
+
+        return true;
     }
 
 }
