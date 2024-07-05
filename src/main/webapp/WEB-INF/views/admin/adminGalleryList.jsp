@@ -48,7 +48,7 @@
             <c:set var="previewId" value="preview-${galleryDto.gseq}-${status.index}"/>
             <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
                 <li>
-                    <label><input name="gseqs" type="checkbox" value="${galleryDto.gseq}" class="check-box"></label>
+                    <label><input name="gseq" type="checkbox" value="${galleryDto.gseq}" class="check-box"></label>
                 </li>
                 <li>${galleryDto.gseq}</li>
                 <li>${galleryDto.authorId}</li>

@@ -67,7 +67,7 @@
             <c:set var="previewId" value="preview-${artworkDto.aseq}-${status.index}"/>
             <ul class="admin-list-main admin-artwork-list" onclick="go_check(event)">
                 <li>
-                    <label><input name="aseqs" type="checkbox" value="${artworkDto.aseq}" class="check-box"></label>
+                    <label><input name="aseq" type="checkbox" value="${artworkDto.aseq}" class="check-box"></label>
                 </li>
                 <li>${artworkDto.displayyn}</li>
                 <li>${artworkDto.aseq}</li>

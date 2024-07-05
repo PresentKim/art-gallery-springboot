@@ -46,9 +46,9 @@ public class AdminQnaController {
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "문의글을 선택해주세요")
-            @RequestParam(name = "qseqs", required = false) List<Integer> qseqs
+            @RequestParam(name = "qseq", required = false) List<Integer> qseq
     ) throws SqlException {
-        qnaService.deleteInquiry(qseqs);
+        qnaService.deleteInquiry(qseq);
         return new ResponseDto("문의글 정보를 제거했습니다", ":reload");
     }
 

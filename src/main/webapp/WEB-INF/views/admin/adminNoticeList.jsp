@@ -57,7 +57,7 @@
         <c:forEach items="${noticeList}" var="noticeDto">
             <ul class="admin-list-main admin-notice-list" onclick="go_check(event)">
                 <li>
-                    <label><input name="nseqs" type="checkbox" value="${noticeDto.nseq}" class="check-box"></label>
+                    <label><input name="nseq" type="checkbox" value="${noticeDto.nseq}" class="check-box"></label>
                 </li>
                 <li>${noticeDto.nseq}</li>
                 <li>${noticeDto.category}</li>

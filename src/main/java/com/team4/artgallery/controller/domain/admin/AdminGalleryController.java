@@ -46,10 +46,10 @@ public class AdminGalleryController {
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "갤러리를 선택해주세요")
-            @RequestParam(name = "gseqs", required = false)
-            List<Integer> gseqs
+            @RequestParam(name = "gseq", required = false)
+            List<Integer> gseq
     ) throws SqlException {
-        galleryService.deleteGallery(gseqs);
+        galleryService.deleteGallery(gseq);
         return new ResponseDto("갤러리 정보를 제거했습니다", ":reload");
     }
 

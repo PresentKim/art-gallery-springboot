@@ -49,10 +49,10 @@ public class AdminArtworkController {
             @Valid
             @NotEmpty(message = "예술품을 선택해주세요.")
             @Size(max = 1, message = "한 번에 하나의 예술품만 수정할 수 있습니다.")
-            @RequestParam(name = "aseqs")
-            List<Integer> aseqs
+            @RequestParam(name = "aseq")
+            List<Integer> aseq
     ) throws URISyntaxException {
-        return new URI("/artwork/write?aseq=" + aseqs.get(0));
+        return new URI("/artwork/write?aseq=" + aseq.get(0));
     }
 
     @PostMapping("/delete")
@@ -61,10 +61,10 @@ public class AdminArtworkController {
     public ResponseDto delete(
             @Valid
             @NotEmpty(message = "예술품을 선택해주세요.")
-            @RequestParam(name = "aseqs", required = false)
-            List<Integer> aseqs
+            @RequestParam(name = "aseq", required = false)
+            List<Integer> aseq
     ) throws SqlException {
-        artworkService.deleteArtwork(aseqs);
+        artworkService.deleteArtwork(aseq);
         return new ResponseDto("예술품이 삭제되었습니다.", "/artwork");
     }
 

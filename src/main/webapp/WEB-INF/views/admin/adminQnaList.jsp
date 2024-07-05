@@ -49,7 +49,7 @@
         <c:forEach items="${qnaList}" var="qnaDto">
             <ul class="admin-list-main admin-qna-list" onclick="go_check(event)">
                 <li>
-                    <label><input name="qseqs" type="checkbox" value="${qnaDto.qseq}" class="check-box"></label>
+                    <label><input name="qseq" type="checkbox" value="${qnaDto.qseq}" class="check-box"></label>
                 </li>
                 <li>${qnaDto.hasReply() ? '답변완료' : '대기중'}</li>
                 <li>${qnaDto.qseq}</li>
