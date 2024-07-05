@@ -75,7 +75,8 @@ public class Assert {
      * @throws T 값이 비어있는 경우 예외 발생
      */
     public <T extends Throwable> void notEmpty(Object value, String message, Function<String, T> throwableConstructor) throws T {
-        isTrue(getSize(value) == 0, message, throwableConstructor);
+        System.out.println(value + " : " + getSize(value));
+        isTrue(getSize(value) > 0, message, throwableConstructor);
     }
 
     /**
@@ -101,6 +102,8 @@ public class Assert {
             return v.length;
         } else if (value instanceof MultipartFile v) {
             return v.isEmpty() ? 0 : 1;
+        } else if (value instanceof Object) {
+            return 1;
         }
 
         return 0;
