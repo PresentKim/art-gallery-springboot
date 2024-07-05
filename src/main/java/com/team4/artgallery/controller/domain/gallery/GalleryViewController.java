@@ -47,7 +47,7 @@ public class GalleryViewController {
 
             Model model
     ) {
-        galleryService.markAsRead(gseq);
+        galleryService.increaseReadCountIfNew(gseq);
         model.addAttribute("galleryDto", galleryService.getGallery(gseq));
         return "gallery/galleryView";
     }

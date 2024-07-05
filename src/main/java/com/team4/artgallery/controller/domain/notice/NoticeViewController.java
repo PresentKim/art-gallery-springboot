@@ -53,7 +53,7 @@ public class NoticeViewController {
 
             Model model
     ) throws NotFoundException, SqlException {
-        noticeService.markAsRead(nseq);
+        noticeService.increaseReadCountIfNew(nseq);
         model.addAttribute("noticeDto", noticeService.getNotice(nseq));
         return "notice/noticeView";
     }
