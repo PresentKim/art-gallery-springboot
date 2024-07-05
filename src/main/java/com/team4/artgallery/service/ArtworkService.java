@@ -7,7 +7,6 @@ import com.team4.artgallery.dao.IArtworkDao;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.helper.MultipartFileService;
-import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,10 +56,7 @@ public class ArtworkService {
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      */
     public ArtworkDto getArtwork(int aseq) throws NotFoundException {
-        ArtworkDto artworkDto = artworkDao.getArtwork(aseq);
-        Assert.exists(artworkDto, "예술품 정보를 찾을 수 없습니다.");
-
-        return artworkDto;
+        return artworkDao.getArtwork(aseq);
     }
 
     /**
@@ -81,13 +77,11 @@ public class ArtworkService {
      * @throws FileException     이미지 저장에 실패한 경우 예외 발생
      */
     public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws NotFoundException {
-        ArtworkDto oldArtwork = getArtwork(artworkDto.getAseq());
-        Assert.exists(oldArtwork, "예술품 정보를 찾을 수 없습니다.");
-
         if (imageFile != null && !imageFile.isEmpty()) {
             saveImage(imageFile, artworkDto);
         } else {
             // 이미지 파일이 없을 경우 기존 이미지 파일 정보를 가져옵니다.
+            ArtworkDto oldArtwork = getArtwork(artworkDto.getAseq());
             artworkDto.setImage(oldArtwork.getImage());
             artworkDto.setSavefilename(oldArtwork.getSavefilename());
         }

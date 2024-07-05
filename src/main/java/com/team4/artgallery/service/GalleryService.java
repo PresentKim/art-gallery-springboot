@@ -65,10 +65,7 @@ public class GalleryService {
      * @throws NotFoundException 갤러리 정보를 찾을 수 없는 경우 예외 발생
      */
     public GalleryDto getGallery(int gseq) {
-        GalleryDto galleryDto = galleryDao.getGallery(gseq);
-        Assert.exists(galleryDto, "갤러리 정보를 찾을 수 없습니다.");
-
-        return galleryDto;
+        return galleryDao.getGallery(gseq);
     }
 
     /**
@@ -82,9 +79,7 @@ public class GalleryService {
      */
     public GalleryDto getGalleryOnlyAuthor(int gseq, MemberDto loginMember) throws NotFoundException, ForbiddenException {
         GalleryDto galleryDto = galleryDao.getGallery(gseq);
-        Assert.exists(galleryDto, "갤러리 정보를 찾을 수 없습니다.");
         Assert.trueOrForbidden(loginMember.getId().equals(galleryDto.getAuthorId()), "작성자만 수정할 수 있습니다.");
-
         return galleryDto;
     }
 
@@ -133,8 +128,6 @@ public class GalleryService {
      */
     public void deleteGallery(int gseq, MemberDto loginMember) throws NotFoundException, ForbiddenException {
         GalleryDto oldGallery = galleryDao.getGallery(gseq);
-        Assert.exists(oldGallery, "갤러리 정보를 찾을 수 없습니다.");
-
         Assert.trueOrForbidden(
                 loginMember.getId().equals(oldGallery.getAuthorId()) || loginMember.isAdmin(),
                 "작성자 혹은 관리자만 삭제할 수 있습니다."

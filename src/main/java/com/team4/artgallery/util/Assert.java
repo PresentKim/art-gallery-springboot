@@ -1,7 +1,6 @@
 package com.team4.artgallery.util;
 
 import com.team4.artgallery.controller.exception.ForbiddenException;
-import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
 import lombok.experimental.UtilityClass;
 
@@ -31,17 +30,6 @@ public class Assert {
      */
     public void trueOrUnauthorized(boolean value, String message) throws UnauthorizedException {
         isTrue(value, message, UnauthorizedException::new);
-    }
-
-    /**
-     * 값이 비어있는 경우 {@link NotFoundException} 예외를 발생시킵니다.
-     *
-     * @param message 예외 메시지
-     * @throws NotFoundException 값이 비어있는 경우 예외 발생
-     * @see #notEmpty(Object, String, Function)
-     */
-    public void exists(Object value, String message) throws NotFoundException {
-        notEmpty(value, message, NotFoundException::new);
     }
 
     /**

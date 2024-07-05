@@ -1,6 +1,7 @@
 package com.team4.artgallery.dao;
 
 import com.team4.artgallery.aspect.annotation.NotEmptyReturn;
+import com.team4.artgallery.aspect.annotation.NotNullReturn;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.GalleryDto;
@@ -34,7 +35,9 @@ public interface IGalleryDao {
      *
      * @param gseq 갤러리 번호
      * @return 갤러리 정보
+     * @throws NotFoundException 반환 값이 null인 경우 예외 발생 ({@link NotNullReturn} 참조)
      */
+    @NotNullReturn(value = "갤러리 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     GalleryDto getGallery(int gseq);
 
     /**

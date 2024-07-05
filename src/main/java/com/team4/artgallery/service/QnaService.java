@@ -59,11 +59,8 @@ public class QnaService {
      * @throws UnauthorizedException 접근 권한이 없는 경우 예외 발생
      */
     public QnaDto getInquiry(int qseq) throws NotFoundException, UnauthorizedException {
-        QnaDto qnaDto = qnaDao.getInquiry(qseq);
-        Assert.exists(qnaDto, "문의글 정보를 찾을 수 없습니다.");
-
         Assert.trueOrUnauthorized(authorizeForRestrict(qseq), "접근 권한이 없습니다.");
-        return qnaDto;
+        return qnaDao.getInquiry(qseq);
     }
 
     /**
@@ -177,14 +174,15 @@ public class QnaService {
      * @param qseq 문의글 번호
      * @param pwd  문의글 비밀번호
      * @return 인증 성공 시 true, 실패 시 false
+     * @throws NotFoundException 문의글 정보를 찾을 수 없는 경우 예외 발생
      */
-    public boolean authorizeWithPwd(int qseq, String pwd) {
+    public boolean authorizeWithPwd(int qseq, String pwd) throws NotFoundException {
         if (isAuthorized(qseq)) {
             return true;
         }
 
         QnaDto qnaDto = qnaDao.getInquiry(qseq);
-        if (qnaDto == null || !qnaDto.getPwd().equals(pwd)) {
+        if (!qnaDto.getPwd().equals(pwd)) {
             return false;
         }
 

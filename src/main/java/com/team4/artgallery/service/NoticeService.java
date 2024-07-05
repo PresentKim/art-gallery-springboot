@@ -7,7 +7,6 @@ import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.helper.SessionProvider;
-import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ReadCountHelper;
 import lombok.RequiredArgsConstructor;
@@ -66,10 +65,7 @@ public class NoticeService {
      * @throws NotFoundException 소식지 정보를 찾을 수 없는 경우 예외 발생
      */
     public NoticeDto getNotice(int nseq) {
-        NoticeDto noticeDto = noticeDao.getNotice(nseq);
-        Assert.exists(noticeDto, "소식지 정보를 찾을 수 없습니다.");
-
-        return noticeDto;
+        return noticeDao.getNotice(nseq);
     }
 
     /**
