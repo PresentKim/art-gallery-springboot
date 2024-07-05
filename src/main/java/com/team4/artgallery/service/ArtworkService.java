@@ -41,13 +41,13 @@ public class ArtworkService {
      *
      * @param filter     검색 조건
      * @param pagination 페이지 정보
-     * @return 예술품 목록과 페이지 정보
+     * @return 예술품 목록
      */
-    public Pagination.Pair<ArtworkDto> getArtworksPair(ArtworkFilter filter, Pagination pagination) {
-        return pagination
-                .setUrlTemplateFromFilter(filter)
-                .setItemCount(artworkDao.countArtworks(filter))
-                .pair(artworkDao.getArtworks(filter, pagination));
+    public List<ArtworkDto> getArtworks(ArtworkFilter filter, Pagination pagination) {
+        return artworkDao.getArtworks(
+                filter,
+                pagination.setUrlTemplateFromFilter(filter).setItemCount(artworkDao.countArtworks(filter))
+        );
     }
 
     /**

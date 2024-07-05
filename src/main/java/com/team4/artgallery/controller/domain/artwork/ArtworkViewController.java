@@ -31,8 +31,10 @@ public class ArtworkViewController {
 
             Model model
     ) {
-        filter.setDisplayyn("Y").setIncludeDisplay(false);
-        model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
+        model.addAttribute("artworkList", artworkService.getArtworks(
+                filter.setDisplayyn("Y").setIncludeDisplay(false),
+                pagination
+        ));
         return "artwork/artworkList";
     }
 

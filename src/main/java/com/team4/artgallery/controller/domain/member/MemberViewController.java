@@ -107,7 +107,7 @@ public class MemberViewController {
             MemberDto loginMember,
             Model model
     ) {
-        model.addAttribute("artworkList", favoriteService.getFavorites(loginMember.getId(), pagination).list());
+        model.addAttribute("artworkList", favoriteService.getFavorites(loginMember.getId(), pagination));
         return "member/mypage/mypageFavoriteList";
     }
 

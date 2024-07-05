@@ -49,13 +49,12 @@ public class GalleryService {
      *
      * @param filter     검색 조건
      * @param pagination 페이지 정보
-     * @return 갤러리 목록과 페이지 정보
+     * @return 갤러리 목록
      */
-    public Pagination.Pair<GalleryDto> getGalleriesPair(KeywordFilter filter, Pagination pagination) {
-        return pagination
-                .setUrlTemplateFromFilter(filter)
-                .setItemCount(galleryDao.countGalleries(filter))
-                .pair(galleryDao.getGalleries(filter, pagination));
+    public List<GalleryDto> getGalleries(KeywordFilter filter, Pagination pagination) {
+        return galleryDao.getGalleries(
+                filter,
+                pagination.setUrlTemplateFromFilter(filter).setItemCount(galleryDao.countGalleries(filter)));
     }
 
     /**

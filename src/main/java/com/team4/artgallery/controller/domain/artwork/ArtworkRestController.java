@@ -31,8 +31,10 @@ public class ArtworkRestController {
             @Valid
             Pagination pagination
     ) {
-        filter.setDisplayyn("Y").setIncludeDisplay(false);
-        return artworkService.getArtworksPair(filter, pagination);
+        return pagination.pair(artworkService.getArtworks(
+                filter.setDisplayyn("Y").setIncludeDisplay(false),
+                pagination)
+        );
     }
 
     @GetMapping("/{aseq}")

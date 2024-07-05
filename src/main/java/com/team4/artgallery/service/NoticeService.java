@@ -40,13 +40,13 @@ public class NoticeService {
      *
      * @param filter     검색 조건
      * @param pagination 페이지 정보
-     * @return 소식지 목록과 페이지 정보
+     * @return 소식지 목록
      */
-    public Pagination.Pair<NoticeDto> getNoticesPair(NoticeFilter filter, Pagination pagination) {
-        return pagination
-                .setUrlTemplateFromFilter(filter)
-                .setItemCount(noticeDao.countNotices(filter))
-                .pair(noticeDao.getNotices(filter, pagination));
+    public List<NoticeDto> getNotices(NoticeFilter filter, Pagination pagination) {
+        return noticeDao.getNotices(
+                filter,
+                pagination.setUrlTemplateFromFilter(filter).setItemCount(noticeDao.countNotices(filter))
+        );
     }
 
     /**

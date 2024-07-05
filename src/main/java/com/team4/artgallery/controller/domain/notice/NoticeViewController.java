@@ -42,7 +42,7 @@ public class NoticeViewController {
             return "redirect:/notice/newspaper";
         }
 
-        model.addAttribute("noticeList", noticeService.getNoticesPair(filter, pagination).list());
+        model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
         return "notice/noticeList";
     }
 

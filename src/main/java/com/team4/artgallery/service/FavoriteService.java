@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -21,11 +22,10 @@ public class FavoriteService {
      *
      * @param memberId   회원 ID
      * @param pagination 페이지네이션 정보
-     * @return 관심 예술품 목록과 페이지네이션 정보
+     * @return 관심 예술품 목록
      */
-    public Pagination.Pair<FavoriteDto> getFavorites(String memberId, Pagination pagination) {
-        pagination.setItemCount(favoriteDao.countFavorites(memberId));
-        return pagination.pair(favoriteDao.getFavorites(memberId, pagination));
+    public List<FavoriteDto> getFavorites(String memberId, Pagination pagination) {
+        return favoriteDao.getFavorites(memberId, pagination.setItemCount(favoriteDao.countFavorites(memberId)));
     }
 
     /**

@@ -38,7 +38,7 @@ public class AdminNoticeController {
 
             Model model
     ) {
-        model.addAttribute("noticeList", noticeService.getNoticesPair(filter, pagination).list());
+        model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
         return "admin/adminNoticeList";
     }
 

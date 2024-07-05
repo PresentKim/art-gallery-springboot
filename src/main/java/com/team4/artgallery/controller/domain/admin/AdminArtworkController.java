@@ -38,7 +38,7 @@ public class AdminArtworkController {
 
             Model model
     ) {
-        model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
+        model.addAttribute("artworkList", artworkService.getArtworks(filter, pagination));
         return "admin/adminArtworkList";
     }
 
