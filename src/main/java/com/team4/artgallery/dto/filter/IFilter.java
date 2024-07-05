@@ -55,7 +55,7 @@ public interface IFilter {
     }
 
     /**
-     * 필터 맵을 URL 파라미터 문자열로 변환합니다.
+     * 필터로부터 URL 파라미터 문자열을 생성해 반환합니다.
      *
      * @return URL 파라미터 문자열
      */
@@ -75,12 +75,12 @@ public interface IFilter {
     }
 
     /**
-     * 주어진 필드 이름을 URL 파라미터로 변환할지 여부를 반환합니다.
+     * 주어진 필드 이름이 URL 파라미터에 포함될지 여부를 반환합니다.
      *
-     * @return URL 파라미터로 변환할지 여부
-     * @hidden 이 메서드는 {@link #getUrlParam()} 메서드에서 사용됩니다.
+     * @return URL 파라미터에 포함될지 여부
+     * @implNote 이 메서드는 {@link #getUrlParam()} 메서드에서 사용됩니다.
      */
-    default boolean urlParamFilter(String fieldName) {
+    default boolean isFieldIncludedAsUrlParam(String fieldName) {
         return true;
     }
 
