@@ -1,7 +1,7 @@
 package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -27,8 +27,8 @@ public class ArtworkFilter implements IFilter {
      * 예술품 전시 여부
      */
     @FilterField
-    @Pattern(regexp = "Y", message = "displayyn 값은 설정할 수 없습니다", groups = ExcludeDisplay.class) // 요청 파라미터의 바인딩을 방지
-    private String displayyn = "Y";
+    @Null(message = "displayyn 값은 설정할 수 없습니다", groups = ExcludeDisplay.class) // 요청 파라미터의 바인딩을 방지
+    private String displayyn;
 
     /**
      * URL 파라미터에 전시 여부를 포함할지 여부
