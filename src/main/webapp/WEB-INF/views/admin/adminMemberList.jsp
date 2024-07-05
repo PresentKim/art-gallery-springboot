@@ -20,9 +20,9 @@
 
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
-                <input type="submit" value="관리자 권한 부여" formaction="<c:url value="/admin/member/grant"/>">
-                <input type="submit" value="관리자 권한 해제" formaction="<c:url value="/admin/member/revoke"/>">
-                <input type="submit" value="회원 삭제" formaction="<c:url value="/admin/member/delete"/>">
+                <input type="submit" value="관리자 권한 부여" formaction="<c:url value="/member/grant"/>">
+                <input type="submit" value="관리자 권한 해제" formaction="<c:url value="/member/revoke"/>">
+                <input type="submit" value="회원 삭제" formaction="<c:url value="/member/delete"/>">
             </div>
 
             <!-- 검색 기능 -->

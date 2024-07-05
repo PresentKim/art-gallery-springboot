@@ -11,6 +11,7 @@ import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -64,6 +67,19 @@ public class ArtworkRestController {
             artworkService.updateArtwork(artworkDto, imageFile);
         }
         return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
+    }
+
+    @CheckAdmin
+    @PostMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Object update(
+            @Valid
+            @NotEmpty(message = "예술품을 선택해주세요.")
+            @Size(max = 1, message = "한 번에 하나의 예술품만 수정할 수 있습니다.")
+            @RequestParam(name = "aseq")
+            List<Integer> aseq
+    ) throws URISyntaxException {
+        return new URI("/artwork/write?aseq=" + aseq.get(0));
     }
 
     @CheckAdmin

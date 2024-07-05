@@ -1,10 +1,8 @@
 package com.team4.artgallery.controller.domain.member;
 
+import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.aspect.annotation.CheckLogin;
-import com.team4.artgallery.controller.exception.BadRequestException;
-import com.team4.artgallery.controller.exception.ConflictException;
-import com.team4.artgallery.controller.exception.SqlException;
-import com.team4.artgallery.controller.exception.UnauthorizedException;
+import com.team4.artgallery.controller.exception.*;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.ResponseDto;
@@ -13,6 +11,7 @@ import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Assert;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/member", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -129,6 +129,46 @@ public class MemberRestController {
     ) throws SqlException {
         boolean result = favoriteService.toggleFavorite(loginMember.getId(), aseq);
         return "관심 예술품 목록에 " + (result ? "추가" : "삭제") + "되었습니다.";
+    }
+
+
+    @CheckAdmin
+    @PostMapping("/grant")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDto grant(
+            @Valid
+            @NotEmpty(message = "회원을 선택해주세요")
+            @RequestParam(name = "memberIds", required = false)
+            List<String> memberIds
+    ) throws NotFoundException {
+        memberService.grantAdminMembers(memberIds);
+        return new ResponseDto("관리자 권한을 부여했습니다", ":reload");
+    }
+
+    @CheckAdmin
+    @PostMapping("/revoke")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDto revoke(
+            @Valid
+            @NotEmpty(message = "회원을 선택해주세요")
+            @RequestParam(name = "memberIds", required = false)
+            List<String> memberIds
+    ) throws NotFoundException {
+        memberService.revokeAdminMembers(memberIds);
+        return new ResponseDto("관리자 권한을 제거했습니다", ":reload");
+    }
+
+    @CheckAdmin
+    @PostMapping("/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto delete(
+            @Valid
+            @NotEmpty(message = "회원을 선택해주세요")
+            @RequestParam(name = "memberIds", required = false)
+            List<String> memberIds
+    ) throws NotFoundException {
+        memberService.deleteMembers(memberIds);
+        return new ResponseDto("회원 정보를 제거했습니다", ":reload");
     }
 
 }

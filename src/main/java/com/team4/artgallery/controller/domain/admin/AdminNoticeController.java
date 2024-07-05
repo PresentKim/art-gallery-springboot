@@ -5,17 +5,12 @@ import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin/notice")
@@ -38,18 +33,6 @@ public class AdminNoticeController {
     ) {
         model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
         return "admin/adminNoticeList";
-    }
-
-    @PostMapping("/update")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public Object edit(
-            @Valid
-            @NotEmpty(message = "소식지를 선택해주세요.")
-            @Size(max = 1, message = "한 번에 하나의 소식지만 수정할 수 있습니다.")
-            @RequestParam(name = "nseq") List<Integer> nseq
-    ) throws URISyntaxException {
-        return new URI("/notice/update/" + nseq.get(0));
     }
 
 }

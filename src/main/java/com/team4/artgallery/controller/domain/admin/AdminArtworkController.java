@@ -5,16 +5,12 @@ import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin/artwork")
@@ -37,18 +33,6 @@ public class AdminArtworkController {
     ) {
         model.addAttribute("artworkList", artworkService.getArtworks(filter, pagination));
         return "admin/adminArtworkList";
-    }
-
-    @PostMapping("/update")
-    @ResponseBody
-    public Object update(
-            @Valid
-            @NotEmpty(message = "예술품을 선택해주세요.")
-            @Size(max = 1, message = "한 번에 하나의 예술품만 수정할 수 있습니다.")
-            @RequestParam(name = "aseq")
-            List<Integer> aseq
-    ) throws URISyntaxException {
-        return new URI("/artwork/write?aseq=" + aseq.get(0));
     }
 
 }

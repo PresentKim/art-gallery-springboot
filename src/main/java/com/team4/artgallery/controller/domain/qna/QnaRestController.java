@@ -9,12 +9,14 @@ import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.QnaService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/qna", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,6 +50,18 @@ public class QnaRestController {
     ) throws NotFoundException, SqlException {
         qnaService.updateReply(qseq, reply);
         return "문의 답변이 완료되었습니다.";
+    }
+
+    @CheckAdmin
+    @PostMapping("/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto delete(
+            @Valid
+            @NotEmpty(message = "문의글을 선택해주세요")
+            @RequestParam(name = "qseq", required = false) List<Integer> qseq
+    ) throws SqlException {
+        qnaService.deleteInquiry(qseq);
+        return new ResponseDto("문의글 정보를 제거했습니다", ":reload");
     }
 
     @PostMapping("/authorize")
