@@ -12,7 +12,6 @@ import com.team4.artgallery.util.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class ArtworkService {
      * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      * @throws SqlException  예술품 정보 추가에 실패한 경우 예외 발생
      */
-    public void createArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws ResponseStatusException {
+    public void createArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws SqlException {
         saveImage(imageFile, artworkDto);
         artworkDao.createArtwork(artworkDto);
     }
@@ -82,7 +81,7 @@ public class ArtworkService {
      * @throws FileException     이미지 저장에 실패한 경우 예외 발생
      * @throws SqlException      예술품 정보 수정에 실패한 경우 예외 발생
      */
-    public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws ResponseStatusException {
+    public void updateArtwork(ArtworkDto artworkDto, MultipartFile imageFile) throws SqlException {
         ArtworkDto oldArtwork = getArtwork(artworkDto.getAseq());
         Assert.exists(oldArtwork, "예술품 정보를 찾을 수 없습니다.");
 
@@ -102,9 +101,9 @@ public class ArtworkService {
      *
      * @param aseq 예술품 번호 (artwork sequence)
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
-     * @throws SqlException      전시 여부 변경에 실패한 경우 예외 발생
+     * @throws NotFoundException 전시 여부 변경에 실패한 경우 예외 발생
      */
-    public void toggleArtworkDisplay(int aseq) throws ResponseStatusException {
+    public void toggleArtworkDisplay(int aseq) throws NotFoundException {
         Assert.exists(artworkDao.getArtwork(aseq), "예술품 정보를 찾을 수 없습니다.");
         artworkDao.toggleArtworkDisplay(aseq);
     }
@@ -113,9 +112,9 @@ public class ArtworkService {
      * 예술품 정보를 삭제합니다.
      *
      * @param aseqList 예술품 번호 목록
-     * @throws SqlException 예술품 삭제에 실패한 경우 예외 발생
+     * @throws NotFoundException 예술품 삭제에 실패한 경우 예외 발생
      */
-    public void deleteArtwork(List<Integer> aseqList) throws SqlException {
+    public void deleteArtwork(List<Integer> aseqList) throws NotFoundException {
         artworkDao.deleteArtworks(aseqList);
     }
 
@@ -123,9 +122,9 @@ public class ArtworkService {
      * 예술품 정보를 삭제합니다.
      *
      * @param aseq 예술품 번호 (artwork sequence)
-     * @throws SqlException 예술품 삭제에 실패한 경우 예외 발생
+     * @throws NotFoundException 예술품 삭제에 실패한 경우 예외 발생
      */
-    public void deleteArtwork(int aseq) throws SqlException {
+    public void deleteArtwork(int aseq) throws NotFoundException {
         artworkDao.deleteArtwork(aseq);
     }
 

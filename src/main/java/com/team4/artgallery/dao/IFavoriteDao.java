@@ -52,6 +52,6 @@ public interface IFavoriteDao {
      * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
     @QueryApplied("관심 예술품 정보를 변경하는 중 오류가 발생했습니다.")
-    int toggleFavorite(Map<String, Object> params);
+    int toggleFavorite(Map<String, Object> params) throws SqlException;
 
 }

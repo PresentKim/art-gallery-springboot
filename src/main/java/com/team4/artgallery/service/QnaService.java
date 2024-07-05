@@ -10,7 +10,6 @@ import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -32,7 +31,7 @@ public class QnaService {
      * @param qnaDto 문의글 정보
      * @throws SqlException 문의글 정보 추가에 실패한 경우 예외 발생
      */
-    public void createInquiry(QnaDto qnaDto) throws ResponseStatusException {
+    public void createInquiry(QnaDto qnaDto) throws SqlException {
         qnaDao.createInquiry(qnaDto);
         saveAuthorize(qnaDto.getQseq());
     }
@@ -73,7 +72,7 @@ public class QnaService {
      * @throws UnauthorizedException 접근 권한이 없는 경우 예외 발생
      * @throws SqlException          문의글 정보 수정에 실패한 경우 예외 발생
      */
-    public void updateInquiry(QnaDto qnaDto) throws ResponseStatusException {
+    public void updateInquiry(QnaDto qnaDto) throws NotFoundException, UnauthorizedException, SqlException {
         int qseq = qnaDto.getQseq();
         QnaDto oldInquiry = getInquiry(qseq);
         Assert.exists(oldInquiry, "문의글 정보를 찾을 수 없습니다.");
@@ -88,10 +87,8 @@ public class QnaService {
      * @param qseq  문의글 번호 (qna sequence)
      * @param reply 답변 내용
      * @throws NotFoundException 문의글 정보를 찾을 수 없는 경우 예외 발생
-     * @throws SqlException      문의글 정보 수정에 실패한 경우 예외 발생
      */
-    public void updateReply(int qseq, String reply) throws NotFoundException, SqlException {
-        Assert.exists(getInquiry(qseq), "문의글 정보를 찾을 수 없습니다.");
+    public void updateReply(int qseq, String reply) throws NotFoundException {
         qnaDao.updateReply(qseq, reply);
     }
 
@@ -99,9 +96,9 @@ public class QnaService {
      * 문의글 정보를 삭제합니다.
      *
      * @param qseqList 문의글 번호 목록
-     * @throws SqlException 문의글 삭제에 실패한 경우 예외 발생
+     * @throws NotFoundException 문의글 삭제에 실패한 경우 예외 발생
      */
-    public void deleteInquiry(List<Integer> qseqList) throws SqlException {
+    public void deleteInquiry(List<Integer> qseqList) throws NotFoundException {
         qnaDao.deleteInquiries(qseqList);
     }
 

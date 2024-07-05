@@ -12,7 +12,6 @@ import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ReadCountHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class NoticeService {
      * @param loginMember 로그인 멤버 정보
      * @throws SqlException 소식지 정보 추가에 실패한 경우 예외 발생
      */
-    public void createNotice(NoticeDto noticeDto, MemberDto loginMember) throws ResponseStatusException {
+    public void createNotice(NoticeDto noticeDto, MemberDto loginMember) throws SqlException {
         noticeDto.setAuthor(loginMember.getId());
         noticeDao.createNotice(noticeDto);
     }
@@ -79,12 +78,8 @@ public class NoticeService {
      * @param noticeDto   소식지 정보
      * @param loginMember 로그인 멤버 정보
      * @throws NotFoundException 소식지 정보를 찾을 수 없는 경우 예외 발생
-     * @throws SqlException      소식지 정보 수정에 실패한 경우 예외 발생
      */
-    public void updateNotice(NoticeDto noticeDto, MemberDto loginMember) throws ResponseStatusException {
-        NoticeDto oldNotice = getNotice(noticeDto.getNseq());
-        Assert.exists(oldNotice, "소식지 정보를 찾을 수 없습니다.");
-
+    public void updateNotice(NoticeDto noticeDto, MemberDto loginMember) throws NotFoundException {
         noticeDto.setAuthor(loginMember.getId());
         noticeDao.updateNotice(noticeDto);
     }
@@ -93,9 +88,9 @@ public class NoticeService {
      * 소식지 정보를 삭제합니다.
      *
      * @param nseqList 소식지 번호 목록
-     * @throws SqlException 소식지 삭제에 실패한 경우 예외 발생
+     * @throws NotFoundException 소식지 삭제에 실패한 경우 예외 발생
      */
-    public void deleteNotice(List<Integer> nseqList) throws SqlException {
+    public void deleteNotice(List<Integer> nseqList) throws NotFoundException {
         noticeDao.deleteNotices(nseqList);
     }
 
@@ -103,9 +98,9 @@ public class NoticeService {
      * 소식지 정보를 삭제합니다.
      *
      * @param nseq 소식지 번호 (notice sequence)
-     * @throws SqlException 소식지 삭제에 실패한 경우 예외 발생
+     * @throws NotFoundException 소식지 삭제에 실패한 경우 예외 발생
      */
-    public void deleteNotice(int nseq) throws SqlException {
+    public void deleteNotice(int nseq) throws NotFoundException {
         noticeDao.deleteNotice(nseq);
     }
 

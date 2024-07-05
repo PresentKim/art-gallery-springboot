@@ -16,7 +16,6 @@ import com.team4.artgallery.util.ReadCountHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class GalleryService {
      * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      * @throws SqlException  갤러리 정보 추가에 실패한 경우 예외 발생
      */
-    public void createGallery(GalleryDto galleryDto, MultipartFile imageFile, MemberDto loginMember) throws ResponseStatusException {
+    public void createGallery(GalleryDto galleryDto, MultipartFile imageFile, MemberDto loginMember) throws FileException, SqlException {
         saveImage(imageFile, galleryDto);
         galleryDto.setAuthorId(loginMember.getId());
         galleryDao.createGallery(galleryDto);
@@ -98,9 +97,10 @@ public class GalleryService {
      * @throws NotFoundException  갤러리 정보를 찾을 수 없는 경우 예외 발생
      * @throws ForbiddenException 작성자가 아닌 경우 예외 발생
      * @throws FileException      이미지 저장에 실패한 경우 예외 발생
-     * @throws SqlException       갤러리 정보 수정에 실패한 경우 예외 발생
      */
-    public void updateGallery(GalleryDto galleryDto, MultipartFile imageFile, MemberDto loginMember) throws ResponseStatusException {
+    public void updateGallery(GalleryDto galleryDto, MultipartFile imageFile, MemberDto loginMember)
+            throws NotFoundException, ForbiddenException, FileException {
+
         GalleryDto oldGallery = getGalleryOnlyAuthor(galleryDto.getGseq(), loginMember);
         if (imageFile != null && !imageFile.isEmpty()) {
             saveImage(imageFile, galleryDto);
@@ -117,9 +117,9 @@ public class GalleryService {
      * 갤러리 정보를 삭제합니다.
      *
      * @param gseqList 갤러리 번호 목록
-     * @throws SqlException 갤러리 삭제에 실패한 경우 예외 발생
+     * @throws NotFoundException 갤러리 삭제에 실패한 경우 예외 발생
      */
-    public void deleteGallery(List<Integer> gseqList) throws SqlException {
+    public void deleteGallery(List<Integer> gseqList) throws NotFoundException {
         galleryDao.deleteGalleries(gseqList);
     }
 
@@ -130,9 +130,8 @@ public class GalleryService {
      * @param loginMember 로그인 멤버 정보
      * @throws NotFoundException  갤러리 정보를 찾을 수 없는 경우 예외 발생
      * @throws ForbiddenException 작성자 혹은 관리자가 아닌 경우 예외 발생
-     * @throws SqlException       갤러리 삭제에 실패한 경우 예외 발생
      */
-    public void deleteGallery(int gseq, MemberDto loginMember) throws NotFoundException, ForbiddenException, SqlException {
+    public void deleteGallery(int gseq, MemberDto loginMember) throws NotFoundException, ForbiddenException {
         GalleryDto oldGallery = galleryDao.getGallery(gseq);
         Assert.exists(oldGallery, "갤러리 정보를 찾을 수 없습니다.");
 

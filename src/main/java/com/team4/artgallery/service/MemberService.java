@@ -1,7 +1,7 @@
 package com.team4.artgallery.service;
 
 import com.team4.artgallery.controller.exception.BadRequestException;
-import com.team4.artgallery.controller.exception.SqlException;
+import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
 import com.team4.artgallery.dao.IMemberDao;
 import com.team4.artgallery.dto.MemberDto;
@@ -104,9 +104,9 @@ public class MemberService {
      * @param loginMember 로그인한 회원 정보
      * @throws BadRequestException   비밀번호가 일치하지 않는 경우 예외 발생
      * @throws UnauthorizedException 로그인 상태가 아닌 경우 예외 발생
-     * @throws SqlException          회원 정보 삭제 중 오류가 발생한 경우 예외 발생
+     * @throws NotFoundException     회원 정보 삭제 중 오류가 발생한 경우 예외 발생
      */
-    public void withdraw(String pwd, MemberDto loginMember) throws BadRequestException, UnauthorizedException, SqlException {
+    public void withdraw(String pwd, MemberDto loginMember) throws BadRequestException, UnauthorizedException, NotFoundException {
         Assert.isTrue(pwd.equals(loginMember.getPwd()), "ID 혹은 비밀번호가 일치하지 않습니다.", BadRequestException::new);
 
         memberDao.deleteMember(loginMember.getId());
