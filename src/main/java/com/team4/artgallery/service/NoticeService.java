@@ -54,7 +54,7 @@ public class NoticeService {
      * @param count 최근 소식지 개수
      */
     public List<NoticeDto> getRecentNotices(int count) {
-        return getNoticesPair(null, new Pagination().setItemCount(0).setDisplayCount(count)).list();
+        return noticeDao.getNotices(null, new Pagination().setItemCount(0).setDisplayCount(count));
     }
 
     /**
