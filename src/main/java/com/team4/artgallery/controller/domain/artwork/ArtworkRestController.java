@@ -32,7 +32,6 @@ public class ArtworkRestController {
             Pagination pagination
     ) {
         filter.setIncludeDisplay(false);
-        pagination.setUrlTemplate("/artwork?page=%d" + filter.getUrlParam());
         return artworkService.getArtworksPair(filter, pagination);
     }
 

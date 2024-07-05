@@ -42,7 +42,6 @@ public class NoticeViewController {
             return "redirect:/notice/newspaper";
         }
 
-        pagination.setUrlTemplate("/notice?page=%d" + filter.getUrlParam());
         model.addAttribute("noticeList", noticeService.getNoticesPair(filter, pagination).list());
         return "notice/noticeList";
     }

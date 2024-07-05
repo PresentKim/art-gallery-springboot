@@ -38,7 +38,6 @@ public class AdminNoticeController {
 
             Model model
     ) {
-        pagination.setUrlTemplate("/admin/notice?page=%d" + filter.getUrlParam());
         model.addAttribute("noticeList", noticeService.getNoticesPair(filter, pagination).list());
         return "admin/adminNoticeList";
     }

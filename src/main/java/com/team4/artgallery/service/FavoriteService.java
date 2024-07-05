@@ -24,9 +24,7 @@ public class FavoriteService {
      * @return 관심 예술품 목록과 페이지네이션 정보
      */
     public Pagination.Pair<FavoriteDto> getFavorites(String memberId, Pagination pagination) {
-        pagination
-                .setItemCount(favoriteDao.countFavorites(memberId))
-                .setUrlTemplate("/mypage/favorite?page=%d");
+        pagination.setItemCount(favoriteDao.countFavorites(memberId));
         return pagination.pair(favoriteDao.getFavorites(memberId, pagination));
     }
 

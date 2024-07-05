@@ -32,7 +32,6 @@ public class ArtworkViewController {
             Model model
     ) {
         filter.setIncludeDisplay(false);
-        pagination.setUrlTemplate("/artwork?page=%d" + filter.getUrlParam());
         model.addAttribute("artworkList", artworkService.getArtworksPair(filter, pagination).list());
         return "artwork/artworkList";
     }

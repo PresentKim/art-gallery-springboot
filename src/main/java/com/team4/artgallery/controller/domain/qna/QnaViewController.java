@@ -1,6 +1,7 @@
 package com.team4.artgallery.controller.domain.qna;
 
 import com.team4.artgallery.controller.exception.UnauthorizedException;
+import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
@@ -29,8 +30,7 @@ public class QnaViewController {
 
             Model model
     ) {
-        pagination.setUrlTemplate("/qna?page=%d");
-        model.addAttribute("qnaList", qnaService.getInquiriesPair(null, pagination).list());
+        model.addAttribute("qnaList", qnaService.getInquiriesPair(new QnaFilter(), pagination).list());
         return "qna/qnaList";
     }
 

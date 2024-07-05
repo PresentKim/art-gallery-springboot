@@ -45,6 +45,7 @@ public class ArtworkService {
      */
     public Pagination.Pair<ArtworkDto> getArtworksPair(ArtworkFilter filter, Pagination pagination) {
         return pagination
+                .setUrlTemplateFromFilter(filter)
                 .setItemCount(artworkDao.countArtworks(filter))
                 .pair(artworkDao.getArtworks(filter, pagination));
     }

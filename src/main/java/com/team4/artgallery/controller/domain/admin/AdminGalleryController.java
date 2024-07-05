@@ -35,7 +35,6 @@ public class AdminGalleryController {
 
             Model model
     ) {
-        pagination.setUrlTemplate("/gallery?page=%d" + filter.getUrlParam());
         model.addAttribute("galleryList", galleryService.getGalleriesPair(filter, pagination).list());
         return "admin/adminGalleryList";
     }

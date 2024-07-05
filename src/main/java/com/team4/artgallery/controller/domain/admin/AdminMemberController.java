@@ -35,10 +35,12 @@ public class AdminMemberController {
 
             Model model
     ) {
-        pagination.setItemCount(memberService.countMembers(filter))
-                .setUrlTemplate("/admin/member?page=%d" + filter.getUrlParam());
-
-        model.addAttribute("memberList", memberService.getMembers(filter, pagination));
+        model.addAttribute("memberList", memberService.getMembers(
+                filter,
+                pagination
+                        .setUrlTemplateFromFilter(filter)
+                        .setItemCount(memberService.countMembers(filter))
+        ));
         return "admin/adminMemberList";
     }
 

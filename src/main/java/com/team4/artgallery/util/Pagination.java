@@ -1,7 +1,9 @@
 package com.team4.artgallery.util;
 
+import com.team4.artgallery.dto.filter.IFilter;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -47,8 +49,8 @@ public class Pagination {
     /**
      * 페이지의 URL 템플릿
      */
-    @Null(message = "urlTemplate 값은 설정할 수 없습니다") // 요청 파라미터의 바인딩을 방지
-    private String urlTemplate;
+    @Pattern(regexp = "^\\?page=%d$", message = "urlTemplate 값은 설정할 수 없습니다") // 요청 파라미터의 바인딩을 방지
+    private String urlTemplate = "?page=%d";
 
     /**
      * 현재 페이지를 반환합니다.
@@ -57,6 +59,17 @@ public class Pagination {
      */
     public int getPage() {
         return fitPage(page);
+    }
+
+    /**
+     * 필터 객체를 받아 URL 템플릿을 설정합니다.
+     *
+     * @param filter 필터 객체
+     * @return Pagination 객체
+     */
+    public Pagination setUrlTemplateFromFilter(IFilter filter) {
+        this.urlTemplate = "?page=%d" + filter.getUrlParam();
+        return this;
     }
 
     /**

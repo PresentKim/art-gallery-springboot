@@ -46,6 +46,7 @@ public class QnaService {
      */
     public Pagination.Pair<QnaDto> getInquiriesPair(QnaFilter filter, Pagination pagination) {
         return pagination
+                .setUrlTemplateFromFilter(filter)
                 .setItemCount(qnaDao.countInquiries(filter))
                 .pair(qnaDao.getInquiries(filter, pagination));
     }

@@ -35,7 +35,6 @@ public class AdminQnaController {
 
             Model model
     ) throws SqlException {
-        pagination.setUrlTemplate("/admin/qna?page=%d" + filter.getUrlParam());
         model.addAttribute("qnaList", qnaService.getInquiriesPair(filter, pagination).list());
         return "admin/adminQnaList";
     }

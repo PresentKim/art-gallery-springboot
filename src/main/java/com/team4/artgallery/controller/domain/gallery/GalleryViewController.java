@@ -36,7 +36,6 @@ public class GalleryViewController {
 
             Model model
     ) {
-        pagination.setUrlTemplate("/gallery?page=%d" + filter.getUrlParam());
         model.addAttribute("galleryList", galleryService.getGalleriesPair(filter, pagination).list());
         return "gallery/galleryList";
     }

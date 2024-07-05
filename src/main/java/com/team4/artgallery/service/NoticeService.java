@@ -44,6 +44,7 @@ public class NoticeService {
      */
     public Pagination.Pair<NoticeDto> getNoticesPair(NoticeFilter filter, Pagination pagination) {
         return pagination
+                .setUrlTemplateFromFilter(filter)
                 .setItemCount(noticeDao.countNotices(filter))
                 .pair(noticeDao.getNotices(filter, pagination));
     }

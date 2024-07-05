@@ -53,6 +53,7 @@ public class GalleryService {
      */
     public Pagination.Pair<GalleryDto> getGalleriesPair(KeywordFilter filter, Pagination pagination) {
         return pagination
+                .setUrlTemplateFromFilter(filter)
                 .setItemCount(galleryDao.countGalleries(filter))
                 .pair(galleryDao.getGalleries(filter, pagination));
     }
