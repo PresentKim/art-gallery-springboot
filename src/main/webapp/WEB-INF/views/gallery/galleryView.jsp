@@ -37,13 +37,13 @@
         </li>
         <li class="gbtn">
             <c:if test="${loginMember.id eq galleryDto.authorId}">
-                <a class="gbtn-update gallery-btn" href="<c:url value="/gallery/update?gseq=${galleryDto.gseq}"/>">
+                <a class="gbtn-update gallery-btn" href="<c:url value="/gallery/write?gseq=${galleryDto.gseq}"/>">
                     수정하기
                 </a>
             </c:if>
             <c:if test="${loginMember.id eq galleryDto.authorId or loginMember.admin}">
                 <div class="gbtn-delete gallery-btn"
-                     onclick="ajax('/gallery/delete', 'gseq=${galleryDto.gseq}').then(defaultAjaxHandler)">
+                     onclick="ajax('/gallery/delete', {gseq:${galleryDto.gseq}}).then(defaultAjaxHandler)">
                     삭제하기
                 </div>
             </c:if>

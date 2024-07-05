@@ -6,7 +6,7 @@
 <t:layout>
     <jsp:attribute name="head">
         <title>갤러리 ${empty galleryDto ? '등록' : '수정 :: '}${galleryDto.gseq}</title>
-        <link rel="stylesheet" href="<c:url value="/static/stylesheet/galleryForm.css"/>">
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/gallery_write.css"/>">
         <script src="<c:url value="/static/script/gallery.js"/>"></script>
     </jsp:attribute>
 
@@ -14,17 +14,8 @@
 
 <h2 class="gallery-form-header">${empty galleryDto ? '갤러리 등록' : '갤러리 수정'}</h2>
 <section class="gallery-form-main">
-    <form class="gallery-form"
-          method="post" enctype="multipart/form-data" onsubmit="ajaxSubmit(event)"
-            <c:choose>
-    <c:when test="${empty galleryDto}">
-          action="<c:url value="/gallery/write"/>"
-    </c:when>
-    <c:otherwise>
-          action="<c:url value="/gallery/update"/>"
-    </c:otherwise>
-    </c:choose>
-    >
+    <form class="gallery-form" method="post" action="<c:url value="/gallery/write"/>" enctype="multipart/form-data"
+          onsubmit="ajaxSubmit(event)">
         <c:if test="${not empty galleryDto}">
             <input type="hidden" name="gseq" value="${galleryDto.gseq}">
         </c:if>

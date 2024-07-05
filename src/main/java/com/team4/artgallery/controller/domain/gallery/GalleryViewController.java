@@ -1,7 +1,6 @@
 package com.team4.artgallery.controller.domain.gallery;
 
 import com.team4.artgallery.aspect.annotation.CheckLogin;
-import com.team4.artgallery.controller.exception.ForbiddenException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
@@ -13,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path = "/gallery", produces = MediaType.TEXT_HTML_VALUE)
@@ -52,24 +48,20 @@ public class GalleryViewController {
         return "gallery/galleryView";
     }
 
-    @CheckLogin("/gallery/update/${gseq}")
-    @GetMapping("/update/{gseq}")
-    public String update(
-            @PathVariable(name = "gseq")
+    @CheckLogin("/gallery/write?gseq=${gseq}")
+    @GetMapping("/write")
+    public String write(
+            @RequestParam(name = "gseq", required = false)
             Integer gseq,
 
             @LoginMember
             MemberDto loginMember,
             Model model
-    ) throws NotFoundException, ForbiddenException {
-        model.addAttribute("galleryDto", galleryService.getGalleryOnlyAuthor(gseq, loginMember));
-        return "gallery/galleryForm";
-    }
-
-    @CheckLogin("/gallery/write")
-    @GetMapping("/write")
-    public String write() {
-        return "gallery/galleryForm";
+    ) throws NotFoundException {
+        if (gseq != null) {
+            model.addAttribute("galleryDto", galleryService.getGalleryOnlyAuthor(gseq, loginMember));
+        }
+        return "gallery/galleryWrite";
     }
 
 }

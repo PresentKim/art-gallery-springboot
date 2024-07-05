@@ -11,7 +11,6 @@ import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.GalleryService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,37 +25,24 @@ public class GalleryRestController {
     private final GalleryService galleryService;
 
     @CheckLogin
-    @PostMapping("/update")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto update(
-            @Valid
-            GalleryDto galleryDto,
-            @RequestParam(name = "imageFile", required = false)
-            MultipartFile imageFile,
-
-            @LoginMember
-            MemberDto loginMember
-    ) throws NotFoundException, ForbiddenException, SqlException, FileException {
-        galleryService.updateGallery(galleryDto, imageFile, loginMember);
-        return new ResponseDto("갤러리가 수정되었습니다.", "/gallery/" + galleryDto.getGseq());
-    }
-
-    @CheckLogin
     @PostMapping("/write")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDto write(
             @Valid
             GalleryDto galleryDto,
             @Valid
-            @NotNull(message = "이미지 파일을 업로드해주세요.")
             @RequestParam(name = "imageFile", required = false)
             MultipartFile imageFile,
 
             @LoginMember
             MemberDto loginMember
-    ) throws FileException, SqlException {
-        galleryService.createGallery(galleryDto, imageFile, loginMember);
-        return new ResponseDto("갤러리가 작성되었습니다.", "/gallery/" + galleryDto.getGseq());
+    ) throws NotFoundException, SqlException, FileException {
+        if (galleryDto.getGseq() == null) {
+            galleryService.createGallery(galleryDto, imageFile, loginMember);
+        } else {
+            galleryService.updateGallery(galleryDto, imageFile, loginMember);
+        }
+        return new ResponseDto("갤러리가 등록되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
     @CheckLogin
