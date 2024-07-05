@@ -103,7 +103,7 @@ public class MemberRestController {
 
     @CheckLogin
     @PostMapping("/withdraw")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseDto withdraw(
             @Valid
             @NotBlank(message = "비밀번호를 입력해주세요")

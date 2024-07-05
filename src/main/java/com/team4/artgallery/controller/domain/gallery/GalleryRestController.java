@@ -61,7 +61,7 @@ public class GalleryRestController {
 
     @CheckLogin
     @PostMapping("/delete")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseDto delete(
             @RequestParam(name = "gseq")
             Integer gseq,

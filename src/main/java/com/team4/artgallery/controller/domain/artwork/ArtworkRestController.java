@@ -74,7 +74,7 @@ public class ArtworkRestController {
 
     @CheckAdmin
     @PostMapping("/delete")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseDto delete(
             @RequestParam(name = "aseq")
             Integer aseq

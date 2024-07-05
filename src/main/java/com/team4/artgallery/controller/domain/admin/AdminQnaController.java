@@ -40,7 +40,7 @@ public class AdminQnaController {
     }
 
     @PostMapping("/delete")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseDto delete(
             @Valid

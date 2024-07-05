@@ -50,7 +50,7 @@ public class NoticeRestController {
 
     @CheckAdmin
     @PostMapping("/delete")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseDto delete(
             @RequestParam(name = "nseq")
             Integer nseq
