@@ -31,7 +31,7 @@
         <div class="gallery-list-main-content">
             <c:forEach items="${galleryList}" var="galleryDto">
                 <a href="<c:url value="/gallery/${galleryDto.gseq}"/>">
-                    <img src="<c:url value="/static/image/gallery/${galleryDto.savefilename}"/>"
+                    <img src="<c:url value="${galleryDto.fullSavefilename}"/>"
                          alt="gallery_image"/>
                     <div class="gallery-list-main-content_info">
                         <h1 class="glmc_info-title">${galleryDto.title}</h1>

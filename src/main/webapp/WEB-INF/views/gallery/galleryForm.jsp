@@ -45,7 +45,7 @@
                     <input type="file" name="imageFile" id="imageFile" accept="image/*" onchange="updatePreviewImage()">
                 </li>
                 <li>
-                    <img id="image-preview" alt="image-preview" src="/static/image/gallery/${galleryDto.savefilename}">
+                    <img id="image-preview" alt="image-preview" src="${galleryDto.fullSavefilename}">
                 </li>
             </ul>
         </div>

@@ -39,4 +39,12 @@ public class GalleryDto {
     @Null(message = "등록일은 직접 설정할 수 없습니다.")
     private Date writedate;
 
+    public String getFullSavefilename() {
+        if (savefilename.startsWith("http")) {
+            return savefilename;
+        }
+
+        return "/static/image/gallery/" + savefilename;
+    }
+
 }
