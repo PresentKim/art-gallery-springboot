@@ -86,7 +86,7 @@ public interface IGalleryDao {
      * @return 삭제된 행의 수
      * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
-    @QueryApplied("갤러리 정보를 삭제하는 중 오류가 발생했습니다.")
+    @QueryApplied("갤러리 정보를 찾을 수 없습니다.")
     int deleteGallery(int gseq);
 
     /**
@@ -96,7 +96,7 @@ public interface IGalleryDao {
      * @return 삭제된 행의 수
      * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
-    @QueryApplied("갤러리 정보를 삭제하는 중 오류가 발생했습니다.")
+    @QueryApplied("갤러리 정보를 찾을 수 없습니다.")
     int deleteGalleries(List<Integer> gseqList);
 
 }

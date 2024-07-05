@@ -85,7 +85,7 @@ public interface IQnaDao {
      * @param qseq 문의글 번호
      * @return 삭제된 행의 수
      */
-    @QueryApplied("문의글 정보를 삭체하는 중 오류가 발생했습니다.")
+    @QueryApplied("문의글 정보를 정보를 찾을 수 없습니다.")
     int deleteInquiry(int qseq);
 
     /**
@@ -95,7 +95,7 @@ public interface IQnaDao {
      * @return 삭제된 행의 수
      * @throws SqlException 쿼리 결과 값이 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
-    @QueryApplied("문의글 정보를 삭체하는 중 오류가 발생했습니다.")
+    @QueryApplied("문의글 정보를 정보를 찾을 수 없습니다.")
     int deleteInquiries(List<Integer> qseqList);
 
 }
