@@ -10,7 +10,7 @@
             <c:otherwise>${qnaDto.qseq}번 문의 수정</c:otherwise>
         </c:choose></title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_icon.css"/>">
-        <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_form.css"/>">
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_write.css"/>">
         <script src="<c:url value="/static/script/qna.js"/>"></script>
     </jsp:attribute>
 
@@ -27,17 +27,7 @@
             </h1>
         </div>
     </div>
-    <form class="qna-form_body"
-          method="post" onsubmit="ajaxSubmit(event)"
-            <c:choose>
-                <c:when test="${empty qnaDto}">
-                    action="<c:url value="/qna/write"/>"
-                </c:when>
-                <c:otherwise>
-                    action="<c:url value="/qna/update"/>"
-                </c:otherwise>
-            </c:choose>
-    >
+    <form class="qna-form_body" method="post" action="<c:url value="/qna/write"/>" onsubmit="ajaxSubmit(event)">
         <c:if test="${not empty qnaDto}">
             <input type="hidden" name="qseq" value="${qnaDto.qseq}">
         </c:if>

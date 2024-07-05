@@ -28,19 +28,13 @@ public class QnaRestController {
     public ResponseDto write(
             @Valid
             QnaDto qnaDto
-    ) throws SqlException {
-        qnaService.createInquiry(qnaDto);
-        return new ResponseDto("문의글 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
-    }
-
-    @PostMapping("/update")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto update(
-            @Valid
-            QnaDto qnaDto
     ) throws NotFoundException, UnauthorizedException, SqlException {
-        qnaService.updateInquiry(qnaDto);
-        return new ResponseDto("문의 수정이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
+        if (qnaDto.getQseq() != null) {
+            qnaService.updateInquiry(qnaDto);
+        } else {
+            qnaService.createInquiry(qnaDto);
+        }
+        return new ResponseDto("문의글 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
     }
 
     @CheckAdmin
