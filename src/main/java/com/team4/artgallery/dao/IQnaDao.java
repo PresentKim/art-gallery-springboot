@@ -62,10 +62,10 @@ public interface IQnaDao {
      *
      * @param qnaDto 문의글 정보
      * @return 수정된 행의 수
-     * @throws SqlException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
-    @QueryApplied("문의글 정보를 수정하는 중 오류가 발생했습니다.")
-    int updateInquiry(QnaDto qnaDto) throws SqlException;
+    @QueryApplied(value = "문의글 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    int updateInquiry(QnaDto qnaDto) throws NotFoundException;
 
     /**
      * 문의글 답변을 수정합니다.
@@ -73,10 +73,10 @@ public interface IQnaDao {
      * @param qseq  문의글 번호
      * @param reply 답변 내용
      * @return 수정된 행의 수
-     * @throws SqlException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
+     * @throws NotFoundException 수정된 행의 수가 0인 경우 예외 발생 ({@link QueryApplied} 참조)
      */
-    @QueryApplied("문의글 답변을 수정하는 중 오류가 발생했습니다.")
-    int updateReply(@Param("qseq") int qseq, @Param("updateReply") String reply) throws SqlException;
+    @QueryApplied(value = "문의글 정보를 찾을 수 없습니다.", exceptionClass = NotFoundException.class)
+    int updateReply(@Param("qseq") int qseq, @Param("updateReply") String reply) throws NotFoundException;
 
     /* ========== DELETE =========== */
 

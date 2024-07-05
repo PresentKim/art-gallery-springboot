@@ -4,7 +4,6 @@ import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
 import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.QnaService;
-import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +37,7 @@ public class QnaViewController {
             Integer qseq,
 
             Model model
-    ) throws UnauthorizedException {
-        Assert.trueOrUnauthorized(qnaService.authorizeForRestrict(qseq), "잘못된 접근입니다.");
+    ) throws NotFoundException, UnauthorizedException {
         model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         return "qna/qnaView";
     }
@@ -53,7 +51,6 @@ public class QnaViewController {
             Model model
     ) throws NotFoundException, UnauthorizedException {
         if (qseq != null) {
-            Assert.trueOrUnauthorized(qnaService.authorizeForPersonal(qseq), "잘못된 접근입니다.");
             model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
         }
         return "qna/qnaWrite";

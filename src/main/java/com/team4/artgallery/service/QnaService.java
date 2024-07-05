@@ -55,12 +55,14 @@ public class QnaService {
      *
      * @param qseq 문의글 번호 (qna sequence)
      * @return 문의글 정보
-     * @throws NotFoundException 문의글 정보를 찾을 수 없는 경우 예외 발생
+     * @throws NotFoundException     문의글 정보를 찾을 수 없는 경우 예외 발생
+     * @throws UnauthorizedException 접근 권한이 없는 경우 예외 발생
      */
-    public QnaDto getInquiry(int qseq) {
+    public QnaDto getInquiry(int qseq) throws NotFoundException, UnauthorizedException {
         QnaDto qnaDto = qnaDao.getInquiry(qseq);
         Assert.exists(qnaDto, "문의글 정보를 찾을 수 없습니다.");
 
+        Assert.trueOrUnauthorized(authorizeForRestrict(qseq), "접근 권한이 없습니다.");
         return qnaDto;
     }
 
@@ -70,14 +72,9 @@ public class QnaService {
      * @param qnaDto 문의글 정보
      * @throws NotFoundException     문의글 정보를 찾을 수 없는 경우 예외 발생
      * @throws UnauthorizedException 접근 권한이 없는 경우 예외 발생
-     * @throws SqlException          문의글 정보 수정에 실패한 경우 예외 발생
      */
-    public void updateInquiry(QnaDto qnaDto) throws NotFoundException, UnauthorizedException, SqlException {
-        int qseq = qnaDto.getQseq();
-        QnaDto oldInquiry = getInquiry(qseq);
-        Assert.exists(oldInquiry, "문의글 정보를 찾을 수 없습니다.");
-        Assert.trueOrUnauthorized(authorizeForPersonal(qseq), "접근 권한이 없습니다.");
-
+    public void updateInquiry(QnaDto qnaDto) throws NotFoundException, UnauthorizedException {
+        Assert.trueOrUnauthorized(authorizeForPersonal(qnaDto.getQseq()), "접근 권한이 없습니다.");
         qnaDao.updateInquiry(qnaDto);
     }
 
