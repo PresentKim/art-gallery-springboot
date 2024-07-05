@@ -41,13 +41,13 @@ public class QnaService {
      *
      * @param filter     검색 조건
      * @param pagination 페이지 정보
-     * @return 문의글 목록과 페이지 정보
+     * @return 문의글 목록
      */
-    public Pagination.Pair<QnaDto> getInquiriesPair(QnaFilter filter, Pagination pagination) {
-        return pagination
-                .setUrlTemplateFromFilter(filter)
-                .setItemCount(qnaDao.countInquiries(filter))
-                .pair(qnaDao.getInquiries(filter, pagination));
+    public List<QnaDto> getInquiries(QnaFilter filter, Pagination pagination) {
+        return qnaDao.getInquiries(
+                filter,
+                pagination.setUrlTemplateFromFilter(filter).setItemCount(qnaDao.countInquiries(filter))
+        );
     }
 
     /**

@@ -35,7 +35,7 @@ public class AdminQnaController {
 
             Model model
     ) throws SqlException {
-        model.addAttribute("qnaList", qnaService.getInquiriesPair(filter, pagination).list());
+        model.addAttribute("qnaList", qnaService.getInquiries(filter, pagination));
         return "admin/adminQnaList";
     }
 
