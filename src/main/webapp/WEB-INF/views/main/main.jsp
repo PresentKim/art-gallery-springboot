@@ -78,14 +78,14 @@
         <div class="image-list" id="container1">
             <c:forEach items="${artworkList1}" var="artworkDto">
                     <a class="imagelist" href="<c:url value="/artwork/${artworkDto.aseq}"/>">
-                        <img alt="${artworkDto.name}" src="${artworkDto.fullSavefilename}">
+                        <img alt="${artworkDto.name}" src="${artworkDto.imageSrc}">
                     </a>
             </c:forEach>
         </div>
         <div class="image-list" id="container2">
             <c:forEach items="${artworkList2}" var="artworkDto">
                 <a class="imagelist" href="<c:url value="/artwork/${artworkDto.aseq}"/>">
-                    <img alt="${artworkDto.name}" src="${artworkDto.fullSavefilename}">
+                    <img alt="${artworkDto.name}" src="${artworkDto.imageSrc}">
                 </a>
             </c:forEach>
         </div>
@@ -94,14 +94,14 @@
         <div class="image-list" id="container3">
             <c:forEach items="${artworkList3}" var="artworkDto">
                 <a class="imagelist" href="<c:url value="/artwork/${artworkDto.aseq}"/>">
-                    <img alt="${artworkDto.name}" src="${artworkDto.fullSavefilename}">
+                    <img alt="${artworkDto.name}" src="${artworkDto.imageSrc}">
                 </a>
             </c:forEach>
         </div>
         <div class="image-list" id="container4">
             <c:forEach items="${artworkList4}" var="artworkDto">
                 <a class="imagelist" href="<c:url value="/artwork/${artworkDto.aseq}"/>">
-                    <img alt="${artworkDto.name}" src="${artworkDto.fullSavefilename}">
+                    <img alt="${artworkDto.name}" src="${artworkDto.imageSrc}">
                 </a>
             </c:forEach>
         </div>

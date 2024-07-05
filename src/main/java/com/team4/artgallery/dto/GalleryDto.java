@@ -39,7 +39,10 @@ public class GalleryDto {
     @Null(message = "등록일은 직접 설정할 수 없습니다.")
     private Date writedate;
 
-    public String getFullSavefilename() {
+    /**
+     * 사용자가 접근 가능한 이미지 경로를 반환합니다.
+     */
+    public String getImageSrc() {
         if (savefilename.startsWith("http")) {
             return savefilename;
         }

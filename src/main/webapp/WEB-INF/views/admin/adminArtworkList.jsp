@@ -79,13 +79,13 @@
                 <li>${artworkDto.size}</li>
                 <li>${artworkDto.indate}</li>
                 <li>
-                    <img alt="artwork-img" src="${artworkDto.fullSavefilename}"
+                    <img alt="artwork-img" src="${artworkDto.imageSrc}"
                          onmouseover="previewImg('${previewId}')"
                          onmouseleave="previewImg('${previewId}')">
                 </li>
             </ul>
             <div id="${previewId}" class="preview hidden">
-                <img alt="artwork-img" src="${artworkDto.fullSavefilename}">
+                <img alt="artwork-img" src="${artworkDto.imageSrc}">
             </div>
         </c:forEach>
     </form>

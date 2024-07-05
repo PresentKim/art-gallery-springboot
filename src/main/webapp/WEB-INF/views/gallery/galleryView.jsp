@@ -52,7 +52,7 @@
     </ul>
     <ul class="gallery-main">
         <li>
-            <img alt="gallery-img" src="<c:url value="${galleryDto.fullSavefilename}"/>">
+            <img alt="gallery-img" src="<c:url value="${galleryDto.imageSrc}"/>">
         </li>
     </ul>
 </section>

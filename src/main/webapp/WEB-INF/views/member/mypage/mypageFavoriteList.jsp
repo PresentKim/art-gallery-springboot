@@ -20,7 +20,7 @@
     <div class="artwork-list">
         <c:forEach items="${artworkList}" var="artwork">
             <div onclick="location.href='/artwork/${artwork.aseq}'">
-                <img src="${artwork.fullSavefilename}" alt="artwork_image" class="artwork-list_img"/>
+                <img src="${artwork.imageSrc}" alt="artwork_image" class="artwork-list_img"/>
                 <div class="artwork-list_info">
                     <span>${artwork.artist}</span>
                     <p>${artwork.name}</p>

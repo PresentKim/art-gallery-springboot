@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="artwork-view_img">
-        <img alt="artwork-image" src="${artworkDto.fullSavefilename}">
+        <img alt="artwork-image" src="${artworkDto.imageSrc}">
         <span> ※ 예술품 이미지는 저작권법에 따라 복제뿐만 아니라 전송, 배포 등 어떠한 방식으로든 무단 이용할 수 없으며, 영리적인 목적으로 사용할 경우 원작자에게 별도의 동의를 받아야함을 알려드립니다. </span>
     </div>
     <div class="artwork-view_info">

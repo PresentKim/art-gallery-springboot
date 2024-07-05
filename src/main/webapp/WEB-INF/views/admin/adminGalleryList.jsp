@@ -60,13 +60,13 @@
                 <li>${galleryDto.writedate}</li>
                 <li>${galleryDto.readcount}</li>
                 <li>
-                    <img alt="artwork-img" src="${galleryDto.fullSavefilename}"
+                    <img alt="artwork-img" src="${galleryDto.imageSrc}"
                          onmouseover="previewImg('${previewId}')"
                          onmouseleave="previewImg('${previewId}')">
                 </li>
             </ul>
             <div id="${previewId}" class="preview hidden">
-                <img alt="artwork-img" src="${galleryDto.fullSavefilename}">
+                <img alt="artwork-img" src="${galleryDto.imageSrc}">
             </div>
         </c:forEach>
     </form>
