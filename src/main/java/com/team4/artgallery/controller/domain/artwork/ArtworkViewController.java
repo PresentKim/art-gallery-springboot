@@ -51,7 +51,7 @@ public class ArtworkViewController {
 
     @CheckAdmin
     @GetMapping("/write")
-    public String update(
+    public String write(
             @RequestParam(name = "aseq", required = false)
             Integer aseq,
 
