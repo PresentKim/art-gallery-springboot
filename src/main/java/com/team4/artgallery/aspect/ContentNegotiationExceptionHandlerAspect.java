@@ -70,7 +70,6 @@ public class ContentNegotiationExceptionHandlerAspect {
 
         // application/json 요청이 아닌 경우 ModelAndView 로 변환
         ModelAndView modelAndView = new ModelAndView();
-        System.out.println("result: " + result);
         if (result instanceof ResponseDto responseDto) {
             String url = responseDto.getUrl();
             modelAndView.addObject("message", responseDto.getMessage());
