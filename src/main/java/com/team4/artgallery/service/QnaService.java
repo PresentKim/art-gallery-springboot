@@ -155,7 +155,7 @@ public class QnaService {
                 break;
             case "update":
                 if (authorizeForPersonal(qseq)) {
-                    return new URI("/qna/update/" + qseq);
+                    return new URI("/qna/write?qseq=" + qseq);
                 }
                 break;
             default:
