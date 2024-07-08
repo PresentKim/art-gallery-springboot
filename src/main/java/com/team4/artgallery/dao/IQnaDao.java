@@ -79,7 +79,7 @@ public interface IQnaDao {
      * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
     @NotEmptyReturn(value = "문의글 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
-    int updateReply(@Param("qseq") int qseq, @Param("updateReply") String reply) throws NotFoundException;
+    int updateReply(@Param("qseq") int qseq, @Param("reply") String reply) throws NotFoundException;
 
     /* ========== DELETE =========== */
 
