@@ -42,7 +42,7 @@
         <div class="noticeView-button">
             <c:if test="${loginMember.admin}">
                 <a href="<c:url value="/notice/write?nseq=${noticeDto.nseq}"/>">수정</a>
-                <div onclick="ajax('/notice/delete', {nseq: ${noticeDto.nseq}}).then(defaultAjaxHandler)">삭제</div>
+                <div onclick="ajax('/notice/delete', {nseq: ${noticeDto.nseq}})">삭제</div>
                 <a href="<c:url value="/notice"/>">목록</a>
             </c:if>
         </div>

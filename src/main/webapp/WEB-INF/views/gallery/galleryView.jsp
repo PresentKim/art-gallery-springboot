@@ -42,8 +42,7 @@
                 </a>
             </c:if>
             <c:if test="${loginMember.id eq galleryDto.authorId or loginMember.admin}">
-                <div class="gbtn-delete gallery-btn"
-                     onclick="ajax('/gallery/delete', {gseq:${galleryDto.gseq}}).then(defaultAjaxHandler)">
+                <div class="gbtn-delete gallery-btn" onclick="ajax('/gallery/delete', {gseq:${galleryDto.gseq}})">
                     삭제하기
                 </div>
             </c:if>

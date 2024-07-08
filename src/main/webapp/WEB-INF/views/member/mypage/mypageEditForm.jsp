@@ -13,7 +13,7 @@
     <jsp:attribute name="content">
 
 <section class="form-wrapper wide-form">
-    <form method="post" action="<c:url value="/member/mypage/edit"/>" onsubmit="ajaxSubmit(event)">
+    <form method="post" action="<c:url value="/member/mypage/edit"/>">
         <h2>회원정보 수정</h2>
         <div class="field required">
             <label for="name">이름</label>

@@ -20,7 +20,7 @@
         </div>
         <div class="artwork-view_btn">
             <c:if test="${not empty loginMember}">
-                <div onclick="ajax('/member/mypage/favorite', {aseq: ${artworkDto.aseq}}).then(defaultAjaxHandler)">
+                <div onclick="ajax('/member/mypage/favorite', {aseq: ${artworkDto.aseq}})">
                     관심 예술품 +
                 </div>
 
@@ -29,7 +29,7 @@
                             ${artworkDto.display ? '비공개' : '공개'}로 전환
                     </div>
                     <a href="<c:url value="/artwork/write?aseq=${artworkDto.aseq}"/>">수정</a>
-                    <div onclick="ajax('/artwork/delete', {aseq: ${artworkDto.aseq}}).then(defaultAjaxHandler)">
+                    <div onclick="ajax('/artwork/delete', {aseq: ${artworkDto.aseq}})">
                         삭제
                     </div>
                 </c:if>

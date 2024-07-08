@@ -97,7 +97,7 @@
                     <a href="<c:url value="/member/mypage"/>" class="login-join-box_btn">
                             ${loginMember.name}(${loginMember.id})
                     </a>
-                    <a href="#" onclick="ajax('/member/logout').then(defaultAjaxHandler)" class="login-join-box_btn">
+                    <a href="#" onclick="ajax('/member/logout')" class="login-join-box_btn">
                         로그아웃
                     </a>
                 </c:otherwise>

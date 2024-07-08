@@ -27,7 +27,7 @@
             </h1>
         </div>
     </div>
-    <form class="qna-form_body" method="post" action="<c:url value="/qna/write"/>" onsubmit="ajaxSubmit(event)">
+    <form class="qna-form_body" method="post" action="<c:url value="/qna/write"/>">
         <c:if test="${not empty qnaDto}">
             <input type="hidden" name="qseq" value="${qnaDto.qseq}">
         </c:if>

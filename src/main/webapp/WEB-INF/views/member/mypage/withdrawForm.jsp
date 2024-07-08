@@ -10,7 +10,7 @@
     <jsp:attribute name="content">
 
 <section class="form-wrapper">
-    <form method="post" action="<c:url value="/member/withdraw"/>" onsubmit="ajaxSubmit(event)">
+    <form method="post" action="<c:url value="/member/withdraw"/>">
         <input type="hidden" name="returnUrl" value="${returnUrl}">
         <img src="<c:url value="/static/image/ico_login_img.png"/>" alt="form-logo">
         <h2>회원탈퇴</h2>

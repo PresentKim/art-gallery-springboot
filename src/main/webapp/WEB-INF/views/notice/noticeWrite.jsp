@@ -15,8 +15,7 @@
 <div id="notice_update_box">
     <h2>소식지 수정</h2>
     <div class="notice_update_innerbox">
-        <form class="notice-form" method="post" action="<c:url value="/notice/write"/>" enctype="multipart/form-data"
-              onsubmit="ajaxSubmit(event)">
+        <form class="notice-form" method="post" action="<c:url value="/notice/write"/>" enctype="multipart/form-data">
             <c:if test="${not empty noticeDto}">
                 <input type="hidden" name="nseq" value="${noticeDto.nseq}">
             </c:if>

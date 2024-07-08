@@ -1,11 +1,17 @@
 async function submitIdCheck(id) {
-    const response = await ajax('/member/idCheck', {id}, 'POST');
+    try {
+        const response = await axios({
+            url: '/member/idCheck',
+            method: 'POST',
+            headers: {'content-type': 'application/x-www-form-urlencoded'},
+            data: {id},
+        });
 
-    // 결과 상태 코드가 200이면 id 필드에 id를 설정하고, 그렇지 않으면 빈 문자열을 설정
-    document.getElementById('idCheck').value = response.status === 200 ? id : '';
-
-    // 메시지 출력은 defaultAjaxHandler 에서 처리
-    defaultAjaxHandler(response);
+        document.getElementById('idCheck').value = id;
+        defaultAjaxHandler(response);
+    } catch (error) {
+        defaultAjaxHandler(error.response);
+    }
 }
 
 function searchPostcode() {

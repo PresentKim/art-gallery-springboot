@@ -14,8 +14,7 @@
 
 <h2 class="gallery-form-header">${empty galleryDto ? '갤러리 등록' : '갤러리 수정'}</h2>
 <section class="gallery-form-main">
-    <form class="gallery-form" method="post" action="<c:url value="/gallery/write"/>" enctype="multipart/form-data"
-          onsubmit="ajaxSubmit(event)">
+    <form class="gallery-form" method="post" action="<c:url value="/gallery/write"/>" enctype="multipart/form-data">
         <c:if test="${not empty galleryDto}">
             <input type="hidden" name="gseq" value="${galleryDto.gseq}">
         </c:if>

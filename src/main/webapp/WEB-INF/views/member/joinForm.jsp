@@ -12,7 +12,7 @@
     <jsp:attribute name="content">
 
 <section class="form-wrapper wide-form">
-    <form method="post" action="<c:url value="/member/join"/>" onsubmit="ajaxSubmit(event)">
+    <form method="post" action="<c:url value="/member/join"/>">
         <input type="hidden" name="returnUrl" value="${returnUrl}">
         <h2>회원가입</h2>
         <div class="field required">

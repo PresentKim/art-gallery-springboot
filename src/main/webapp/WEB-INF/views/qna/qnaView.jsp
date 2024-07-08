@@ -49,7 +49,7 @@
         <h2>답변</h2>
         <c:choose>
             <c:when test="${loginMember.admin}">
-                <form action="<c:url value="/qna/reply"/>" method="post" onsubmit="ajaxSubmit(event)">
+                <form action="<c:url value="/qna/reply"/>" method="post">
                     <input type="hidden" name="qseq" value="${qnaDto.qseq}"/>
                     <label>
                         <textarea name="reply" placeholder="답변을 입력하세요"><c:out value="${qnaDto.reply}"/></textarea>

@@ -12,6 +12,7 @@
 
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="<c:url value="/static/script/ajax.js"/>"></script>
     <script src="https://unpkg.com/aos@2.2/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.drawsvg/1/jquery.drawsvg.min.js"></script>

@@ -13,7 +13,7 @@
 
 <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
 <section class="admin-list">
-    <form name="adminForm" method="get" action="<c:url value="/admin/gallery"/>" onsubmit="ajaxSubmit(event)">
+    <form name="adminForm" method="get" action="<c:url value="/admin/gallery"/>">
         <div class="admin-list-btn">
             <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
             <input class="fake-submit" type="submit" formmethod="get" formaction="<c:url value="/admin/gallery"/>">

@@ -15,8 +15,7 @@
 
 <h2 class="artwork-form-header">${empty artworkDto ? '예술품 등록' : '예술품 수정'}</h2>
 <section class="artwork-form-main">
-    <form class="artwork-form" method="post" action="<c:url value="/artwork/write"/>" enctype="multipart/form-data"
-          onsubmit="ajaxSubmit(event)">
+    <form class="artwork-form" method="post" action="<c:url value="/artwork/write"/>" enctype="multipart/form-data">
         <c:if test="${not empty artworkDto}">
             <input type="hidden" name="aseq" value="${artworkDto.aseq}">
         </c:if>
