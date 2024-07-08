@@ -20,8 +20,8 @@ public class ArtworkViewController {
 
     private final ArtworkService artworkService;
 
-    @GetMapping({"", "/"})
-    public String list(
+    @GetMapping("")
+    public String root(
             @Validated(ArtworkFilter.ExcludeDisplay.class)
             @ModelAttribute("filter")
             ArtworkFilter filter,

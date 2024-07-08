@@ -30,8 +30,8 @@ public class ArtworkRestController {
 
     private final ArtworkService artworkService;
 
-    @GetMapping({"", "/"})
-    public Pagination.Pair<ArtworkDto> list(
+    @GetMapping("")
+    public Pagination.Pair<ArtworkDto> root(
             @Validated(ArtworkFilter.ExcludeDisplay.class)
             ArtworkFilter filter,
             @Valid

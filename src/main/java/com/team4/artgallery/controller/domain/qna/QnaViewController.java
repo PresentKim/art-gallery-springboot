@@ -19,8 +19,8 @@ public class QnaViewController {
 
     private final QnaService qnaService;
 
-    @GetMapping({"", "/"})
-    public String list(
+    @GetMapping("")
+    public String root(
             @Valid
             @ModelAttribute("pagination")
             Pagination pagination,

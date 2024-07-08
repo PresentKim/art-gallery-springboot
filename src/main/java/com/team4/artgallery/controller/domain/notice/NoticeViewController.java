@@ -21,8 +21,8 @@ public class NoticeViewController {
 
     private final NoticeService noticeService;
 
-    @GetMapping({"", "/"})
-    public String list(
+    @GetMapping("")
+    public String root(
             @Valid
             @ModelAttribute("filter")
             NoticeFilter filter,

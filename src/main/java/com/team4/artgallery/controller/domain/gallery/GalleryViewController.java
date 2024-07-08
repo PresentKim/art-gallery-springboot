@@ -21,8 +21,8 @@ public class GalleryViewController {
 
     private final GalleryService galleryService;
 
-    @GetMapping({"", "/"})
-    public String list(
+    @GetMapping("")
+    public String root(
             @Valid
             @ModelAttribute("filter")
             KeywordFilter filter,
