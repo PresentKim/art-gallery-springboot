@@ -19,7 +19,7 @@ public class QnaViewController {
 
     private final QnaService qnaService;
 
-    @GetMapping("")
+    @GetMapping
     public String root(
             @Valid
             @ModelAttribute("pagination")
@@ -31,7 +31,7 @@ public class QnaViewController {
         return "qna/qnaList";
     }
 
-    @GetMapping("/{qseq}")
+    @GetMapping("{qseq}")
     public String view(
             @PathVariable(name = "qseq")
             Integer qseq,
@@ -43,7 +43,7 @@ public class QnaViewController {
     }
 
 
-    @GetMapping("/write")
+    @GetMapping("write")
     public String write(
             @RequestParam(name = "qseq", required = false)
             Integer qseq,

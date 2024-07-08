@@ -21,7 +21,7 @@ public class GalleryViewController {
 
     private final GalleryService galleryService;
 
-    @GetMapping("")
+    @GetMapping
     public String root(
             @Valid
             @ModelAttribute("filter")
@@ -36,7 +36,7 @@ public class GalleryViewController {
         return "gallery/galleryList";
     }
 
-    @GetMapping("/{gseq}")
+    @GetMapping("{gseq}")
     public String view(
             @PathVariable(name = "gseq")
             Integer gseq,
@@ -49,7 +49,7 @@ public class GalleryViewController {
     }
 
     @CheckLogin("/gallery/write?gseq=${gseq}")
-    @GetMapping("/write")
+    @GetMapping("write")
     public String write(
             @RequestParam(name = "gseq", required = false)
             Integer gseq,

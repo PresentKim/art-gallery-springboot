@@ -20,7 +20,7 @@ public class IndexViewController {
 
     private final ArtworkService artworkService;
 
-    @GetMapping("")
+    @GetMapping
     public String root(Model model) {
         // 최근 공지사항 5개를 가져옵니다.
         model.addAttribute("noticeList", noticeService.getRecentNotices(5));

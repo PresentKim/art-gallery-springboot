@@ -20,7 +20,7 @@ public class ArtworkViewController {
 
     private final ArtworkService artworkService;
 
-    @GetMapping("")
+    @GetMapping
     public String root(
             @Validated(ArtworkFilter.ExcludeDisplay.class)
             @ModelAttribute("filter")
@@ -38,7 +38,7 @@ public class ArtworkViewController {
         return "artwork/artworkList";
     }
 
-    @GetMapping("/{aseq}")
+    @GetMapping("{aseq}")
     public String view(
             @PathVariable("aseq")
             Integer aseq,
@@ -50,7 +50,7 @@ public class ArtworkViewController {
     }
 
     @CheckAdmin
-    @GetMapping("/write")
+    @GetMapping("write")
     public String write(
             @RequestParam(name = "aseq", required = false)
             Integer aseq,

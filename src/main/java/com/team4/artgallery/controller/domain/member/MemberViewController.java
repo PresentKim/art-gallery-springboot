@@ -24,7 +24,7 @@ public class MemberViewController {
     private final MemberService memberService;
     private final FavoriteService favoriteService;
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String login(
             @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
@@ -40,7 +40,7 @@ public class MemberViewController {
         return "member/loginForm";
     }
 
-    @GetMapping("/contract")
+    @GetMapping("contract")
     public String contract(
             @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
@@ -56,7 +56,7 @@ public class MemberViewController {
         return "member/contract";
     }
 
-    @GetMapping("/join")
+    @GetMapping("join")
     public String join(
             @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
@@ -73,19 +73,19 @@ public class MemberViewController {
     }
 
     @CheckLogin("/member/mypage")
-    @GetMapping("/mypage")
+    @GetMapping("mypage")
     public String mypage() {
         return "member/mypage/index";
     }
 
     @CheckLogin("/member/mypage/edit")
-    @GetMapping("/mypage/edit")
+    @GetMapping("mypage/edit")
     public String mypageEdit() {
         return "member/mypage/mypageEditForm";
     }
 
     @CheckLogin("/member/withdraw")
-    @GetMapping("/withdraw")
+    @GetMapping("withdraw")
     public String withdraw(
             @RequestParam(name = "returnUrl", defaultValue = "/")
             String returnUrl,
@@ -97,7 +97,7 @@ public class MemberViewController {
     }
 
     @CheckLogin("/member/mypage/favorite")
-    @GetMapping("/mypage/favorite")
+    @GetMapping("mypage/favorite")
     public String favorite(
             @Valid
             @ModelAttribute("pagination")

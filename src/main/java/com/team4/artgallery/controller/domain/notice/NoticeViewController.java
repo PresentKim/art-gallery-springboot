@@ -21,7 +21,7 @@ public class NoticeViewController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("")
+    @GetMapping
     public String root(
             @Valid
             @ModelAttribute("filter")
@@ -43,7 +43,7 @@ public class NoticeViewController {
         return "notice/noticeList";
     }
 
-    @GetMapping("/{nseq}")
+    @GetMapping("{nseq}")
     public String view(
             @PathVariable(name = "nseq")
             Integer nseq,
@@ -56,7 +56,7 @@ public class NoticeViewController {
     }
 
     @CheckAdmin
-    @GetMapping("/write")
+    @GetMapping("write")
     public String write(
             @RequestParam(name = "nseq", required = false)
             Integer nseq,
@@ -69,12 +69,12 @@ public class NoticeViewController {
         return "notice/noticeWrite";
     }
 
-    @GetMapping("/magazine")
+    @GetMapping("magazine")
     public String magazine() {
         return "notice/noticeMagazine";
     }
 
-    @GetMapping("/newspaper")
+    @GetMapping("newspaper")
     public String newspaper() {
         return "notice/noticeNewspaper";
     }

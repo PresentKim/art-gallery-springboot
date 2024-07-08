@@ -28,12 +28,12 @@ public class AdminViewController {
     private final NoticeService noticeService;
     private final QnaService qnaService;
 
-    @GetMapping("")
+    @GetMapping
     public String root() {
         return "admin/adminMain";
     }
 
-    @GetMapping("/artwork")
+    @GetMapping("artwork")
     public String artwork(
             @Valid
             @ModelAttribute("filter")
@@ -48,7 +48,7 @@ public class AdminViewController {
         return "admin/adminArtworkList";
     }
 
-    @GetMapping("/gallery")
+    @GetMapping("gallery")
     public String gallery(
             @Valid
             @ModelAttribute("filter")
@@ -63,7 +63,7 @@ public class AdminViewController {
         return "admin/adminGalleryList";
     }
 
-    @GetMapping("/member")
+    @GetMapping("member")
     public String member(
             @Valid
             @ModelAttribute("filter")
@@ -83,7 +83,7 @@ public class AdminViewController {
         return "admin/adminMemberList";
     }
 
-    @GetMapping("/notice")
+    @GetMapping("notice")
     public String notice(
             @Valid
             @ModelAttribute("filter")
@@ -98,7 +98,7 @@ public class AdminViewController {
         return "admin/adminNoticeList";
     }
 
-    @GetMapping("/qna")
+    @GetMapping("qna")
     public String qna(
             @Valid
             @ModelAttribute("filter")

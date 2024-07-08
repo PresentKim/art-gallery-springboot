@@ -30,7 +30,7 @@ public class ArtworkRestController {
 
     private final ArtworkService artworkService;
 
-    @GetMapping("")
+    @GetMapping
     public Pagination.Pair<ArtworkDto> root(
             @Validated(ArtworkFilter.ExcludeDisplay.class)
             ArtworkFilter filter,
@@ -43,7 +43,7 @@ public class ArtworkRestController {
         );
     }
 
-    @GetMapping("/{aseq}")
+    @GetMapping("{aseq}")
     public ArtworkDto view(
             @PathVariable(name = "aseq")
             Integer aseq
