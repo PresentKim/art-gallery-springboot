@@ -6,7 +6,6 @@ import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path = "/qna", produces = MediaType.TEXT_HTML_VALUE)
-@RequiredArgsConstructor
 public class QnaViewController {
 
     private final QnaService qnaService;
+
+    public QnaViewController(QnaService qnaService) {
+        this.qnaService = qnaService;
+    }
 
     @GetMapping
     public String root(

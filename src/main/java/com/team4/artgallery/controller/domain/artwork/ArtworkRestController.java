@@ -12,7 +12,6 @@ import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -25,10 +24,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/artwork", produces = MediaType.APPLICATION_JSON_VALUE)
-@RequiredArgsConstructor
 public class ArtworkRestController {
 
     private final ArtworkService artworkService;
+
+    public ArtworkRestController(ArtworkService artworkService) {
+        this.artworkService = artworkService;
+    }
 
     @GetMapping
     public Pagination.Pair<ArtworkDto> root(

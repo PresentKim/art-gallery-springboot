@@ -2,13 +2,15 @@ package com.team4.artgallery.util;
 
 import com.team4.artgallery.controller.exception.ForbiddenException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
-import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Array;
 import java.util.function.Function;
 
-@UtilityClass
-public class Assert {
+public final class Assert {
+
+    private Assert() {
+        // 인스턴스화 방지
+    }
 
     /**
      * 값이 true가 아닌 경우 {@link ForbiddenException} 예외를 발생시킵니다.
@@ -17,7 +19,7 @@ public class Assert {
      * @throws ForbiddenException 값이 true가 아닌 경우 예외 발생
      * @see #isTrue(boolean, String, Function)
      */
-    public void trueOrForbidden(boolean value, String message) throws ForbiddenException {
+    public static void trueOrForbidden(boolean value, String message) throws ForbiddenException {
         isTrue(value, message, ForbiddenException::new);
     }
 
@@ -28,7 +30,7 @@ public class Assert {
      * @throws UnauthorizedException 값이 true가 아닌 경우 예외 발생
      * @see #isTrue(boolean, String, Function)
      */
-    public void trueOrUnauthorized(boolean value, String message) throws UnauthorizedException {
+    public static void trueOrUnauthorized(boolean value, String message) throws UnauthorizedException {
         isTrue(value, message, UnauthorizedException::new);
     }
 
@@ -38,7 +40,7 @@ public class Assert {
      * @param message 예외 메시지
      * @throws T 값이 false가 아닌 경우 예외 발생
      */
-    public <T extends Throwable> void isFalse(boolean value, String message, Function<String, T> throwableConstructor) throws T {
+    public static <T extends Throwable> void isFalse(boolean value, String message, Function<String, T> throwableConstructor) throws T {
         if (value) {
             throw throwableConstructor.apply(message);
         }
@@ -50,7 +52,7 @@ public class Assert {
      * @param message 예외 메시지
      * @throws T 값이 true가 아닌 경우 예외 발생
      */
-    public <T extends Throwable> void isTrue(boolean value, String message, Function<String, T> throwableConstructor) throws T {
+    public static <T extends Throwable> void isTrue(boolean value, String message, Function<String, T> throwableConstructor) throws T {
         isFalse(!value, message, throwableConstructor);
     }
 
@@ -60,14 +62,14 @@ public class Assert {
      * @param message 예외 메시지
      * @throws T 값이 비어있는 경우 예외 발생
      */
-    public <T extends Throwable> void notEmpty(Object value, String message, Function<String, T> throwableConstructor) throws T {
+    public static <T extends Throwable> void notEmpty(Object value, String message, Function<String, T> throwableConstructor) throws T {
         isFalse(checkIsEmpty(value), message, throwableConstructor);
     }
 
     /**
      * 값이 비어있는지 확인합니다.
      */
-    public boolean checkIsEmpty(Object value) {
+    public static boolean checkIsEmpty(Object value) {
         if (value == null) return true;
 
         if (value instanceof String v) {

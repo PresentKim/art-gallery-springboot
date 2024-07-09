@@ -11,7 +11,6 @@ import com.team4.artgallery.service.NoticeService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +21,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/notice", produces = MediaType.APPLICATION_JSON_VALUE)
-@RequiredArgsConstructor
 public class NoticeRestController {
 
     private final NoticeService noticeService;
+
+    public NoticeRestController(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
 
     @CheckAdmin
     @PostMapping("/write")

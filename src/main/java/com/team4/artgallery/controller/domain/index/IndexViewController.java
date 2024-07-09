@@ -3,7 +3,6 @@ package com.team4.artgallery.controller.domain.index;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.service.NoticeService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +12,16 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-@RequiredArgsConstructor
 public class IndexViewController {
 
     private final NoticeService noticeService;
 
     private final ArtworkService artworkService;
+
+    public IndexViewController(NoticeService noticeService, ArtworkService artworkService) {
+        this.noticeService = noticeService;
+        this.artworkService = artworkService;
+    }
 
     @GetMapping
     public String root(Model model) {

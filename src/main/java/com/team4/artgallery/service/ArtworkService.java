@@ -8,19 +8,22 @@ import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.helper.MultipartFileService;
 import com.team4.artgallery.util.Pagination;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ArtworkService {
 
     private final IArtworkDao artworkDao;
 
     private final MultipartFileService fileService;
+
+    public ArtworkService(IArtworkDao artworkDao, MultipartFileService fileService) {
+        this.artworkDao = artworkDao;
+        this.fileService = fileService;
+    }
 
     /**
      * 예술품 정보를 추가합니다

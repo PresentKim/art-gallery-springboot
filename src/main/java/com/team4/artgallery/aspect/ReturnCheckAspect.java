@@ -4,7 +4,6 @@ import com.team4.artgallery.aspect.annotation.NotEmptyReturn;
 import com.team4.artgallery.aspect.annotation.NotNullReturn;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.util.Assert;
-import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
  */
 @Aspect
 @Component
-@RequiredArgsConstructor
 public class ReturnCheckAspect {
 
     /**

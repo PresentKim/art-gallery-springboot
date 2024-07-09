@@ -3,7 +3,6 @@ package com.team4.artgallery.aspect;
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.service.MemberService;
-import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -19,10 +18,13 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-@RequiredArgsConstructor
 public class CheckLoginAspect {
 
     private final MemberService memberService;
+
+    public CheckLoginAspect(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     /**
      * {@code @annotation}을 통해 메서드에 붙은 {@link CheckLogin} 어노테이션을 받아

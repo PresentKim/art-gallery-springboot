@@ -9,18 +9,20 @@ import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ReadCountHelper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class NoticeService {
 
     private final INoticeDao noticeDao;
-
     private final SessionProvider sessionProvider;
+
+    public NoticeService(INoticeDao noticeDao, SessionProvider sessionProvider) {
+        this.noticeDao = noticeDao;
+        this.sessionProvider = sessionProvider;
+    }
 
     /**
      * 소식지 정보를 추가합니다

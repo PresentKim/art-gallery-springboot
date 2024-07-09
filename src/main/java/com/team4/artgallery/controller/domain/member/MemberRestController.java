@@ -12,7 +12,6 @@ import com.team4.artgallery.util.Assert;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -24,11 +23,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/member", produces = MediaType.APPLICATION_JSON_VALUE)
-@RequiredArgsConstructor
 public class MemberRestController {
 
     private final MemberService memberService;
     private final FavoriteService favoriteService;
+
+    public MemberRestController(MemberService memberService, FavoriteService favoriteService) {
+        this.memberService = memberService;
+        this.favoriteService = favoriteService;
+    }
 
     @PostMapping("/login")
     public Object login(
@@ -167,7 +170,7 @@ public class MemberRestController {
             @RequestParam(name = "memberIds", required = false)
             List<String> memberIds
     ) throws NotFoundException {
-        memberService.deleteMembers(memberIds);
+        memberService.deleteMember(memberIds);
         return new ResponseDto("회원 정보를 제거했습니다", ":reload");
     }
 

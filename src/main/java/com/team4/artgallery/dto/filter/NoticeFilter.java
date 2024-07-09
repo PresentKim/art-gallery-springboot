@@ -1,11 +1,7 @@
 package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class NoticeFilter implements IFilter {
 
     /**
@@ -19,5 +15,23 @@ public class NoticeFilter implements IFilter {
      */
     @FilterField
     private String category;
+
+    public String getKeyword() {
+        return this.keyword;
+    }
+
+    public NoticeFilter setKeyword(String keyword) {
+        this.keyword = keyword;
+        return this;
+    }
+
+    public String getCategory() {
+        return this.category;
+    }
+
+    public NoticeFilter setCategory(String category) {
+        this.category = category;
+        return this;
+    }
 
 }

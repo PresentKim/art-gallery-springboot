@@ -8,7 +8,6 @@ import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +15,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path = "/notice", produces = MediaType.TEXT_HTML_VALUE)
-@RequiredArgsConstructor
 public class NoticeViewController {
 
     private final NoticeService noticeService;
+
+    public NoticeViewController(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
 
     @GetMapping
     public String root(

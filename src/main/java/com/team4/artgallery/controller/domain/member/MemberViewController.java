@@ -7,7 +7,6 @@ import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(path = "/member", produces = MediaType.TEXT_HTML_VALUE)
-@RequiredArgsConstructor
 public class MemberViewController {
 
     private final MemberService memberService;
     private final FavoriteService favoriteService;
+
+    public MemberViewController(MemberService memberService, FavoriteService favoriteService) {
+        this.memberService = memberService;
+        this.favoriteService = favoriteService;
+    }
 
     @GetMapping("login")
     public String login(

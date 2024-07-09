@@ -13,14 +13,12 @@ import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ReadCountHelper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class GalleryService {
 
     private final IGalleryDao galleryDao;
@@ -28,6 +26,12 @@ public class GalleryService {
     private final MultipartFileService fileService;
 
     private final SessionProvider sessionProvider;
+
+    public GalleryService(IGalleryDao galleryDao, MultipartFileService fileService, SessionProvider sessionProvider) {
+        this.galleryDao = galleryDao;
+        this.fileService = fileService;
+        this.sessionProvider = sessionProvider;
+    }
 
     /**
      * 갤러리 정보를 추가합니다

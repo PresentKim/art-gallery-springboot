@@ -1,12 +1,9 @@
 package com.team4.artgallery.dto.enums;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@Getter
-@RequiredArgsConstructor
 public enum NoticeCategory {
     ALL("전체", ""),
     NOTICE("공지사항"),
@@ -14,11 +11,19 @@ public enum NoticeCategory {
     MAGAZINE("매거진"),
     NEWSPAPER("신문");
 
+    @Getter
     private final String korName;
+
+    @Getter
     private final String value;
 
     NoticeCategory(String korName) {
         this(korName, korName);
+    }
+
+    NoticeCategory(String korName, String value) {
+        this.korName = korName;
+        this.value = value;
     }
 
     /**

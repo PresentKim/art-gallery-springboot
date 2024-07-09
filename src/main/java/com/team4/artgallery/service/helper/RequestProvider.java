@@ -1,8 +1,6 @@
 package com.team4.artgallery.service.helper;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -36,10 +34,16 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @Service
 @Scope(scopeName = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
-@Getter
-@RequiredArgsConstructor
 public class RequestProvider {
 
     private final HttpServletRequest request;
+
+    public RequestProvider(HttpServletRequest request) {
+        this.request = request;
+    }
+
+    public HttpServletRequest getRequest() {
+        return this.request;
+    }
 
 }

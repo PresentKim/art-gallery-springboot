@@ -12,7 +12,6 @@ import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.GalleryService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +21,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/gallery", produces = MediaType.APPLICATION_JSON_VALUE)
-@RequiredArgsConstructor
 public class GalleryRestController {
 
     private final GalleryService galleryService;
+
+    public GalleryRestController(GalleryService galleryService) {
+        this.galleryService = galleryService;
+    }
 
     @CheckLogin
     @PostMapping("/write")

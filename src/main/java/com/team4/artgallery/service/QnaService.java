@@ -8,7 +8,6 @@ import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -16,14 +15,17 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class QnaService {
 
     private final IQnaDao qnaDao;
-
     private final MemberService memberService;
-
     private final SessionProvider sessionProvider;
+
+    public QnaService(IQnaDao qnaDao, MemberService memberService, SessionProvider sessionProvider) {
+        this.qnaDao = qnaDao;
+        this.memberService = memberService;
+        this.sessionProvider = sessionProvider;
+    }
 
     /**
      * 문의글 정보를 추가합니다

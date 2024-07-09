@@ -10,7 +10,6 @@ import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.QnaService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +19,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/qna", produces = MediaType.APPLICATION_JSON_VALUE)
-@RequiredArgsConstructor
 public class QnaRestController {
 
     private final QnaService qnaService;
+
+    public QnaRestController(QnaService qnaService) {
+        this.qnaService = qnaService;
+    }
 
     @PostMapping("/write")
     @ResponseStatus(HttpStatus.CREATED)

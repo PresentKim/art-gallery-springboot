@@ -4,15 +4,9 @@ import com.team4.artgallery.dto.filter.IFilter;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.List;
 
-@Getter
-@Setter
-@Accessors(chain = true)
 public class Pagination {
 
     /**
@@ -62,14 +56,71 @@ public class Pagination {
     }
 
     /**
+     * 현재 페이지를 설정합니다.
+     */
+    public Pagination setPage(Integer page) {
+        this.page = page;
+        return this;
+    }
+
+    /**
+     * 한 페이지당 표시할 아이템의 갯수를 반환합니다.
+     *
+     * @return 한 페이지당 표시할 아이템의 갯수
+     */
+    public Integer getDisplayCount() {
+        return this.displayCount;
+    }
+
+    /**
+     * 한 페이지당 표시할 아이템의 갯수를 설정합니다.
+     */
+    public Pagination setDisplayCount(Integer displayCount) {
+        this.displayCount = displayCount;
+        return this;
+    }
+
+    /**
+     * 아이템의 총 갯수를 반환합니다.
+     *
+     * @return 아이템의 총 갯수
+     */
+    public Integer getItemCount() {
+        return this.itemCount;
+    }
+
+    /**
+     * 아이템의 총 갯수를 설정합니다.
+     */
+    public Pagination setItemCount(Integer itemCount) {
+        this.itemCount = itemCount;
+        return this;
+    }
+
+    /**
+     * 페이지의 URL 템플릿을 반환합니다.
+     *
+     * @return 페이지의 URL 템플릿
+     */
+    public String getUrlTemplate() {
+        return this.urlTemplate;
+    }
+
+    /**
+     * 페이지의 URL 템플릿을 설정합니다.
+     */
+    public Pagination setUrlTemplate(String urlTemplate) {
+        this.urlTemplate = urlTemplate;
+        return this;
+    }
+
+    /**
      * 필터 객체를 받아 URL 템플릿을 설정합니다.
      *
      * @param filter 필터 객체
-     * @return Pagination 객체
      */
     public Pagination setUrlTemplateFromFilter(IFilter filter) {
-        this.urlTemplate = "?page=%d" + filter.getUrlParam();
-        return this;
+        return setUrlTemplate("?page=%d" + filter.getUrlParam());
     }
 
     /**
@@ -226,9 +277,7 @@ public class Pagination {
     /**
      * Pagination 객체와 리스트를 묶은 Pair 객체
      */
-    public record Pair<T>(
-            Pagination pagination,
-            List<T> list
-    ) {
+    public record Pair<T>(Pagination pagination, List<T> list) {
     }
+
 }

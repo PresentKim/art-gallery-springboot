@@ -9,7 +9,6 @@ import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.*;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 @CheckAdmin
-@RequiredArgsConstructor
 public class AdminViewController {
 
     private final ArtworkService artworkService;
@@ -27,6 +25,21 @@ public class AdminViewController {
     private final MemberService memberService;
     private final NoticeService noticeService;
     private final QnaService qnaService;
+
+    // TODO: 책임 분리 혹은 AJAX 처리로 AdminViewController 클래스의 서비스 의존성 제거
+    public AdminViewController(
+            ArtworkService artworkService,
+            GalleryService galleryService,
+            MemberService memberService,
+            NoticeService noticeService,
+            QnaService qnaService
+    ) {
+        this.artworkService = artworkService;
+        this.galleryService = galleryService;
+        this.memberService = memberService;
+        this.noticeService = noticeService;
+        this.qnaService = qnaService;
+    }
 
     @GetMapping
     public String root() {

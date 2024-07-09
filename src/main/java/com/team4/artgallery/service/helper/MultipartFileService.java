@@ -2,7 +2,6 @@ package com.team4.artgallery.service.helper;
 
 import com.team4.artgallery.controller.exception.FileException;
 import jakarta.servlet.ServletContext;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,10 +12,13 @@ import java.util.Calendar;
  * MultipartFile 객체를 다루는 서비스
  */
 @Service
-@RequiredArgsConstructor
 final public class MultipartFileService {
 
     private final ServletContext context;
+
+    public MultipartFileService(ServletContext context) {
+        this.context = context;
+    }
 
     /**
      * 요청으로 받은 파일을 저장하고 저장된 파일 이름을 반환합니다.

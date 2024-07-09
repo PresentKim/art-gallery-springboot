@@ -2,7 +2,6 @@ package com.team4.artgallery.controller.domain.admin;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.service.AdminService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +15,13 @@ import java.sql.SQLException;
 @RestController
 @RequestMapping("/admin")
 @CheckAdmin
-@RequiredArgsConstructor
 public class AdminRestController {
 
     private final AdminService adminService;
+
+    public AdminRestController(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
     @PostMapping(path = "reset", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)

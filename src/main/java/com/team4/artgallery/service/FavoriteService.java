@@ -4,7 +4,6 @@ import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dao.IFavoriteDao;
 import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.util.Pagination;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -12,10 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class FavoriteService {
 
     private final IFavoriteDao favoriteDao;
+
+    public FavoriteService(IFavoriteDao favoriteDao) {
+        this.favoriteDao = favoriteDao;
+    }
 
     /**
      * 회원의 관심 예술품 목록을 가져옵니다.

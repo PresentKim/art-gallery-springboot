@@ -2,13 +2,7 @@ package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
 import jakarta.validation.constraints.Null;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
-@Getter
-@Setter
-@Accessors(chain = true)
 public class ArtworkFilter implements IFilter {
 
     /**
@@ -41,6 +35,38 @@ public class ArtworkFilter implements IFilter {
         }
 
         return true;
+    }
+
+    public String getKeyword() {
+        return this.keyword;
+    }
+
+    public ArtworkFilter setKeyword(String keyword) {
+        this.keyword = keyword;
+        return this;
+    }
+
+    public String getCategory() {
+        return this.category;
+    }
+
+    public ArtworkFilter setCategory(String category) {
+        this.category = category;
+        return this;
+    }
+
+    public String getDisplayyn() {
+        return this.displayyn;
+    }
+
+    public ArtworkFilter setDisplayyn(String displayyn) {
+        this.displayyn = displayyn;
+        return this;
+    }
+
+    public ArtworkFilter setIncludeDisplay(boolean includeDisplay) {
+        this.includeDisplay = includeDisplay;
+        return this;
     }
 
 

@@ -6,7 +6,6 @@ import com.team4.artgallery.aspect.ContentNegotiationExceptionHandlerAspect;
 import com.team4.artgallery.aspect.exception.NotAdminException;
 import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.dto.ResponseDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -39,7 +38,6 @@ import java.util.Objects;
  * 이 클래스에선 {@link ExceptionHandler} 어노테이션을 사용하여 예외 처리를 위한 메소드를 정의합니다.
  */
 @ControllerAdvice
-@RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
     // 프로젝트에서 의도적으로 발생시킨 예외를 처리하는 핸들러 메소드

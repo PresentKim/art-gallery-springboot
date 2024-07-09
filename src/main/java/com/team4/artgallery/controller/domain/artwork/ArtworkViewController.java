@@ -6,7 +6,6 @@ import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path = "/artwork", produces = MediaType.TEXT_HTML_VALUE)
-@RequiredArgsConstructor
 public class ArtworkViewController {
 
     private final ArtworkService artworkService;
+
+    public ArtworkViewController(ArtworkService artworkService) {
+        this.artworkService = artworkService;
+    }
 
     @GetMapping
     public String root(

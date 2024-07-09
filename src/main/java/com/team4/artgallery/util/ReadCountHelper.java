@@ -1,7 +1,6 @@
 package com.team4.artgallery.util;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.experimental.UtilityClass;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -9,8 +8,11 @@ import java.util.function.Function;
 /**
  * 조회수를 관리하는 도우미 클래스입니다.
  */
-@UtilityClass
-public class ReadCountHelper {
+public final class ReadCountHelper {
+
+    private ReadCountHelper() {
+        // 인스턴스화 방지
+    }
 
     /**
      * 조회 기록을 확인하고, 조회 기록이 없는 경우 조회수를 증가시킵니다.
@@ -20,7 +22,7 @@ public class ReadCountHelper {
      * @param hashPrefix                주어진 값을 앞에 붙여 해시 문자열로 변환할 접두사
      * @param increaseReadCountFunction 조회수를 증가시키는 함수
      */
-    public <T> void increaseReadCountIfNew(
+    public static <T> void increaseReadCountIfNew(
             T key,
             HttpSession session,
             String hashPrefix,
@@ -37,7 +39,7 @@ public class ReadCountHelper {
      * @param hashFunction              주어진 값을 해시 문자열으로 변환하는 함수
      * @param increaseReadCountFunction 조회수를 증가시키는 함수
      */
-    public <T> void increaseReadCountIfNew(
+    public static <T> void increaseReadCountIfNew(
             T key,
             HttpSession session,
             Function<T, String> hashFunction,

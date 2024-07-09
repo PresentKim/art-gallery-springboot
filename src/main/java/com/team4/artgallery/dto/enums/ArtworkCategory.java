@@ -1,12 +1,9 @@
 package com.team4.artgallery.dto.enums;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@Getter
-@RequiredArgsConstructor
 public enum ArtworkCategory {
     ALL("전체", ""),
     PAINTING("회화"),
@@ -18,11 +15,19 @@ public enum ArtworkCategory {
     DESIGN("디자인"),
     CALLIGRAPHY("서예");
 
+    @Getter
     private final String korName;
+
+    @Getter
     private final String value;
 
     ArtworkCategory(String korName) {
         this(korName, korName);
+    }
+
+    ArtworkCategory(String korName, String value) {
+        this.korName = korName;
+        this.value = value;
     }
 
     /**

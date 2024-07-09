@@ -1,6 +1,5 @@
 package com.team4.artgallery.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +13,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Service
-@RequiredArgsConstructor
 public class AdminService {
 
     private final DataSource dataSource;
+
+    public AdminService(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * 데이터베이스를 초기화합니다.

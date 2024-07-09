@@ -2,7 +2,6 @@ package com.team4.artgallery.aspect;
 
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.helper.RequestProvider;
-import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,10 +27,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Aspect
 @Order(-1)
 @Component
-@RequiredArgsConstructor
 public class ContentNegotiationExceptionHandlerAspect {
 
     private final RequestProvider requestProvider;
+
+    public ContentNegotiationExceptionHandlerAspect(RequestProvider requestProvider) {
+        this.requestProvider = requestProvider;
+    }
 
     /**
      * {@link ExceptionHandler} 어노테이션이 붙은 메소드가 호출될 때 요청 헤더의 ACCEPT 값에 따라 적절한 객체로 변환하여 반환합니다.
@@ -71,8 +73,8 @@ public class ContentNegotiationExceptionHandlerAspect {
         // application/json 요청이 아닌 경우 ModelAndView 로 변환
         ModelAndView modelAndView = new ModelAndView();
         if (result instanceof ResponseDto responseDto) {
-            String url = responseDto.getUrl();
-            modelAndView.addObject("message", responseDto.getMessage());
+            String url = responseDto.url();
+            modelAndView.addObject("message", responseDto.message());
             modelAndView.addObject("url", url);
 
             // url 값이 존재하는 경우 alert 페이지로 포워딩

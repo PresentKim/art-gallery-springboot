@@ -8,7 +8,6 @@ import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +15,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path = "/gallery", produces = MediaType.TEXT_HTML_VALUE)
-@RequiredArgsConstructor
 public class GalleryViewController {
 
     private final GalleryService galleryService;
+
+    public GalleryViewController(GalleryService galleryService) {
+        this.galleryService = galleryService;
+    }
 
     @GetMapping
     public String root(

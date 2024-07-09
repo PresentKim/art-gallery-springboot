@@ -5,23 +5,27 @@ import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
 import com.team4.artgallery.dao.IMemberDao;
 import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Assert;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Delegate;
+import com.team4.artgallery.util.Pagination;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class MemberService {
 
-    @Delegate
     private final IMemberDao memberDao;
 
     private final SessionProvider sessionProvider;
+
+    public MemberService(IMemberDao memberDao, SessionProvider sessionProvider) {
+        this.memberDao = memberDao;
+        this.sessionProvider = sessionProvider;
+    }
 
     /**
      * 주어진 ID에 해당하는 회원이 존재하는지 확인한다.
@@ -120,6 +124,34 @@ public class MemberService {
      */
     public String getRedirectToLogin(String returnUrl) {
         return "/member/login?returnUrl=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8);
+    }
+
+    public void createMember(MemberDto dto) throws com.team4.artgallery.controller.exception.SqlException {
+        this.memberDao.createMember(dto);
+    }
+
+    public List<MemberDto> getMembers(KeywordFilter filter, Pagination pagination) {
+        return this.memberDao.getMembers(filter, pagination);
+    }
+
+    public int countMembers(KeywordFilter filter) {
+        return this.memberDao.countMembers(filter);
+    }
+
+    public void updateMember(MemberDto dto) throws com.team4.artgallery.controller.exception.SqlException {
+        this.memberDao.updateMember(dto);
+    }
+
+    public void grantAdminMembers(List<String> memberIds) throws NotFoundException {
+        this.memberDao.grantAdminMembers(memberIds);
+    }
+
+    public void revokeAdminMembers(List<String> memberIds) throws NotFoundException {
+        this.memberDao.revokeAdminMembers(memberIds);
+    }
+
+    public void deleteMember(List<String> memberIdList) throws NotFoundException {
+        this.memberDao.deleteMembers(memberIdList);
     }
 
 }

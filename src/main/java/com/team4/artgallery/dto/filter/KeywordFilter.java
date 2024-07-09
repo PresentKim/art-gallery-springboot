@@ -1,11 +1,7 @@
 package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class KeywordFilter implements IFilter {
 
     /**
@@ -13,5 +9,15 @@ public class KeywordFilter implements IFilter {
      */
     @FilterField
     private String keyword;
+
+    public String getKeyword() {
+        return this.keyword;
+    }
+
+    public KeywordFilter setKeyword(String keyword) {
+        this.keyword = keyword;
+
+        return this;
+    }
 
 }

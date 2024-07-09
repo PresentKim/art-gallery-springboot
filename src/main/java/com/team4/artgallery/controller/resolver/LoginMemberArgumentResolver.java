@@ -4,8 +4,6 @@ import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.service.MemberService;
-import com.team4.artgallery.service.helper.SessionProvider;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -22,11 +20,13 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  * 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
  */
 @Component
-@RequiredArgsConstructor
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final MemberService memberService;
-    private final SessionProvider sessionProvider;
+
+    public LoginMemberArgumentResolver(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     /**
      * 주어진 메소드 매개변수가 이 리졸버에서 지원되는지 여부를 반환
@@ -56,7 +56,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
     ) throws NotLoginException {
         // 로그인하지 않은 경우 NotLoginException 예외 발생
         if (!memberService.isLogin()) {
-            throw new NotLoginException();
+            throw new NotLoginException("");
         }
 
         // 로그인한 회원 정보를 반환합니다.

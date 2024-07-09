@@ -3,49 +3,57 @@ package com.team4.artgallery.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Date;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class MemberDto {
 
-    /**
-     * 회원 아이디
-     */
+    @Getter
+    @Setter
     @NotBlank(groups = OnLogin.class, message = "아이디는 필수 입력값입니다.")
     @Size(groups = OnLogin.class, min = 4, max = 45, message = "아이디는 4자 이상 45자 이하로 입력해주세요.")
     private String id;
 
+    @Getter
+    @Setter
     @NotBlank(groups = OnUpdate.class, message = "이름은 필수 입력값입니다.")
     @Size(groups = OnUpdate.class, min = 2, max = 45, message = "이름은 2자 이상 45자 이하로 입력해주세요.")
     private String name;
 
+    @Getter
+    @Setter
     @NotBlank(groups = OnLogin.class, message = "비밀번호는 필수 입력값입니다.")
     @Size(groups = OnLogin.class, min = 4, max = 45, message = "비밀번호는 4자 이상 45자 이하로 입력해주세요.")
     private String pwd;
 
+    @Getter
+    @Setter
     @NotBlank(groups = OnUpdate.class, message = "이메일은 필수 입력값입니다.")
     @Size(groups = OnUpdate.class, min = 4, max = 45, message = "이메일은 4자 이상 45자 이하로 입력해주세요.")
     private String email;
 
+    @Getter
+    @Setter
     @NotBlank(groups = OnUpdate.class, message = "전화번호는 필수 입력값입니다.")
     @Size(groups = OnUpdate.class, min = 4, max = 45, message = "전화번호는 4자 이상 45자 이하로 입력해주세요.")
     private String phone;
 
+    @Getter
+    @Setter
     @NotBlank(groups = OnUpdate.class, message = "주소는 필수 입력값입니다.")
     @Size(groups = OnUpdate.class, max = 100, message = "주소는 100자 이하로 입력해주세요.")
     private String address;
 
-    @Null(message = "가입일은 직접 설정할 수 없습니다.")
-    private Date indate;
-
+    @Getter
+    @Setter
     @Null(message = "관리자 여부는 직접 설정할 수 없습니다.")
     private String adminyn;
+
+    @Getter
+    @Null(message = "가입일은 직접 설정할 수 없습니다.")
+    private Date indate;
 
     public boolean isAdmin() {
         return adminyn.equals("Y");

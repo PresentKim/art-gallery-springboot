@@ -1,8 +1,6 @@
 package com.team4.artgallery.service.helper;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -36,10 +34,16 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @Service
 @Scope(scopeName = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-@Getter
-@RequiredArgsConstructor
 public class SessionProvider {
 
     private final HttpSession session;
+
+    public SessionProvider(HttpSession session) {
+        this.session = session;
+    }
+
+    public HttpSession getSession() {
+        return this.session;
+    }
 
 }
