@@ -1,22 +1,22 @@
 function swiperRun(swiper) {
     // 이미지 컨테이너 요소와 이미지 요소 배열
-    var imageContainer = swiper.querySelectorAll('.main-swiper_image-container')[0];
-    var imageCount = imageContainer.children.length;
+    const imageContainer = swiper.querySelectorAll('.main-swiper_image-container')[0];
+    const imageCount = imageContainer.children.length;
 
     // 리모콘 이미지 선택 버튼 생성
-    var remoteContainer = swiper.querySelectorAll('.main-swiper_remote-container')[0];
-    for (var i = 0; i < imageCount; i++) {
+    const remoteContainer = swiper.querySelectorAll('.main-swiper_remote-container')[0];
+    for (let i = 0; i < imageCount; i++) {
         remoteContainer.appendChild(document.createElement('div'));
     }
 
     // 리모콘 재생/일시정지 버튼 생성
-    var remotePauseButton = document.createElement('div');
+    const remotePauseButton = document.createElement('div');
     remotePauseButton.classList.add('pause-button');
     remoteContainer.appendChild(remotePauseButton);
 
     // 이미지 선택 함수
-    var imageIndex = 0;
-    var timer = -1;
+    let imageIndex = 0;
+    let timer = -1;
 
     function selectImage(newIndex) {
         // 이미지 인덱스 계산 (0 ~ imageCount - 1)
@@ -26,7 +26,7 @@ function swiperRun(swiper) {
         imageContainer.style.left = -imageIndex * 100 + '%';
 
         // 버튼 선택 상태 변경
-        for (var i = 0; i < imageCount; i++) {
+        for (let i = 0; i < imageCount; i++) {
             remoteContainer.children[i].classList.remove('selected');
         }
         remoteContainer.children[imageIndex].classList.add('selected');
@@ -53,7 +53,7 @@ function swiperRun(swiper) {
     }
 
     // 이벤트 핸들러 추가
-    for (var i = 0; i < imageCount; i++) {
+    for (let i = 0; i < imageCount; i++) {
         const index = i;
         remoteContainer.children[i].addEventListener('click', function () {
             selectImage(index);
@@ -66,11 +66,10 @@ function swiperRun(swiper) {
     togglePlay();
 }
 
-
 window.addEventListener('load', function () {
     // 스와이퍼 컨테이너 요소 배열
-    var swipers = document.querySelectorAll('.main-swiper');
-    for (var i = 0; i < swipers.length; i++) {
+    const swipers = document.querySelectorAll('.main-swiper');
+    for (let i = 0; i < swipers.length; i++) {
         swiperRun(swipers[i]);
     }
 });
