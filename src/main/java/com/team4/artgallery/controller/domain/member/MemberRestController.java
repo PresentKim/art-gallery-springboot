@@ -4,11 +4,13 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.exception.*;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
+import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.util.Assert;
+import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -31,6 +33,19 @@ public class MemberRestController {
     public MemberRestController(MemberService memberService, FavoriteService favoriteService) {
         this.memberService = memberService;
         this.favoriteService = favoriteService;
+    }
+
+    @CheckLogin
+    @GetMapping("mypage/favorite")
+    public Pagination.Pair<FavoriteDto> favorite(
+            @Valid
+            @ModelAttribute("pagination")
+            Pagination pagination,
+
+            @LoginMember
+            MemberDto loginMember
+    ) {
+        return pagination.pair(favoriteService.getFavorites(loginMember.getId(), pagination));
     }
 
     @PostMapping("/login")

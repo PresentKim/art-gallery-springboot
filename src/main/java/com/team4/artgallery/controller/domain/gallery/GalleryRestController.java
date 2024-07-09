@@ -9,7 +9,9 @@ import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.GalleryDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.ResponseDto;
+import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.service.GalleryService;
+import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,25 @@ public class GalleryRestController {
 
     public GalleryRestController(GalleryService galleryService) {
         this.galleryService = galleryService;
+    }
+
+    @GetMapping
+    public Pagination.Pair<GalleryDto> root(
+            @Valid
+            KeywordFilter filter,
+            @Valid
+            Pagination pagination
+    ) {
+        return pagination.pair(galleryService.getGalleries(filter, pagination));
+    }
+
+    @GetMapping("{gseq}")
+    public GalleryDto view(
+            @PathVariable(name = "gseq")
+            Integer gseq
+    ) {
+        galleryService.increaseReadCountIfNew(gseq);
+        return galleryService.getGallery(gseq);
     }
 
     @CheckLogin

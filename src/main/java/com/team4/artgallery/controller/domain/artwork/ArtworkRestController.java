@@ -45,6 +45,14 @@ public class ArtworkRestController {
         );
     }
 
+    @GetMapping("random")
+    public List<ArtworkDto> random(
+            @RequestParam(name = "count", defaultValue = "5")
+            Integer count
+    ) {
+        return artworkService.getRandomArtworks(count);
+    }
+
     @GetMapping("{aseq}")
     public ArtworkDto view(
             @PathVariable(name = "aseq")

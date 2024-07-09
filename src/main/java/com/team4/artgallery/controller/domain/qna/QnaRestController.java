@@ -7,7 +7,9 @@ import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.dto.ResponseDto;
+import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.service.QnaService;
+import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,23 @@ public class QnaRestController {
 
     public QnaRestController(QnaService qnaService) {
         this.qnaService = qnaService;
+    }
+
+    @GetMapping
+    public Pagination.Pair<QnaDto> root(
+            @Valid
+            @ModelAttribute("pagination")
+            Pagination pagination
+    ) {
+        return pagination.pair(qnaService.getInquiries(new QnaFilter(), pagination));
+    }
+
+    @GetMapping("{qseq}")
+    public QnaDto view(
+            @PathVariable(name = "qseq")
+            Integer qseq
+    ) throws NotFoundException, UnauthorizedException {
+        return qnaService.getInquiry(qseq);
     }
 
     @PostMapping("/write")

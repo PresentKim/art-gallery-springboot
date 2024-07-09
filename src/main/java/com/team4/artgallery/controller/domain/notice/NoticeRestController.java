@@ -1,13 +1,18 @@
 package com.team4.artgallery.controller.domain.notice;
 
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
+import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.ResponseDto;
+import com.team4.artgallery.dto.enums.NoticeCategory;
+import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.service.NoticeService;
+import com.team4.artgallery.util.Assert;
+import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -27,6 +32,37 @@ public class NoticeRestController {
 
     public NoticeRestController(NoticeService noticeService) {
         this.noticeService = noticeService;
+    }
+
+    @GetMapping
+    public Pagination.Pair<NoticeDto> root(
+            @Valid
+            NoticeFilter filter,
+            @Valid
+            Pagination pagination
+    ) {
+        String category = filter.getCategory();
+        Assert.isFalse(NoticeCategory.MAGAZINE.isEquals(category), "잘못된 카테고리입니다.", BadRequestException::new);
+        Assert.isFalse(NoticeCategory.NEWSPAPER.isEquals(category), "잘못된 카테고리입니다.", BadRequestException::new);
+
+        return pagination.pair(noticeService.getNotices(filter, pagination));
+    }
+
+    @GetMapping("recent")
+    public List<NoticeDto> recent(
+            @RequestParam(name = "count", defaultValue = "5")
+            Integer count
+    ) {
+        return noticeService.getRecentNotices(count);
+    }
+
+    @GetMapping("{nseq}")
+    public NoticeDto view(
+            @PathVariable(name = "nseq")
+            Integer nseq
+    ) throws NotFoundException, SqlException {
+        noticeService.increaseReadCountIfNew(nseq);
+        return noticeService.getNotice(nseq);
     }
 
     @CheckAdmin
