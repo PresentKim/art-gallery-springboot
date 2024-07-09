@@ -66,10 +66,93 @@ function swiperRun(swiper) {
     togglePlay();
 }
 
+function loadRecentNotices(count) {
+    function noticeDataToElement(notice) {
+        const $title = document.createElement('a');
+        $title.href = `/notice/${notice.nseq}`;
+        $title.innerText = notice.content;
+
+        const $titleWrapper = document.createElement('div');
+        $titleWrapper.classList.add('col_col_title');
+        $titleWrapper.appendChild($title);
+
+        const $date = document.createElement('div');
+        $date.innerText = new Date(notice.writedate).toLocaleDateString();
+        $date.classList.add('col_col_date');
+
+        const $innerRow = document.createElement('li');
+        $innerRow.classList.add('main_notice_inner_row');
+        $innerRow.appendChild($titleWrapper);
+        $innerRow.appendChild($date);
+
+        return $innerRow;
+    }
+
+    axios({
+        url: `/notice/recent?count=${count}`,
+        method: 'GET',
+        headers: {'content-type': 'application/x-www-form-urlencoded'}
+    }).then(({data}) => {
+        // 소식지 목록 요소를 가져와 초기화
+        const $noticeList = document.getElementById('notice-list');
+        $noticeList.innerHTML = '';
+
+        // 소식지 데이터를 소식지 목록 요소에 추가
+        for (let i = 0; i < count; ++i) {
+            $noticeList.appendChild(noticeDataToElement(data[i]));
+        }
+    }).catch(console.error);
+}
+
+function loadRandomArtworks(count) {
+    function artworkDataToElement(artwork) {
+        const $image = document.createElement('img');
+        $image.src = artwork.imageSrc;
+        $image.alt = artwork.name;
+
+        const $imageWrapper = document.createElement('a');
+        $imageWrapper.classList.add('imagelist');
+        $imageWrapper.href = `/artwork/${artwork.aseq}`;
+        $imageWrapper.target = '_self';
+        $imageWrapper.appendChild($image);
+        return $imageWrapper;
+    }
+
+    axios({
+        url: `/artwork/random?count=${count}`,
+        method: 'GET',
+        headers: {'content-type': 'application/x-www-form-urlencoded'}
+    }).then(({data}) => {
+        // 예술품 컨테이너 4개를 가져와 초기화
+        const artworkContainers = [
+            document.getElementById('container1'),
+            document.getElementById('container2'),
+            document.getElementById('container3'),
+            document.getElementById('container4')
+        ];
+        for (const $container of artworkContainers) {
+            $container.innerHTML = '';
+        }
+
+        // 예술품 데이터를 각 컨테이너에 골고루 배치
+        for (let i = 0; i < count; ++i) {
+            artworkContainers[i % 4].appendChild(artworkDataToElement(data[i]));
+        }
+    }).catch(console.error);
+}
+
 window.addEventListener('load', function () {
     // 스와이퍼 컨테이너 요소 배열
     const swipers = document.querySelectorAll('.main-swiper');
     for (let i = 0; i < swipers.length; i++) {
         swiperRun(swipers[i]);
     }
+
+    // 최신 소식지 목록 불러오기
+    const NOTICE_COUNT = 5;
+    loadRecentNotices(NOTICE_COUNT);
+
+    // 랜덤 예술품 목록 불러오기
+    const ARTWORK_COUNT = 24;
+    loadRandomArtworks(ARTWORK_COUNT);
 });
