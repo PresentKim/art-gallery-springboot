@@ -7,23 +7,21 @@ import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
+import com.team4.artgallery.dto.request.CountRequest;
+import com.team4.artgallery.dto.request.FilteredGetListRequest;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/artwork", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/artworks", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ArtworkRestController {
 
     private final ArtworkService artworkService;
@@ -32,8 +30,8 @@ public class ArtworkRestController {
         this.artworkService = artworkService;
     }
 
-    @GetMapping
-    public Pagination.Pair<ArtworkDto> root(
+    @GetMapping(path = "")
+    public Pagination.Pair<ArtworkDto> getList(
             @Validated(ArtworkFilter.ExcludeDisplay.class)
             ArtworkFilter filter,
             @Valid
@@ -45,72 +43,96 @@ public class ArtworkRestController {
         );
     }
 
-    @GetMapping("random")
-    public List<ArtworkDto> random(
-            @RequestParam(name = "count", defaultValue = "5")
+    @GetMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Pagination.Pair<ArtworkDto> getList(
+            @Validated(ArtworkFilter.ExcludeDisplay.class)
+            @RequestBody(required = false)
+            FilteredGetListRequest<ArtworkFilter> requestBody
+    ) {
+        if (requestBody == null) requestBody = new FilteredGetListRequest<>(null, null);
+        return getList(
+                requestBody.getFilter().orElse(new ArtworkFilter()),
+                requestBody.getPagination().orElse(new Pagination())
+        );
+    }
+
+    @GetMapping(path = "random")
+    public List<ArtworkDto> getRandomList(
+            @RequestParam("count")
             Integer count
     ) {
         return artworkService.getRandomArtworks(count);
     }
 
-    @GetMapping("{aseq}")
-    public ArtworkDto view(
-            @PathVariable(name = "aseq")
-            Integer aseq
+    @GetMapping(path = "random", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<ArtworkDto> getRandomList(
+            @RequestBody
+            CountRequest requestBody
+    ) {
+        return getRandomList(requestBody.count());
+    }
+
+    @GetMapping(path = "{aseq}")
+    public ArtworkDto getById(
+            @PathVariable("aseq")
+            String aseq
     ) throws NotFoundException {
-        return artworkService.getArtwork(aseq);
+        try {
+            return artworkService.getArtwork(Integer.parseInt(aseq));
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
     }
 
     @CheckAdmin
-    @PostMapping("/write")
+    @PostMapping(path = "{aseq}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto write(
+    public ResponseDto upsert(
+            @PathVariable("aseq")
+            String aseq,
             @Valid
             ArtworkDto artworkDto,
             @Valid
             @RequestParam(name = "imageFile", required = false)
             MultipartFile imageFile
     ) throws NotFoundException, SqlException, FileException {
-        if (artworkDto.getAseq() == null) {
+        if (aseq == null) {
             artworkService.createArtwork(artworkDto, imageFile);
         } else {
-            artworkService.updateArtwork(artworkDto, imageFile);
+            try {
+                artworkDto.setAseq(Integer.parseInt(aseq));
+                artworkService.updateArtwork(artworkDto, imageFile);
+            } catch (NumberFormatException e) {
+                throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+            }
         }
+
         return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
 
-    @CheckAdmin
-    @PostMapping("/update")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Object update(
-            @Valid
-            @NotEmpty(message = "예술품을 선택해주세요.")
-            @Size(max = 1, message = "한 번에 하나의 예술품만 수정할 수 있습니다.")
-            @RequestParam(name = "aseq")
-            List<Integer> aseq
-    ) throws URISyntaxException {
-        return new URI("/artwork/write?aseq=" + aseq.get(0));
-    }
+    // TODO: upsertArtworkJson 메소드 구현
 
     @CheckAdmin
-    @PostMapping("/toggleArtworkDisplay")
+    @PutMapping("/{aseq}/toggleDisplay")
     @ResponseStatus(HttpStatus.CREATED)
     public Object toggleArtworkDisplay(
-            @RequestParam(name = "aseq")
-            Integer aseq
+            @PathVariable("aseq")
+            String aseq
     ) throws SqlException {
-        artworkService.toggleArtworkDisplay(aseq);
-        return "전시 여부가 변경되었습니다.";
+        try {
+            artworkService.toggleArtworkDisplay(Integer.parseInt(aseq));
+            return "전시 여부가 변경되었습니다.";
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
     }
 
     @CheckAdmin
-    @PostMapping("/delete")
+    @DeleteMapping(path = "{aseq}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto delete(
-            @Valid
-            @NotEmpty(message = "예술품을 선택해주세요.")
-            @RequestParam(name = "aseq", required = false)
-            List<Integer> aseq
+            @PathVariable("aseq")
+            Integer aseq
     ) throws SqlException {
         artworkService.deleteArtwork(aseq);
         return new ResponseDto("예술품이 삭제되었습니다.", "/artwork");

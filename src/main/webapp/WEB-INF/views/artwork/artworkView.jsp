@@ -29,9 +29,7 @@
                             ${artworkDto.display ? '비공개' : '공개'}로 전환
                     </div>
                     <a href="<c:url value="/artwork/write?aseq=${artworkDto.aseq}"/>">수정</a>
-                    <div onclick="ajax('/artwork/delete', {aseq: ${artworkDto.aseq}})">
-                        삭제
-                    </div>
+                    <div onclick="ajax('/api/artworks/${artworkDto.aseq}', {}, 'DELETE')">삭제</div>
                 </c:if>
             </c:if>
 

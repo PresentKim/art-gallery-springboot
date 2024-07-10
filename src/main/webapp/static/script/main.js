@@ -119,9 +119,9 @@ function loadRandomArtworks(count) {
     }
 
     axios({
-        url: `/artwork/random?count=${count}`,
+        url: `/api/artworks/random`,
         method: 'GET',
-        headers: {'content-type': 'application/x-www-form-urlencoded'}
+        params: {count: count}
     }).then(({data}) => {
         // 예술품 컨테이너 4개를 가져와 초기화
         const artworkContainers = [

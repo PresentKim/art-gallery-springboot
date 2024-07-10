@@ -8,6 +8,7 @@
         <title>관리자 :: 예술품 관리</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
         <script src="<c:url value="/static/script/admin.js"/>"></script>
+        <script src="<c:url value="/static/script/admin/admin_artwork.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
@@ -23,7 +24,7 @@
             <div class="admin-list-func-btn">
                 <input type="submit" value="등록" formmethod="get" formaction="<c:url value="/artwork/write"/>">
                 <input type="submit" value="수정" formmethod="post" formaction="<c:url value="/artwork/updates"/>">
-                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/artwork/delete"/>">
+                <input type="button" value="삭제" onclick="deleteSelectedArtworks()">
             </div>
 
             <!-- 검색 기능 -->
@@ -66,7 +67,7 @@
         <c:forEach items="${artworkList}" var="artworkDto" varStatus="status">
             <ul class="admin-list-main admin-artwork-list" onclick="checkChildCheckbox(this)">
                 <li>
-                    <label><input name="aseq" type="checkbox" value="${artworkDto.aseq}" class="check-box"></label>
+                    <label><input type="checkbox" value="${artworkDto.aseq}" class="check-box"></label>
                 </li>
                 <li>${artworkDto.displayyn}</li>
                 <li>${artworkDto.aseq}</li>

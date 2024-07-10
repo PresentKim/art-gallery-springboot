@@ -105,11 +105,11 @@ public class ArtworkService {
     /**
      * 예술품 정보를 삭제합니다.
      *
-     * @param aseqList 예술품 번호 목록
+     * @param aseq 예술품 번호
      * @throws NotFoundException 예술품 삭제에 실패한 경우 예외 발생
      */
-    public void deleteArtwork(List<Integer> aseqList) throws NotFoundException {
-        artworkDao.deleteArtworks(aseqList);
+    public void deleteArtwork(Integer aseq) throws NotFoundException {
+        artworkDao.deleteArtwork(aseq);
     }
 
     /**

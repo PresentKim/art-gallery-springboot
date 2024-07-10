@@ -83,13 +83,4 @@
         WHERE aseq = #{aseq}
     </delete>
 
-    <delete id="deleteArtworks" parameterType="list">
-        DELETE
-        FROM artwork
-        WHERE aseq IN
-        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </delete>
-
 </mapper>

@@ -101,14 +101,4 @@ public interface IArtworkDao {
     @NotEmptyReturn(value = "예술품 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int deleteArtwork(int aseq) throws NotFoundException;
 
-    /**
-     * 여러 예술품 정보를 삭제합니다.
-     *
-     * @param aseqList 예술품 번호 목록
-     * @return 삭제된 행의 수
-     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
-     */
-    @NotEmptyReturn(value = "예술품 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
-    int deleteArtworks(List<Integer> aseqList) throws NotFoundException;
-
 }
