@@ -211,10 +211,21 @@
 
 .admin-list-main {
     cursor: pointer;
+    transition: all 0.5s;
+    overflow: hidden;
+    height: 4rem;
 }
 
 .admin-list-main:hover, .admin-list-main.checked {
     background-color: #faedcd;
+}
+
+.admin-list-main.delete-target {
+    background-color: #facdcd;
+}
+
+.admin-list-main.deleted {
+    height: 0;
 }
 
 .view-link:hover {
