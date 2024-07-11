@@ -136,13 +136,12 @@ public class ArtworkRestController {
 
     @CheckAdmin
     @DeleteMapping(path = "{aseq}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseDto delete(
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(
             @PathVariable("aseq")
             Integer aseq
     ) throws SqlException {
         artworkService.deleteArtwork(aseq);
-        return new ResponseDto("예술품이 삭제되었습니다.", "/artwork");
     }
 
 }

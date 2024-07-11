@@ -9,3 +9,13 @@ async function toggleArtworkDisplay(element, aseq) {
         defaultAjaxHandler(error.response);
     }
 }
+
+async function deleteArtwork(aseq) {
+    try {
+        await axios.delete(`/api/artworks/${aseq}`);
+        alert("예술품이 삭제되었습니다");
+        location.href = '/artwork';
+    } catch (error) {
+        defaultAjaxHandler(error.response);
+    }
+}
