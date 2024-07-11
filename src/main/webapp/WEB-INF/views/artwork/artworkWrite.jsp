@@ -15,11 +15,16 @@
 
 <h2 class="artwork-form-header">${empty artworkDto ? '예술품 등록' : '예술품 수정'}</h2>
 <section class="artwork-form-main">
-    <form class="artwork-form" method="post" action="<c:url value="/api/artworks/"/>${artworkDto.aseq}"
-          enctype="multipart/form-data">
-        <c:if test="${not empty artworkDto}">
-            <input type="hidden" name="aseq" value="${artworkDto.aseq}">
-        </c:if>
+    <form class="artwork-form"
+            <c:choose>
+                <c:when test="${empty artworkDto}">
+                    onsubmit="submitCreateArtwork(this); return false;"
+                </c:when>
+                <c:otherwise>
+                    onsubmit="submitUpdateArtwork(this, ${artworkDto.aseq}); return false;"
+                </c:otherwise>
+            </c:choose>
+    >
         <div class="artwork-form_info">
             <ul>
                 <li>

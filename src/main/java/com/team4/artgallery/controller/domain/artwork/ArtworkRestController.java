@@ -85,32 +85,39 @@ public class ArtworkRestController {
     }
 
     @CheckAdmin
-    @PostMapping(path = "{aseq}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(path = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto upsert(
+    public ResponseDto create(
+            @Valid
+            ArtworkDto artworkDto,
+            @Valid
+            @RequestPart(name = "imageFile")
+            MultipartFile imageFile
+    ) throws NotFoundException, SqlException, FileException {
+        artworkService.createArtwork(artworkDto, imageFile);
+        return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
+    }
+
+    @CheckAdmin
+    @PutMapping(path = "{aseq}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDto update(
             @PathVariable("aseq")
             String aseq,
             @Valid
             ArtworkDto artworkDto,
             @Valid
-            @RequestParam(name = "imageFile", required = false)
+            @RequestPart(name = "imageFile", required = false)
             MultipartFile imageFile
     ) throws NotFoundException, SqlException, FileException {
-        if (aseq == null) {
-            artworkService.createArtwork(artworkDto, imageFile);
-        } else {
-            try {
-                artworkDto.setAseq(Integer.parseInt(aseq));
-                artworkService.updateArtwork(artworkDto, imageFile);
-            } catch (NumberFormatException e) {
-                throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
-            }
+        try {
+            artworkDto.setAseq(Integer.parseInt(aseq));
+            artworkService.updateArtwork(artworkDto, imageFile);
+            return new ResponseDto("예술품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
-
-        return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
     }
-
-    // TODO: upsertArtworkJson 메소드 구현
 
     @CheckAdmin
     @PutMapping("/{aseq}/toggleDisplay")

@@ -49,3 +49,21 @@ function updatePreviewImage() {
     };
     reader.readAsDataURL(event.target.files[0]); // 선택한 파일을 읽어들임
 }
+
+function submitCreateArtwork($form) {
+    handleAxiosFinally(axios({
+        url: '/api/artworks',
+        method: 'POST',
+        data: new FormData($form),
+        headers: {'Content-Type': 'multipart/form-data'}
+    }));
+}
+
+function submitUpdateArtwork($form, aseq) {
+    handleAxiosFinally(axios({
+        url: `/api/artworks/${aseq}`,
+        method: 'PUT',
+        data: new FormData($form),
+        headers: {'Content-Type': 'multipart/form-data'}
+    }));
+}
