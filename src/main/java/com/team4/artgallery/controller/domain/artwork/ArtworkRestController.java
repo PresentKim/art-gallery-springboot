@@ -56,34 +56,6 @@ public class ArtworkRestController {
         );
     }
 
-    @GetMapping(path = "random")
-    public List<ArtworkDto> getRandomList(
-            @RequestParam("count")
-            Integer count
-    ) {
-        return artworkService.getRandomArtworks(count);
-    }
-
-    @GetMapping(path = "random", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<ArtworkDto> getRandomList(
-            @RequestBody
-            CountRequest requestBody
-    ) {
-        return getRandomList(requestBody.count());
-    }
-
-    @GetMapping(path = "{aseq}")
-    public ArtworkDto getById(
-            @PathVariable("aseq")
-            String aseq
-    ) throws NotFoundException {
-        try {
-            return artworkService.getArtwork(Integer.parseInt(aseq));
-        } catch (NumberFormatException e) {
-            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
-        }
-    }
-
     @CheckAdmin
     @PostMapping(path = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
@@ -96,6 +68,18 @@ public class ArtworkRestController {
     ) throws NotFoundException, SqlException, FileException {
         artworkService.createArtwork(artworkDto, imageFile);
         return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
+    }
+
+    @GetMapping(path = "{aseq}")
+    public ArtworkDto getById(
+            @PathVariable("aseq")
+            String aseq
+    ) throws NotFoundException {
+        try {
+            return artworkService.getArtwork(Integer.parseInt(aseq));
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
     }
 
     @CheckAdmin
@@ -120,6 +104,16 @@ public class ArtworkRestController {
     }
 
     @CheckAdmin
+    @DeleteMapping(path = "{aseq}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(
+            @PathVariable("aseq")
+            Integer aseq
+    ) throws SqlException {
+        artworkService.deleteArtwork(aseq);
+    }
+
+    @CheckAdmin
     @PutMapping("/{aseq}/toggleDisplay")
     @ResponseStatus(HttpStatus.CREATED)
     public Object toggleArtworkDisplay(
@@ -134,14 +128,20 @@ public class ArtworkRestController {
         }
     }
 
-    @CheckAdmin
-    @DeleteMapping(path = "{aseq}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(
-            @PathVariable("aseq")
-            Integer aseq
-    ) throws SqlException {
-        artworkService.deleteArtwork(aseq);
+    @GetMapping(path = "random")
+    public List<ArtworkDto> getRandomList(
+            @RequestParam("count")
+            Integer count
+    ) {
+        return artworkService.getRandomArtworks(count);
+    }
+
+    @GetMapping(path = "random", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<ArtworkDto> getRandomList(
+            @RequestBody
+            CountRequest requestBody
+    ) {
+        return getRandomList(requestBody.count());
     }
 
 }
