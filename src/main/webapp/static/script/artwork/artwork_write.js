@@ -1,69 +1,69 @@
-var artworkArtistBackup = "";
-var artworkYearBackup = "";
+window.addEventListener('load', function () {
+    // 작가 관련 이벤트 핸들러 등록
+    let artworkArtistBackup = '';
+    const $artistInput = document.getElementById('artist');
+    const $artistUnknownCheckbox = document.getElementById('unknown-artist');
+    $artistUnknownCheckbox.addEventListener('input', () => {
+        if ($artistUnknownCheckbox.checked) {
+            artworkArtistBackup = $artistInput.value;
+            $artistInput.value = '작자미상';
+        } else {
+            $artistInput.value = artworkArtistBackup;
+        }
+    });
+    const syncArtistInput = () => $artistUnknownCheckbox.checked = ($artistInput.value === '작자미상');
+    $artistInput.addEventListener('input', syncArtistInput);
 
-/**
- * "작자미상" 체크박스의 체크 변경 이벤트 핸들러
- * 체크된 경우 작가명 입력란의 값을 "작자미상"으로 설정하고, 체크 해제된 경우 이전 값으로 설정한다.
- */
-function onUnknownArtistChange() {
-    let artistInput = document.getElementById("artist");
+    // 연도 관련 이벤트 핸들러 등록
+    let artworkYearBackup = '';
+    const $yearInput = document.getElementById('year');
+    const $yearUnknownCheckbox = document.getElementById('unknown-year');
+    $yearUnknownCheckbox.addEventListener('change', () => {
+        if ($yearUnknownCheckbox.checked) {
+            artworkYearBackup = $yearInput.value;
+            $yearInput.value = '연도미상';
+        } else {
+            $yearInput.value = artworkYearBackup;
+        }
+    });
+    const syncYearInput = () => $yearUnknownCheckbox.checked = ($yearInput.value === '연도미상');
+    $yearInput.addEventListener('input', syncYearInput);
 
-    if (document.getElementById("unknown-artist").checked) {
-        artworkArtistBackup = artistInput.value;
-        artistInput.value = "작자미상";
-    } else {
-        artistInput.value = artworkArtistBackup;
-    }
-}
+    // 이미지 파일 선택 이벤트 핸들러 등록
+    const $imageInput = document.getElementById('image-file');
+    const $imagePreview = document.getElementById('image-preview');
+    $imageInput.addEventListener('change', () => {
+        let reader = new FileReader();
+        reader.onload = () => $imagePreview.src = reader.result;
+        reader.readAsDataURL($imageInput.files[0]);
+    });
 
-/**
- * "연도미상" 체크박스의 체크 변경 이벤트 핸들러
- * 체크된 경우 제작연도 입력란의 값을 "연도미상"으로 설정하고, 체크 해제된 경우 이전 값으로 설정한다.
- */
-function onUnknownYearChange() {
-    let yearInput = document.getElementById("year");
+    // 예술품 폼 등록 이벤트 핸들러 등록
+    const $form = document.getElementById('artwork-form');
+    $form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if ($form.checkValidity()) {
+            const commonData = {
+                data: new FormData($form),
+                headers: {'Content-Type': 'multipart/form-data'}
+            }
 
-    if (document.getElementById("unknown-year").checked) {
-        artworkYearBackup = yearInput.value;
-        yearInput.value = "연도미상";
-    } else {
-        yearInput.value = artworkYearBackup;
-    }
-}
-
-/**
- * 주어진 ID의 체크박스를 체크 해제하는 함수
- *
- * @param elementId
- */
-function uncheck(elementId) {
-    console.log(document.getElementById(elementId));
-    document.getElementById(elementId).checked = false;
-}
-
-function updatePreviewImage() {
-    let reader = new FileReader(); // 파일을 읽을 FileReader 객체 생성
-    reader.onload = function () {
-        // 파일의 데이터를 img 태그의 src에 설정
-        document.getElementById("image-preview").src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]); // 선택한 파일을 읽어들임
-}
-
-function submitCreateArtwork($form) {
-    handleAxiosFinally(axios({
-        url: '/api/artworks',
-        method: 'POST',
-        data: new FormData($form),
-        headers: {'Content-Type': 'multipart/form-data'}
-    }));
-}
-
-function submitUpdateArtwork($form, aseq) {
-    handleAxiosFinally(axios({
-        url: `/api/artworks/${aseq}`,
-        method: 'PUT',
-        data: new FormData($form),
-        headers: {'Content-Type': 'multipart/form-data'}
-    }));
-}
+            if ($form.hasAttribute('data-aseq')) {
+                const aseq = $form.getAttribute('data-aseq');
+                handleAxiosFinally(axios({
+                    url: `/api/artworks/${aseq}`,
+                    method: 'PUT',
+                    ...commonData
+                }));
+            } else {
+                handleAxiosFinally(axios({
+                    url: '/api/artworks',
+                    method: 'POST',
+                    ...commonData
+                }));
+            }
+        } else {
+            alert('입력값을 확인해주세요.');
+        }
+    });
+});

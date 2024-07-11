@@ -15,23 +15,13 @@
 
 <h2 class="artwork-form-header">${empty artworkDto ? '예술품 등록' : '예술품 수정'}</h2>
 <section class="artwork-form-main">
-    <form class="artwork-form"
-            <c:choose>
-                <c:when test="${empty artworkDto}">
-                    onsubmit="submitCreateArtwork(this); return false;"
-                </c:when>
-                <c:otherwise>
-                    onsubmit="submitUpdateArtwork(this, ${artworkDto.aseq}); return false;"
-                </c:otherwise>
-            </c:choose>
-    >
+    <form id="artwork-form" class="artwork-form" data-aseq="${artworkDto.aseq}">
         <div class="artwork-form_info">
             <ul>
                 <li>
                     <label for="artist">작가명</label>
-                    <input type="text" name="artist" id="artist" value="${artworkDto.artist}"
-                           oninput="uncheck('unknown-artist')">
-                    <input type="checkbox" name="unknown-artist" id="unknown-artist" onchange="onUnknownArtistChange()"
+                    <input type="text" name="artist" id="artist" value="${artworkDto.artist}">
+                    <input type="checkbox" name="unknown-artist" id="unknown-artist"
                            <c:if test="${artworkDto.artist.equals('작자미상')}">checked</c:if>>
                     <label for="unknown-artist" class="unknown-label">작자미상</label>
                 </li>
@@ -41,9 +31,8 @@
                 </li>
                 <li>
                     <label for="year">제작연도</label>
-                    <input type="text" name="year" id="year" value="${artworkDto.year}" maxlength="4"
-                           oninput="uncheck('unknown-year')">
-                    <input type="checkbox" name="unknown-year" id="unknown-year" onchange="onUnknownYearChange()"
+                    <input type="text" name="year" id="year" value="${artworkDto.year}" maxlength="4">
+                    <input type="checkbox" name="unknown-year" id="unknown-year"
                            <c:if test="${artworkDto.year.equals('연도미상')}">checked</c:if>>
                     <label for="unknown-year" class="unknown-label">연도미상</label>
                 </li>
@@ -78,8 +67,8 @@
                     <label for="displayOff">비공개</label>
                 </li>
                 <li>
-                    <label for="imageFile">이미지 등록</label>
-                    <input type="file" name="imageFile" id="imageFile" accept="image/*" onchange="updatePreviewImage()">
+                    <label for="image-file">이미지 등록</label>
+                    <input type="file" name="imageFile" id="image-file" accept="image/*">
                 </li>
                 <li>
                     <img id="image-preview" alt="image-preview" src="${artworkDto.imageSrc}">
