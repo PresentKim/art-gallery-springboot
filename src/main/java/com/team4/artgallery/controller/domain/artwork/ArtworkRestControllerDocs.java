@@ -3,6 +3,7 @@ package com.team4.artgallery.controller.domain.artwork;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
+import com.team4.artgallery.dto.request.DisplayRequest;
 import com.team4.artgallery.util.Pagination;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -110,8 +111,6 @@ interface ArtworkRestControllerDocs {
     @Operation(
             summary = "예술품 수정",
             description = "예술품을 수정합니다.",
-            parameters = {
-            },
             method = "PUT",
             responses = {
                     @ApiResponse(
@@ -146,9 +145,6 @@ interface ArtworkRestControllerDocs {
     @Operation(
             summary = "예술품 삭제",
             description = "예술품을 삭제합니다.",
-            parameters = {
-                    @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
-            },
             method = "DELETE",
             responses = {
                     @ApiResponse(
@@ -177,16 +173,13 @@ interface ArtworkRestControllerDocs {
 
     @Tag(name = "admin", description = "관리자 메서드")
     @Operation(
-            summary = "예술품 전시 여부 토글",
-            description = "예술품 전시 여부를 토글합니다.",
-            parameters = {
-                    @Parameter(name = "aseq", description = "예술품 번호", required = true)
-            },
+            summary = "예술품 전시 여부 수정",
+            description = "예술품 전시 여부를 수정합니다.",
             method = "PUT",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "예술품 전시 여부 토글 성공",
+                            description = "예술품 전시 여부 변경 성공",
                             content = {
                                     @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
                                     @Content(mediaType = "text/html")
@@ -202,9 +195,11 @@ interface ArtworkRestControllerDocs {
                     )
             }
     )
-    Object toggleArtworkDisplay(
+    Object updateDisplay(
             @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
-            String aseq
+            String aseq,
+            @ParameterObject
+            DisplayRequest request
     );
 
 }

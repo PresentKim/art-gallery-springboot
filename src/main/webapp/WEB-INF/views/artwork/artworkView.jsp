@@ -25,7 +25,7 @@
                 </div>
 
                 <c:if test="${loginMember.admin}">
-                    <div onclick="toggleArtworkDisplay(this, ${artworkDto.aseq})">
+                    <div onclick="updateArtworkDisplay(this, ${artworkDto.aseq})">
                             ${artworkDto.display ? '비공개' : '공개'}로 전환
                     </div>
                     <a href="<c:url value="/artwork/write?aseq=${artworkDto.aseq}"/>">수정</a>

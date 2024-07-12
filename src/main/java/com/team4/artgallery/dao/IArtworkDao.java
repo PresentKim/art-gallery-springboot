@@ -79,14 +79,15 @@ public interface IArtworkDao {
     int updateArtwork(ArtworkDto artworkDto) throws NotFoundException;
 
     /**
-     * 예술품 전시 여부를 토글합니다.
+     * 예술품 전시 여부를 수정합니다.
      *
-     * @param aseq 예술품 번호
+     * @param aseq    예술품 번호
+     * @param display 전시 여부
      * @return 수정된 행의 수
      * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
     @NotEmptyReturn(value = "예술품 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
-    int toggleArtworkDisplay(int aseq) throws NotFoundException;
+    int updateDisplay(@Param("aseq") int aseq, @Param("display") boolean display) throws NotFoundException;
 
 
     /* ========== DELETE =========== */

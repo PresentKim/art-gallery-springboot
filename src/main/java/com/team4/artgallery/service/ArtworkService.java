@@ -93,13 +93,14 @@ public class ArtworkService {
     }
 
     /**
-     * 예술품 전시 여부를 토글합니다.
+     * 예술품 전시 여부를 수정합니다.
      *
-     * @param aseq 예술품 번호 (artwork sequence)
+     * @param aseq    예술품 번호 (artwork sequence)
+     * @param display 전시 여부
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      */
-    public void toggleArtworkDisplay(int aseq) throws NotFoundException {
-        artworkDao.toggleArtworkDisplay(aseq);
+    public void updateDisplay(int aseq, boolean display) throws NotFoundException {
+        artworkDao.updateDisplay(aseq, display);
     }
 
     /**

@@ -7,6 +7,7 @@ import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
+import com.team4.artgallery.dto.request.DisplayRequest;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
@@ -95,14 +96,16 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
     }
 
     @CheckAdmin
-    @PutMapping("/{aseq}/toggleDisplay")
+    @PutMapping("/{aseq}/display")
     @ResponseStatus(HttpStatus.CREATED)
-    public Object toggleArtworkDisplay(
+    public Object updateDisplay(
             @PathVariable("aseq")
-            String aseq
+            String aseq,
+            @RequestBody
+            DisplayRequest request
     ) throws SqlException {
         try {
-            artworkService.toggleArtworkDisplay(Integer.parseInt(aseq));
+            artworkService.updateDisplay(Integer.parseInt(aseq), request.display());
             return "전시 여부가 변경되었습니다.";
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");

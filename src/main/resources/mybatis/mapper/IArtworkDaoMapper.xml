@@ -71,9 +71,9 @@
         WHERE aseq = #{aseq}
     </update>
 
-    <update id="toggleArtworkDisplay" parameterType="int">
+    <update id="updateDisplay">
         UPDATE artwork
-        SET displayyn = IF(displayyn = 'Y', 'N', 'Y')
+        SET displayyn = IF(${display}, 'Y', 'N')
         WHERE aseq = #{aseq}
     </update>
 
