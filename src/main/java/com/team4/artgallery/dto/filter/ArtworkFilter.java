@@ -1,6 +1,8 @@
 package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.Null;
 
 public class ArtworkFilter implements IFilter {
@@ -9,26 +11,31 @@ public class ArtworkFilter implements IFilter {
      * 검색어
      */
     @FilterField
+    @Parameter(name = "keyword", description = "검색어", example = "풍경화", allowEmptyValue = true)
     private String keyword;
 
     /**
      * 예술품 카테고리
      */
     @FilterField
+    @Parameter(name = "category", description = "카테고리", example = "PAINTING", allowEmptyValue = true)
     private String category;
 
     /**
      * 예술품 전시 여부
      */
     @FilterField
+    @Hidden
     @Null(message = "displayyn 값은 설정할 수 없습니다", groups = ExcludeDisplay.class) // 요청 파라미터의 바인딩을 방지
     private String displayyn;
 
     /**
      * URL 파라미터에 전시 여부를 포함할지 여부
      */
+    @Hidden
     private boolean includeDisplay = true;
 
+    @Hidden
     public boolean isFieldIncludedAsUrlParam(String fieldName) {
         if (fieldName.equals("displayyn")) {
             return includeDisplay;
@@ -64,6 +71,7 @@ public class ArtworkFilter implements IFilter {
         return this;
     }
 
+    @Hidden
     public ArtworkFilter setIncludeDisplay(boolean includeDisplay) {
         this.includeDisplay = includeDisplay;
         return this;

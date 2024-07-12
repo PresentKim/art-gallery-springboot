@@ -1,6 +1,7 @@
 package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
+import io.swagger.v3.oas.annotations.Hidden;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ public interface IFilter {
      * @implNote 리플렉션을 사용하여 모든 필드를 읽어와 필드 맵을 생성합니다.
      * @implSpec 필터 맵은 필드 이름과 필드 값으로 구성되어 있습니다.
      */
+    @Hidden
     default Map<String, Object> getFilters() {
         Map<String, Object> filters = new HashMap<>();
 
@@ -62,6 +64,7 @@ public interface IFilter {
      *
      * @return URL 파라미터 문자열
      */
+    @Hidden
     default String getUrlParam() {
         StringBuilder urlParam = new StringBuilder();
         for (Map.Entry<String, Object> entry : getFilters().entrySet()) {
@@ -80,6 +83,7 @@ public interface IFilter {
      * @return URL 파라미터에 포함될지 여부
      * @implNote 이 메서드는 {@link #getUrlParam()} 메서드에서 사용됩니다.
      */
+    @Hidden
     default boolean isFieldIncludedAsUrlParam(String fieldName) {
         return true;
     }

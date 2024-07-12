@@ -7,8 +7,6 @@ import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
-import com.team4.artgallery.dto.request.CountRequest;
-import com.team4.artgallery.dto.request.FilteredGetListRequest;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
@@ -22,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/artworks", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ArtworkRestController {
+public class ArtworkRestController implements ArtworkRestControllerDocs {
 
     private final ArtworkService artworkService;
 
@@ -43,19 +41,6 @@ public class ArtworkRestController {
         );
     }
 
-    @GetMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Pagination.Pair<ArtworkDto> getList(
-            @Validated(ArtworkFilter.ExcludeDisplay.class)
-            @RequestBody(required = false)
-            FilteredGetListRequest<ArtworkFilter> requestBody
-    ) {
-        if (requestBody == null) requestBody = new FilteredGetListRequest<>(null, null);
-        return getList(
-                requestBody.getFilter().orElse(new ArtworkFilter()),
-                requestBody.getPagination().orElse(new Pagination())
-        );
-    }
-
     @CheckAdmin
     @PostMapping(path = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
@@ -73,13 +58,9 @@ public class ArtworkRestController {
     @GetMapping(path = "{aseq}")
     public ArtworkDto getById(
             @PathVariable("aseq")
-            String aseq
+            int aseq
     ) throws NotFoundException {
-        try {
-            return artworkService.getArtwork(Integer.parseInt(aseq));
-        } catch (NumberFormatException e) {
-            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
-        }
+        return artworkService.getArtwork(aseq);
     }
 
     @CheckAdmin
@@ -134,14 +115,6 @@ public class ArtworkRestController {
             Integer count
     ) {
         return artworkService.getRandomArtworks(count);
-    }
-
-    @GetMapping(path = "random", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<ArtworkDto> getRandomList(
-            @RequestBody
-            CountRequest requestBody
-    ) {
-        return getRandomList(requestBody.count());
     }
 
 }

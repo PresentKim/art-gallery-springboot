@@ -1,7 +1,7 @@
 package com.team4.artgallery.util;
 
 import com.team4.artgallery.dto.filter.IFilter;
-import jakarta.validation.constraints.NotNull;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
 
@@ -25,25 +25,27 @@ public class Pagination {
     /**
      * 현재 페이지
      */
-    @NotNull(message = "잘못된 page 값입니다")
+    @Schema(description = "페이지 번호", example = "1")
     private Integer page = 1;
 
     /**
      * 한 페이지당 표시할 아이템의 갯수
      */
-    @NotNull(message = "잘못된 displayCount 값입니다")
+    @Schema(description = "페이지 크기", example = "10")
     private Integer displayCount = 10;
 
     /**
      * 아이템의 총 갯수
      */
     @Null(message = "itemCount 값은 설정할 수 없습니다") // 요청 파라미터의 바인딩을 방지
+    @Schema(description = "아이템 총 갯수", example = "100", hidden = true)
     private Integer itemCount;
 
     /**
      * 페이지의 URL 템플릿
      */
     @Pattern(regexp = "^\\?page=%d$", message = "urlTemplate 값은 설정할 수 없습니다") // 요청 파라미터의 바인딩을 방지
+    @Schema(description = "페이지의 URL 템플릿", example = "?page=%d", hidden = true)
     private String urlTemplate = "?page=%d";
 
     /**
