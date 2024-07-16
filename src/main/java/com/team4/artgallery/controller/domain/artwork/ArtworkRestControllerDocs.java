@@ -44,7 +44,7 @@ interface ArtworkRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    Pagination.Pair<ArtworkDto> getList(
+    List<ArtworkDto> getList(
             @ParameterObject
             ArtworkFilter filter,
             @ParameterObject
@@ -78,7 +78,7 @@ interface ArtworkRestControllerDocs {
                             responseCode = "201",
                             description = "성공",
                             content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ArtworkDto.class)),
                                     @Content(mediaType = "text/html")
                             }
                     ),
@@ -100,7 +100,7 @@ interface ArtworkRestControllerDocs {
                     )
             }
     )
-    ResponseDto create(
+    ArtworkDto create(
             @ParameterObject
             ArtworkDto artworkDto,
             @Parameter(name = "imageFile", description = "이미지 파일", required = true)
@@ -115,11 +115,7 @@ interface ArtworkRestControllerDocs {
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "예술품 수정 성공",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
+                            description = "예술품 수정 성공"
                     ),
                     @ApiResponse(
                             responseCode = "400",
@@ -131,7 +127,7 @@ interface ArtworkRestControllerDocs {
                     )
             }
     )
-    ResponseDto update(
+    void update(
             @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
             String aseq,
             @ParameterObject
@@ -149,11 +145,7 @@ interface ArtworkRestControllerDocs {
             responses = {
                     @ApiResponse(
                             responseCode = "204",
-                            description = "예술품 삭제 성공",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
+                            description = "예술품 삭제 성공"
                     ),
                     @ApiResponse(
                             responseCode = "400",
@@ -179,11 +171,7 @@ interface ArtworkRestControllerDocs {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "예술품 전시 여부 변경 성공",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
+                            description = "예술품 전시 여부 변경 성공"
                     ),
                     @ApiResponse(
                             responseCode = "400",
@@ -195,7 +183,7 @@ interface ArtworkRestControllerDocs {
                     )
             }
     )
-    Object updateDisplay(
+    void updateDisplay(
             @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
             String aseq,
             @ParameterObject

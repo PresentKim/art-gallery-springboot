@@ -48,19 +48,29 @@ window.addEventListener('load', function () {
                 headers: {'Content-Type': 'multipart/form-data'}
             }
 
-            if ($form.hasAttribute('data-aseq')) {
+            if ($form.getAttribute('data-aseq')) {
                 const aseq = $form.getAttribute('data-aseq');
-                handleAxiosFinally(axios({
+                axios({
                     url: `/api/artworks/${aseq}`,
                     method: 'PUT',
                     ...commonData
-                }));
+                })
+                    .then(() => {
+                        alert('예술품이 수정되었습니다');
+                        location.href = `/artwork/${aseq}`;
+                    })
+                    .catch(defaultAjaxHandler);
             } else {
-                handleAxiosFinally(axios({
+                axios({
                     url: '/api/artworks',
                     method: 'POST',
                     ...commonData
-                }));
+                })
+                    .then((json) => {
+                        alert('예술품이 등록되었습니다');
+                        location.href = `/artwork/${json.data.aseq}`;
+                    })
+                    .catch(defaultAjaxHandler);
             }
         } else {
             alert('입력값을 확인해주세요.');

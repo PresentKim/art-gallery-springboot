@@ -1,6 +1,8 @@
 package com.team4.artgallery.dto;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.team4.artgallery.dto.enums.ArtworkCategory;
+import com.team4.artgallery.dto.view.Views;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +20,7 @@ public class ArtworkDto {
     @Getter
     @Setter
     @Schema(description = "예술품 번호", example = "1", hidden = true)
+    @JsonView({Views.Identifier.class, Views.Summary.class, Views.Detail.class})
     private Integer aseq;
 
     @Getter
@@ -25,6 +28,7 @@ public class ArtworkDto {
     @NotBlank(message = "작품명을 입력해주세요.")
     @Size(max = 45, message = "작품명은 45자 이내로 입력해주세요.")
     @Schema(description = "작품명", example = "풍경화")
+    @JsonView({Views.Summary.class, Views.Detail.class})
     private String name;
 
     /**
@@ -36,6 +40,7 @@ public class ArtworkDto {
     @Size(max = 45, message = "부문은 45자 이내로 입력해주세요.")
     @Pattern(regexp = "^회화|드로잉|판화|조각ㆍ설치|사진|공예|디자인|서예$", message = "부문은 회화, 드로잉, 판화, 조각ㆍ설치, 사진, 공예, 디자인, 서예 중 하나로 입력해주세요.")
     @Schema(description = "부문", example = "회화")
+    @JsonView({Views.Detail.class})
     private String category;
 
     @Getter
@@ -43,6 +48,7 @@ public class ArtworkDto {
     @NotBlank(message = "작가명을 입력해주세요.")
     @Size(max = 45, message = "작가명은 45자 이내로 입력해주세요.")
     @Schema(description = "작가명", example = "홍길동")
+    @JsonView({Views.Summary.class, Views.Detail.class})
     private String artist;
 
     @Getter
@@ -50,6 +56,7 @@ public class ArtworkDto {
     @NotBlank(message = "제작년도를 입력해주세요.")
     @Size(max = 4, message = "제작년도는 4자 이내로 입력해주세요.")
     @Schema(description = "제작년도", example = "2021")
+    @JsonView({Views.Summary.class, Views.Detail.class})
     private String year;
 
     @Getter
@@ -57,6 +64,7 @@ public class ArtworkDto {
     @NotBlank(message = "재료를 입력해주세요.")
     @Size(max = 45, message = "재료는 45자 이내로 입력해주세요.")
     @Schema(description = "재료", example = "캔버스")
+    @JsonView({Views.Detail.class})
     private String material;
 
     @Getter
@@ -64,6 +72,7 @@ public class ArtworkDto {
     @NotBlank(message = "규격을 입력해주세요.")
     @Size(max = 45, message = "규격은 45자 이내로 입력해주세요.")
     @Schema(description = "규격", example = "100x100")
+    @JsonView({Views.Detail.class})
     private String size;
 
     @Getter
@@ -72,12 +81,14 @@ public class ArtworkDto {
     @Size(max = 1, message = "전시상태는 1자 이내로 입력해주세요.")
     @Pattern(regexp = "^[YN]$", message = "전시상태는 Y 또는 N으로 입력해주세요.")
     @Schema(description = "전시상태", example = "Y")
+    @JsonView({Views.Detail.class})
     private String displayyn;
 
     @Getter
     @Setter
     @NotBlank(message = "작품설명을 입력해주세요.")
     @Schema(description = "작품설명", example = "풍경화")
+    @JsonView({Views.Detail.class})
     private String content;
 
     @Getter
@@ -101,6 +112,7 @@ public class ArtworkDto {
     /**
      * 사용자가 접근 가능한 이미지 경로를 반환합니다.
      */
+    @JsonView({Views.Summary.class, Views.Detail.class})
     public String getImageSrc() {
         if (savefilename.startsWith("http")) {
             return savefilename;

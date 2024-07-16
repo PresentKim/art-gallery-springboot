@@ -7,7 +7,7 @@ async function updateArtworkDisplay($button, aseq) {
 
         // element의 텍스트를 '비'를 포함하고 있으면 '공개로 전환', 그렇지 않으면 '비공개로 전환'으로 설정
         $button.textContent = prevDisplay ? '공개로 전환' : '비공개로 전환';
-        defaultAjaxHandler(response);
+        alert(`예술품을 ${$button.textContent}했습니다`);
     } catch (error) {
         defaultAjaxHandler(error.response);
     }

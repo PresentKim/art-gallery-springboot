@@ -1,13 +1,14 @@
 package com.team4.artgallery.controller.domain.artwork;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.exception.FileException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dto.ArtworkDto;
-import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.dto.request.DisplayRequest;
+import com.team4.artgallery.dto.view.Views;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
@@ -30,22 +31,24 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
     }
 
     @GetMapping(path = "")
-    public Pagination.Pair<ArtworkDto> getList(
+    @JsonView(Views.Summary.class)
+    public List<ArtworkDto> getList(
             @Validated(ArtworkFilter.ExcludeDisplay.class)
             ArtworkFilter filter,
             @Valid
             Pagination pagination
     ) {
-        return pagination.pair(artworkService.getArtworks(
+        return artworkService.getArtworks(
                 filter.setDisplayyn("Y").setIncludeDisplay(false),
-                pagination)
+                pagination
         );
     }
 
     @CheckAdmin
     @PostMapping(path = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto create(
+    @JsonView(Views.Identifier.class)
+    public ArtworkDto create(
             @Valid
             ArtworkDto artworkDto,
             @Valid
@@ -53,10 +56,11 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
             MultipartFile imageFile
     ) throws NotFoundException, SqlException, FileException {
         artworkService.createArtwork(artworkDto, imageFile);
-        return new ResponseDto("예술품이 등록되었습니다.", "/artwork/" + artworkDto.getAseq());
+        return artworkDto;
     }
 
     @GetMapping(path = "{aseq}")
+    @JsonView(Views.Detail.class)
     public ArtworkDto getById(
             @PathVariable("aseq")
             int aseq
@@ -67,7 +71,7 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
     @CheckAdmin
     @PutMapping(path = "{aseq}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto update(
+    public void update(
             @PathVariable("aseq")
             String aseq,
             @Valid
@@ -79,7 +83,6 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
         try {
             artworkDto.setAseq(Integer.parseInt(aseq));
             artworkService.updateArtwork(artworkDto, imageFile);
-            return new ResponseDto("예술품이 수정되었습니다.", "/artwork/" + artworkDto.getAseq());
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
@@ -98,7 +101,7 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
     @CheckAdmin
     @PutMapping("/{aseq}/display")
     @ResponseStatus(HttpStatus.CREATED)
-    public Object updateDisplay(
+    public void updateDisplay(
             @PathVariable("aseq")
             String aseq,
             @RequestBody
@@ -106,13 +109,13 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
     ) throws SqlException {
         try {
             artworkService.updateDisplay(Integer.parseInt(aseq), request.display());
-            return "전시 여부가 변경되었습니다.";
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
     }
 
     @GetMapping(path = "random")
+    @JsonView(Views.Summary.class)
     public List<ArtworkDto> getRandomList(
             @RequestParam("count")
             Integer count
