@@ -14,7 +14,7 @@
 
 <h2 class="gallery-form-header">${empty galleryDto ? '갤러리 등록' : '갤러리 수정'}</h2>
 <section class="gallery-form-main">
-    <form id="gallery-form" class="gallery-form" data-aseq="${galleryDto.gseq}">
+    <form id="gallery-form" class="gallery-form" data-gseq="${galleryDto.gseq}">
         <div class="gallery-form_info">
             <ul class="gallery-form-text">
                 <li>
