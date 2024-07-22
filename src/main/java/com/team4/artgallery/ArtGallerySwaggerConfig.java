@@ -48,4 +48,12 @@ public class ArtGallerySwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi adminApi() {
+        return GroupedOpenApi.builder().group("admin")
+                .packagesToScan("com.team4.artgallery.controller.domain.admin")
+                .addOpenApiCustomizer(openApi -> openApi.info(new Info().title("Admin API").version("v1")))
+                .build();
+    }
+
 }
