@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_icon.css"/>">
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_write.css"/>">
         <script src="<c:url value="/static/script/qna.js"/>"></script>
+        <script src="<c:url value="/static/script/qna/qna_write.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
@@ -27,10 +28,7 @@
             </h1>
         </div>
     </div>
-    <form class="qna-form_body" method="post" action="<c:url value="/qna/write"/>">
-        <c:if test="${not empty qnaDto}">
-            <input type="hidden" name="qseq" value="${qnaDto.qseq}">
-        </c:if>
+    <form id="qna-form" class="qna-form_body" data-nseq="${qnaDto.qseq}">
         <div class="qna-form_input-wrapper">
             <i class="qna-icon title"></i>
             <input type="text" name="title" id="title"

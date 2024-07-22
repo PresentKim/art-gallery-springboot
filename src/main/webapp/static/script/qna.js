@@ -1,7 +1,7 @@
 async function qnaAuth(qseq, mode, pwd) {
     try {
         const response = await axios({
-            url: '/qna/authorize',
+            url: '/api/qnas/authorize',
             method: 'POST',
             headers: {'content-type': 'application/x-www-form-urlencoded'},
             data: {qseq, mode, pwd},

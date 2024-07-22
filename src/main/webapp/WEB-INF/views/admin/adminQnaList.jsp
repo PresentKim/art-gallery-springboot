@@ -15,12 +15,9 @@
 <section class="admin-list">
     <form name="adminForm" method="get" action="<c:url value="/admin/qna"/>">
         <div class="admin-list-btn">
-            <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
-            <input class="fake-submit" type="submit" formmethod="get" formaction="<c:url value="/admin/qna"/>">
-
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
-                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/qna/delete"/>">
+                <input type="button" value="삭제" onclick="deleteSelected('/api/qnas/')">
             </div>
 
             <!-- 검색 기능 -->
@@ -47,9 +44,13 @@
             <li>작성일</li>
         </ul>
         <c:forEach items="${qnaList}" var="qnaDto">
-            <ul class="admin-list-main admin-qna-list" onclick="checkChildCheckbox(this)">
+            <ul
+                    class="admin-list-main admin-qna-list"
+                    onclick="checkChildCheckbox(this)"
+                    data-seq="${qnaDto.qseq}"
+            >
                 <li>
-                    <label><input name="qseq" type="checkbox" value="${qnaDto.qseq}" class="check-box"></label>
+                    <input type="checkbox">
                 </li>
                 <li>${qnaDto.hasReply() ? '답변완료' : '대기중'}</li>
                 <li>${qnaDto.qseq}</li>
