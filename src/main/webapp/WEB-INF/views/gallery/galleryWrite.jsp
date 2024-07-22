@@ -7,17 +7,14 @@
     <jsp:attribute name="head">
         <title>갤러리 ${empty galleryDto ? '등록' : '수정 :: '}${galleryDto.gseq}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/gallery_write.css"/>">
-        <script src="<c:url value="/static/script/gallery.js"/>"></script>
+        <script src="<c:url value="/static/script/gallery/gallery_write.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
 <h2 class="gallery-form-header">${empty galleryDto ? '갤러리 등록' : '갤러리 수정'}</h2>
 <section class="gallery-form-main">
-    <form class="gallery-form" method="post" action="<c:url value="/gallery/write"/>" enctype="multipart/form-data">
-        <c:if test="${not empty galleryDto}">
-            <input type="hidden" name="gseq" value="${galleryDto.gseq}">
-        </c:if>
+    <form id="gallery-form" class="gallery-form" data-aseq="${galleryDto.gseq}">
         <div class="gallery-form_info">
             <ul class="gallery-form-text">
                 <li>
@@ -31,8 +28,8 @@
             </ul>
             <ul class="gallery-form-img">
                 <li>
-                    <label for="imageFile">이미지 등록</label>
-                    <input type="file" name="imageFile" id="imageFile" accept="image/*" onchange="updatePreviewImage()">
+                    <label for="image-file">이미지 등록</label>
+                    <input type="file" name="imageFile" id="image-file" accept="image/*">
                 </li>
                 <li>
                     <img id="image-preview" alt="image-preview" src="${galleryDto.imageSrc}">
@@ -40,8 +37,8 @@
             </ul>
         </div>
         <div class="gallery-form_btn">
-            <input class="btn" type="submit" value="${empty galleryDto ? '등록' : '수정'}">
-            <input class="btn" type="button" value="취소" onclick="history.back()">
+            <input type="submit" value="${empty galleryDto ? '등록' : '수정'}">
+            <input type="button" value="취소" onclick="history.back()">
         </div>
     </form>
 </section>

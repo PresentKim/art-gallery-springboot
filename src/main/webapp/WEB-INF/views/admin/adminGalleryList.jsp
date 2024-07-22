@@ -15,12 +15,9 @@
 <section class="admin-list">
     <form name="adminForm" method="get" action="<c:url value="/admin/gallery"/>">
         <div class="admin-list-btn">
-            <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
-            <input class="fake-submit" type="submit" formmethod="get" formaction="<c:url value="/admin/gallery"/>">
-
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
-                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/gallery/delete"/>">
+                <input type="button" value="삭제" onclick="deleteSelected('/api/galleries/')">
             </div>
 
             <!-- 검색 기능 -->
@@ -28,7 +25,7 @@
                 <label>
                     <input type="text" placeholder="ID 또는 이름을 입력하세요" name="keyword" value="${filter.keyword}">
                 </label>
-                <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/gallery"/>">
+                <input type="submit" value="검색"/>">
             </div>
         </div>
         <ul class="admin-list-header admin-artwork-list">
@@ -45,15 +42,18 @@
             <li>미리보기</li>
         </ul>
         <c:forEach items="${galleryList}" var="galleryDto" varStatus="status">
-            <ul class="admin-list-main admin-artwork-list" onclick="checkChildCheckbox(this)">
+            <ul
+                    class="admin-list-main admin-artwork-list"
+                    onclick="checkChildCheckbox(this)"
+                    data-seq="${galleryDto.gseq}"
+            >
                 <li>
-                    <label><input name="gseq" type="checkbox" value="${galleryDto.gseq}" class="check-box"></label>
+                    <input type="checkbox">
                 </li>
                 <li>${galleryDto.gseq}</li>
                 <li>${galleryDto.authorId}</li>
                 <li>${galleryDto.authorName}</li>
-                <li class="view-link" onclick="location.href='museum.do?command=galleryView&gseq=${galleryDto.gseq}'">
-                        ${galleryDto.title}
+                <li class="view-link"><a href="<c:url value="/gallery/${galleryDto.gseq}"/>">${galleryDto.title}</a>
                 </li>
                 <li>${galleryDto.content}</li>
                 <li>${galleryDto.writedate}</li>

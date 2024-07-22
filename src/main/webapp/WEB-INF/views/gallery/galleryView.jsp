@@ -7,7 +7,7 @@
     <jsp:attribute name="head">
         <title>갤러리 :: ${galleryDto.title}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/gallery.css"/>">
-        <script src="<c:url value="/static/script/gallery.js"/>"></script>
+        <script src="<c:url value="/static/script/gallery/gallery_view.js"/>"></script>
         <script type="text/javascript" src="https://ssl.pstatic.net/share/js/naver_sharebutton.js"></script>
     </jsp:attribute>
 
@@ -38,13 +38,11 @@
         <li class="gbtn">
             <c:if test="${loginMember.id eq galleryDto.authorId}">
                 <a class="gbtn-update gallery-btn" href="<c:url value="/gallery/write?gseq=${galleryDto.gseq}"/>">
-                    수정하기
+                    수정
                 </a>
             </c:if>
             <c:if test="${loginMember.id eq galleryDto.authorId or loginMember.admin}">
-                <div class="gbtn-delete gallery-btn" onclick="ajax('/gallery/delete', {gseq:${galleryDto.gseq}})">
-                    삭제하기
-                </div>
+                    <div class="gbtn-delete gallery-btn" onclick="deleteGallery(${galleryDto.gseq})">삭제</div>
             </c:if>
         </li>
 
