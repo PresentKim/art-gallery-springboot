@@ -64,12 +64,8 @@ public class NoticeRestController implements NoticeRestControllerDocs {
     public NoticeDto create(
             @Valid
             NoticeDto noticeDto
-    ) throws SqlException, NotFoundException {
-        if (noticeDto.getNseq() == null) {
-            noticeService.createNotice(noticeDto);
-        } else {
-            noticeService.updateNotice(noticeDto);
-        }
+    ) throws SqlException {
+        noticeService.createNotice(noticeDto);
         return noticeDto;
     }
 

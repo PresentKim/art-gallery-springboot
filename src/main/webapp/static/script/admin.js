@@ -62,3 +62,16 @@ function deleteSelected(apiPath) {
             });
     });
 }
+
+function updateSelected(urlPath) {
+    const targets = getSelected();
+    if (targets.length === 0) {
+        alert('선택된 요소가 없습니다.');
+        return;
+    } else if (targets.length > 1) {
+        alert('하나의 요소만 선택해주세요.');
+        return;
+    }
+
+    location.href = urlPath + targets[0].dataset.seq;
+}

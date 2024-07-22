@@ -7,7 +7,6 @@
     <jsp:attribute name="head">
         <title>관리자 :: 예술품 관리</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
-        <script src="<c:url value="/static/script/admin/admin_artwork.js"/>"></script>
         <script src="<c:url value="/static/script/admin.js"/>"></script>
     </jsp:attribute>
 
@@ -20,7 +19,7 @@
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
                 <input type="button" value="등록" onclick="location.href = '/artwork/write'">
-                <input type="button" value="수정" onclick="updateSelectedArtwork()">
+                <input type="button" value="수정" onclick="updateSelected('/artwork/write?aseq=')">
                 <input type="button" value="삭제" onclick="deleteSelected('/api/artworks/')">
             </div>
 
