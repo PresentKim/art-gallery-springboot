@@ -1,19 +1,17 @@
 package com.team4.artgallery.controller.domain.gallery;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.exception.FileException;
 import com.team4.artgallery.controller.exception.ForbiddenException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
-import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.GalleryDto;
-import com.team4.artgallery.dto.MemberDto;
-import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
+import com.team4.artgallery.dto.view.Views;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/gallery", produces = MediaType.APPLICATION_JSON_VALUE)
-public class GalleryRestController {
+@RequestMapping(path = "/api/galleries", produces = MediaType.APPLICATION_JSON_VALUE)
+public class GalleryRestController implements GalleryRestControllerDocs {
 
     private final GalleryService galleryService;
 
@@ -31,18 +29,20 @@ public class GalleryRestController {
         this.galleryService = galleryService;
     }
 
-    @GetMapping
-    public Pagination.Pair<GalleryDto> root(
+    @GetMapping(path = "")
+    @JsonView(Views.Summary.class)
+    public List<GalleryDto> getList(
             @Valid
             KeywordFilter filter,
             @Valid
             Pagination pagination
     ) {
-        return pagination.pair(galleryService.getGalleries(filter, pagination));
+        return galleryService.getGalleries(filter, pagination);
     }
 
     @GetMapping("{gseq}")
-    public GalleryDto view(
+    @JsonView(Views.Detail.class)
+    public GalleryDto getById(
             @PathVariable(name = "gseq")
             Integer gseq
     ) {
@@ -51,44 +51,52 @@ public class GalleryRestController {
     }
 
     @CheckLogin
-    @PostMapping("/write")
+    @PostMapping(path = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto write(
+    public GalleryDto create(
+            @Valid
+            GalleryDto galleryDto,
+            @Valid
+            @RequestParam(name = "imageFile")
+            MultipartFile imageFile
+    ) throws NotFoundException, SqlException, FileException {
+        galleryService.createGallery(galleryDto, imageFile);
+        return galleryDto;
+    }
+
+    @CheckLogin
+    @PutMapping(path = "{gseq}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void update(
+            @PathVariable("gseq")
+            String gseq,
             @Valid
             GalleryDto galleryDto,
             @Valid
             @RequestParam(name = "imageFile", required = false)
-            MultipartFile imageFile,
-
-            @LoginMember
-            MemberDto loginMember
+            MultipartFile imageFile
     ) throws NotFoundException, SqlException, FileException {
-        if (galleryDto.getGseq() == null) {
-            galleryService.createGallery(galleryDto, imageFile, loginMember);
-        } else {
-            galleryService.updateGallery(galleryDto, imageFile, loginMember);
+        try {
+            galleryDto.setGseq(Integer.parseInt(gseq));
+            galleryService.updateGallery(galleryDto, imageFile);
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
-        return new ResponseDto("갤러리가 등록되었습니다.", "/gallery/" + galleryDto.getGseq());
     }
 
     @CheckLogin
-    @PostMapping("/delete")
+    @DeleteMapping(path = "{gseq}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto delete(
-            @Valid
-            @NotEmpty(message = "갤러리를 선택해주세요")
-            @RequestParam(name = "gseq", required = false)
-            List<Integer> gseq,
-
-            @LoginMember
-            MemberDto loginMember
+    public void delete(
+            @PathVariable("gseq")
+            String gseq
     ) throws NotFoundException, ForbiddenException, SqlException {
-        if (loginMember.isAdmin()) {
-            galleryService.deleteGallery(gseq);
-        } else {
-            galleryService.deleteGallery(gseq, loginMember);
+        try {
+            galleryService.deleteGallery(Integer.parseInt(gseq));
+        } catch (NumberFormatException e) {
+            System.out.println(gseq);
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
-        return new ResponseDto("갤러리가 삭제되었습니다.", "/gallery");
     }
 
 }

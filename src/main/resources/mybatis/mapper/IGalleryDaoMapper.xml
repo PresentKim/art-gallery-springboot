@@ -62,13 +62,4 @@
         WHERE gseq = #{gseq}
     </delete>
 
-    <delete id="deleteGalleries" parameterType="list">
-        DELETE
-        FROM gallery
-        WHERE gseq IN
-        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </delete>
-
 </mapper>

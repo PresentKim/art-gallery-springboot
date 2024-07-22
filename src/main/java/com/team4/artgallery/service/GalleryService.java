@@ -24,25 +24,28 @@ public class GalleryService {
     private final IGalleryDao galleryDao;
 
     private final MultipartFileService fileService;
+    private final MemberService memberService;
 
     private final SessionProvider sessionProvider;
 
-    public GalleryService(IGalleryDao galleryDao, MultipartFileService fileService, SessionProvider sessionProvider) {
+    public GalleryService(IGalleryDao galleryDao, MultipartFileService fileService, MemberService memberService, SessionProvider sessionProvider) {
         this.galleryDao = galleryDao;
         this.fileService = fileService;
+        this.memberService = memberService;
         this.sessionProvider = sessionProvider;
     }
 
     /**
      * 갤러리 정보를 추가합니다
      *
-     * @param galleryDto  갤러리 정보
-     * @param imageFile   이미지 파일
-     * @param loginMember 로그인 멤버 정보
+     * @param galleryDto 갤러리 정보
+     * @param imageFile  이미지 파일
      * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      * @throws SqlException  갤러리 정보 추가에 실패한 경우 예외 발생
      */
-    public void createGallery(GalleryDto galleryDto, MultipartFile imageFile, MemberDto loginMember) throws FileException, SqlException {
+    public void createGallery(GalleryDto galleryDto, MultipartFile imageFile) throws FileException, SqlException {
+        MemberDto loginMember = memberService.getLoginMember();
+
         saveImage(imageFile, galleryDto);
         galleryDto.setAuthorId(loginMember.getId());
         galleryDao.createGallery(galleryDto);
@@ -90,15 +93,14 @@ public class GalleryService {
     /**
      * 갤러리 정보를 수정합니다
      *
-     * @param galleryDto  갤러리 정보
-     * @param imageFile   이미지 파일
-     * @param loginMember 로그인 멤버 정보
+     * @param galleryDto 갤러리 정보
+     * @param imageFile  이미지 파일
      * @throws NotFoundException  갤러리 정보를 찾을 수 없는 경우 예외 발생
      * @throws ForbiddenException 작성자가 아닌 경우 예외 발생
      * @throws FileException      이미지 저장에 실패한 경우 예외 발생
      */
-    public void updateGallery(GalleryDto galleryDto, MultipartFile imageFile, MemberDto loginMember)
-            throws NotFoundException, ForbiddenException, FileException {
+    public void updateGallery(GalleryDto galleryDto, MultipartFile imageFile) throws NotFoundException, ForbiddenException, FileException {
+        MemberDto loginMember = memberService.getLoginMember();
 
         GalleryDto oldGallery = getGalleryOnlyAuthor(galleryDto.getGseq(), loginMember);
         if (imageFile != null && !imageFile.isEmpty()) {
@@ -115,27 +117,17 @@ public class GalleryService {
     /**
      * 갤러리 정보를 삭제합니다.
      *
-     * @param gseqList 갤러리 번호 목록
-     * @throws NotFoundException 갤러리 삭제에 실패한 경우 예외 발생
-     */
-    public void deleteGallery(List<Integer> gseqList) throws NotFoundException {
-        galleryDao.deleteGalleries(gseqList);
-    }
-
-    /**
-     * 갤러리 정보를 삭제합니다.
-     *
-     * @param gseqList    갤러리 번호 목록
-     * @param loginMember 로그인 멤버 정보
+     * @param gseq 갤러리 번호
      * @throws NotFoundException  갤러리 정보를 찾을 수 없는 경우 예외 발생
-     * @throws ForbiddenException 작성자가 아닌 경우 예외 발생
+     * @throws ForbiddenException 작성자 혹은 관리자가 아닌 경우 예외 발생
      */
-    public void deleteGallery(List<Integer> gseqList, MemberDto loginMember) throws NotFoundException, ForbiddenException {
-        String memberId = loginMember.getId();
-        gseqList.forEach(gseq -> {
-            GalleryDto oldGallery = galleryDao.getGallery(gseq);
-            Assert.trueOrForbidden(memberId.equals(oldGallery.getAuthorId()), "작성자만 삭제할 수 있습니다.");
-        });
+    public void deleteGallery(Integer gseq) throws NotFoundException, ForbiddenException {
+        MemberDto loginMember = memberService.getLoginMember();
+
+        GalleryDto oldGallery = galleryDao.getGallery(gseq);
+        Assert.trueOrForbidden(loginMember.isAdmin() || loginMember.getId().equals(oldGallery.getAuthorId()), "작성자 혹은 관리자만 삭제할 수 있습니다.");
+
+        galleryDao.deleteGallery(gseq);
     }
 
     /**
