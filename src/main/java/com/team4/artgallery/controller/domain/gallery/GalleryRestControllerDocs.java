@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.gallery;
 
-import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.GalleryDto;
+import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.util.Pagination;
@@ -61,7 +61,7 @@ interface GalleryRestControllerDocs {
                             responseCode = "201",
                             description = "성공",
                             content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ArtworkDto.class)),
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = NoticeDto.class)),
                                     @Content(mediaType = "text/html")
                             }
                     ),
