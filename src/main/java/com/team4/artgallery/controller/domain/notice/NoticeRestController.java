@@ -1,32 +1,27 @@
 package com.team4.artgallery.controller.domain.notice;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
-import com.team4.artgallery.controller.resolver.annotation.LoginMember;
-import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.NoticeDto;
-import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.enums.NoticeCategory;
 import com.team4.artgallery.dto.filter.NoticeFilter;
+import com.team4.artgallery.dto.view.Views;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/notice", produces = MediaType.APPLICATION_JSON_VALUE)
-public class NoticeRestController {
+@RequestMapping(path = "/api/notices", produces = MediaType.APPLICATION_JSON_VALUE)
+public class NoticeRestController implements NoticeRestControllerDocs {
 
     private final NoticeService noticeService;
 
@@ -34,8 +29,9 @@ public class NoticeRestController {
         this.noticeService = noticeService;
     }
 
-    @GetMapping
-    public Pagination.Pair<NoticeDto> root(
+    @GetMapping("")
+    @JsonView(Views.Summary.class)
+    public List<NoticeDto> getList(
             @Valid
             NoticeFilter filter,
             @Valid
@@ -45,67 +41,75 @@ public class NoticeRestController {
         Assert.isFalse(NoticeCategory.MAGAZINE.isEquals(category), "잘못된 카테고리입니다.", BadRequestException::new);
         Assert.isFalse(NoticeCategory.NEWSPAPER.isEquals(category), "잘못된 카테고리입니다.", BadRequestException::new);
 
-        return pagination.pair(noticeService.getNotices(filter, pagination));
+        return noticeService.getNotices(filter, pagination);
+    }
+
+    @GetMapping("{nseq}")
+    public NoticeDto getById(
+            @PathVariable(name = "nseq")
+            String nseq
+    ) throws NotFoundException, SqlException {
+        try {
+            int nseqInt = Integer.parseInt(nseq);
+            noticeService.increaseReadCountIfNew(nseqInt);
+            return noticeService.getNotice(nseqInt);
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
+    }
+
+    @CheckAdmin
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
+    public NoticeDto create(
+            @Valid
+            NoticeDto noticeDto
+    ) throws SqlException, NotFoundException {
+        if (noticeDto.getNseq() == null) {
+            noticeService.createNotice(noticeDto);
+        } else {
+            noticeService.updateNotice(noticeDto);
+        }
+        return noticeDto;
+    }
+
+    @CheckAdmin
+    @PutMapping("{nseq}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void update(
+            @PathVariable("nseq")
+            String nseq,
+            @Valid
+            NoticeDto noticeDto
+    ) throws SqlException, NotFoundException {
+        try {
+            noticeDto.setNseq(Integer.parseInt(nseq));
+            noticeService.updateNotice(noticeDto);
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
+    }
+
+    @CheckAdmin
+    @DeleteMapping("{nseq}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(
+            @PathVariable("nseq")
+            String nseq
+    ) throws SqlException {
+        try {
+            noticeService.deleteNotice(Integer.parseInt(nseq));
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
     }
 
     @GetMapping("recent")
-    public List<NoticeDto> recent(
+    public List<NoticeDto> getRecentList(
             @RequestParam(name = "count", defaultValue = "5")
             Integer count
     ) {
         return noticeService.getRecentNotices(count);
-    }
-
-    @GetMapping("{nseq}")
-    public NoticeDto view(
-            @PathVariable(name = "nseq")
-            Integer nseq
-    ) throws NotFoundException, SqlException {
-        noticeService.increaseReadCountIfNew(nseq);
-        return noticeService.getNotice(nseq);
-    }
-
-    @CheckAdmin
-    @PostMapping("/write")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto write(
-            @Valid
-            NoticeDto noticeDto,
-
-            @LoginMember
-            MemberDto loginMember
-    ) throws SqlException, NotFoundException {
-        if (noticeDto.getNseq() == null) {
-            noticeService.createNotice(noticeDto, loginMember);
-        } else {
-            noticeService.updateNotice(noticeDto, loginMember);
-        }
-        return new ResponseDto("소식지 작성이 완료되었습니다.", "/notice/" + noticeDto.getNseq());
-    }
-
-    @CheckAdmin
-    @PostMapping("/delete")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseDto delete(
-            @Valid
-            @NotEmpty(message = "소식지를 선택해주세요")
-            @RequestParam(name = "nseq", required = false)
-            List<Integer> nseq
-    ) throws SqlException {
-        noticeService.deleteNotice(nseq);
-        return new ResponseDto("소식지가 삭제되었습니다.", "/notice");
-    }
-
-    @CheckAdmin
-    @PostMapping("/update")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Object edit(
-            @Valid
-            @NotEmpty(message = "소식지를 선택해주세요.")
-            @Size(max = 1, message = "한 번에 하나의 소식지만 수정할 수 있습니다.")
-            @RequestParam(name = "nseq") List<Integer> nseq
-    ) throws URISyntaxException {
-        return new URI("/notice/update/" + nseq.get(0));
     }
 
 }
