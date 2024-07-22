@@ -93,14 +93,4 @@ public interface IQnaDao {
     @NotEmptyReturn(value = "문의글 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int deleteInquiry(int qseq) throws NotFoundException;
 
-    /**
-     * 여러 문의글 정보를 삭제합니다.
-     *
-     * @param qseqList 문의글 번호 목록
-     * @return 삭제된 행의 수
-     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
-     */
-    @NotEmptyReturn(value = "문의글 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
-    int deleteInquiries(List<Integer> qseqList) throws NotFoundException;
-
 }

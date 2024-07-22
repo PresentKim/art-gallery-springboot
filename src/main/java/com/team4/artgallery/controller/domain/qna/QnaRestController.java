@@ -1,17 +1,18 @@
 package com.team4.artgallery.controller.domain.qna;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
 import com.team4.artgallery.dto.QnaDto;
-import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.QnaFilter;
+import com.team4.artgallery.dto.view.Views;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/qna", produces = MediaType.APPLICATION_JSON_VALUE)
-public class QnaRestController {
+@RequestMapping(path = "/api/qnas", produces = MediaType.APPLICATION_JSON_VALUE)
+public class QnaRestController implements QnaRestControllerDocs {
 
     private final QnaService qnaService;
 
@@ -30,59 +31,84 @@ public class QnaRestController {
     }
 
     @GetMapping
-    public Pagination.Pair<QnaDto> root(
+    @JsonView(Views.Summary.class)
+    public List<QnaDto> getList(
+            @ParameterObject
+            QnaFilter filter,
             @Valid
-            @ModelAttribute("pagination")
             Pagination pagination
     ) {
-        return pagination.pair(qnaService.getInquiries(new QnaFilter(), pagination));
+        return qnaService.getInquiries(filter, pagination);
     }
 
     @GetMapping("{qseq}")
-    public QnaDto view(
+    @JsonView(Views.Detail.class)
+    public QnaDto getById(
             @PathVariable(name = "qseq")
-            Integer qseq
+            String qseq
     ) throws NotFoundException, UnauthorizedException {
-        return qnaService.getInquiry(qseq);
+        try {
+            return qnaService.getInquiry(Integer.parseInt(qseq));
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
     }
 
-    @PostMapping("/write")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto write(
+    @JsonView(Views.Detail.class)
+    public QnaDto create(
             @Valid
             QnaDto qnaDto
     ) throws NotFoundException, UnauthorizedException, SqlException {
-        if (qnaDto.getQseq() != null) {
+        qnaService.createInquiry(qnaDto);
+        return qnaDto;
+    }
+
+    @PutMapping("{qseq}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void update(
+            @PathVariable(name = "qseq")
+            String qseq,
+            @Valid
+            QnaDto qnaDto
+    ) throws NotFoundException, UnauthorizedException, SqlException {
+        try {
+            qnaDto.setQseq(Integer.parseInt(qseq));
             qnaService.updateInquiry(qnaDto);
-        } else {
-            qnaService.createInquiry(qnaDto);
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
-        return new ResponseDto("문의글 작성이 완료되었습니다.", "/qna/" + qnaDto.getQseq());
     }
 
     @CheckAdmin
-    @PostMapping("/reply")
+    @PutMapping("{qseq}/reply")
     @ResponseStatus(HttpStatus.CREATED)
-    public Object reply(
-            @RequestParam(name = "qseq")
-            Integer qseq,
+    public void updateReply(
+            @PathVariable(name = "qseq")
+            String qseq,
             @RequestParam(name = "reply")
             String reply
     ) throws NotFoundException, SqlException {
-        qnaService.updateReply(qseq, reply);
-        return "문의 답변이 완료되었습니다.";
+        try {
+            qnaService.updateReply(Integer.parseInt(qseq), reply);
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
     }
 
     @CheckAdmin
-    @PostMapping("/delete")
+    @DeleteMapping("{qseq}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto delete(
-            @Valid
-            @NotEmpty(message = "문의글을 선택해주세요")
-            @RequestParam(name = "qseq", required = false) List<Integer> qseq
-    ) throws SqlException {
-        qnaService.deleteInquiry(qseq);
-        return new ResponseDto("문의글 정보를 제거했습니다", ":reload");
+    public void delete(
+            @PathVariable(name = "qseq")
+            String qseq
+    ) throws SqlException, NotFoundException {
+        try {
+            qnaService.deleteInquiry(Integer.parseInt(qseq));
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
     }
 
     @PostMapping("/authorize")

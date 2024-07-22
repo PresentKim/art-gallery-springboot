@@ -2,6 +2,7 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.controller.exception.*;
 import com.team4.artgallery.dao.IQnaDao;
+import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.QnaFilter;
@@ -46,8 +47,10 @@ public class QnaService {
      * @return 문의글 목록
      */
     public List<QnaDto> getInquiries(QnaFilter filter, Pagination pagination) {
+        MemberDto loginMember = memberService.getLoginMember();
+
         return qnaDao.getInquiries(
-                filter,
+                loginMember != null && loginMember.isAdmin() ? filter : new QnaFilter(),
                 pagination.setUrlTemplateFromFilter(filter).setItemCount(qnaDao.countInquiries(filter))
         );
     }
@@ -86,16 +89,6 @@ public class QnaService {
      */
     public void updateReply(int qseq, String reply) throws NotFoundException {
         qnaDao.updateReply(qseq, reply);
-    }
-
-    /**
-     * 문의글 정보를 삭제합니다.
-     *
-     * @param qseqList 문의글 번호 목록
-     * @throws NotFoundException 문의글 삭제에 실패한 경우 예외 발생
-     */
-    public void deleteInquiry(List<Integer> qseqList) throws NotFoundException {
-        qnaDao.deleteInquiries(qseqList);
     }
 
     /**

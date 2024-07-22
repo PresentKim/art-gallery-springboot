@@ -71,13 +71,4 @@
         FROM qna
         WHERE qseq = #{qseq}
     </delete>
-
-    <delete id="deleteInquiries" parameterType="list">
-        DELETE
-        FROM qna
-        WHERE qseq IN
-        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </delete>
 </mapper>
