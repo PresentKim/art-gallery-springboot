@@ -159,7 +159,7 @@ interface ArtworkRestControllerDocs {
     )
     void delete(
             @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
-            Integer aseq
+            String aseq
     );
 
 

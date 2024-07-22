@@ -93,9 +93,13 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(
             @PathVariable("aseq")
-            Integer aseq
+            String aseq
     ) throws SqlException {
-        artworkService.deleteArtwork(aseq);
+        try {
+            artworkService.deleteArtwork(Integer.parseInt(aseq));
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
+        }
     }
 
     @CheckAdmin
