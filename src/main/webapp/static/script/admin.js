@@ -4,7 +4,7 @@ function checkAll() {
     const isChecked = selectAllBox.checked;
 
     // 모든 체크박스를 가져옵니다.
-    const checkBoxes = document.querySelectorAll('.check-box');
+    const checkBoxes = document.querySelectorAll('.admin-list-main input[type="checkbox"]');
 
     // 모든 체크박스의 체크 상태를 select-all-box의 상태와 일치시킵니다.
     checkBoxes.forEach(checkBox => {
@@ -13,7 +13,7 @@ function checkAll() {
 }
 
 function checkChildCheckbox($ul) {
-    const $checkbox = $ul.querySelector('input[type="checkbox"]');
+    const $checkbox = $ul.querySelector('.admin-list-main input[type="checkbox"]');
     if (!$checkbox) {
         alert('체크박스를 찾을 수 없습니다.');
         return;
@@ -40,4 +40,25 @@ function previewImage($img) {
 
     $preview.appendChild($previewImage);
     document.body.appendChild($preview);
+}
+
+function getSelected() {
+    return document.querySelectorAll('ul.admin-list-main:has(input[type="checkbox"]:checked)');
+}
+
+function deleteSelected(apiPath) {
+    getSelected().forEach($ul => {
+        $ul.classList.add('delete-target');
+        axios.delete(apiPath + $ul.dataset.seq)
+            .then(() => {
+                $ul.classList.add('deleted');
+                return new Promise(resolve => setTimeout(resolve, 500));
+            })
+            .then(() => $ul.remove())
+            .catch(error => {
+                $ul.classList.remove('deleted');
+                $ul.classList.remove('delete-target');
+                defaultAjaxHandler(error.response);
+            });
+    });
 }
