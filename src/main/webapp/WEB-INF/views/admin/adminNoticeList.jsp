@@ -16,20 +16,17 @@
 <section class="admin-list">
     <form name="adminForm" method="get" action="<c:url value="/admin/notice"/>">
         <div class="admin-list-btn">
-            <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
-            <input class="fake-submit" type="submit" formmethod="get" formaction="<c:url value="/admin/notice"/>">
-
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
-                <input type="submit" value="등록" formmethod="get" formaction="<c:url value="/notice/write"/>">
-                <input type="submit" value="수정" formmethod="post" formaction="<c:url value="/notice/update"/>">
-                <input type="submit" value="삭제" formmethod="post" formaction="<c:url value="/notice/delete"/>">
+                <input type="button" value="등록" onclick="location.href = '/notice/write'">
+                <input type="button" value="수정" onclick="updateSelected('/notice/write?nseq=')">
+                <input type="button" value="삭제" onclick="deleteSelected('/api/notices/')">
             </div>
 
             <!-- 검색 기능 -->
             <div class="admin-list-search">
                 <label><input type="text" placeholder="검색어를 입력해주세요" name="keyword" value="${filter.keyword}"></label>
-                <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/notice"/>">
+                <input type="submit" value="검색">
             </div>
         </div>
         <ul class="admin-list-header admin-notice-list">
@@ -55,14 +52,17 @@
             <li>조회수</li>
         </ul>
         <c:forEach items="${noticeList}" var="noticeDto">
-            <ul class="admin-list-main admin-notice-list" onclick="checkChildCheckbox(this)">
+            <ul
+                    class="admin-list-main admin-notice-list"
+                    onclick="checkChildCheckbox(this)"
+                    data-seq="${noticeDto.nseq}"
+            >
                 <li>
-                    <label><input name="nseq" type="checkbox" value="${noticeDto.nseq}" class="check-box"></label>
+                    <input type="checkbox">
                 </li>
                 <li>${noticeDto.nseq}</li>
                 <li>${noticeDto.category}</li>
-                <li onclick="location.href='museum.do?command=noticeView&nseq=${noticeDto.nseq}'"
-                    class="view-link">${noticeDto.title}</li>
+                <li class="view-link"><a href="<c:url value="/notice/${noticeDto.nseq}"/>">${noticeDto.title}</a></li>
                 <c:choose>
                     <c:when test="${noticeDto.content.length() > 50}">
                         <li>${noticeDto.content.substring(0, 50)}...</li>

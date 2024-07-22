@@ -8,6 +8,7 @@
     <jsp:attribute name="head">
         <title>${empty noticeDto ? '소식지 등록' : '소식지 수정 :: '}${noticeDto.nseq}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
+        <script src="<c:url value="/static/script/notice/notice_write.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
@@ -15,10 +16,7 @@
 <div id="notice_update_box">
     <h2>소식지 수정</h2>
     <div class="notice_update_innerbox">
-        <form class="notice-form" method="post" action="<c:url value="/notice/write"/>" enctype="multipart/form-data">
-            <c:if test="${not empty noticeDto}">
-                <input type="hidden" name="nseq" value="${noticeDto.nseq}">
-            </c:if>
+        <form id="notice-form" class="notice-form" data-nseq="${noticeDto.nseq}">
             <div class="notice_update_field">
                 <label for="id">작성자</label> <input type="text" name="id" id="id" value="${loginMember.id}" readonly/>
             </div>
