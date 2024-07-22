@@ -7,6 +7,7 @@
     <jsp:attribute name="head">
         <title>관리자 :: 예술품 관리</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
+        <script src="<c:url value="/static/script/admin/admin_artwork.js"/>"></script>
         <script src="<c:url value="/static/script/admin.js"/>"></script>
     </jsp:attribute>
 
@@ -16,13 +17,10 @@
 <section class="admin-list">
     <form name="adminForm" method="get" action="<c:url value="/admin/artwork"/>">
         <div class="admin-list-btn">
-            <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
-            <input class="fake-submit" type="submit" formmethod="get" formaction="<c:url value="/admin/artwork"/>">
-
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
-                <input type="submit" value="등록" formmethod="get" formaction="<c:url value="/artwork/write"/>">
-                <input type="submit" value="수정" formmethod="post" formaction="<c:url value="/artwork/updates"/>">
+                <input type="button" value="등록" onclick="location.href = '/artwork/write'">
+                <input type="button" value="수정" onclick="updateSelectedArtwork()">
                 <input type="button" value="삭제" onclick="deleteSelected('/api/artworks/')">
             </div>
 
@@ -30,7 +28,7 @@
             <div class="admin-list-search">
                 <label><input type="text" placeholder="작품명 또는 작가명을 입력하세요" name="keyword"
                               value="${filter.keyword}"></label>
-                <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/artwork"/>">
+                <input type="submit">
             </div>
         </div>
         <ul class="admin-list-header admin-member-list">
