@@ -4,13 +4,16 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.exception.*;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
+import com.team4.artgallery.dto.EmailMessage;
 import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
+import com.team4.artgallery.service.helper.EmailService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -29,10 +32,12 @@ public class MemberRestController {
 
     private final MemberService memberService;
     private final FavoriteService favoriteService;
+    private final EmailService emailService;
 
-    public MemberRestController(MemberService memberService, FavoriteService favoriteService) {
+    public MemberRestController(MemberService memberService, FavoriteService favoriteService, EmailService emailService) {
         this.memberService = memberService;
         this.favoriteService = favoriteService;
+        this.emailService = emailService;
     }
 
     @CheckLogin
@@ -187,6 +192,28 @@ public class MemberRestController {
     ) throws NotFoundException {
         memberService.deleteMember(memberIds);
         return new ResponseDto("회원 정보를 제거했습니다", ":reload");
+    }
+
+    @GetMapping("/mail/signup")
+    @ResponseStatus(HttpStatus.OK)
+    public Object sendSignUpMail(
+            @RequestParam(name = "email")
+            String email
+    ) throws SqlException, MessagingException {
+        emailService.sendMail(new EmailMessage(email, "[예술품갤러리] 회원가입을 위한 이메일입니다", "인증번호 : "));
+        return "인증번호가 발송되었습니다";
+    }
+
+    @PostMapping("/mail/signup")
+    @ResponseStatus(HttpStatus.OK)
+    public Object checkSignUpMail(
+            @RequestParam(name = "email")
+            String email,
+            @RequestParam(name = "authCode")
+            String authCode
+    ) {
+        emailService.checkAuthCode(email, authCode);
+        return "인증에 성공하였습니다";
     }
 
 }
