@@ -1,3 +1,16 @@
+function resetDatabase() {
+    if (!confirm('데이터베이스를 초기화하시겠습니까?')) {
+        return;
+    }
+
+    axios.post('/api/admin/reset')
+        .then(() => {
+            alert('데이터베이스를 초기화했습니다.');
+            location.reload();
+        })
+        .catch(() => alert('데이터베이스 초기화에 실패했습니다.'));
+}
+
 function checkAll() {
     // select-all-box의 체크 상태를 가져옵니다.
     const selectAllBox = document.querySelector('.select-all-box');
