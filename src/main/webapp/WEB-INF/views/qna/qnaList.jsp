@@ -39,7 +39,7 @@
             </thead>
             <tbody>
             <c:forEach items="${qnaList}" var="qnaDto">
-                <c:set var="qnaPassKey" value="qnaPass${qnaDto.qseq}"/>
+                <c:set var="qnaPassKey" value="qnaHash${qnaDto.qseq}"/>
                 <tr onclick="qnaAuth(${qnaDto.qseq}, 'view')">
                     <td data-title="번호">${qnaDto.qseq}</td>
                     <td data-title="제목">
