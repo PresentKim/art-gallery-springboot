@@ -22,7 +22,7 @@ function searchPostcode() {
 
             // 법정동명이 있을 경우 추가한다. (법정리는 제외)
             // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+            if (data.bname !== '' && /[동로가]$/g.test(data.bname)) {
                 extraRoadAddr += data.bname;
             }
 
