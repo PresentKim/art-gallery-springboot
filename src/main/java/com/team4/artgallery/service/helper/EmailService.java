@@ -16,10 +16,14 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
     private final SessionProvider sessionProvider;
 
-    @Value("${spring.mail.username}")
-    private String from;
+    private final String from;
 
-    public EmailService(JavaMailSender javaMailSender, SessionProvider sessionProvider) {
+    public EmailService(
+            @Value("${spring.mail.username}") String from,
+            JavaMailSender javaMailSender,
+            SessionProvider sessionProvider
+    ) {
+        this.from = from;
         this.javaMailSender = javaMailSender;
         this.sessionProvider = sessionProvider;
     }
