@@ -117,6 +117,16 @@ window.addEventListener('load', function () {
     }
 });
 
+function registerImagePreviewHandler() {
+    const $imageInput = document.getElementById('image-file');
+    const $imagePreview = document.getElementById('image-preview');
+    $imageInput.addEventListener('change', () => {
+        let reader = new FileReader();
+        reader.onload = () => $imagePreview.src = reader.result;
+        reader.readAsDataURL($imageInput.files[0]);
+    });
+}
+
 function registerDefaultSubmitAjaxHandler($form, apiUrl, redirectUrl, dataKey, prefixMessage) {
     $form.addEventListener('submit-ajax', () => {
         const axiosOptions = getAxiosOptions($form);
