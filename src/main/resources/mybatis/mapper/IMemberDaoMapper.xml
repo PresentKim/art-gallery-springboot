@@ -49,22 +49,16 @@
         WHERE id = #{id}
     </update>
 
-    <update id="grantAdminMembers" parameterType="list">
+    <update id="grantAdmin" parameterType="String">
         UPDATE member
         SET adminyn = 'Y'
-        WHERE id IN
-        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        WHERE id = #{id}
     </update>
 
-    <update id="revokeAdminMembers" parameterType="list">
+    <update id="revokeAdmin" parameterType="String">
         UPDATE member
         SET adminyn = 'N'
-        WHERE id IN
-        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        WHERE id = #{id}
     </update>
 
     <delete id="deleteMember" parameterType="String">

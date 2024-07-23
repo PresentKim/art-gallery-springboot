@@ -60,7 +60,7 @@ function getSelected() {
 }
 
 function deleteSelected(apiPath) {
-    getSelected().forEach($ul => {
+    for (const $ul of getSelected()) {
         $ul.classList.add('delete-target');
         axios.delete(apiPath + $ul.dataset.seq)
             .then(() => {
@@ -73,7 +73,7 @@ function deleteSelected(apiPath) {
                 $ul.classList.remove('delete-target');
                 defaultAjaxHandler(error.response);
             });
-    });
+    }
 }
 
 function updateSelected(urlPath) {

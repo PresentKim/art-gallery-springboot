@@ -90,16 +90,14 @@
         <div class="login_join_box">
             <c:choose>
                 <c:when test="${empty loginMember}">
-                    <a href="<c:url value="/member/login?returnUrl={RETURN_URL}"/>" class="login-join-box_btn">로그인</a>
-                    <a href="<c:url value="/member/contract?returnUrl={RETURN_URL}"/>">회원가입</a>
+                    <div class="login-join-box_btn" onclick="onClickLoginButton()">로그인</div>
+                    <div class="login-join-box_btn" onclick="onClickSignupButton()">회원가입</div>
                 </c:when>
                 <c:otherwise>
                     <a href="<c:url value="/member/mypage"/>" class="login-join-box_btn">
                             ${loginMember.name}(${loginMember.id})
                     </a>
-                    <a href="#" onclick="ajax('/member/logout')" class="login-join-box_btn">
-                        로그아웃
-                    </a>
+                    <div class="login-join-box_btn" onclick="onClickLogoutButton()">로그아웃</div>
                 </c:otherwise>
             </c:choose>
         </div>

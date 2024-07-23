@@ -44,18 +44,18 @@ function searchPostcode() {
 
 window.addEventListener('load', function () {
     // 폼 등록 이벤트 핸들러 등록
-    const $form = document.getElementById('join-form');
+    const $form = document.getElementById('withdraw-form');
     $form.addEventListener('submit-ajax', () => {
         const axiosOptions = getAxiosOptions($form);
 
         axios({
-            url: '/api/members',
-            method: 'POST',
+            url: `/api/members`,
+            method: 'DELETE',
             ...axiosOptions
         })
             .then(() => {
-                alert('회원가입이 완료되었습니다.');
-                location.href = '/member/login?returnUrl=' + getReturnUrl();
+                alert('회원탈퇴가 완료되었습니다.');
+                location.href = decodeURIComponent(getReturnUrl());
             })
             .catch(error => defaultAjaxHandler(error.response));
     });

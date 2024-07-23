@@ -5,13 +5,13 @@
 <t:layout>
     <jsp:attribute name="head">
         <title>로그인</title>
+        <script src="<c:url value="/static/script/member/login_form.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
 <section class="form-wrapper">
-    <form method="post" action="<c:url value="/member/login"/>">
-        <input type="hidden" name="returnUrl" value="${returnUrl}">
+    <form id="login-form" method="post">
         <img src="<c:url value="/static/image/ico_login_img.png"/>" alt="form-logo">
         <h2>로그인</h2>
         <div class="field">

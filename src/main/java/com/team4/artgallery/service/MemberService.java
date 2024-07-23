@@ -1,6 +1,7 @@
 package com.team4.artgallery.service;
 
 import com.team4.artgallery.controller.exception.BadRequestException;
+import com.team4.artgallery.controller.exception.ConflictException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
 import com.team4.artgallery.dao.IMemberDao;
@@ -79,11 +80,11 @@ public class MemberService {
      *
      * @param id  로그인 시도할 ID
      * @param pwd 로그인 시도할 비밀번호
-     * @throws BadRequestException   이미 로그인 상태인 경우 예외 발생
+     * @throws ConflictException     이미 로그인 상태인 경우 예외 발생
      * @throws UnauthorizedException ID 혹은 비밀번호가 일치하지 않는 경우 예외 발생
      */
     public void login(String id, String pwd) throws BadRequestException, UnauthorizedException {
-        Assert.isFalse(isLogin(), "이미 로그인 상태입니다.", BadRequestException::new);
+        Assert.isFalse(isLogin(), "이미 로그인 상태입니다.", ConflictException::new);
 
         MemberDto memberDto = memberDao.getMember(id);
         Assert.trueOrUnauthorized(memberDto != null && memberDto.getPwd().equals(pwd), "ID 혹은 비밀번호가 일치하지 않습니다.");
@@ -111,7 +112,7 @@ public class MemberService {
      * @throws NotFoundException     회원 정보 삭제 중 오류가 발생한 경우 예외 발생
      */
     public void withdraw(String pwd, MemberDto loginMember) throws BadRequestException, UnauthorizedException, NotFoundException {
-        Assert.isTrue(pwd.equals(loginMember.getPwd()), "ID 혹은 비밀번호가 일치하지 않습니다.", BadRequestException::new);
+        Assert.isTrue(pwd.equals(loginMember.getPwd()), "비밀번호가 일치하지 않습니다.", BadRequestException::new);
 
         memberDao.deleteMember(loginMember.getId());
         logout();
@@ -134,6 +135,10 @@ public class MemberService {
         return this.memberDao.getMembers(filter, pagination);
     }
 
+    public MemberDto getMember(String id) {
+        return this.memberDao.getMember(id);
+    }
+
     public int countMembers(KeywordFilter filter) {
         return this.memberDao.countMembers(filter);
     }
@@ -142,16 +147,16 @@ public class MemberService {
         this.memberDao.updateMember(dto);
     }
 
-    public void grantAdminMembers(List<String> memberIds) throws NotFoundException {
-        this.memberDao.grantAdminMembers(memberIds);
+    public void grantAdmin(String id) throws NotFoundException {
+        this.memberDao.grantAdmin(id);
     }
 
-    public void revokeAdminMembers(List<String> memberIds) throws NotFoundException {
-        this.memberDao.revokeAdminMembers(memberIds);
+    public void revokeAdmin(String id) throws NotFoundException {
+        this.memberDao.revokeAdmin(id);
     }
 
-    public void deleteMember(List<String> memberIdList) throws NotFoundException {
-        this.memberDao.deleteMembers(memberIdList);
+    public void deleteMember(String id) throws NotFoundException {
+        this.memberDao.deleteMember(id);
     }
 
 }

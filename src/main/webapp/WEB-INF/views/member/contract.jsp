@@ -5,13 +5,18 @@
 <t:layout>
     <jsp:attribute name="head">
         <title>회원가입 :: 약관 동의</title>
+        <script>
+            window.addEventListener('load', function () {
+                document.querySelector('form').returnUrl.value = decodeURIComponent(getReturnUrl());
+            });
+        </script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
 <section class="form-wrapper">
     <form method="get" action="<c:url value="/member/join"/>">
-        <input type="hidden" name="returnUrl" value="${returnUrl}"/>
+        <input type="hidden" name="returnUrl"/>
         <h2>가입 약관</h2>
         <div class="field">
             <label for="contract">약관 총칙</label>

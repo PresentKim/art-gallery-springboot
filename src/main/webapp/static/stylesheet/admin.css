@@ -109,6 +109,11 @@
     text-align: center;
 }
 
+.admin-list li .admin-id {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 .admin-list img {
     display: inline-block;
     height: 100%;

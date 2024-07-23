@@ -70,22 +70,22 @@ public interface IMemberDao {
     /**
      * 회원의 관리자 권한을 부여합니다.
      *
-     * @param memberIds 회원 ID 목록
+     * @param id 회원 ID
      * @return 수정된 행의 수
      * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
     @NotEmptyReturn(value = "회원 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
-    int grantAdminMembers(List<String> memberIds) throws NotFoundException;
+    int grantAdmin(String id) throws NotFoundException;
 
     /**
      * 회원의 관리자 권한을 박탈합니다.
      *
-     * @param memberIds 회원 ID 목록
+     * @param id 회원 ID
      * @return 수정된 행의 수
      * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
      */
     @NotEmptyReturn(value = "회원 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
-    int revokeAdminMembers(List<String> memberIds) throws NotFoundException;
+    int revokeAdmin(String id) throws NotFoundException;
 
 
     /* ========== DELETE =========== */
@@ -99,15 +99,5 @@ public interface IMemberDao {
      */
     @NotEmptyReturn(value = "회원 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
     int deleteMember(String memberId) throws NotFoundException;
-
-    /**
-     * 여러 회원 정보를 삭제합니다.
-     *
-     * @param memberIdList 회원 ID 목록
-     * @return 삭제된 행의 수
-     * @throws NotFoundException 반환 값이 0인 경우 예외 발생 ({@link NotEmptyReturn} 참조)
-     */
-    @NotEmptyReturn(value = "회원 정보를 찾을 수 없습니다.", exception = NotFoundException.class)
-    int deleteMembers(List<String> memberIdList) throws NotFoundException;
 
 }

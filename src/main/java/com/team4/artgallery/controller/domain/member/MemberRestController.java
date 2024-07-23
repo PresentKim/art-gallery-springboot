@@ -6,26 +6,21 @@ import com.team4.artgallery.controller.exception.*;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.EmailMessage;
 import com.team4.artgallery.dto.MemberDto;
-import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.helper.EmailService;
 import com.team4.artgallery.util.Assert;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-
 @RestController
-@RequestMapping(path = "/member", produces = MediaType.APPLICATION_JSON_VALUE)
-public class MemberRestController {
+@RequestMapping(path = "/api/members", produces = MediaType.APPLICATION_JSON_VALUE)
+public class MemberRestController implements MemberRestControllerDocs {
 
     private final MemberService memberService;
     private final EmailService emailService;
@@ -35,81 +30,21 @@ public class MemberRestController {
         this.emailService = emailService;
     }
 
-    @PostMapping("/login")
-    public Object login(
-            @RequestParam(name = "returnUrl", defaultValue = "/")
-            String returnUrl,
-            @Validated(MemberDto.OnLogin.class)
-            MemberDto loginForm
-    ) throws BadRequestException, UnauthorizedException, URISyntaxException {
-        memberService.login(loginForm.getId(), loginForm.getPwd());
-        return new URI(returnUrl);
-    }
-
-    @CheckLogin
-    @PostMapping("/logout")
-    public ResponseDto logout(
-            @RequestParam(name = "returnUrl", defaultValue = "/")
-            String returnUrl
-    ) throws UnauthorizedException {
-        memberService.logout();
-        return new ResponseDto("로그아웃에 성공하였습니다", returnUrl);
-    }
-
-    @PostMapping("/join")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto join(
-            @RequestParam(name = "returnUrl", defaultValue = "/")
-            String returnUrl,
+    public void create(
             @Validated(MemberDto.OnJoin.class)
             MemberDto memberDto
     ) throws ConflictException, SqlException {
         Assert.isFalse(memberService.isMember(memberDto.getId()), "이미 사용중인 아이디입니다.", ConflictException::new);
 
         memberService.createMember(memberDto);
-
-        return new ResponseDto("회원가입에 성공하였습니다.", memberService.getRedirectToLogin(returnUrl));
-    }
-
-    @PostMapping("/idCheck")
-    public Object idCheck(
-            @Valid
-            @NotBlank(message = "아이디를 입력해주세요")
-            @RequestParam(name = "id")
-            String id
-    ) throws ConflictException {
-        Assert.isFalse(memberService.isMember(id), "이미 사용중인 아이디입니다.", ConflictException::new);
-
-        return "사용 가능한 아이디입니다.";
     }
 
     @CheckLogin
-    @PostMapping("/mypage/edit")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto edit(
-            @Validated(MemberDto.OnUpdate.class)
-            MemberDto memberDto,
-
-            @LoginMember
-            MemberDto loginMember
-    ) throws SqlException {
-        // 로그인 회원의 ID 를 수정할 수 없도록 설정
-        memberDto.setId(loginMember.getId());
-
-        // 비밀번호가 입력되지 않았다면 기존 비밀번호로 설정
-        if (memberDto.getPwd() == null || memberDto.getPwd().isEmpty()) {
-            memberDto.setPwd(loginMember.getPwd());
-        }
-
-        memberService.updateMember(memberDto);
-        memberService.setLoginMember(memberDto);
-        return new ResponseDto("회원정보 수정에 성공하였습니다.", "/member/mypage");
-    }
-
-    @CheckLogin
-    @PostMapping("/withdraw")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseDto withdraw(
+    @DeleteMapping("")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void withdraw(
             @Valid
             @NotBlank(message = "비밀번호를 입력해주세요")
             @RequestParam(name = "pwd")
@@ -119,46 +54,93 @@ public class MemberRestController {
             MemberDto loginMember
     ) throws BadRequestException, UnauthorizedException, SqlException {
         memberService.withdraw(pwd, loginMember);
-        return new ResponseDto("회원 탈퇴에 성공하였습니다.", "/");
     }
 
-    @CheckAdmin
-    @PostMapping("/grant")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto grant(
-            @Valid
-            @NotEmpty(message = "회원을 선택해주세요")
-            @RequestParam(name = "memberIds", required = false)
-            List<String> memberIds
-    ) throws NotFoundException {
-        memberService.grantAdminMembers(memberIds);
-        return new ResponseDto("관리자 권한을 부여했습니다", ":reload");
-    }
-
-    @CheckAdmin
-    @PostMapping("/revoke")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto revoke(
-            @Valid
-            @NotEmpty(message = "회원을 선택해주세요")
-            @RequestParam(name = "memberIds", required = false)
-            List<String> memberIds
-    ) throws NotFoundException {
-        memberService.revokeAdminMembers(memberIds);
-        return new ResponseDto("관리자 권한을 제거했습니다", ":reload");
-    }
-
-    @CheckAdmin
-    @PostMapping("/delete")
+    @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto delete(
+    public void login(
+            @Validated(MemberDto.OnLogin.class)
+            MemberDto loginForm
+    ) throws ConflictException, BadRequestException, UnauthorizedException {
+        memberService.login(loginForm.getId(), loginForm.getPwd());
+    }
+
+    @CheckLogin
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.OK)
+    public void logout() throws UnauthorizedException {
+        memberService.logout();
+    }
+
+    @CheckLogin
+    @PostMapping("{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void update(
+            @PathVariable("id")
+            String id,
+            @Validated(MemberDto.OnUpdate.class)
+            MemberDto memberDto,
+
+            @LoginMember
+            MemberDto loginMember
+    ) throws SqlException, ForbiddenException {
+        if (!loginMember.getId().equals(id)) {
+            throw new ForbiddenException("본인의 회원 정보만 수정할 수 있습니다.");
+        }
+
+        memberDto.setId(id);
+
+        // 비밀번호가 입력되지 않았다면 기존 비밀번호로 설정
+        if (memberDto.getPwd() == null || memberDto.getPwd().isEmpty()) {
+            memberDto.setPwd(loginMember.getPwd());
+        }
+
+        memberService.updateMember(memberDto);
+        memberService.setLoginMember(memberService.getMember(id));
+    }
+
+    @GetMapping("check-id")
+    public ResponseEntity<?> checkIdAvailability(
             @Valid
-            @NotEmpty(message = "회원을 선택해주세요")
-            @RequestParam(name = "memberIds", required = false)
-            List<String> memberIds
+            @NotBlank(message = "아이디를 입력해주세요")
+            @RequestParam("id")
+            String id
+    ) {
+        if (memberService.isMember(id)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 아이디입니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+    }
+
+    @CheckAdmin
+    @PutMapping("{id}/grant")
+    @ResponseStatus(HttpStatus.OK)
+    public void grant(
+            @PathVariable("id")
+            String id
     ) throws NotFoundException {
-        memberService.deleteMember(memberIds);
-        return new ResponseDto("회원 정보를 제거했습니다", ":reload");
+        memberService.grantAdmin(id);
+    }
+
+    @CheckAdmin
+    @PutMapping("{id}/revoke")
+    @ResponseStatus(HttpStatus.OK)
+    public void revoke(
+            @PathVariable("id")
+            String id
+    ) throws NotFoundException {
+        memberService.revokeAdmin(id);
+    }
+
+    @CheckAdmin
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(
+            @PathVariable("id")
+            String id
+    ) throws NotFoundException {
+        memberService.deleteMember(id);
     }
 
     @GetMapping("/mail/signup")
@@ -166,9 +148,13 @@ public class MemberRestController {
     public Object sendSignUpMail(
             @RequestParam(name = "email")
             String email
-    ) throws SqlException, MessagingException {
-        emailService.sendMail(new EmailMessage(email, "[예술품갤러리] 회원가입을 위한 이메일입니다", "인증번호 : "));
-        return "인증번호가 발송되었습니다";
+    ) throws InternalServerErrorException {
+        try {
+            emailService.sendMail(new EmailMessage(email, "[예술품갤러리] 회원가입을 위한 이메일입니다", "인증번호 : "));
+            return "인증번호가 발송되었습니다";
+        } catch (MessagingException e) {
+            throw new InternalServerErrorException("이메일 발송 중 오류가 발생하였습니다");
+        }
     }
 
     @PostMapping("/mail/signup")

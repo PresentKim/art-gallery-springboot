@@ -7,28 +7,26 @@
         <title>관리자 :: 회원 관리</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
         <script src="<c:url value="/static/script/admin.js"/>"></script>
+        <script src="<c:url value="/static/script/admin/admin_member.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
 <%@ include file="/WEB-INF/views/admin/sub_menu.jsp" %>
 <section class="admin-list">
-    <form name="adminForm" method="post">
+    <form name="adminForm" method="get" action="<c:url value="/admin/member"/>">
         <div class="admin-list-btn">
-            <!-- 검색 기능을 위해 최상단에 보이지 않는 submit 버튼을 추가 -->
-            <input class="fake-submit" type="submit" formmethod="get" formaction="<c:url value="/admin/member"/>">
-
             <!-- 기능 버튼 -->
             <div class="admin-list-func-btn">
-                <input type="submit" value="관리자 권한 부여" formaction="<c:url value="/member/grant"/>">
-                <input type="submit" value="관리자 권한 해제" formaction="<c:url value="/member/revoke"/>">
-                <input type="submit" value="회원 삭제" formaction="<c:url value="/member/delete"/>">
+                <input type="button" value="관리자 권한 부여" onclick="grantMembers()">
+                <input type="button" value="관리자 권한 해제" onclick="revokeMembers()">
+                <input type="button" value="회원 삭제" onclick="deleteSelected('/api/members/')">
             </div>
 
             <!-- 검색 기능 -->
             <div class="admin-list-search">
                 <label><input type="text" placeholder="검색어를 입력하세요" name="keyword" value="${filter.keyword}"></label>
-                <input type="submit" value="검색" formmethod="get" formaction="<c:url value="/admin/member"/>">
+                <input type="submit" value="검색">
             </div>
         </div>
         <ul class="admin-list-header admin-member-list">
@@ -42,15 +40,18 @@
             <li>휴대번호</li>
         </ul>
         <c:forEach items="${memberList}" var="memberDto">
-            <ul class="admin-list-main admin-member-list" onclick="checkChildCheckbox(this)">
+            <ul
+                    class="admin-list-main admin-artwork-list"
+                    onclick="checkChildCheckbox(this)"
+                    data-seq="${memberDto.id}"
+            >
                 <li>
-                    <label><input name="memberIds" type="checkbox" value="${memberDto.id}" class="check-box"></label>
+                    <input type="checkbox">
                 </li>
                 <li>
-                    <span>${memberDto.id}</span>
-                    <c:if test="${memberDto.admin}">
-                        <span style="color: red;">[admin]</span>
-                    </c:if>
+                    <span class="id <c:if test="${memberDto.admin}"> admin-id</c:if>">
+                            ${memberDto.id}
+                    </span>
                 </li>
                 <li>${memberDto.name}</li>
                 <li>${memberDto.email}</li>

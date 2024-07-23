@@ -1,17 +1,18 @@
+<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>마이페이지 :: 회원탈퇴</title>
+        <title>회원탈퇴</title>
+        <script src="<c:url value="/static/script/member/withdraw_form.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
 
 <section class="form-wrapper">
-    <form method="post" action="<c:url value="/member/withdraw"/>">
-        <input type="hidden" name="returnUrl" value="${returnUrl}">
+    <form id="withdraw-form" method="post">
         <img src="<c:url value="/static/image/ico_login_img.png"/>" alt="form-logo">
         <h2>회원탈퇴</h2>
         <div class="field">

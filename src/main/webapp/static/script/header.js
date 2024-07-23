@@ -73,14 +73,37 @@ $(document).ready(function ($) {
         $('.header_gnb_list_containner01').stop().slideUp()
     })
 
-    // a 태그의 {RETURN_URL} 문자열을 현재 페이지의 URL로 치환
-    function getReturnUrlParameter() {
-        var urlParams = new URLSearchParams(location.search);
-        return urlParams.get('returnUrl') || location.pathname + location.search;
-    }
-
-    $('a').map((_, a) => a.href = a.href.replace('{RETURN_URL}', encodeURIComponent(getReturnUrlParameter())))
 });
 
+function getReturnUrl() {
+    const urlParams = new URLSearchParams(location.search);
+    const returnUrl = urlParams.get('returnUrl') || location.pathname + location.search;
+    return encodeURIComponent(returnUrl);
+}
 
+function onClickLoginButton() {
+    location.href = `/member/login?returnUrl=${getReturnUrl()}`;
+}
 
+function onClickSignupButton() {
+    location.href = `/member/contract?returnUrl=${getReturnUrl()}`;
+}
+
+function onClickLogoutButton() {
+    axios({
+        url: '/api/members/logout',
+        method: 'POST'
+    })
+        .then(() => {
+            alert('로그아웃 되었습니다.');
+            location.reload();
+        })
+        .catch((error) => {
+            if (error.response.status === 401) {
+                alert('이미 로그아웃 상태입니다.');
+            } else {
+                alert('로그인 중 오류가 발생했습니다.');
+                console.log(error);
+            }
+        });
+}
