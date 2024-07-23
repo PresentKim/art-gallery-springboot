@@ -89,7 +89,7 @@ function loadRecentNotices(count) {
     }
 
     axios({
-        url: `/notice/recent?count=${count}`,
+        url: `/api/notices/recent?count=${count}`,
         method: 'GET',
         headers: {'content-type': 'application/x-www-form-urlencoded'}
     }).then(({data}) => {
