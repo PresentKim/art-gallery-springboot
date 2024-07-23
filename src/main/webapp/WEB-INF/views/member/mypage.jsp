@@ -6,7 +6,7 @@
 <t:layout>
     <jsp:attribute name="head">
         <title>마이페이지 :: 메인</title>
-        <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/mypage/mypage.css"/>">
+        <link rel="stylesheet" href="<c:url value="/static/stylesheet/member/mypage.css"/>">
     </jsp:attribute>
 
     <jsp:attribute name="content">

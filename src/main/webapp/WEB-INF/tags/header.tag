@@ -103,7 +103,7 @@
         </div>
     </nav>
 </header>
-<div class="header_gnb_list_containner flow-anchor">
+<div class="header_gnb_list_container flow-anchor">
     <div>
         <c:forEach items="${ArtworkCategory.values()}" var="c">
             <%--@elvariable id="c" type="com.team4.artgallery.dto.enums.ArtworkCategory"--%>
@@ -111,7 +111,7 @@
         </c:forEach>
     </div>
 </div>
-<div class="header_gnb_list_containner01 flow-anchor">
+<div class="header_gnb_list_container flow-anchor">
     <div>
         <c:forEach items="${NoticeCategory.values()}" var="c">
             <%--@elvariable id="c" type="com.team4.artgallery.dto.enums.NoticeCategory"--%>

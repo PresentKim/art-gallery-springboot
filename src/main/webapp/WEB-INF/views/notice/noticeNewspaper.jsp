@@ -10,13 +10,13 @@
 
     <jsp:attribute name="content">
 
-<div class="noticeNewpaper_containner">
-    <ul class="noticeNewpaper_innerbox">
+<div class="noticeNewspaper_container">
+    <ul class="noticeNewspaper_innerbox">
         <li>
-            <div class="noticeNewpaper_img_box">
+            <div class="noticeNewspaper_img_box">
                 <img src="/static/image/magazine/magazine2.jpg" alt="박물관신문 632호 대표이미지"/>
             </div>
-            <div class="noticeNewpaper_info">
+            <div class="noticeNewspaper_info">
                 <p>박물관신문 632호</p>
                 <p>
                     <span>발행일</span> 2024.04.
@@ -32,10 +32,10 @@
             </div>
         </li>
         <li>
-            <div class="noticeNewpaper_img_box">
+            <div class="noticeNewspaper_img_box">
                 <img src="/static/image/magazine/magazine3.jpg" alt="박물관신문 631호 대표이미지"/>
             </div>
-            <div class="noticeNewpaper_info">
+            <div class="noticeNewspaper_info">
                 <p>박물관신문 631호</p>
                 <p>
                     <span>발행일</span> 2024.03.
@@ -51,10 +51,10 @@
             </div>
         </li>
         <li>
-            <div class="noticeNewpaper_img_box">
+            <div class="noticeNewspaper_img_box">
                 <img src="/static/image/magazine/magazine4.jpg" alt="박물관신문 630호 대표이미지"/>
             </div>
-            <div class="noticeNewpaper_info">
+            <div class="noticeNewspaper_info">
                 <p>박물관신문 630호</p>
                 <p>
                     <span>발행일</span> 2024.02.
@@ -70,10 +70,10 @@
             </div>
         </li>
         <li>
-            <div class="noticeNewpaper_img_box">
+            <div class="noticeNewspaper_img_box">
                 <img src="/static/image/magazine/magazine5.jpg" alt="박물관신문 629호 대표이미지"/>
             </div>
-            <div class="noticeNewpaper_info">
+            <div class="noticeNewspaper_info">
                 <p>박물관신문 629호</p>
                 <p>
                     <span>발행일</span> 2024.01.
@@ -89,10 +89,10 @@
             </div>
         </li>
         <li>
-            <div class="noticeNewpaper_img_box">
+            <div class="noticeNewspaper_img_box">
                 <img src="/static/image/magazine/magazine6.jpg" alt="박물관신문 628호 대표이미지"/>
             </div>
-            <div class="noticeNewpaper_info">
+            <div class="noticeNewspaper_info">
                 <p>박물관신문 628호</p>
                 <p>
                     <span>발행일</span> 2023.12.
@@ -108,10 +108,10 @@
             </div>
         </li>
         <li>
-            <div class="noticeNewpaper_img_box">
+            <div class="noticeNewspaper_img_box">
                 <img src="/static/image/magazine/magazine7.jpg" alt="박물관신문 627호 대표이미지"/>
             </div>
-            <div class="noticeNewpaper_info">
+            <div class="noticeNewspaper_info">
                 <p>박물관신문 627호</p>
                 <p>
                     <span>발행일</span> 2023.11.
@@ -127,10 +127,10 @@
             </div>
         </li>
         <li>
-            <div class="noticeNewpaper_img_box">
+            <div class="noticeNewspaper_img_box">
                 <img src="/static/image/magazine/magazine8.jpg" alt="박물관신문 626호 대표이미지"/>
             </div>
-            <div class="noticeNewpaper_info">
+            <div class="noticeNewspaper_info">
                 <p>박물관신문 626호</p>
                 <p>
                     <span>발행일</span> 2023.10.
@@ -146,10 +146,10 @@
             </div>
         </li>
         <li>
-            <div class="noticeNewpaper_img_box">
+            <div class="noticeNewspaper_img_box">
                 <img src="/static/image/magazine/magazine9.jpg" alt="박물관신문 625호 대표이미지"/>
             </div>
-            <div class="noticeNewpaper_info">
+            <div class="noticeNewspaper_info">
                 <p>박물관신문 625호</p>
                 <p>
                     <span>발행일</span> 2023.09.
@@ -164,7 +164,7 @@
 				</span>
             </div>
         </li>
-        <div class="noticeNewpaper-button">
+        <div class="noticeNewspaper-button">
             <input type="button" class="btn-noticeNewspaper" value="목록"
                    onClick="location.href='museum.do?command=noticeList'"/>
         </div>

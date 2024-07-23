@@ -90,13 +90,6 @@ header nav {
     margin-right: 20px;
 }
 
-
-.header_logo {
-    width: 208px;
-    height: 55px;
-    background: url(../image/header/header_logo.png) no-repeat center/cover;
-}
-
 .login_join_box {
     display: flex;
     flex-direction: row;
@@ -108,23 +101,8 @@ header nav {
     font-weight: bold;
 }
 
-.login-join-box_btn {
-    margin-right: 1rem;
-    cursor: pointer;
-}
-
-.artwork, .notice {
-    margin-top: 1rem;
-}
-
-.sub-menu a {
-    margin-right: 1rem;
-}
-
 /* 하위 컨테이너  */
-
-
-.header_gnb_list_containner {
+.header_gnb_list_container {
     display: none;
     position: absolute;
     top: 169px;
@@ -137,44 +115,17 @@ header nav {
     border-bottom: 1px solid var(--gray-300);
 }
 
-.header_gnb_list_containner div {
+.header_gnb_list_container div {
     width: 60%;
     height: 100%;
     margin-left: 17%;
     margin-top: 10px;
 }
 
-.header_gnb_list_containner a {
+.header_gnb_list_container a {
     margin-top: 13px;
     margin-right: 20px;
 }
-
-.header_gnb_list_containner01 {
-    display: none;
-    position: absolute;
-    top: 169px;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    font-weight: bold;
-    background-color: var(--gray-100);
-    font-size: 1rem;
-    border-bottom: 1px solid var(--gray-300);
-}
-
-.header_gnb_list_containner01 div {
-    width: 60%;
-    height: 100%;
-    margin-left: 17%;
-    /* border: 1px solid blue; */
-    margin-top: 10px;
-}
-
-.header_gnb_list_containner01 a {
-    margin-right: 20px;
-    margin-top: 13px;
-}
-
 
 .content-wrap {
     flex: 1;

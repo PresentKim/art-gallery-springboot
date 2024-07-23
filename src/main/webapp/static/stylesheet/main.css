@@ -84,126 +84,6 @@
     width: 35%;
 }
 
-/* 관람시간 관람료 오시는길 예약하기 */
-/* Main Section Text */
-.main-section_text {
-    display: flex;
-    flex-wrap: wrap;
-    width: 70%;
-    margin: 0 auto 150px;
-}
-
-/* Main Info Area */
-.main-info-area {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-right: 20px;
-    position: relative;
-    bottom: -80px;
-    left: 50px;
-    margin-bottom: 40px;
-}
-
-.main_info {
-    display: flex;
-}
-
-/* Main Info */
-.main_info, .main_admission {
-    margin-bottom: 20px;
-}
-
-.main_admission {
-    display: flex;
-}
-
-.main_info-tit {
-    font-weight: bold;
-    margin-bottom: 10px;
-    align-items: center;
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 24px;
-    color: var(--black);
-    margin-right: 20px;
-}
-
-.main_info-tit01 {
-    font-weight: bold;
-    margin-bottom: 10px;
-    align-items: center;
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 24px;
-    color: var(--black);
-    margin-right: 48px;
-}
-
-.main_info-tit i {
-    display: inline-block;
-    width: 26px;
-    height: 26px;
-    margin-right: 8px;
-    vertical-align: sub;
-    background: url(../image/ico_main_cont_img_1.png) no-repeat left center;
-    background-size: 26px;
-}
-
-.main_info-txt ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-}
-
-.main_info-txt ul li {
-    margin-bottom: 5px;
-}
-
-.main_info-txt ul li strong {
-    font-weight: bold;
-}
-
-.main_info-txt ul li span {
-    color: var(--gray-650);
-}
-
-/* Info Link */
-.info-link {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.info-link ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    position: relative;
-    bottom: -103px;
-}
-
-.info-link ul li {
-    margin-bottom: 10px;
-    margin-right: 20px;
-}
-
-.info-link .main_btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: var(--gray-800);
-    color: var(--white);
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-.info-link .main_btn:hover {
-    background-color: var(--gray-700);
-}
-
 /* 좌우로 넘어가는 슬라이드 */
 .imagelist {
     width: 200px;
@@ -244,10 +124,6 @@
 .image-list {
     display: flex;
     flex-shrink: 0;
-}
-
-.list {
-    margin: 0 6px;
 }
 
 /* 알립니다 플러스 슬라이더 */
@@ -400,66 +276,6 @@
     width: 100%;
     height: 100%;
     border-bottom: 1px solid var(--gray-300);
-}
-
-/* side slide */
-#main-center_slide02 {
-    position: relative;
-    width: 45%;
-    margin: 0 auto;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#main-center-imgs02 {
-    position: relative;
-    width: 100%;
-    /* Adjusted to fit the container width */
-    height: 100%;
-    /* Adjusted to fit the container height */
-    display: flex;
-    transition: left 1s;
-    /* Smooth transition */
-}
-
-#main-center-imgs02 img {
-    width: 100%;
-    /* Ensure each image takes up 70% of the container */
-    height: auto;
-    /* Maintain aspect ratio */
-    margin: 0 auto;
-    /* Center the images horizontally */
-}
-
-#main-center-remote02 {
-    position: absolute;
-    width: 100%;
-    height: 50px;
-    bottom: 11px;
-    left: 38%;
-    display: flex;
-    justify-content: center;
-    /* Center the navigation dots */
-}
-
-#main-center-remote02 div {
-    width: 20px;
-    height: 20px;
-    background: var(--white);
-    border-radius: 50%;
-    margin: 15px 7px;
-    text-align: center;
-    line-height: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    border: 1px solid var(--gray-300);
-}
-
-#main-center-remote02 .selected {
-    background: var(--gray-300);
-    border: 1px solid var(--gray-300);
 }
 
 #container1 {
