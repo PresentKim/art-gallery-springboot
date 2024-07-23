@@ -25,6 +25,14 @@ public class ArtGallerySwaggerConfig {
     }
 
     @Bean
+    public GroupedOpenApi favoriteApi() {
+        return GroupedOpenApi.builder().group("favorite")
+                .packagesToScan("com.team4.artgallery.controller.domain.favorite")
+                .addOpenApiCustomizer(openApi -> openApi.info(new Info().title("Favorite API").version("v1")))
+                .build();
+    }
+
+    @Bean
     public GroupedOpenApi memberApi() {
         return GroupedOpenApi.builder().group("member")
                 .packagesToScan("com.team4.artgallery.controller.domain.member")

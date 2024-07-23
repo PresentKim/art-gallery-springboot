@@ -5,14 +5,11 @@ import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.exception.*;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.EmailMessage;
-import com.team4.artgallery.dto.FavoriteDto;
 import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.ResponseDto;
-import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.helper.EmailService;
 import com.team4.artgallery.util.Assert;
-import com.team4.artgallery.util.Pagination;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -31,26 +28,11 @@ import java.util.List;
 public class MemberRestController {
 
     private final MemberService memberService;
-    private final FavoriteService favoriteService;
     private final EmailService emailService;
 
-    public MemberRestController(MemberService memberService, FavoriteService favoriteService, EmailService emailService) {
+    public MemberRestController(MemberService memberService, EmailService emailService) {
         this.memberService = memberService;
-        this.favoriteService = favoriteService;
         this.emailService = emailService;
-    }
-
-    @CheckLogin
-    @GetMapping("mypage/favorite")
-    public Pagination.Pair<FavoriteDto> favorite(
-            @Valid
-            @ModelAttribute("pagination")
-            Pagination pagination,
-
-            @LoginMember
-            MemberDto loginMember
-    ) {
-        return pagination.pair(favoriteService.getFavorites(loginMember.getId(), pagination));
     }
 
     @PostMapping("/login")
@@ -139,21 +121,6 @@ public class MemberRestController {
         memberService.withdraw(pwd, loginMember);
         return new ResponseDto("회원 탈퇴에 성공하였습니다.", "/");
     }
-
-    @CheckLogin("/artwork/${aseq}")
-    @PostMapping("/mypage/favorite")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Object favorite(
-            @RequestParam(name = "aseq")
-            Integer aseq,
-
-            @LoginMember
-            MemberDto loginMember
-    ) throws SqlException {
-        boolean result = favoriteService.toggleFavorite(loginMember.getId(), aseq);
-        return "관심 예술품 목록에 " + (result ? "추가" : "삭제") + "되었습니다.";
-    }
-
 
     @CheckAdmin
     @PostMapping("/grant")

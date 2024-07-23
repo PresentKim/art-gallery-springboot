@@ -20,12 +20,10 @@
         </div>
         <div class="artwork-view_btn">
             <c:if test="${not empty loginMember}">
-                <div onclick="ajax('/member/mypage/favorite', {aseq: ${artworkDto.aseq}})">
-                    관심 예술품 +
-                </div>
+                <div id="toggle-favorite-btn" onclick="toggleFavorite()"></div>
 
                 <c:if test="${loginMember.admin}">
-                    <div onclick="updateArtworkDisplay(this, ${artworkDto.aseq})">
+                    <div onclick="updateArtworkDisplay(this)">
                             ${artworkDto.display ? '비공개' : '공개'}로 전환
                     </div>
                     <a href="<c:url value="/artwork/write?aseq=${artworkDto.aseq}"/>">수정</a>

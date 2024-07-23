@@ -31,6 +31,39 @@ public class FavoriteService {
     }
 
     /**
+     * 주어진 회원 ID와 예술품 번호에 해당하는 관심 예술품 정보가 존재하는지 확인합니다.
+     *
+     * @param memberId 회원 ID
+     * @param aseq     예술품 번호 (artwork sequence)
+     * @return 관심 예술품 정보가 존재하면 true, 존재하지 않으면 false
+     */
+    public Boolean isFavorite(String memberId, int aseq) {
+        return favoriteDao.isFavorite(memberId, aseq);
+    }
+
+    /**
+     * 주어진 회원 ID와 예술품 번호에 해당하는 관심 예술품 정보를 추가합니다.
+     *
+     * @param memberId 회원 ID
+     * @param aseq     예술품 번호 (artwork sequence)
+     * @throws SqlException 관심 예술품 정보 추가에 실패한 경우 예외 발생
+     */
+    public void createFavorite(String memberId, int aseq) throws SqlException {
+        favoriteDao.createFavorite(memberId, aseq);
+    }
+
+    /**
+     * 주어진 회원 ID와 예술품 번호에 해당하는 관심 예술품 정보를 제거합니다.
+     *
+     * @param memberId 회원 ID
+     * @param aseq     예술품 번호 (artwork sequence)
+     * @throws SqlException 관심 예술품 정보 제거에 실패한 경우 예외 발생
+     */
+    public void deleteFavorite(String memberId, int aseq) throws SqlException {
+        favoriteDao.deleteFavorite(memberId, aseq);
+    }
+
+    /**
      * 주어진 회원 ID와 예술품 번호에 해당하는 관심 예술품 정보가 존재하면 제거, 존재하지 않으면 추가한다.
      *
      * @param memberId 회원 ID

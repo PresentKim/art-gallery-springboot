@@ -34,7 +34,7 @@
     <div class="mypage_button_wrapper">
         <a class="mypage_button" href="<c:url value="/member/mypage/edit"/>"> 개인정보수정 </a>
         <a class="mypage_button" href="<c:url value="/member/withdraw"/>"> 회원탈퇴 </a>
-        <a class="mypage_button" href="<c:url value="/member/mypage/favorite"/>"> 관심예술품 </a>
+        <a class="mypage_button" href="<c:url value="/favorite"/>"> 관심예술품 </a>
     </div>
 </main>
 

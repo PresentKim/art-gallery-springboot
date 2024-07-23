@@ -13,6 +13,14 @@ import java.util.Map;
 @Mapper
 public interface IFavoriteDao {
 
+    /* ========== CREATE =========== */
+
+    /**
+     * 주어진 회원 ID와 예술품 번호에 해당하는 관심 예술품 정보를 추가한다.
+     */
+    int createFavorite(@Param("memberId") String memberId, @Param("aseq") int aseq);
+
+
     /* ========== READ =========== */
 
     /**
@@ -40,6 +48,14 @@ public interface IFavoriteDao {
      * @return 관심 예술품 목록의 총 개수
      */
     int countFavorites(String memberId);
+
+
+    /* ========== DELETE =========== */
+
+    /**
+     * 주어진 회원 ID와 예술품 번호에 해당하는 관심 예술품 정보를 제거한다.
+     */
+    int deleteFavorite(@Param("memberId") String memberId, @Param("aseq") int aseq);
 
 
     /* ========== CALL PROCEDURE =========== */
