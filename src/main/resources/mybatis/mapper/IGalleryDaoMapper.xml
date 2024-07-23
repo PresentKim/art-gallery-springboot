@@ -42,8 +42,7 @@
 
     <update id="updateGallery" parameterType="GalleryDto">
         UPDATE gallery
-        SET author       = #{author},
-            title        = #{title},
+        SET title        = #{title},
             content      = #{content},
             image        = #{image},
             savefilename = #{savefilename}
