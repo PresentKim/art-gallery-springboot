@@ -48,7 +48,7 @@
                     data-seq="${galleryDto.gseq}"
             >
                 <li>
-                    <input type="checkbox">
+                    <label><input type="checkbox"></label>
                 </li>
                 <li>${galleryDto.gseq}</li>
                 <li>${galleryDto.authorId}</li>

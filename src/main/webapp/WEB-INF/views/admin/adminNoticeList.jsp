@@ -58,7 +58,7 @@
                     data-seq="${noticeDto.nseq}"
             >
                 <li>
-                    <input type="checkbox">
+                    <label><input type="checkbox"></label>
                 </li>
                 <li>${noticeDto.nseq}</li>
                 <li>${noticeDto.category}</li>

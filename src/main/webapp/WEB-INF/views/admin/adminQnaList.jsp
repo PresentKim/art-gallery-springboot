@@ -50,7 +50,7 @@
                     data-seq="${qnaDto.qseq}"
             >
                 <li>
-                    <input type="checkbox">
+                    <label><input type="checkbox"></label>
                 </li>
                 <li>${qnaDto.hasReply() ? '답변완료' : '대기중'}</li>
                 <li>${qnaDto.qseq}</li>

@@ -67,7 +67,7 @@
                     data-seq="${artworkDto.aseq}"
             >
                 <li>
-                    <input type="checkbox">
+                    <label><input type="checkbox"></label>
                 </li>
                 <li>${artworkDto.displayyn}</li>
                 <li>${artworkDto.aseq}</li>

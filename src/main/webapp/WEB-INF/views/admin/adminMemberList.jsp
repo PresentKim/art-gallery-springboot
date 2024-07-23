@@ -46,7 +46,7 @@
                     data-seq="${memberDto.id}"
             >
                 <li>
-                    <input type="checkbox">
+                    <label><input type="checkbox"></label>
                 </li>
                 <li>
                     <span class="id <c:if test="${memberDto.admin}"> admin-id</c:if>">
