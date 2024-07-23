@@ -1,5 +1,5 @@
 <%--@elvariable id="pagination" type="com.team4.artgallery.util.Pagination"--%>
-<%@ tag language="java" pageEncoding="UTF-8" body-content="empty" %>
+<%@ tag pageEncoding="UTF-8" body-content="empty" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ attribute name="paginationName" required="false" %>
 

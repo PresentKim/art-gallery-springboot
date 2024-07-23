@@ -1,4 +1,4 @@
-<%@ tag language="java" pageEncoding="UTF-8" body-content="scriptless" %>
+<%@ tag pageEncoding="UTF-8" body-content="scriptless" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ attribute name="head" required="false" fragment="true" description="<head> 태그에 삽입될 내용" %>
