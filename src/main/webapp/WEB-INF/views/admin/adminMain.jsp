@@ -6,6 +6,7 @@
     <jsp:attribute name="head">
         <title>관리자 :: 메인</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/admin.css"/>">
+        <script src="<c:url value="/static/script/admin.js"/>"></script>
     </jsp:attribute>
 
     <jsp:attribute name="content">
