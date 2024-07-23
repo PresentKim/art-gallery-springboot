@@ -64,41 +64,15 @@ function handleAxiosFinally(axiosPromise) {
 window.addEventListener('load', function () {
     for (const form of document.forms) {
         form.addEventListener('submit', (event) => {
-            function getInputName(input) {
-                return (input.labels && input.labels[0] && input.labels[0].innerText) || input.name || input.id;
-            }
-
             // form 요소 유효성 검사
-            const form = event.target;
-            for (const input of form.elements) {
-                if (input.required && input.value.trim() === "") {
-                    alert(getInputName(input) + "을(를) 입력해 주세요.");
-                    input.focus();
-
-                    // 폼 등록 이벤트 취소
-                    event.preventDefault();
-                    return;
-                }
-
-                // data-require-equals 속성이 있는 경우 값 비교
-                const requireEquals = input.dataset.requireEquals;
-                if (requireEquals) {
-                    // 대상 요소가 존재하고 값이 다른 경우 경고 메시지 출력
-                    const target = form.elements[requireEquals];
-                    if (target && input.value !== target.value) {
-                        // data-require-message 속성이 있는 경우 메시지 출력
-                        alert(input.dataset.requireMessage || getInputName(target) + "와(과) " + getInputName(input) + "이(가) 일치하지 않습니다.");
-                        input.focus();
-
-                        // 폼 등록 이벤트 취소
-                        event.preventDefault();
-                        return;
-                    }
-                }
+            const $form = event.target;
+            if (!validateForm($form)) {
+                event.preventDefault();
+                return;
             }
 
             // 요청 메소드가 GET 인 경우 그대로 전송
-            const method = event.submitter.getAttribute("formmethod") || form.method;
+            const method = event.submitter.getAttribute("formmethod") || $form.method;
             if (method.toUpperCase() === "GET") {
                 return;
             }
@@ -107,13 +81,45 @@ window.addEventListener('load', function () {
             event.preventDefault();
 
             // submitter 버튼의 formaction 속성 또는 form 요소의 action 속성으로 요청 URL 결정
-            const url = event.submitter.getAttribute("formaction") || form.action;
+            const url = event.submitter.getAttribute("formaction") || $form.action;
 
             handleAxiosFinally(axios({
                 url,
                 method,
-                data: new FormData(form)
+                data: new FormData($form)
             }));
         });
     }
 });
+
+function validateForm($form) {
+    function getInputName(input) {
+        return (input.labels && input.labels[0] && input.labels[0].innerText) || input.name || input.id;
+    }
+
+    // 브라우저 기본 유효성 검사
+    if (!$form.checkValidity()) {
+        const $input = $form.querySelector(":invalid");
+        if ($input) {
+            alert(getInputName($input) + "을(를) 확인해 주세요.");
+            $input.focus();
+        }
+        return false;
+    }
+
+    // data-require-equals 속성 값이 있는 요소 유효성 검사
+    for (const $input of $form.querySelectorAll("[data-require-equals]")) {
+        const requireEquals = $input.dataset.requireEquals;
+        // 대상 요소가 존재하고 값이 다른 경우 경고 메시지 출력
+        const $target = $form.elements[requireEquals];
+        if ($target && $input.value !== $target.value) {
+            // data-require-message 속성이 있는 경우 메시지 출력
+            alert($input.dataset.requireMessage || getInputName($target) + "와(과) " + getInputName($input) + "이(가) 일치하지 않습니다.");
+            $input.focus();
+
+            return false;
+        }
+    }
+
+    return true;
+}

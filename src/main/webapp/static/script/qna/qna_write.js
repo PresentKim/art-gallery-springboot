@@ -3,7 +3,7 @@ window.addEventListener('load', function () {
     const $form = document.getElementById('qna-form');
     $form.addEventListener('submit', (event) => {
         event.preventDefault();
-        if ($form.checkValidity()) {
+        if (validateForm($form)) {
             const commonData = {
                 data: new FormData($form),
                 headers: {'Content-Type': 'multipart/form-data'}
