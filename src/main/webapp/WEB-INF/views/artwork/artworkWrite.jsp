@@ -15,7 +15,7 @@
 
 <h2 class="artwork-form-header">${empty artworkDto ? '예술품 등록' : '예술품 수정'}</h2>
 <section class="artwork-form-main">
-    <form id="artwork-form" class="artwork-form" data-aseq="${artworkDto.aseq}">
+    <form id="artwork-form" class="artwork-form" method="post" data-aseq="${artworkDto.aseq}">
         <div class="artwork-form_info">
             <ul>
                 <li>

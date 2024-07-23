@@ -38,42 +38,7 @@ window.addEventListener('load', function () {
         reader.readAsDataURL($imageInput.files[0]);
     });
 
-    // 예술품 폼 등록 이벤트 핸들러 등록
+    // 폼 등록 이벤트 핸들러 등록
     const $form = document.getElementById('artwork-form');
-    $form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        if (validateForm($form)) {
-            const commonData = {
-                data: new FormData($form),
-                headers: {'Content-Type': 'multipart/form-data'}
-            }
-
-            if ($form.getAttribute('data-aseq')) {
-                const aseq = $form.getAttribute('data-aseq');
-                axios({
-                    url: `/api/artworks/${aseq}`,
-                    method: 'PUT',
-                    ...commonData
-                })
-                    .then(() => {
-                        alert('예술품이 수정되었습니다');
-                        location.href = `/artwork/${aseq}`;
-                    })
-                    .catch(defaultAjaxHandler);
-            } else {
-                axios({
-                    url: '/api/artworks',
-                    method: 'POST',
-                    ...commonData
-                })
-                    .then((json) => {
-                        alert('예술품이 등록되었습니다');
-                        location.href = `/artwork/${json.data.aseq}`;
-                    })
-                    .catch(defaultAjaxHandler);
-            }
-        } else {
-            alert('입력값을 확인해주세요.');
-        }
-    });
+    registerDefaultSubmitAjaxHandler($form, '/api/artworks', '/artwork/', 'aseq', '예술품이');
 });

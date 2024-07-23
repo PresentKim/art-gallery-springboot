@@ -28,7 +28,7 @@
             </h1>
         </div>
     </div>
-    <form id="qna-form" class="qna-form_body" data-nseq="${qnaDto.qseq}">
+    <form id="qna-form" class="qna-form_body" method="post" data-nseq="${qnaDto.qseq}">
         <div class="qna-form_input-wrapper">
             <i class="qna-icon title"></i>
             <input type="text" name="title" id="title"

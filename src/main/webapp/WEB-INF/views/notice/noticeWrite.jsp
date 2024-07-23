@@ -16,7 +16,7 @@
 <div id="notice_update_box">
     <h2>소식지 수정</h2>
     <div class="notice_update_innerbox">
-        <form id="notice-form" class="notice-form" data-nseq="${noticeDto.nseq}">
+        <form id="notice-form" class="notice-form" method="post" data-nseq="${noticeDto.nseq}">
             <div class="notice_update_field">
                 <label for="id">작성자</label> <input type="text" name="id" id="id" value="${loginMember.id}" readonly/>
             </div>
