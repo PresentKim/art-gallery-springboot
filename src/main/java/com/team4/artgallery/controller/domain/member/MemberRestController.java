@@ -5,17 +5,18 @@ import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.exception.*;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.EmailMessage;
-import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.dto.member.MemberCreateDto;
+import com.team4.artgallery.dto.member.MemberLoginDto;
+import com.team4.artgallery.dto.member.MemberUpdateDto;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.MemberService;
 import com.team4.artgallery.service.helper.EmailService;
-import com.team4.artgallery.util.Assert;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,12 +34,10 @@ public class MemberRestController implements MemberRestControllerDocs {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public void create(
-            @Validated(MemberDto.OnJoin.class)
-            MemberDto memberDto
+            @Valid
+            MemberCreateDto memberCreateDto
     ) throws ConflictException, SqlException {
-        Assert.isFalse(memberService.isMember(memberDto.getId()), "이미 사용중인 아이디입니다.", ConflictException::new);
-
-        memberService.createMember(memberDto);
+        memberService.createMember(memberCreateDto);
     }
 
     @CheckLogin
@@ -51,7 +50,7 @@ public class MemberRestController implements MemberRestControllerDocs {
             String pwd,
 
             @LoginMember
-            MemberDto loginMember
+            MemberEntity loginMember
     ) throws BadRequestException, UnauthorizedException, SqlException {
         memberService.withdraw(pwd, loginMember);
     }
@@ -59,10 +58,10 @@ public class MemberRestController implements MemberRestControllerDocs {
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public void login(
-            @Validated(MemberDto.OnLogin.class)
-            MemberDto loginForm
+            @Valid
+            MemberLoginDto memberLoginDto
     ) throws ConflictException, BadRequestException, UnauthorizedException {
-        memberService.login(loginForm.getId(), loginForm.getPwd());
+        memberService.login(memberLoginDto);
     }
 
     @CheckLogin
@@ -78,24 +77,17 @@ public class MemberRestController implements MemberRestControllerDocs {
     public void update(
             @PathVariable("id")
             String id,
-            @Validated(MemberDto.OnUpdate.class)
-            MemberDto memberDto,
+            @Valid
+            MemberUpdateDto memberUpdateDto,
 
             @LoginMember
-            MemberDto loginMember
+            MemberEntity loginMember
     ) throws SqlException, ForbiddenException {
-        if (!loginMember.getId().equals(id)) {
-            throw new ForbiddenException("본인의 회원 정보만 수정할 수 있습니다.");
+        if (!loginMember.id().equals(id)) {
+            throw new ForbiddenException("본인 정보만 수정할 수 있습니다");
         }
 
-        memberDto.setId(id);
-
-        // 비밀번호가 입력되지 않았다면 기존 비밀번호로 설정
-        if (memberDto.getPwd() == null || memberDto.getPwd().isEmpty()) {
-            memberDto.setPwd(loginMember.getPwd());
-        }
-
-        memberService.updateMember(memberDto);
+        memberService.updateMember(memberUpdateDto);
         memberService.setLoginMember(memberService.getMember(id));
     }
 

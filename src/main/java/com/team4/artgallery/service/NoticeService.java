@@ -5,6 +5,7 @@ import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dao.INoticeDao;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.filter.NoticeFilter;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ReadCountHelper;
@@ -17,24 +18,22 @@ public class NoticeService {
 
     private final INoticeDao noticeDao;
 
-    private final MemberService memberService;
-
     private final SessionProvider sessionProvider;
 
-    public NoticeService(INoticeDao noticeDao, MemberService memberService, SessionProvider sessionProvider) {
+    public NoticeService(INoticeDao noticeDao, SessionProvider sessionProvider) {
         this.noticeDao = noticeDao;
-        this.memberService = memberService;
         this.sessionProvider = sessionProvider;
     }
 
     /**
      * 소식지 정보를 추가합니다
      *
-     * @param noticeDto 소식지 정보
+     * @param noticeDto   소식지 정보
+     * @param loginMember 로그인한 회원 정보
      * @throws SqlException 소식지 정보 추가에 실패한 경우 예외 발생
      */
-    public void createNotice(NoticeDto noticeDto) throws SqlException {
-        noticeDto.setAuthor(memberService.getLoginMember().getId());
+    public void createNotice(NoticeDto noticeDto, MemberEntity loginMember) throws SqlException {
+        noticeDto.setAuthor(loginMember.id());
         noticeDao.createNotice(noticeDto);
     }
 
@@ -75,11 +74,12 @@ public class NoticeService {
     /**
      * 소식지 정보를 수정합니다
      *
-     * @param noticeDto 소식지 정보
+     * @param noticeDto   소식지 정보
+     * @param loginMember 로그인한 회원 정보
      * @throws NotFoundException 소식지 정보를 찾을 수 없는 경우 예외 발생
      */
-    public void updateNotice(NoticeDto noticeDto) throws NotFoundException {
-        noticeDto.setAuthor(memberService.getLoginMember().getId());
+    public void updateNotice(NoticeDto noticeDto, MemberEntity loginMember) throws NotFoundException {
+        noticeDto.setAuthor(loginMember.id());
         noticeDao.updateNotice(noticeDto);
     }
 

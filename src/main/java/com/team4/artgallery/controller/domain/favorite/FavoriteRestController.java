@@ -6,8 +6,8 @@ import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.FavoriteDto;
-import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.view.Views;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
@@ -36,9 +36,9 @@ public class FavoriteRestController implements FavoriteRestControllerDocs {
             Pagination pagination,
 
             @LoginMember
-            MemberDto loginMember
+            MemberEntity loginMember
     ) {
-        return favoriteService.getFavorites(loginMember.getId(), pagination);
+        return favoriteService.getFavorites(loginMember.id(), pagination);
     }
 
     @CheckLogin
@@ -48,10 +48,10 @@ public class FavoriteRestController implements FavoriteRestControllerDocs {
             String aseq,
 
             @LoginMember
-            MemberDto loginMember
+            MemberEntity loginMember
     ) {
         try {
-            if (favoriteService.isFavorite(loginMember.getId(), Integer.parseInt(aseq))) {
+            if (favoriteService.isFavorite(loginMember.id(), Integer.parseInt(aseq))) {
                 return ResponseEntity.ok().build();
             } else {
                 return ResponseEntity.noContent().build();
@@ -69,10 +69,10 @@ public class FavoriteRestController implements FavoriteRestControllerDocs {
             String aseq,
 
             @LoginMember
-            MemberDto loginMember
+            MemberEntity loginMember
     ) throws SqlException {
         try {
-            favoriteService.createFavorite(loginMember.getId(), Integer.parseInt(aseq));
+            favoriteService.createFavorite(loginMember.id(), Integer.parseInt(aseq));
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
@@ -86,10 +86,10 @@ public class FavoriteRestController implements FavoriteRestControllerDocs {
             String aseq,
 
             @LoginMember
-            MemberDto loginMember
+            MemberEntity loginMember
     ) throws SqlException {
         try {
-            favoriteService.deleteFavorite(loginMember.getId(), Integer.parseInt(aseq));
+            favoriteService.deleteFavorite(loginMember.id(), Integer.parseInt(aseq));
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }

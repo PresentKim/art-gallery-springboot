@@ -1,4 +1,4 @@
-<%--@elvariable id="loginMember" type="com.team4.artgallery.dto.MemberDto"--%>
+<%--@elvariable id="loginMember" type="com.team4.artgallery.entity.MemberEntity"--%>
 <%@ tag pageEncoding="UTF-8" %>
 <%@ tag import="com.team4.artgallery.dto.enums.NoticeCategory" %>
 <%@ tag import="com.team4.artgallery.dto.enums.ArtworkCategory" %>

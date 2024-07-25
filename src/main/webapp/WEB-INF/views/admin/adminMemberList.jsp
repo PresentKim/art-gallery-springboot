@@ -39,24 +39,24 @@
             <li>가입일</li>
             <li>휴대번호</li>
         </ul>
-        <c:forEach items="${memberList}" var="memberDto">
+        <c:forEach items="${memberList}" var="memberEntity">
             <ul
                     class="admin-list-main admin-artwork-list"
                     onclick="checkChildCheckbox(this)"
-                    data-seq="${memberDto.id}"
+                    data-seq="${memberEntity.id}"
             >
                 <li>
                     <label><input type="checkbox"></label>
                 </li>
                 <li>
-                    <span class="id <c:if test="${memberDto.admin}"> admin-id</c:if>">
-                            ${memberDto.id}
+                    <span class="id <c:if test="${memberEntity.admin}"> admin-id</c:if>">
+                            ${memberEntity.id}
                     </span>
                 </li>
-                <li>${memberDto.name}</li>
-                <li>${memberDto.email}</li>
-                <li>${memberDto.indate}</li>
-                <li>${memberDto.phone}</li>
+                <li>${memberEntity.name}</li>
+                <li>${memberEntity.email}</li>
+                <li>${memberEntity.indate}</li>
+                <li>${memberEntity.phone}</li>
             </ul>
         </c:forEach>
     </form>

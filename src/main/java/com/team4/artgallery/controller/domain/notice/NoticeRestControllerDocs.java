@@ -3,6 +3,7 @@ package com.team4.artgallery.controller.domain.notice;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.NoticeFilter;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.util.Pagination;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -92,7 +93,10 @@ interface NoticeRestControllerDocs {
     )
     NoticeDto create(
             @ParameterObject
-            NoticeDto artworkDto
+            NoticeDto artworkDto,
+
+            @Parameter(hidden = true)
+            MemberEntity loginMember
     );
 
     @Tag(name = "admin", description = "관리자 메서드")
@@ -119,7 +123,10 @@ interface NoticeRestControllerDocs {
             @Parameter(name = "nseq", description = "소식지 번호", required = true, in = ParameterIn.PATH)
             String nseq,
             @ParameterObject
-            NoticeDto artworkDto
+            NoticeDto artworkDto,
+
+            @Parameter(hidden = true)
+            MemberEntity loginMember
     );
 
 

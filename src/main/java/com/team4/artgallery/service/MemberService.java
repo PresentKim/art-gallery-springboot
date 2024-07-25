@@ -4,9 +4,12 @@ import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.ConflictException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
-import com.team4.artgallery.dao.IMemberDao;
-import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
+import com.team4.artgallery.dto.member.MemberCreateDto;
+import com.team4.artgallery.dto.member.MemberLoginDto;
+import com.team4.artgallery.dto.member.MemberUpdateDto;
+import com.team4.artgallery.entity.MemberEntity;
+import com.team4.artgallery.repository.MemberRepository;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
@@ -19,23 +22,13 @@ import java.util.List;
 @Service
 public class MemberService {
 
-    private final IMemberDao memberDao;
+    private final MemberRepository memberRepository;
 
     private final SessionProvider sessionProvider;
 
-    public MemberService(IMemberDao memberDao, SessionProvider sessionProvider) {
-        this.memberDao = memberDao;
+    public MemberService(MemberRepository memberRepository, SessionProvider sessionProvider) {
+        this.memberRepository = memberRepository;
         this.sessionProvider = sessionProvider;
-    }
-
-    /**
-     * 주어진 ID에 해당하는 회원이 존재하는지 확인한다.
-     *
-     * @param id 확인할 회원 ID
-     * @return 회원이 존재하면 true, 그렇지 않으면 false
-     */
-    public boolean isMember(String id) {
-        return memberDao.getMember(id) != null;
     }
 
     /**
@@ -43,17 +36,17 @@ public class MemberService {
      *
      * @return 세션에 저장된 회원 정보, 없으면 null
      */
-    public MemberDto getLoginMember() {
-        return (MemberDto) sessionProvider.getSession().getAttribute("loginMember");
+    public MemberEntity getLoginMember() {
+        return (MemberEntity) sessionProvider.getSession().getAttribute("loginMember");
     }
 
     /**
      * 세션에 회원 정보를 저장한다.
      *
-     * @param memberDto 저장할 회원 정보
+     * @param memberEntity 저장할 회원 정보
      */
-    public void setLoginMember(MemberDto memberDto) {
-        sessionProvider.getSession().setAttribute("loginMember", memberDto);
+    public void setLoginMember(MemberEntity memberEntity) {
+        sessionProvider.getSession().setAttribute("loginMember", memberEntity);
     }
 
     /**
@@ -71,25 +64,34 @@ public class MemberService {
      * @return 관리자이면 true, 그렇지 않으면 false
      */
     public boolean isAdmin() {
-        MemberDto memberDto = getLoginMember();
-        return memberDto != null && memberDto.isAdmin();
+        MemberEntity memberEntity = getLoginMember();
+        return memberEntity != null && memberEntity.isAdmin();
+    }
+
+    /**
+     * 주어진 ID에 해당하는 회원이 존재하는지 확인한다.
+     *
+     * @param id 확인할 회원 ID
+     * @return 회원이 존재하면 true, 그렇지 않으면 false
+     */
+    public boolean isMember(String id) {
+        return memberRepository.existsById(id);
     }
 
     /**
      * 주어진 ID와 비밀번호로 로그인을 시도한다.
      *
-     * @param id  로그인 시도할 ID
-     * @param pwd 로그인 시도할 비밀번호
+     * @param memberLoginDto 로그인 시도할 회원 정보
      * @throws ConflictException     이미 로그인 상태인 경우 예외 발생
      * @throws UnauthorizedException ID 혹은 비밀번호가 일치하지 않는 경우 예외 발생
      */
-    public void login(String id, String pwd) throws BadRequestException, UnauthorizedException {
+    public void login(MemberLoginDto memberLoginDto) throws BadRequestException, UnauthorizedException {
         Assert.isFalse(isLogin(), "이미 로그인 상태입니다.", ConflictException::new);
 
-        MemberDto memberDto = memberDao.getMember(id);
-        Assert.trueOrUnauthorized(memberDto != null && memberDto.getPwd().equals(pwd), "ID 혹은 비밀번호가 일치하지 않습니다.");
+        MemberEntity memberEntity = memberRepository.findById(memberLoginDto.id()).orElse(null);
+        Assert.trueOrUnauthorized(memberEntity != null && memberEntity.pwd().equals(memberLoginDto.pwd()), "ID 혹은 비밀번호가 일치하지 않습니다.");
 
-        setLoginMember(memberDto);
+        setLoginMember(memberEntity);
     }
 
     /**
@@ -111,10 +113,10 @@ public class MemberService {
      * @throws UnauthorizedException 로그인 상태가 아닌 경우 예외 발생
      * @throws NotFoundException     회원 정보 삭제 중 오류가 발생한 경우 예외 발생
      */
-    public void withdraw(String pwd, MemberDto loginMember) throws BadRequestException, UnauthorizedException, NotFoundException {
-        Assert.isTrue(pwd.equals(loginMember.getPwd()), "비밀번호가 일치하지 않습니다.", BadRequestException::new);
+    public void withdraw(String pwd, MemberEntity loginMember) throws BadRequestException, UnauthorizedException, NotFoundException {
+        Assert.isTrue(pwd.equals(loginMember.pwd()), "비밀번호가 일치하지 않습니다.", BadRequestException::new);
 
-        memberDao.deleteMember(loginMember.getId());
+        memberRepository.deleteById(loginMember.id());
         logout();
     }
 
@@ -127,36 +129,50 @@ public class MemberService {
         return "/member/login?returnUrl=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8);
     }
 
-    public void createMember(MemberDto dto) throws com.team4.artgallery.controller.exception.SqlException {
-        this.memberDao.createMember(dto);
+    public void createMember(MemberCreateDto memberCreateDto) throws com.team4.artgallery.controller.exception.SqlException {
+        Assert.isFalse(isMember(memberCreateDto.id()), "이미 사용중인 아이디입니다.", ConflictException::new);
+
+        memberRepository.save(memberCreateDto.toEntity());
     }
 
-    public List<MemberDto> getMembers(KeywordFilter filter, Pagination pagination) {
-        return this.memberDao.getMembers(filter, pagination);
+    public List<MemberEntity> getMembers(KeywordFilter filter, Pagination pagination) {
+        String keyword = filter.getKeyword();
+        if (keyword == null || keyword.isEmpty()) {
+            return memberRepository.findAll(pagination.getPageRequest()).getContent();
+        }
+
+        return memberRepository.findAllByNameContainingIgnoreCaseOrIdContainingIgnoreCase(
+                keyword,
+                keyword,
+                pagination.getPageRequest()
+        ).getContent();
     }
 
-    public MemberDto getMember(String id) {
-        return this.memberDao.getMember(id);
+    public MemberEntity getMember(String id) {
+        return memberRepository.findById(id).orElse(null);
     }
 
     public int countMembers(KeywordFilter filter) {
-        return this.memberDao.countMembers(filter);
+        return (int) memberRepository.countAllByNameContainingIgnoreCaseOrIdContainingIgnoreCase(
+                filter.getKeyword(),
+                filter.getKeyword()
+        );
     }
 
-    public void updateMember(MemberDto dto) throws com.team4.artgallery.controller.exception.SqlException {
-        this.memberDao.updateMember(dto);
+    public void updateMember(MemberUpdateDto memberUpdateDto) throws com.team4.artgallery.controller.exception.SqlException {
+        memberRepository.save(memberUpdateDto.toEntity());
     }
 
     public void grantAdmin(String id) throws NotFoundException {
-        this.memberDao.grantAdmin(id);
+        memberRepository.updateAdminynById(id, 'Y');
     }
 
     public void revokeAdmin(String id) throws NotFoundException {
-        this.memberDao.revokeAdmin(id);
+        memberRepository.updateAdminynById(id, 'N');
     }
 
     public void deleteMember(String id) throws NotFoundException {
-        this.memberDao.deleteMember(id);
+        memberRepository.deleteById(id);
     }
 
 }

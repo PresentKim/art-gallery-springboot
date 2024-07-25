@@ -2,10 +2,10 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.controller.exception.*;
 import com.team4.artgallery.dao.IQnaDao;
-import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.QnaFilter;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
@@ -47,7 +47,7 @@ public class QnaService {
      * @return 문의글 목록
      */
     public List<QnaDto> getInquiries(QnaFilter filter, Pagination pagination) {
-        MemberDto loginMember = memberService.getLoginMember();
+        MemberEntity loginMember = memberService.getLoginMember();
 
         return qnaDao.getInquiries(
                 loginMember != null && loginMember.isAdmin() ? filter : new QnaFilter(),

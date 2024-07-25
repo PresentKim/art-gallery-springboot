@@ -2,7 +2,7 @@ package com.team4.artgallery.controller.domain.favorite;
 
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
-import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
@@ -31,10 +31,10 @@ public class FavoriteViewController {
             Pagination pagination,
 
             @LoginMember
-            MemberDto loginMember,
+            MemberEntity loginMember,
             Model model
     ) {
-        model.addAttribute("artworkList", favoriteService.getFavorites(loginMember.getId(), pagination));
+        model.addAttribute("artworkList", favoriteService.getFavorites(loginMember.id(), pagination));
         return "favorite/favoriteList";
     }
 

@@ -5,10 +5,12 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
+import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.enums.NoticeCategory;
 import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.dto.view.Views;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
@@ -63,9 +65,12 @@ public class NoticeRestController implements NoticeRestControllerDocs {
     @ResponseStatus(HttpStatus.CREATED)
     public NoticeDto create(
             @Valid
-            NoticeDto noticeDto
+            NoticeDto noticeDto,
+
+            @LoginMember
+            MemberEntity loginMember
     ) throws SqlException {
-        noticeService.createNotice(noticeDto);
+        noticeService.createNotice(noticeDto, loginMember);
         return noticeDto;
     }
 
@@ -76,11 +81,14 @@ public class NoticeRestController implements NoticeRestControllerDocs {
             @PathVariable("nseq")
             String nseq,
             @Valid
-            NoticeDto noticeDto
+            NoticeDto noticeDto,
+
+            @LoginMember
+            MemberEntity loginMember
     ) throws SqlException, NotFoundException {
         try {
             noticeDto.setNseq(Integer.parseInt(nseq));
-            noticeService.updateNotice(noticeDto);
+            noticeService.updateNotice(noticeDto, loginMember);
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }

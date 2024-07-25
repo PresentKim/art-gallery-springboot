@@ -1,6 +1,9 @@
 package com.team4.artgallery.controller.domain.member;
 
-import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.dto.member.MemberCreateDto;
+import com.team4.artgallery.dto.member.MemberLoginDto;
+import com.team4.artgallery.dto.member.MemberUpdateDto;
+import com.team4.artgallery.entity.MemberEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -25,7 +28,7 @@ interface MemberRestControllerDocs {
     )
     void create(
             @ParameterObject
-            MemberDto memberDto
+            MemberCreateDto memberCreateDto
     );
 
 
@@ -47,7 +50,7 @@ interface MemberRestControllerDocs {
     )
     void login(
             @Parameter(hidden = true)
-            MemberDto loginForm
+            MemberLoginDto memberLoginDto
     );
 
 
@@ -86,7 +89,7 @@ interface MemberRestControllerDocs {
             String pwd,
 
             @Parameter(hidden = true)
-            MemberDto loginMember
+            MemberEntity loginMember
     );
 
 
@@ -120,10 +123,10 @@ interface MemberRestControllerDocs {
             @Parameter(name = "id", description = "회원 아이디", required = true, in = ParameterIn.PATH)
             String id,
             @ParameterObject
-            MemberDto memberDto,
+            MemberUpdateDto memberUpdateDto,
 
             @Parameter(hidden = true)
-            MemberDto loginMember
+            MemberEntity loginMember
     );
 
 

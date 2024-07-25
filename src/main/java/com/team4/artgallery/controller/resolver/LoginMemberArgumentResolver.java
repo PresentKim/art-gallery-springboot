@@ -2,7 +2,7 @@ package com.team4.artgallery.controller.resolver;
 
 import com.team4.artgallery.aspect.exception.NotLoginException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
-import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.MemberService;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
@@ -13,7 +13,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 /**
- * 로그인한 회원 정보({@link MemberDto}) 객체를 파라미터로 주입하는 메소드 인자 처리 클래스
+ * 로그인한 회원 정보({@link MemberEntity}) 객체를 파라미터로 주입하는 메소드 인자 처리 클래스
  *
  * @implNote {@link LoginMember} 어노테이션이 붙은 매개변수에 로그인한 회원 정보를 주입합니다.
  * <p>
@@ -43,7 +43,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
     /**
      * 메소드 매개변수를 지정된 요청의 인수 값으로 해결합니다.
      *
-     * @implNote 로그인 정보가 존재하는 경우 로그인한 회원 정보{@link MemberDto}를 반환합니다.
+     * @implNote 로그인 정보가 존재하는 경우 로그인한 회원 정보{@link MemberEntity}를 반환합니다.
      * <p>
      * 로그인하지 않은 경우 {@link NotLoginException} 예외를 발생시킵니다.
      */

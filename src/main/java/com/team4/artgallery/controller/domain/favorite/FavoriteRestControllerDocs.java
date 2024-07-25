@@ -1,7 +1,7 @@
 package com.team4.artgallery.controller.domain.favorite;
 
 import com.team4.artgallery.dto.FavoriteDto;
-import com.team4.artgallery.dto.MemberDto;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.util.Pagination;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,7 +33,7 @@ interface FavoriteRestControllerDocs {
             String aseq,
 
             @Parameter(hidden = true)
-            MemberDto loginMember
+            MemberEntity loginMember
     );
 
     @Tag(name = "member", description = "회원 메서드")
@@ -53,7 +53,7 @@ interface FavoriteRestControllerDocs {
             Pagination pagination,
 
             @Parameter(hidden = true)
-            MemberDto loginMember
+            MemberEntity loginMember
     );
 
     @Tag(name = "member", description = "회원 메서드")
@@ -76,7 +76,7 @@ interface FavoriteRestControllerDocs {
             String aseq,
 
             @Parameter(hidden = true)
-            MemberDto loginMember
+            MemberEntity loginMember
     );
 
 
@@ -97,7 +97,7 @@ interface FavoriteRestControllerDocs {
             String aseq,
 
             @Parameter(hidden = true)
-            MemberDto loginMember
+            MemberEntity loginMember
     );
 
 }

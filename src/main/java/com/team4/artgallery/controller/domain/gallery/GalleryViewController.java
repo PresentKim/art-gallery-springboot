@@ -3,8 +3,8 @@ package com.team4.artgallery.controller.domain.gallery;
 import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
-import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
@@ -57,7 +57,7 @@ public class GalleryViewController {
             Integer gseq,
 
             @LoginMember
-            MemberDto loginMember,
+            MemberEntity loginMember,
             Model model
     ) throws NotFoundException {
         if (gseq != null) {

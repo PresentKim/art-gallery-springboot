@@ -6,8 +6,8 @@ import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.dao.IGalleryDao;
 import com.team4.artgallery.dto.GalleryDto;
-import com.team4.artgallery.dto.MemberDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.helper.MultipartFileService;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Assert;
@@ -44,10 +44,10 @@ public class GalleryService {
      * @throws SqlException  갤러리 정보 추가에 실패한 경우 예외 발생
      */
     public void createGallery(GalleryDto galleryDto, MultipartFile imageFile) throws FileException, SqlException {
-        MemberDto loginMember = memberService.getLoginMember();
+        MemberEntity loginMember = memberService.getLoginMember();
 
         saveImage(imageFile, galleryDto);
-        galleryDto.setAuthorId(loginMember.getId());
+        galleryDto.setAuthorId(loginMember.id());
         galleryDao.createGallery(galleryDto);
     }
 
@@ -84,9 +84,9 @@ public class GalleryService {
      * @throws NotFoundException  갤러리 정보를 찾을 수 없는 경우 예외 발생
      * @throws ForbiddenException 작성자가 아닌 경우 예외 발생
      */
-    public GalleryDto getGalleryOnlyAuthor(int gseq, MemberDto loginMember) throws NotFoundException, ForbiddenException {
+    public GalleryDto getGalleryOnlyAuthor(int gseq, MemberEntity loginMember) throws NotFoundException, ForbiddenException {
         GalleryDto galleryDto = galleryDao.getGallery(gseq);
-        Assert.trueOrForbidden(loginMember.getId().equals(galleryDto.getAuthorId()), "작성자만 수정할 수 있습니다.");
+        Assert.trueOrForbidden(loginMember.id().equals(galleryDto.getAuthorId()), "작성자만 수정할 수 있습니다.");
         return galleryDto;
     }
 
@@ -100,7 +100,7 @@ public class GalleryService {
      * @throws FileException      이미지 저장에 실패한 경우 예외 발생
      */
     public void updateGallery(GalleryDto galleryDto, MultipartFile imageFile) throws NotFoundException, ForbiddenException, FileException {
-        MemberDto loginMember = memberService.getLoginMember();
+        MemberEntity loginMember = memberService.getLoginMember();
 
         GalleryDto oldGallery = getGalleryOnlyAuthor(galleryDto.getGseq(), loginMember);
         if (imageFile != null && !imageFile.isEmpty()) {
@@ -122,10 +122,10 @@ public class GalleryService {
      * @throws ForbiddenException 작성자 혹은 관리자가 아닌 경우 예외 발생
      */
     public void deleteGallery(Integer gseq) throws NotFoundException, ForbiddenException {
-        MemberDto loginMember = memberService.getLoginMember();
+        MemberEntity loginMember = memberService.getLoginMember();
 
         GalleryDto oldGallery = galleryDao.getGallery(gseq);
-        Assert.trueOrForbidden(loginMember.isAdmin() || loginMember.getId().equals(oldGallery.getAuthorId()), "작성자 혹은 관리자만 삭제할 수 있습니다.");
+        Assert.trueOrForbidden(loginMember.isAdmin() || loginMember.id().equals(oldGallery.getAuthorId()), "작성자 혹은 관리자만 삭제할 수 있습니다.");
 
         galleryDao.deleteGallery(gseq);
     }
