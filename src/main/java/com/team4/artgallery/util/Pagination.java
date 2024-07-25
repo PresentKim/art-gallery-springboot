@@ -4,6 +4,7 @@ import com.team4.artgallery.dto.filter.IFilter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -159,6 +160,7 @@ public class Pagination {
      * @return 페이지 LIMIT 값
      */
     public int getLimit() {
+        // TODO: JPA 전환 후 제거
         return displayCount;
     }
 
@@ -168,7 +170,12 @@ public class Pagination {
      * @return 페이지 OFFSET 값
      */
     public int getOffset() {
+        // TODO: JPA 전환 후 제거
         return Math.max(0, getPage() - 1) * displayCount;
+    }
+
+    public PageRequest getPageRequest() {
+        return PageRequest.of(getPage() - 1, displayCount);
     }
 
     /**
