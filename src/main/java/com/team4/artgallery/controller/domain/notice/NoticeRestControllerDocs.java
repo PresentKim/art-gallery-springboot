@@ -93,7 +93,7 @@ interface NoticeRestControllerDocs {
     )
     NoticeDto create(
             @ParameterObject
-            NoticeDto artworkDto,
+            NoticeDto noticeDto,
 
             @Parameter(hidden = true)
             MemberEntity loginMember
@@ -123,7 +123,7 @@ interface NoticeRestControllerDocs {
             @Parameter(name = "nseq", description = "소식지 번호", required = true, in = ParameterIn.PATH)
             String nseq,
             @ParameterObject
-            NoticeDto artworkDto,
+            NoticeDto noticeDto,
 
             @Parameter(hidden = true)
             MemberEntity loginMember

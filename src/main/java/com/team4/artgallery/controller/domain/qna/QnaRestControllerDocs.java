@@ -76,7 +76,7 @@ interface QnaRestControllerDocs {
     )
     QnaDto create(
             @ParameterObject
-            QnaDto artworkDto
+            QnaDto qnaDto
     );
 
     @Tag(name = "admin", description = "관리자 메서드")
@@ -103,7 +103,7 @@ interface QnaRestControllerDocs {
             @Parameter(name = "qseq", description = "문의글 번호", required = true, in = ParameterIn.PATH)
             String qseq,
             @ParameterObject
-            QnaDto artworkDto
+            QnaDto qnaDto
     );
 
     @Tag(name = "admin", description = "관리자 메서드")
