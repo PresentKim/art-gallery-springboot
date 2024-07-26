@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -174,7 +175,7 @@ public class Pagination {
         return Math.max(0, getPage() - 1) * displayCount;
     }
 
-    public PageRequest getPageRequest() {
+    public Pageable toPageable() {
         return PageRequest.of(getPage() - 1, displayCount);
     }
 
