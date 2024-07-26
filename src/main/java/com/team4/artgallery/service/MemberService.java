@@ -13,11 +13,11 @@ import com.team4.artgallery.repository.MemberRepository;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @Service
 public class MemberService {
@@ -135,17 +135,8 @@ public class MemberService {
         memberRepository.save(memberCreateDto.toEntity());
     }
 
-    public List<MemberEntity> getMembers(KeywordFilter filter, Pagination pagination) {
-        String keyword = filter.getKeyword();
-        if (keyword == null || keyword.isEmpty()) {
-            return memberRepository.findAll(pagination.getPageRequest()).getContent();
-        }
-
-        return memberRepository.findAllByNameContainingIgnoreCaseOrIdContainingIgnoreCase(
-                keyword,
-                keyword,
-                pagination.getPageRequest()
-        ).getContent();
+    public Page<MemberEntity> getMembers(KeywordFilter filter, Pagination pagination) {
+        return memberRepository.findAll(filter.toSpec("name", "id"), pagination.toPageable());
     }
 
     public MemberEntity getMember(String id) {
@@ -153,10 +144,7 @@ public class MemberService {
     }
 
     public int countMembers(KeywordFilter filter) {
-        return (int) memberRepository.countAllByNameContainingIgnoreCaseOrIdContainingIgnoreCase(
-                filter.getKeyword(),
-                filter.getKeyword()
-        );
+        return (int) memberRepository.count(filter.toSpec("name", "id"));
     }
 
     public void updateMember(MemberUpdateDto memberUpdateDto) throws com.team4.artgallery.controller.exception.SqlException {

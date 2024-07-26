@@ -26,11 +26,16 @@ public class KeywordFilter implements IFilter {
         return this;
     }
 
-    public Specification<MemberEntity> toSpec(String filedName) {
+    public Specification<MemberEntity> toSpec(String... filedNames) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (keyword != null) {
-                predicates.add(cb.like(root.get(filedName), "%" + keyword + "%"));
+                Predicate[] keywordPredicates = new Predicate[filedNames.length];
+                for (int i = 0; i < filedNames.length; i++) {
+                    keywordPredicates[i] = cb.like(root.get(filedNames[i]), "%" + keyword + "%");
+                }
+
+                predicates.add(cb.or(keywordPredicates));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));
