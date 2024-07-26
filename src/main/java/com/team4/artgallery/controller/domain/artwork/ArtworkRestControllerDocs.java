@@ -1,9 +1,11 @@
 package com.team4.artgallery.controller.domain.artwork;
 
-import com.team4.artgallery.dto.ArtworkDto;
 import com.team4.artgallery.dto.ResponseDto;
+import com.team4.artgallery.dto.artwork.ArtworkCreateDto;
+import com.team4.artgallery.dto.artwork.ArtworkUpdateDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.dto.request.DisplayRequest;
+import com.team4.artgallery.entity.ArtworkEntity;
 import com.team4.artgallery.util.Pagination;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -29,7 +32,7 @@ interface ArtworkRestControllerDocs {
                     @ApiResponse(responseCode = "404", description = "리소스를 찾을 수 없음")
             }
     )
-    ArtworkDto getById(
+    ArtworkEntity getById(
             @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
             int aseq
     );
@@ -44,7 +47,7 @@ interface ArtworkRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    List<ArtworkDto> getList(
+    Page<ArtworkEntity> getList(
             @ParameterObject
             ArtworkFilter filter,
             @ParameterObject
@@ -62,7 +65,7 @@ interface ArtworkRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    List<ArtworkDto> getRandomList(
+    List<ArtworkEntity> getRandomList(
             @Parameter(name = "count", description = "예술품 갯수", required = true)
             Integer count
     );
@@ -78,7 +81,7 @@ interface ArtworkRestControllerDocs {
                             responseCode = "201",
                             description = "성공",
                             content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ArtworkDto.class)),
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ArtworkEntity.class)),
                                     @Content(mediaType = "text/html")
                             }
                     ),
@@ -100,9 +103,9 @@ interface ArtworkRestControllerDocs {
                     )
             }
     )
-    ArtworkDto create(
+    ArtworkEntity create(
             @ParameterObject
-            ArtworkDto artworkDto,
+            ArtworkCreateDto artworkCreateDto,
             @Parameter(name = "imageFile", description = "이미지 파일", required = true)
             MultipartFile imageFile
     );
@@ -131,7 +134,7 @@ interface ArtworkRestControllerDocs {
             @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
             String aseq,
             @ParameterObject
-            ArtworkDto artworkDto,
+            ArtworkUpdateDto artworkUpdateDto,
             @Parameter(name = "imageFile", description = "이미지 파일")
             MultipartFile imageFile
     );

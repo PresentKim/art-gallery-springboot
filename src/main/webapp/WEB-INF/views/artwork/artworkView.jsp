@@ -5,7 +5,7 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>예술품 :: ${artworkDto.artist} | ${artworkDto.name}</title>
+        <title>예술품 :: ${artworkEntity.artist} | ${artworkEntity.name}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/artwork/artwork_view.css"/>">
         <script src="<c:url value="/static/script/artwork/artwork_view.js"/>"></script>
     </jsp:attribute>
@@ -15,8 +15,8 @@
 <section class="artwork-view">
     <div class="artwork-view-header">
         <div class="artwork-view-title">
-            <span>${artworkDto.artist} |&nbsp;</span> <span>${artworkDto.name} |&nbsp;</span>
-            <span>${artworkDto.year}</span>
+            <span>${artworkEntity.artist} |&nbsp;</span> <span>${artworkEntity.name} |&nbsp;</span>
+            <span>${artworkEntity.year}</span>
         </div>
         <div class="artwork-view_btn">
             <c:if test="${not empty loginMember}">
@@ -24,10 +24,10 @@
 
                 <c:if test="${loginMember.admin}">
                     <div onclick="updateArtworkDisplay(this)">
-                            ${artworkDto.display ? '비공개' : '공개'}로 전환
+                            ${artworkEntity.display ? '비공개' : '공개'}로 전환
                     </div>
-                    <a href="<c:url value="/artwork/write?aseq=${artworkDto.aseq}"/>">수정</a>
-                    <div onclick="deleteArtwork(${artworkDto.aseq})">삭제</div>
+                    <a href="<c:url value="/artwork/write?aseq=${artworkEntity.aseq}"/>">수정</a>
+                    <div onclick="deleteArtwork(${artworkEntity.aseq})">삭제</div>
                 </c:if>
             </c:if>
 
@@ -35,20 +35,20 @@
         </div>
     </div>
     <div class="artwork-view_img">
-        <img alt="artwork-image" src="${artworkDto.imageSrc}">
+        <img alt="artwork-image" src="${artworkEntity.imageSrc}">
         <span> ※ 예술품 이미지는 저작권법에 따라 복제뿐만 아니라 전송, 배포 등 어떠한 방식으로든 무단 이용할 수 없으며, 영리적인 목적으로 사용할 경우 원작자에게 별도의 동의를 받아야함을 알려드립니다. </span>
     </div>
     <div class="artwork-view_info">
         <ul>
-            <li><span>작가명</span> <span>${artworkDto.artist}</span></li>
-            <li><span>작품명</span> <span>${artworkDto.name}</span></li>
-            <li><span>제작연도</span> <span>${artworkDto.year}</span></li>
-            <li><span>재료</span> <span>${artworkDto.material}</span></li>
-            <li><span>규격</span> <span>${artworkDto.size}</span></li>
-            <li><span>부문</span> <span>${artworkDto.category}</span></li>
+            <li><span>작가명</span> <span>${artworkEntity.artist}</span></li>
+            <li><span>작품명</span> <span>${artworkEntity.name}</span></li>
+            <li><span>제작연도</span> <span>${artworkEntity.year}</span></li>
+            <li><span>재료</span> <span>${artworkEntity.material}</span></li>
+            <li><span>규격</span> <span>${artworkEntity.size}</span></li>
+            <li><span>부문</span> <span>${artworkEntity.category}</span></li>
             <c:if test="${loginMember.admin}">
                 <li><span>전시상태</span> <c:choose>
-                    <c:when test="${artworkDto.displayyn.equals('Y')}">
+                    <c:when test="${artworkEntity.displayyn.equals('Y')}">
                         <span>공개</span>
                     </c:when>
                     <c:otherwise>
@@ -59,7 +59,7 @@
         </ul>
     </div>
     <div class="artwork-view_content">
-        <p>${artworkDto.content}</p>
+        <p>${artworkEntity.content}</p>
     </div>
 </section>
 

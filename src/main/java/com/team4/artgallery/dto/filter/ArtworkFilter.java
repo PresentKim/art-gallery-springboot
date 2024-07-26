@@ -1,9 +1,15 @@
 package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
+import com.team4.artgallery.entity.ArtworkEntity;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.validation.constraints.Null;
+import org.springframework.data.jpa.domain.Specification;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArtworkFilter implements IFilter {
 
@@ -77,6 +83,29 @@ public class ArtworkFilter implements IFilter {
         return this;
     }
 
+    public Specification<ArtworkEntity> toSpec() {
+        return (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (displayyn != null) {
+                predicates.add(cb.equal(root.get("displayyn"), displayyn.charAt(0)));
+            }
+
+            if (category != null) {
+                predicates.add(cb.equal(root.get("category"), category));
+            }
+
+            if (keyword != null) {
+                String pattern = "%" + keyword + "%";
+                predicates.add(cb.or(
+                        cb.like(root.get("name"), pattern),
+                        cb.like(root.get("artist"), pattern)
+                ));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+    }
 
     // 그룹 클래스
 

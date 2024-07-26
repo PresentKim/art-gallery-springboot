@@ -60,26 +60,26 @@
             <li>등록일</li>
             <li>미리보기</li>
         </ul>
-        <c:forEach items="${artworkList}" var="artworkDto" varStatus="status">
+        <c:forEach items="${artworkList}" var="artworkEntity" varStatus="status">
             <ul
                     class="admin-list-main admin-artwork-list"
                     onclick="checkChildCheckbox(this)"
-                    data-seq="${artworkDto.aseq}"
+                    data-seq="${artworkEntity.aseq}"
             >
                 <li>
                     <label><input type="checkbox"></label>
                 </li>
-                <li>${artworkDto.displayyn}</li>
-                <li>${artworkDto.aseq}</li>
-                <li>${artworkDto.category}</li>
-                <li class="view-link"><a href="<c:url value="/artwork/${artworkDto.aseq}"/>">${artworkDto.name}</a></li>
-                <li>${artworkDto.artist}</li>
-                <li>${artworkDto.year}</li>
-                <li>${artworkDto.material}</li>
-                <li>${artworkDto.size}</li>
-                <li>${artworkDto.indate}</li>
+                <li>${artworkEntity.displayyn}</li>
+                <li>${artworkEntity.aseq}</li>
+                <li>${artworkEntity.category}</li>
+                <li class="view-link"><a href="<c:url value="/artwork/${artworkEntity.aseq}"/>">${artworkEntity.name}</a></li>
+                <li>${artworkEntity.artist}</li>
+                <li>${artworkEntity.year}</li>
+                <li>${artworkEntity.material}</li>
+                <li>${artworkEntity.size}</li>
+                <li>${artworkEntity.indate}</li>
                 <li>
-                    <img alt="artwork-img" src="${artworkDto.imageSrc}" onclick="previewImage(this)">
+                    <img alt="artwork-img" src="${artworkEntity.imageSrc}" onclick="previewImage(this)">
                 </li>
             </ul>
         </c:forEach>

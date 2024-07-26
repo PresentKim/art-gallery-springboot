@@ -5,13 +5,16 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.exception.FileException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
-import com.team4.artgallery.dto.ArtworkDto;
+import com.team4.artgallery.dto.artwork.ArtworkCreateDto;
+import com.team4.artgallery.dto.artwork.ArtworkUpdateDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.dto.request.DisplayRequest;
 import com.team4.artgallery.dto.view.Views;
+import com.team4.artgallery.entity.ArtworkEntity;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -32,7 +35,7 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
 
     @GetMapping(path = "")
     @JsonView(Views.Summary.class)
-    public List<ArtworkDto> getList(
+    public Page<ArtworkEntity> getList(
             @Validated(ArtworkFilter.ExcludeDisplay.class)
             ArtworkFilter filter,
             @Valid
@@ -48,20 +51,19 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
     @PostMapping(path = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @JsonView(Views.Identifier.class)
-    public ArtworkDto create(
+    public ArtworkEntity create(
             @Valid
-            ArtworkDto artworkDto,
+            ArtworkCreateDto artworkCreateDto,
             @Valid
             @RequestPart(name = "imageFile")
             MultipartFile imageFile
     ) throws NotFoundException, SqlException, FileException {
-        artworkService.createArtwork(artworkDto, imageFile);
-        return artworkDto;
+        return artworkService.createArtwork(artworkCreateDto, imageFile);
     }
 
     @GetMapping(path = "{aseq}")
     @JsonView(Views.Detail.class)
-    public ArtworkDto getById(
+    public ArtworkEntity getById(
             @PathVariable("aseq")
             int aseq
     ) throws NotFoundException {
@@ -75,14 +77,13 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
             @PathVariable("aseq")
             String aseq,
             @Valid
-            ArtworkDto artworkDto,
+            ArtworkUpdateDto artworkUpdateDto,
             @Valid
             @RequestPart(name = "imageFile", required = false)
             MultipartFile imageFile
     ) throws NotFoundException, SqlException, FileException {
         try {
-            artworkDto.setAseq(Integer.parseInt(aseq));
-            artworkService.updateArtwork(artworkDto, imageFile);
+            artworkService.updateArtwork(Integer.parseInt(aseq), artworkUpdateDto, imageFile);
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
@@ -120,7 +121,7 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
 
     @GetMapping(path = "random")
     @JsonView(Views.Summary.class)
-    public List<ArtworkDto> getRandomList(
+    public List<ArtworkEntity> getRandomList(
             @RequestParam("count")
             Integer count
     ) {

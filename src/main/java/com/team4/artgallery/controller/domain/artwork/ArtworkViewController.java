@@ -47,7 +47,7 @@ public class ArtworkViewController {
 
             Model model
     ) throws NotFoundException {
-        model.addAttribute("artworkDto", artworkService.getArtwork(aseq));
+        model.addAttribute("artworkEntity", artworkService.getArtwork(aseq));
         return "artwork/artworkView";
     }
 
@@ -60,7 +60,7 @@ public class ArtworkViewController {
             Model model
     ) throws NotFoundException {
         if (aseq != null) {
-            model.addAttribute("artworkDto", artworkService.getArtwork(aseq));
+            model.addAttribute("artworkEntity", artworkService.getArtwork(aseq));
         }
         return "artwork/artworkWrite";
     }
