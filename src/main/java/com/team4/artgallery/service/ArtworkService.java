@@ -101,7 +101,7 @@ public class ArtworkService {
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      */
     public void updateDisplay(int aseq, boolean display) throws NotFoundException {
-        artworkRepository.updateDisplayynByAseq(aseq, display ? 'Y' : 'N');
+        artworkRepository.updateDisplayByAseq(aseq, display);
     }
 
     /**

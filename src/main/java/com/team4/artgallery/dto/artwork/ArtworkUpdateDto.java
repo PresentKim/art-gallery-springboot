@@ -55,14 +55,14 @@ public class ArtworkUpdateDto {
         return ArtworkEntity.builder()
                 .aseq(aseq)
                 .image(image)
-                .savefilename(saveFilename)
+                .saveFileName(saveFilename)
                 .name(name)
                 .category(category)
                 .artist(artist)
                 .year(year)
                 .material(material)
                 .size(size)
-                .displayyn(displayyn)
+                .display(displayyn == 'Y')
                 .content(content)
                 .build();
     }

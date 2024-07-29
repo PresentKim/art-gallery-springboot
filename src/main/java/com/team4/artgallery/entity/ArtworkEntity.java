@@ -2,7 +2,6 @@ package com.team4.artgallery.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.team4.artgallery.dto.view.Views;
-import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
@@ -50,9 +49,9 @@ public record ArtworkEntity(
         @Comment("크기")
         String size,
 
-        @Column(name = "displayyn", length = 1, nullable = false)
+        @Column(name = "display", length = 1, nullable = false)
         @Comment("전시여부")
-        char displayyn,
+        Boolean display,
 
         @Column(name = "content", nullable = false)
         @Comment("설명")
@@ -84,10 +83,7 @@ public record ArtworkEntity(
         return "/static/image/artwork/" + savefilename;
     }
 
-
-    @Hidden
-    public boolean isDisplay() {
-        return displayyn == 'Y';
+        return "/static/image/artwork/" + imageFileName;
     }
 
 }

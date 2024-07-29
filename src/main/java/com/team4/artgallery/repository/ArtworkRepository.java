@@ -22,7 +22,7 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
      */
     @Modifying
     @Transactional
-    @Query("update ArtworkEntity a set a.displayyn = :displayyn where a.aseq = :aseq")
-    void updateDisplayynByAseq(@Param("aseq") int aseq, @Param("displayyn") char displayyn);
+    @Query("update ArtworkEntity a set a.display = :display where a.aseq = :aseq")
+    void updateDisplayByAseq(@Param("aseq") int aseq, @Param("display") boolean display);
 
 }
