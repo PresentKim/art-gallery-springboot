@@ -57,13 +57,9 @@ public record ArtworkEntity(
         @Comment("설명")
         String content,
 
-        @Column(name = "image", length = 100, nullable = false)
-        @Comment("이미지")
-        String image,
-
-        @Column(name = "savefilename", length = 200, nullable = false)
+        @Column(name = "image", length = 200, nullable = false)
         @Comment("저장된 파일명")
-        String savefilename,
+        String imageFileName,
 
         @Column(name = "indate", nullable = false)
         @ColumnDefault("NOW()")
@@ -76,12 +72,9 @@ public record ArtworkEntity(
      */
     @JsonView({Views.Summary.class, Views.Detail.class})
     public String getImageSrc() {
-        if (savefilename.startsWith("http")) {
-            return savefilename;
+        if (imageFileName.startsWith("http")) {
+            return imageFileName;
         }
-
-        return "/static/image/artwork/" + savefilename;
-    }
 
         return "/static/image/artwork/" + imageFileName;
     }

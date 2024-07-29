@@ -51,11 +51,10 @@ public class ArtworkUpdateDto {
 
     protected MultipartFile imageFile;
 
-    public ArtworkEntity toEntity(Integer aseq, String image, String saveFilename) {
+    public ArtworkEntity toEntity(Integer aseq, String imageFileName) {
         return ArtworkEntity.builder()
                 .aseq(aseq)
-                .image(image)
-                .saveFileName(saveFilename)
+                .imageFileName(imageFileName)
                 .name(name)
                 .category(category)
                 .artist(artist)

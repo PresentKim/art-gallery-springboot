@@ -37,8 +37,7 @@ public class ArtworkService {
      * @throws SqlException  예술품 정보 추가에 실패한 경우 예외 발생
      */
     public ArtworkEntity createArtwork(ArtworkCreateDto artworkCreateDto, MultipartFile imageFile) throws SqlException {
-        MultipartFileService.FileNamePair fileNamePair = saveImage(imageFile);
-        return artworkRepository.save(artworkCreateDto.toEntity(null, fileNamePair.fileName(), fileNamePair.saveFileName()));
+        return artworkRepository.save(artworkCreateDto.toEntity(null, saveImage(imageFile)));
     }
 
     /**
@@ -82,15 +81,13 @@ public class ArtworkService {
      * @throws FileException     이미지 저장에 실패한 경우 예외 발생
      */
     public void updateArtwork(int aseq, ArtworkUpdateDto artworkUpdateDto, MultipartFile imageFile) throws NotFoundException {
-        MultipartFileService.FileNamePair fileNamePair;
+        String fileName;
         if (imageFile != null && !imageFile.isEmpty()) {
-            fileNamePair = saveImage(imageFile);
+            fileName = saveImage(imageFile);
         } else {
-            ArtworkEntity oldArtwork = getArtwork(aseq);
-            fileNamePair = new MultipartFileService.FileNamePair(oldArtwork.image(), oldArtwork.savefilename());
+            fileName = getArtwork(aseq).imageFileName();
         }
-
-        artworkRepository.save(artworkUpdateDto.toEntity(aseq, fileNamePair.fileName(), fileNamePair.saveFileName()));
+        artworkRepository.save(artworkUpdateDto.toEntity(aseq, fileName));
     }
 
     /**
@@ -118,10 +115,11 @@ public class ArtworkService {
      * 예술품 이미지를 저장하고  이미지 경로를 반환합니다.
      *
      * @param file 이미지 파일
+     * @return 이미지 파일이 저장된 경로
      * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      */
-    private MultipartFileService.FileNamePair saveImage(MultipartFile file) throws FileException {
-        return fileService.saveFile(file, "/static/image/artwork");
+    private String saveImage(MultipartFile file) throws FileException {
+        return fileService.saveFile(file, "/static/image/artwork").saveFileName();
     }
 
 }
