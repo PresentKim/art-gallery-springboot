@@ -34,7 +34,7 @@ public class FavoriteViewController {
             MemberEntity loginMember,
             Model model
     ) {
-        model.addAttribute("artworkList", favoriteService.getFavorites(loginMember.id(), pagination));
+        model.addAttribute("artworkList", favoriteService.getFavoriteArtworks(loginMember.id(), pagination).toList());
         return "favorite/favoriteList";
     }
 
