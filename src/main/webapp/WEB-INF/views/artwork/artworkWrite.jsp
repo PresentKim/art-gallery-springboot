@@ -1,4 +1,4 @@
-<%--@elvariable id="artworkEntity" type="com.team4.artgallery.dto.ArtworkDto"--%>
+<%--@elvariable id="artworkEntity" type="com.team4.artgallery.entity.ArtworkEntity"--%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.team4.artgallery.dto.enums.ArtworkCategory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
