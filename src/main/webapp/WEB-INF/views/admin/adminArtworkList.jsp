@@ -61,6 +61,7 @@
             <li>미리보기</li>
         </ul>
         <c:forEach items="${artworkList}" var="artworkEntity" varStatus="status">
+            <%--@elvariable id="artworkEntity" type="com.team4.artgallery.entity.ArtworkEntity"--%>
             <ul
                     class="admin-list-main admin-artwork-list"
                     onclick="checkChildCheckbox(this)"
@@ -69,10 +70,11 @@
                 <li>
                     <label><input type="checkbox"></label>
                 </li>
-                <li>${artworkEntity.displayyn}</li>
+                <li>${artworkEntity.display ? 'Y' : 'N'}</li>
                 <li>${artworkEntity.aseq}</li>
                 <li>${artworkEntity.category}</li>
-                <li class="view-link"><a href="<c:url value="/artwork/${artworkEntity.aseq}"/>">${artworkEntity.name}</a></li>
+                <li class="view-link"><a
+                        href="<c:url value="/artwork/${artworkEntity.aseq}"/>">${artworkEntity.name}</a></li>
                 <li>${artworkEntity.artist}</li>
                 <li>${artworkEntity.year}</li>
                 <li>${artworkEntity.material}</li>

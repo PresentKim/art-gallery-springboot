@@ -40,6 +40,7 @@
             <li>휴대번호</li>
         </ul>
         <c:forEach items="${memberList}" var="memberEntity">
+            <%--@elvariable id="memberEntity" type="com.team4.artgallery.entity.MemberEntity"--%>
             <ul
                     class="admin-list-main admin-artwork-list"
                     onclick="checkChildCheckbox(this)"
