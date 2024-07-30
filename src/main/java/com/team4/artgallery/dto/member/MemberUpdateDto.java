@@ -20,8 +20,9 @@ public record MemberUpdateDto(
         String address
 ) {
 
-    public MemberEntity toEntity() {
+    public MemberEntity toEntity(String id) {
         return MemberEntity.builder()
+                .id(id)
                 .name(name)
                 .pwd(pwd)
                 .email(email)

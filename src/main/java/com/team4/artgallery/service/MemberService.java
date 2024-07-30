@@ -152,8 +152,8 @@ public class MemberService {
         return (int) memberRepository.count((Specification<MemberEntity>) filter.toSpec("name", "id"));
     }
 
-    public void updateMember(MemberUpdateDto memberUpdateDto) throws com.team4.artgallery.controller.exception.SqlException {
-        memberRepository.save(memberUpdateDto.toEntity());
+    public void updateMember(String id, MemberUpdateDto memberUpdateDto) throws com.team4.artgallery.controller.exception.SqlException {
+        memberRepository.save(memberUpdateDto.toEntity(id));
     }
 
     public void grantAdmin(String id) throws NotFoundException {

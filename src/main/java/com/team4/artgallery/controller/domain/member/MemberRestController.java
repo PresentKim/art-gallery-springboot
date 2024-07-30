@@ -87,7 +87,7 @@ public class MemberRestController implements MemberRestControllerDocs {
             throw new ForbiddenException("본인 정보만 수정할 수 있습니다");
         }
 
-        memberService.updateMember(memberUpdateDto);
+        memberService.updateMember(id, memberUpdateDto);
         memberService.setLoginMember(memberService.getMember(id));
     }
 
