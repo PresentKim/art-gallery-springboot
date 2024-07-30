@@ -28,7 +28,7 @@ public class KeywordFilter implements IFilter {
     public Specification<?> toSpec(String... filedNames) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (keyword != null) {
+            if (keyword != null && !keyword.isBlank()) {
                 Predicate[] keywordPredicates = new Predicate[filedNames.length];
                 for (int i = 0; i < filedNames.length; i++) {
                     keywordPredicates[i] = cb.like(root.get(filedNames[i]), "%" + keyword + "%");

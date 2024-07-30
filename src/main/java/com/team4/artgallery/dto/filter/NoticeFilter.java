@@ -44,11 +44,11 @@ public class NoticeFilter implements IFilter {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (category != null) {
+            if (category != null && !category.isBlank()) {
                 predicates.add(cb.equal(root.get("category"), category));
             }
 
-            if (keyword != null) {
+            if (keyword != null && !keyword.isBlank()) {
                 String pattern = "%" + keyword + "%";
                 predicates.add(cb.or(
                         cb.like(root.get("title"), pattern),

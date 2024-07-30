@@ -87,15 +87,15 @@ public class ArtworkFilter implements IFilter {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (displayyn != null) {
+            if (displayyn != null && includeDisplay) {
                 predicates.add(cb.equal(root.get("display"), displayyn == 'Y'));
             }
 
-            if (category != null) {
+            if (category != null && !category.isBlank()) {
                 predicates.add(cb.equal(root.get("category"), category));
             }
 
-            if (keyword != null) {
+            if (keyword != null && !keyword.isBlank()) {
                 String pattern = "%" + keyword + "%";
                 predicates.add(cb.or(
                         cb.like(root.get("name"), pattern),
