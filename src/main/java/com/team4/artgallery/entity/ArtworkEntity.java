@@ -67,6 +67,7 @@ public class ArtworkEntity {
 
     @Column(name = "image", length = 200, nullable = false)
     @Comment("저장된 파일명")
+    @JsonView()
     private String imageFileName;
 
     @Column(name = "display", length = 1, nullable = false)
@@ -78,6 +79,7 @@ public class ArtworkEntity {
     @Column(name = "indate", nullable = false)
     @ColumnDefault("NOW()")
     @Comment("등록일")
+    @JsonView({Views.Detail.class})
     private LocalDateTime indate;
 
     /**

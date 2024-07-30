@@ -38,6 +38,7 @@ public class MemberEntity {
 
     @Column(name = "pwd", length = 45, nullable = false)
     @Comment("비밀번호")
+    @JsonView()
     private String pwd;
 
     @Column(name = "email", length = 45, nullable = false)
@@ -59,6 +60,7 @@ public class MemberEntity {
     @Column(name = "adminyn", nullable = false)
     @ColumnDefault("'N'")
     @Comment("관리자 여부")
+    @JsonView()
     private Character adminyn;
 
     @Column(name = "address", length = 100, nullable = false)

@@ -48,6 +48,7 @@ public class GalleryEntity {
 
     @Column(name = "image", length = 200, nullable = false)
     @Comment("저장된 파일명")
+    @JsonView()
     private String imageFileName;
 
     @Column(name = "read_count", nullable = false)
