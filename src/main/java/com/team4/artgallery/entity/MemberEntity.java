@@ -59,7 +59,7 @@ public class MemberEntity {
     @Column(name = "adminyn", nullable = false)
     @ColumnDefault("'N'")
     @Comment("관리자 여부")
-    private char adminyn;
+    private Character adminyn;
 
     @Column(name = "address", length = 100, nullable = false)
     @Comment("주소")
