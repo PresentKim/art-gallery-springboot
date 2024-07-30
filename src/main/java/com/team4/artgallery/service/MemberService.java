@@ -90,7 +90,7 @@ public class MemberService {
         Assert.isFalse(isLogin(), "이미 로그인 상태입니다.", ConflictException::new);
 
         MemberEntity memberEntity = memberRepository.findById(memberLoginDto.id()).orElse(null);
-        Assert.trueOrUnauthorized(memberEntity != null && memberEntity.pwd().equals(memberLoginDto.pwd()), "ID 혹은 비밀번호가 일치하지 않습니다.");
+        Assert.trueOrUnauthorized(memberEntity != null && memberEntity.getPwd().equals(memberLoginDto.pwd()), "ID 혹은 비밀번호가 일치하지 않습니다.");
 
         setLoginMember(memberEntity);
     }
@@ -115,9 +115,9 @@ public class MemberService {
      * @throws NotFoundException     회원 정보 삭제 중 오류가 발생한 경우 예외 발생
      */
     public void withdraw(String pwd, MemberEntity loginMember) throws BadRequestException, UnauthorizedException, NotFoundException {
-        Assert.isTrue(pwd.equals(loginMember.pwd()), "비밀번호가 일치하지 않습니다.", BadRequestException::new);
+        Assert.isTrue(pwd.equals(loginMember.getPwd()), "비밀번호가 일치하지 않습니다.", BadRequestException::new);
 
-        memberRepository.deleteById(loginMember.id());
+        memberRepository.deleteById(loginMember.getPwd());
         logout();
     }
 

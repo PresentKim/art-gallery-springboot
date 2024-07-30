@@ -48,7 +48,7 @@
             <li><span>부문</span> <span>${artworkEntity.category}</span></li>
             <c:if test="${loginMember.admin}">
                 <li><span>전시상태</span> <c:choose>
-                    <c:when test="${artworkEntity.displayyn.equals('Y')}">
+                    <c:when test="${artworkEntity.display}">
                         <span>공개</span>
                     </c:when>
                     <c:otherwise>

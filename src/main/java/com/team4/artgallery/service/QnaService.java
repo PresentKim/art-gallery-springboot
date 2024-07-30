@@ -37,7 +37,7 @@ public class QnaService {
      */
     public QnaEntity createInquiry(QnaUpdateDto qnaDto) throws SqlException {
         QnaEntity qnaEntity = qnaRepository.save(qnaDto.toEntity(null));
-        saveAuthorize(qnaEntity.qseq());
+        saveAuthorize(qnaEntity.getQseq());
         return qnaEntity;
     }
 
@@ -183,7 +183,7 @@ public class QnaService {
 
         QnaEntity qnaEntity = qnaRepository.findById(qseq)
                 .orElseThrow(() -> new NotFoundException("문의글 정보를 찾을 수 없습니다."));
-        if (!qnaEntity.pwd().equals(pwd)) {
+        if (!qnaEntity.getPwd().equals(pwd)) {
             return false;
         }
 
@@ -217,7 +217,7 @@ public class QnaService {
     public boolean authorizeForRestrict(int qseq) {
         QnaEntity qnaEntity = qnaRepository.findById(qseq)
                 .orElseThrow(() -> new NotFoundException("문의글 정보를 찾을 수 없습니다."));
-        return authorizeForPrivilege(qseq) || qnaEntity.display();
+        return authorizeForPrivilege(qseq) || qnaEntity.getDisplay();
     }
 
 }

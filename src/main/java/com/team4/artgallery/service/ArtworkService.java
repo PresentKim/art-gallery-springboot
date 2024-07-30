@@ -86,7 +86,7 @@ public class ArtworkService {
         if (imageFile != null && !imageFile.isEmpty()) {
             fileName = saveImage(imageFile);
         } else {
-            fileName = getArtwork(aseq).imageFileName();
+            fileName = getArtwork(aseq).getImageFileName();
         }
         artworkRepository.save(artworkUpdateDto.toEntity(aseq, fileName));
     }

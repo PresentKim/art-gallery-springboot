@@ -1,7 +1,7 @@
 package com.team4.artgallery.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -14,26 +14,31 @@ import java.time.LocalDateTime;
 @Comment("예술품")
 @DynamicInsert
 @DynamicUpdate
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public record FavoriteEntity(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id")
-        Long id,
+public class FavoriteEntity {
 
-        @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-        @JoinColumn(name = "member_id", nullable = false, unique = true)
-        @Comment("회원 아이디")
-        MemberEntity member,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-        @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-        @JoinColumn(name = "artwork_id", nullable = false, unique = true)
-        @Comment("예술품 번호")
-        ArtworkEntity artwork,
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "member_id", nullable = false, unique = true)
+    @Comment("회원 아이디")
+    private MemberEntity member;
 
-        @Column(name = "writedate", nullable = false)
-        @ColumnDefault("NOW()")
-        @Comment("등록일")
-        LocalDateTime writedate
-) {
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "artwork_id", nullable = false, unique = true)
+    @Comment("예술품 번호")
+    private ArtworkEntity artwork;
+
+    @Column(name = "writedate", nullable = false)
+    @ColumnDefault("NOW()")
+    @Comment("등록일")
+    private LocalDateTime writedate;
+
 }

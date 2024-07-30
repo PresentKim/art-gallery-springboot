@@ -37,7 +37,7 @@ public class FavoriteRestController implements FavoriteRestControllerDocs {
             @LoginMember
             MemberEntity loginMember
     ) {
-        return favoriteService.getFavoriteArtworks(loginMember.id(), pagination);
+        return favoriteService.getFavoriteArtworks(loginMember.getId(), pagination);
     }
 
     @CheckLogin
@@ -50,7 +50,7 @@ public class FavoriteRestController implements FavoriteRestControllerDocs {
             MemberEntity loginMember
     ) {
         try {
-            if (favoriteService.isFavorite(loginMember.id(), Integer.parseInt(aseq))) {
+            if (favoriteService.isFavorite(loginMember.getId(), Integer.parseInt(aseq))) {
                 return ResponseEntity.ok().build();
             } else {
                 return ResponseEntity.noContent().build();
@@ -71,7 +71,7 @@ public class FavoriteRestController implements FavoriteRestControllerDocs {
             MemberEntity loginMember
     ) throws SqlException {
         try {
-            favoriteService.createFavorite(loginMember.id(), Integer.parseInt(aseq));
+            favoriteService.createFavorite(loginMember.getId(), Integer.parseInt(aseq));
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
@@ -88,7 +88,7 @@ public class FavoriteRestController implements FavoriteRestControllerDocs {
             MemberEntity loginMember
     ) throws SqlException {
         try {
-            favoriteService.deleteFavorite(loginMember.id(), Integer.parseInt(aseq));
+            favoriteService.deleteFavorite(loginMember.getId(), Integer.parseInt(aseq));
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }

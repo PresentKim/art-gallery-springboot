@@ -1,7 +1,9 @@
 package com.team4.artgallery.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.team4.artgallery.dto.view.Views;
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -13,44 +15,51 @@ import java.time.LocalDateTime;
 @Table(name = "notice")
 @DynamicInsert
 @DynamicUpdate
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public record NoticeEntity(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "nseq", nullable = false)
-        @Comment("공지사항 번호")
-        Integer nseq,
+public class NoticeEntity {
 
-        @ManyToOne
-        @JoinColumn(name = "author", nullable = false)
-        @Comment("작성자")
-        MemberEntity author,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "nseq", nullable = false)
+    @Comment("공지사항 번호")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private Integer nseq;
 
-        @Column(name = "title", length = 100, nullable = false)
-        @Comment("제목")
-        String title,
+    @ManyToOne
+    @JoinColumn(name = "author", nullable = false)
+    @Comment("작성자")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private MemberEntity author;
 
-        @Column(name = "content", length = 9999, nullable = false)
-        @Comment("내용")
-        String content,
+    @Column(name = "title", length = 100, nullable = false)
+    @Comment("제목")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private String title;
 
-        @Column(name = "category", length = 45, nullable = false)
-        @Comment("카테고리")
-        String category,
+    @Column(name = "content", length = 9999, nullable = false)
+    @Comment("내용")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private String content;
 
-        @Column(name = "read_count", nullable = false)
-        @ColumnDefault("0")
-        @Comment("조회수")
-        Integer readCount,
+    @Column(name = "category", length = 45, nullable = false)
+    @Comment("카테고리")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private String category;
 
-        @Column(name = "indate", nullable = false)
-        @ColumnDefault("NOW()")
-        @Comment("등록일")
-        LocalDateTime indate
-) {
+    @Column(name = "read_count", nullable = false)
+    @ColumnDefault("0")
+    @Comment("조회수")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private Integer readCount;
 
-    public NoticeEntity() {
-        this(0, null, null, null, null, 0, null);
-    }
+    @Column(name = "indate", nullable = false)
+    @ColumnDefault("NOW()")
+    @Comment("등록일")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private LocalDateTime indate;
 
 }

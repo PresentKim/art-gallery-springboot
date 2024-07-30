@@ -1,7 +1,9 @@
 package com.team4.artgallery.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.team4.artgallery.dto.view.Views;
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -13,51 +15,59 @@ import java.time.LocalDateTime;
 @Table(name = "qna")
 @DynamicInsert
 @DynamicUpdate
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public record QnaEntity(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "qseq", nullable = false)
-        @Comment("문의글 번호")
-        Integer qseq,
+public class QnaEntity {
 
-        @Column(name = "title", length = 100, nullable = false)
-        @Comment("제목")
-        String title,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "qseq", nullable = false)
+    @Comment("문의글 번호")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private Integer qseq;
 
-        @Column(name = "content", nullable = false)
-        @Comment("내용")
-        String content,
+    @Column(name = "title", length = 100, nullable = false)
+    @Comment("제목")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private String title;
 
-        @Column(name = "reply", length = 9999, nullable = false)
-        @Comment("답변")
-        String reply,
+    @Column(name = "content", nullable = false)
+    @Comment("내용")
+    @JsonView({Views.Detail.class})
+    private String content;
 
-        @Column(name = "email", length = 45, nullable = false)
-        @Comment("이메일")
-        String email,
+    @Column(name = "reply", length = 9999, nullable = false)
+    @Comment("답변")
+    @JsonView({Views.Detail.class})
+    private String reply;
 
-        @Column(name = "phone", length = 45, nullable = false)
-        @Comment("전화번호")
-        String phone,
+    @Column(name = "email", length = 45, nullable = false)
+    @Comment("이메일")
+    @JsonView({Views.Detail.class})
+    private String email;
 
-        @Column(name = "pwd", length = 45, nullable = false)
-        @Comment("비밀번호")
-        String pwd,
+    @Column(name = "phone", length = 45, nullable = false)
+    @Comment("전화번호")
+    @JsonView({Views.Detail.class})
+    private String phone;
 
-        @Column(name = "display", nullable = false)
-        @ColumnDefault("0")
-        @Comment("공개여부")
-        Boolean display,
+    @Column(name = "pwd", length = 45, nullable = false)
+    @Comment("비밀번호")
+    private String pwd;
 
-        @Column(name = "indate", nullable = false)
-        @ColumnDefault("NOW()")
-        @Comment("등록일")
-        LocalDateTime indate
-) {
+    @Column(name = "display", nullable = false)
+    @ColumnDefault("0")
+    @Comment("공개여부")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private Boolean display;
 
-    public QnaEntity() {
-        this(null, null, null, null, null, null, null, null, null);
-    }
+    @Column(name = "indate", nullable = false)
+    @ColumnDefault("NOW()")
+    @Comment("등록일")
+    @JsonView({Views.Summary.class, Views.Detail.class})
+    private LocalDateTime indate;
 
 }

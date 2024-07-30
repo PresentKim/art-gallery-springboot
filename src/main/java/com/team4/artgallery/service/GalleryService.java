@@ -82,7 +82,7 @@ public class GalleryService {
      */
     public GalleryEntity getGalleryOnlyAuthor(int gseq, MemberEntity loginMember) throws NotFoundException, ForbiddenException {
         GalleryEntity galleryEntity = getGallery(gseq);
-        Assert.trueOrForbidden(loginMember.id().equals(galleryEntity.author().id()), "작성자만 수정할 수 있습니다.");
+        Assert.trueOrForbidden(loginMember.getId().equals(galleryEntity.getAuthor().getId()), "작성자만 수정할 수 있습니다.");
         return galleryEntity;
     }
 
@@ -102,7 +102,7 @@ public class GalleryService {
         if (imageFile != null && !imageFile.isEmpty()) {
             fileName = saveImage(imageFile);
         } else {
-            fileName = getGallery(gseq).imageFileName();
+            fileName = getGallery(gseq).getImageFileName();
         }
 
         galleryRepository.save(galleryUpdateDto.toEntity(gseq, fileName, loginMember));
@@ -118,7 +118,7 @@ public class GalleryService {
     public void deleteGallery(int gseq, MemberEntity loginMember) throws NotFoundException, ForbiddenException {
         GalleryEntity oldGallery = getGallery(gseq);
         Assert.trueOrForbidden(
-                loginMember.isAdmin() || loginMember.id().equals(oldGallery.author().id()),
+                loginMember.isAdmin() || loginMember.getId().equals(oldGallery.getAuthor().getId()),
                 "작성자 혹은 관리자만 삭제할 수 있습니다."
         );
 

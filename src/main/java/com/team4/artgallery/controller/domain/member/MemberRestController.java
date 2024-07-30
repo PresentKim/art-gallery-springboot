@@ -83,7 +83,7 @@ public class MemberRestController implements MemberRestControllerDocs {
             @LoginMember
             MemberEntity loginMember
     ) throws SqlException, ForbiddenException {
-        if (!loginMember.id().equals(id)) {
+        if (!loginMember.getId().equals(id)) {
             throw new ForbiddenException("본인 정보만 수정할 수 있습니다");
         }
 
