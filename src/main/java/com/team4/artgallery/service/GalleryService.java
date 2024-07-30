@@ -148,7 +148,7 @@ public class GalleryService {
      * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      */
     private String saveImage(MultipartFile file) throws FileException {
-        return fileService.saveFile(file, "/static/image/artwork").saveFileName();
+        return fileService.saveFile(file, "/static/image/artwork");
     }
 
 }

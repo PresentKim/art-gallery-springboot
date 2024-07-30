@@ -23,7 +23,7 @@ final public class MultipartFileService {
     /**
      * 요청으로 받은 파일을 저장하고 저장된 파일 이름을 반환합니다.
      */
-    public FileNamePair saveFile(MultipartFile file, String uploadDirName) throws FileException {
+    public String saveFile(MultipartFile file, String uploadDirName) throws FileException {
         // 파일 이름이 비어있으면 중단
         String filename = file.getOriginalFilename();
         if (filename == null || filename.isEmpty()) {
@@ -46,9 +46,7 @@ final public class MultipartFileService {
             throw new FileException("이미지 저장에 실패했습니다. : " + e.getMessage());
         }
 
-        return new FileNamePair(filename, saveFilename);
+        return saveFilename;
     }
 
-    public record FileNamePair(String fileName, String saveFileName) {
-    }
 }
