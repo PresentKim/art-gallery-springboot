@@ -33,7 +33,7 @@ public class ArtworkFilter implements IFilter {
     @FilterField
     @Hidden
     @Null(message = "displayyn 값은 설정할 수 없습니다", groups = ExcludeDisplay.class) // 요청 파라미터의 바인딩을 방지
-    private String displayyn;
+    private Character displayyn;
 
     /**
      * URL 파라미터에 전시 여부를 포함할지 여부
@@ -68,11 +68,11 @@ public class ArtworkFilter implements IFilter {
         return this;
     }
 
-    public String getDisplayyn() {
+    public Character getDisplayyn() {
         return this.displayyn;
     }
 
-    public ArtworkFilter setDisplayyn(String displayyn) {
+    public ArtworkFilter setDisplayyn(Character displayyn) {
         this.displayyn = displayyn;
         return this;
     }
@@ -88,7 +88,7 @@ public class ArtworkFilter implements IFilter {
             List<Predicate> predicates = new ArrayList<>();
 
             if (displayyn != null) {
-                predicates.add(cb.equal(root.get("displayyn"), displayyn.charAt(0)));
+                predicates.add(cb.equal(root.get("display"), displayyn == 'Y'));
             }
 
             if (category != null) {
