@@ -7,6 +7,7 @@ import com.team4.artgallery.repository.FavoriteRepository;
 import com.team4.artgallery.util.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FavoriteService {
@@ -48,6 +49,7 @@ public class FavoriteService {
      * @param aseq     예술품 번호 (artwork sequence)
      * @throws SqlException 관심 예술품 정보 추가에 실패한 경우 예외 발생
      */
+    @Transactional
     public void createFavorite(String memberId, int aseq) throws SqlException {
         favoriteRepository.createByMemberIdAndArtworkAseq(memberId, aseq);
     }
@@ -59,6 +61,7 @@ public class FavoriteService {
      * @param aseq     예술품 번호 (artwork sequence)
      * @throws SqlException 관심 예술품 정보 제거에 실패한 경우 예외 발생
      */
+    @Transactional
     public void deleteFavorite(String memberId, int aseq) throws SqlException {
         favoriteRepository.deleteByMemberIdAndArtworkAseq(memberId, aseq);
     }

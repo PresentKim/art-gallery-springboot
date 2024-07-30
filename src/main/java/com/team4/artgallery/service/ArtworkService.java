@@ -12,6 +12,7 @@ import com.team4.artgallery.service.helper.MultipartFileService;
 import com.team4.artgallery.util.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class ArtworkService {
      * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      * @throws SqlException  예술품 정보 추가에 실패한 경우 예외 발생
      */
+    @Transactional
     public ArtworkEntity createArtwork(ArtworkCreateDto artworkCreateDto) throws SqlException {
         return artworkRepository.save(artworkCreateDto.toEntity(null, saveImage(artworkCreateDto.getImageFile())));
     }
@@ -82,6 +84,7 @@ public class ArtworkService {
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      * @throws FileException     이미지 저장에 실패한 경우 예외 발생
      */
+    @Transactional
     public void updateArtwork(int aseq, ArtworkUpdateDto artworkUpdateDto) throws NotFoundException {
         MultipartFile imageFile = artworkUpdateDto.getImageFile();
         String fileName;
@@ -100,8 +103,10 @@ public class ArtworkService {
      * @param display 전시 여부
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      */
+    @Transactional
     public void updateDisplay(int aseq, boolean display) throws NotFoundException {
-        artworkRepository.updateDisplayByAseq(aseq, display);
+        ArtworkEntity artworkEntity = getArtwork(aseq);
+        artworkEntity.setDisplay(display);
     }
 
     /**
@@ -110,6 +115,7 @@ public class ArtworkService {
      * @param aseq 예술품 번호
      * @throws NotFoundException 예술품 삭제에 실패한 경우 예외 발생
      */
+    @Transactional
     public void deleteArtwork(Integer aseq) throws NotFoundException {
         artworkRepository.deleteById(aseq);
     }

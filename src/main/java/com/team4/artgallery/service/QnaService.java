@@ -12,6 +12,7 @@ import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,6 +36,7 @@ public class QnaService {
      * @param qnaDto 문의글 정보
      * @throws SqlException 문의글 정보 추가에 실패한 경우 예외 발생
      */
+    @Transactional
     public QnaEntity createInquiry(QnaUpdateDto qnaDto) throws SqlException {
         QnaEntity qnaEntity = qnaRepository.save(qnaDto.toEntity(null));
         saveAuthorize(qnaEntity.getQseq());
@@ -81,6 +83,7 @@ public class QnaService {
      * @throws NotFoundException     문의글 정보를 찾을 수 없는 경우 예외 발생
      * @throws UnauthorizedException 접근 권한이 없는 경우 예외 발생
      */
+    @Transactional
     public void updateInquiry(int qseq, QnaUpdateDto qnaDto) throws NotFoundException, UnauthorizedException {
         Assert.trueOrUnauthorized(authorizeForPersonal(qseq), "접근 권한이 없습니다.");
         qnaRepository.save(qnaDto.toEntity(qseq));
@@ -93,9 +96,10 @@ public class QnaService {
      * @param reply 답변 내용
      * @throws NotFoundException 문의글 정보를 찾을 수 없는 경우 예외 발생
      */
+    @Transactional
     public void updateReply(int qseq, String reply) throws NotFoundException {
-        qnaRepository.findById(qseq).orElseThrow(() -> new NotFoundException("문의글 정보를 찾을 수 없습니다."));
-        qnaRepository.updateReplyById(qseq, reply);
+        QnaEntity qnaEntity = getInquiry(qseq);
+        qnaEntity.setReply(reply);
     }
 
     /**
@@ -104,6 +108,7 @@ public class QnaService {
      * @param qseq 문의글 번호 (qna sequence)
      * @throws SqlException 문의글 삭제에 실패한 경우 예외 발생
      */
+    @Transactional
     public void deleteInquiry(int qseq) throws SqlException {
         qnaRepository.deleteById(qseq);
     }

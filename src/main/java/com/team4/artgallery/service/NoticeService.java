@@ -12,6 +12,7 @@ import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ReadCountHelper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class NoticeService {
      * @param loginMember 로그인한 회원 정보
      * @throws SqlException 소식지 정보 추가에 실패한 경우 예외 발생
      */
+    @Transactional
     public NoticeEntity createNotice(NoticeDto noticeDto, MemberEntity loginMember) throws SqlException {
         return noticeRepository.save(noticeDto.toEntity(null, loginMember));
     }
@@ -79,6 +81,7 @@ public class NoticeService {
      * @param loginMember 로그인한 회원 정보
      * @throws NotFoundException 소식지 정보를 찾을 수 없는 경우 예외 발생
      */
+    @Transactional
     public void updateNotice(int nseq, NoticeDto noticeDto, MemberEntity loginMember) throws NotFoundException {
         noticeRepository.save(noticeDto.toEntity(nseq, loginMember));
     }
@@ -89,6 +92,7 @@ public class NoticeService {
      * @param nseq 소식지 번호
      * @throws NotFoundException 소식지 삭제에 실패한 경우 예외 발생
      */
+    @Transactional
     public void deleteNotice(Integer nseq) throws NotFoundException {
         noticeRepository.deleteById(nseq);
     }

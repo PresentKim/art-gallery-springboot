@@ -18,6 +18,7 @@ import com.team4.artgallery.util.ReadCountHelper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -43,6 +44,7 @@ public class GalleryService {
      * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      * @throws SqlException  갤러리 정보 추가에 실패한 경우 예외 발생
      */
+    @Transactional
     public void createGallery(GalleryCreateDto galleryCreateDto, MemberEntity loginMember) throws FileException, SqlException {
         galleryRepository.save(galleryCreateDto.toEntity(null, saveImage(galleryCreateDto.getImageFile()), loginMember));
     }
@@ -98,6 +100,7 @@ public class GalleryService {
      * @throws ForbiddenException 작성자가 아닌 경우 예외 발생
      * @throws FileException      이미지 저장에 실패한 경우 예외 발생
      */
+    @Transactional
     public void updateGallery(int gseq, GalleryUpdateDto galleryUpdateDto, MemberEntity loginMember) throws NotFoundException, ForbiddenException, FileException {
         MultipartFile imageFile = galleryUpdateDto.getImageFile();
         String fileName;
@@ -117,6 +120,7 @@ public class GalleryService {
      * @throws NotFoundException  갤러리 정보를 찾을 수 없는 경우 예외 발생
      * @throws ForbiddenException 작성자 혹은 관리자가 아닌 경우 예외 발생
      */
+    @Transactional
     public void deleteGallery(int gseq, MemberEntity loginMember) throws NotFoundException, ForbiddenException {
         GalleryEntity oldGallery = getGallery(gseq);
         Assert.trueOrForbidden(
@@ -133,6 +137,7 @@ public class GalleryService {
      * @param gseq 갤러리 번호 (gallery sequence)
      * @throws NotFoundException 갤러리 정보를 찾을 수 없는 경우 예외 발생
      */
+    @Transactional
     public void increaseReadCountIfNew(int gseq) throws NotFoundException {
         ReadCountHelper.increaseReadCountIfNew(
                 gseq,
