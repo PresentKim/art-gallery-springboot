@@ -87,7 +87,7 @@ public class ArtworkFilter implements IFilter {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (displayyn != null && includeDisplay) {
+            if (displayyn != null) {
                 predicates.add(cb.equal(root.get("display"), displayyn == 'Y'));
             }
 
