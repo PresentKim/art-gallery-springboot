@@ -26,7 +26,7 @@ public class NoticeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nseq", nullable = false)
     @Comment("공지사항 번호")
-    @JsonView({Views.Summary.class, Views.Detail.class})
+    @JsonView({Views.Identifier.class, Views.Summary.class, Views.Detail.class})
     private Integer nseq;
 
     @ManyToOne

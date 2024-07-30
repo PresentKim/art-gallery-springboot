@@ -26,7 +26,7 @@ public class QnaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "qseq", nullable = false)
     @Comment("문의글 번호")
-    @JsonView({Views.Summary.class, Views.Detail.class})
+    @JsonView({Views.Identifier.class, Views.Summary.class, Views.Detail.class})
     private Integer qseq;
 
     @Column(name = "title", length = 100, nullable = false)

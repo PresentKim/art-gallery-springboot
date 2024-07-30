@@ -27,7 +27,7 @@ public class ArtworkEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "aseq")
     @Comment("예술품 번호")
-    @JsonView({Views.Summary.class, Views.Detail.class})
+    @JsonView({Views.Identifier.class, Views.Summary.class, Views.Detail.class})
     private Integer aseq;
 
     @Column(name = "name", length = 45, nullable = false)

@@ -27,7 +27,7 @@ public class GalleryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gseq", nullable = false)
     @Comment("갤러리 번호")
-    @JsonView({Views.Summary.class, Views.Detail.class})
+    @JsonView({Views.Identifier.class, Views.Summary.class, Views.Detail.class})
     private Integer gseq;
 
     @ManyToOne
