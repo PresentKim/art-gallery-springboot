@@ -35,28 +35,29 @@
             <div class="notice_title_col col_views">조회수</div>
             <div class="notice_title_col col_category">분류</div>
         </div>
-        <c:forEach items="${noticeList}" var="noticeDto">
+        <c:forEach items="${noticeList}" var="noticeEntity">
+            <%--@elvariable id="noticeEntity" type="com.team4.artgallery.entity.NoticeEntity"--%>
             <div class="row">
                     <%-- <div class="col col_number">${noticeList.nseq}</div> --%>
                 <div class="col col_number">
-                    <a href="<c:url value="/notice/${noticeDto.nseq}"/>"> ${noticeDto.nseq} </a>
+                    <a href="<c:url value="/notice/${noticeEntity.nseq}"/>"> ${noticeEntity.nseq} </a>
                     &nbsp;
                 </div>
                 <div class="col col_title">
-                    <a href="<c:url value="/notice/${noticeDto.nseq}"/>"> ${noticeDto.title} </a>
+                    <a href="<c:url value="/notice/${noticeEntity.nseq}"/>"> ${noticeEntity.title} </a>
                     &nbsp;
                 </div>
                 <div class="col col_title">
-                    <a href="<c:url value="/notice/${noticeDto.nseq}"/>"> ${noticeDto.content} </a>
+                    <a href="<c:url value="/notice/${noticeEntity.nseq}"/>"> ${noticeEntity.content} </a>
                     &nbsp;
                 </div>
                     <%-- <div class="col col_content">${noticeList.content}</div> --%>
                 <div class="col col_date">
-                    <fmt:formatDate value="${noticeDto.writedate}" pattern="yyyy-MM-dd"/>
+                    <fmt:formatDate value="${noticeEntity.indate}" pattern="yyyy-MM-dd"/>
                 </div>
-                <div class="col col_author">${noticeDto.author}</div>
-                <div class="col col_views">${noticeDto.readcount}</div>
-                <div class="col col_category">${noticeDto.category}</div>
+                <div class="col col_author">${noticeEntity.author.name}</div>
+                <div class="col col_views">${noticeEntity.readCount}</div>
+                <div class="col col_category">${noticeEntity.category}</div>
             </div>
         </c:forEach>
     </div>

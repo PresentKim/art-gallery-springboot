@@ -53,7 +53,7 @@ public class NoticeViewController {
             Model model
     ) throws NotFoundException, SqlException {
         noticeService.increaseReadCountIfNew(nseq);
-        model.addAttribute("noticeDto", noticeService.getNotice(nseq));
+        model.addAttribute("noticeEntity", noticeService.getNotice(nseq));
         return "notice/noticeView";
     }
 
@@ -66,7 +66,7 @@ public class NoticeViewController {
             Model model
     ) throws NotFoundException {
         if (nseq != null) {
-            model.addAttribute("noticeDto", noticeService.getNotice(nseq));
+            model.addAttribute("noticeEntity", noticeService.getNotice(nseq));
         }
         return "notice/noticeWrite";
     }

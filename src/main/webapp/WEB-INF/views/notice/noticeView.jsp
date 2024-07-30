@@ -6,7 +6,7 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>소식지 :: ${noticeDto.title}</title>
+        <title>소식지 :: ${noticeEntity.title}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/notice.css"/>">
         <script src="<c:url value="/static/script/notice/notice_view.js"/>"></script>
     </jsp:attribute>
@@ -18,32 +18,32 @@
     <div class="noticeView_box">
         <div class="noticeView_field">
             <div class="noticeView_label">작성자</div>
-            <div class="noticeView_text">${noticeDto.author}</div>
+            <div class="noticeView_text">${noticeEntity.author.name}</div>
         </div>
         <div class="noticeView_field">
             <div class="noticeView_label">제목</div>
-            <div class="noticeView_text">${noticeDto.title}</div>
+            <div class="noticeView_text">${noticeEntity.title}</div>
         </div>
         <div class="noticeView_field">
             <div class="noticeView_label">내용</div>
             <div class="noticeView_text">
-                <pre>${noticeDto.content}</pre>
+                <pre>${noticeEntity.content}</pre>
             </div>
         </div>
         <div class="noticeView_field">
             <div class="noticeView_label">카테고리</div>
-            <div class="noticeView_text">${noticeDto.category}</div>
+            <div class="noticeView_text">${noticeEntity.category}</div>
         </div>
         <div class="noticeView_field">
             <div class="noticeView_label">작성일</div>
             <div class="noticeView_text">
-                <fmt:formatDate value="${noticeDto.writedate}"/>
+                <fmt:formatDate value="${noticeEntity.indate}"/>
             </div>
         </div>
         <div class="noticeView-button">
             <c:if test="${loginMember.admin}">
-                <a href="<c:url value="/notice/write?nseq=${noticeDto.nseq}"/>">수정</a>
-                <div onclick="deleteNotice(${noticeDto.nseq})">삭제</div>
+                <a href="<c:url value="/notice/write?nseq=${noticeEntity.nseq}"/>">수정</a>
+                <div onclick="deleteNotice(${noticeEntity.nseq})">삭제</div>
                 <a href="<c:url value="/notice"/>">목록</a>
             </c:if>
         </div>

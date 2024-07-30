@@ -1,18 +1,17 @@
 package com.team4.artgallery.controller.domain.notice;
 
-import com.team4.artgallery.dto.NoticeDto;
-import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.NoticeFilter;
+import com.team4.artgallery.dto.notice.NoticeDto;
 import com.team4.artgallery.entity.MemberEntity;
+import com.team4.artgallery.entity.NoticeEntity;
 import com.team4.artgallery.util.Pagination;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ interface NoticeRestControllerDocs {
                     @ApiResponse(responseCode = "404", description = "리소스를 찾을 수 없음")
             }
     )
-    NoticeDto getById(
+    NoticeEntity getById(
             @Parameter(name = "nseq", description = "소식지 번호", required = true, in = ParameterIn.PATH)
             String nseq
     );
@@ -43,7 +42,7 @@ interface NoticeRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    List<NoticeDto> getList(
+    Page<NoticeEntity> getList(
             @ParameterObject
             NoticeFilter filter,
             @ParameterObject
@@ -61,7 +60,7 @@ interface NoticeRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    List<NoticeDto> getRecentList(
+    List<NoticeEntity> getRecentList(
             @Parameter(name = "count", description = "소식지 갯수", required = true)
             Integer count
     );
@@ -73,25 +72,11 @@ interface NoticeRestControllerDocs {
             description = "소식지를 등록합니다.",
             method = "POST",
             responses = {
-                    @ApiResponse(
-                            responseCode = "201",
-                            description = "성공",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = NoticeDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "잘못된 요청",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
-                    )
+                    @ApiResponse(responseCode = "201", description = "성공"),
+                    @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    NoticeDto create(
+    NoticeEntity create(
             @ParameterObject
             NoticeDto noticeDto,
 
@@ -105,18 +90,8 @@ interface NoticeRestControllerDocs {
             description = "소식지를 수정합니다.",
             method = "PUT",
             responses = {
-                    @ApiResponse(
-                            responseCode = "201",
-                            description = "소식지 수정 성공"
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "잘못된 요청",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
-                    )
+                    @ApiResponse(responseCode = "201", description = "소식지 수정 성공"),
+                    @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
     void update(
@@ -136,18 +111,8 @@ interface NoticeRestControllerDocs {
             description = "소식지를 삭제합니다.",
             method = "DELETE",
             responses = {
-                    @ApiResponse(
-                            responseCode = "204",
-                            description = "소식지 삭제 성공"
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "잘못된 요청",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
-                    )
+                    @ApiResponse(responseCode = "204", description = "소식지 삭제 성공"),
+                    @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
     void delete(

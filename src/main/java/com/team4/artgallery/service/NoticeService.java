@@ -2,13 +2,15 @@ package com.team4.artgallery.service;
 
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
-import com.team4.artgallery.dao.INoticeDao;
-import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.filter.NoticeFilter;
+import com.team4.artgallery.dto.notice.NoticeDto;
 import com.team4.artgallery.entity.MemberEntity;
+import com.team4.artgallery.entity.NoticeEntity;
+import com.team4.artgallery.repository.NoticeRepository;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Pagination;
 import com.team4.artgallery.util.ReadCountHelper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +18,12 @@ import java.util.List;
 @Service
 public class NoticeService {
 
-    private final INoticeDao noticeDao;
+    private final NoticeRepository noticeRepository;
 
     private final SessionProvider sessionProvider;
 
-    public NoticeService(INoticeDao noticeDao, SessionProvider sessionProvider) {
-        this.noticeDao = noticeDao;
+    public NoticeService(NoticeRepository noticeRepository, SessionProvider sessionProvider) {
+        this.noticeRepository = noticeRepository;
         this.sessionProvider = sessionProvider;
     }
 
@@ -32,9 +34,8 @@ public class NoticeService {
      * @param loginMember 로그인한 회원 정보
      * @throws SqlException 소식지 정보 추가에 실패한 경우 예외 발생
      */
-    public void createNotice(NoticeDto noticeDto, MemberEntity loginMember) throws SqlException {
-        noticeDto.setAuthor(loginMember.id());
-        noticeDao.createNotice(noticeDto);
+    public NoticeEntity createNotice(NoticeDto noticeDto, MemberEntity loginMember) throws SqlException {
+        return noticeRepository.save(noticeDto.toEntity(null, loginMember));
     }
 
     /**
@@ -44,11 +45,8 @@ public class NoticeService {
      * @param pagination 페이지 정보
      * @return 소식지 목록
      */
-    public List<NoticeDto> getNotices(NoticeFilter filter, Pagination pagination) {
-        return noticeDao.getNotices(
-                filter,
-                pagination.setUrlTemplateFromFilter(filter).setItemCount(noticeDao.countNotices(filter))
-        );
+    public Page<NoticeEntity> getNotices(NoticeFilter filter, Pagination pagination) {
+        return noticeRepository.findAll(filter.toSpec(), pagination.toPageable());
     }
 
     /**
@@ -56,8 +54,8 @@ public class NoticeService {
      *
      * @param count 최근 소식지 개수
      */
-    public List<NoticeDto> getRecentNotices(int count) {
-        return noticeDao.getNotices(null, new Pagination().setItemCount(0).setDisplayCount(count));
+    public List<NoticeEntity> getRecentNotices(int count) {
+        return noticeRepository.findRecentNotices(count);
     }
 
     /**
@@ -67,8 +65,9 @@ public class NoticeService {
      * @return 소식지 정보
      * @throws NotFoundException 소식지 정보를 찾을 수 없는 경우 예외 발생
      */
-    public NoticeDto getNotice(int nseq) {
-        return noticeDao.getNotice(nseq);
+    public NoticeEntity getNotice(int nseq) {
+        return noticeRepository.findById(nseq)
+                .orElseThrow(() -> new NotFoundException("소식지 정보를 찾을 수 없습니다."));
     }
 
     /**
@@ -78,9 +77,8 @@ public class NoticeService {
      * @param loginMember 로그인한 회원 정보
      * @throws NotFoundException 소식지 정보를 찾을 수 없는 경우 예외 발생
      */
-    public void updateNotice(NoticeDto noticeDto, MemberEntity loginMember) throws NotFoundException {
-        noticeDto.setAuthor(loginMember.id());
-        noticeDao.updateNotice(noticeDto);
+    public void updateNotice(int nseq, NoticeDto noticeDto, MemberEntity loginMember) throws NotFoundException {
+        noticeRepository.save(noticeDto.toEntity(nseq, loginMember));
     }
 
     /**
@@ -90,7 +88,7 @@ public class NoticeService {
      * @throws NotFoundException 소식지 삭제에 실패한 경우 예외 발생
      */
     public void deleteNotice(Integer nseq) throws NotFoundException {
-        noticeDao.deleteNotice(nseq);
+        noticeRepository.deleteById(nseq);
     }
 
     /**
@@ -104,7 +102,7 @@ public class NoticeService {
                 nseq,
                 sessionProvider.getSession(),
                 "notice-read-",
-                noticeDao::increaseReadCount
+                noticeRepository::increaseReadCountById
         );
     }
 

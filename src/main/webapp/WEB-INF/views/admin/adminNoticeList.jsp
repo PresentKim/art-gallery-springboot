@@ -51,29 +51,31 @@
             <li>작성자</li>
             <li>조회수</li>
         </ul>
-        <c:forEach items="${noticeList}" var="noticeDto">
+        <c:forEach items="${noticeList}" var="noticeEntity">
+            <%--@elvariable id="noticeEntity" type="com.team4.artgallery.entity.NoticeEntity"--%>
             <ul
                     class="admin-list-main admin-notice-list"
                     onclick="checkChildCheckbox(this)"
-                    data-seq="${noticeDto.nseq}"
+                    data-seq="${noticeEntity.nseq}"
             >
                 <li>
                     <label><input type="checkbox"></label>
                 </li>
-                <li>${noticeDto.nseq}</li>
-                <li>${noticeDto.category}</li>
-                <li class="view-link"><a href="<c:url value="/notice/${noticeDto.nseq}"/>">${noticeDto.title}</a></li>
+                <li>${noticeEntity.nseq}</li>
+                <li>${noticeEntity.category}</li>
+                <li class="view-link"><a href="<c:url value="/notice/${noticeEntity.nseq}"/>">${noticeEntity.title}</a>
+                </li>
                 <c:choose>
-                    <c:when test="${noticeDto.content.length() > 50}">
-                        <li>${noticeDto.content.substring(0, 50)}...</li>
+                    <c:when test="${noticeEntity.content.length() > 50}">
+                        <li>${noticeEntity.content.substring(0, 50)}...</li>
                     </c:when>
                     <c:otherwise>
-                        <li>${noticeDto.content}</li>
+                        <li>${noticeEntity.content}</li>
                     </c:otherwise>
                 </c:choose>
-                <li>${noticeDto.writedate}</li>
-                <li>${noticeDto.author}</li>
-                <li>${noticeDto.readcount}</li>
+                <li>${noticeEntity.indate}</li>
+                <li>${noticeEntity.author.name}</li>
+                <li>${noticeEntity.readCount}</li>
             </ul>
         </c:forEach>
     </form>

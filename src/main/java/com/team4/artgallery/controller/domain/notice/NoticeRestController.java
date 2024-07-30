@@ -6,15 +6,17 @@ import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
-import com.team4.artgallery.dto.NoticeDto;
 import com.team4.artgallery.dto.enums.NoticeCategory;
 import com.team4.artgallery.dto.filter.NoticeFilter;
+import com.team4.artgallery.dto.notice.NoticeDto;
 import com.team4.artgallery.dto.view.Views;
 import com.team4.artgallery.entity.MemberEntity;
+import com.team4.artgallery.entity.NoticeEntity;
 import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +35,7 @@ public class NoticeRestController implements NoticeRestControllerDocs {
 
     @GetMapping("")
     @JsonView(Views.Summary.class)
-    public List<NoticeDto> getList(
+    public Page<NoticeEntity> getList(
             @Valid
             NoticeFilter filter,
             @Valid
@@ -47,7 +49,7 @@ public class NoticeRestController implements NoticeRestControllerDocs {
     }
 
     @GetMapping("{nseq}")
-    public NoticeDto getById(
+    public NoticeEntity getById(
             @PathVariable(name = "nseq")
             String nseq
     ) throws NotFoundException, SqlException {
@@ -63,15 +65,14 @@ public class NoticeRestController implements NoticeRestControllerDocs {
     @CheckAdmin
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public NoticeDto create(
+    public NoticeEntity create(
             @Valid
             NoticeDto noticeDto,
 
             @LoginMember
             MemberEntity loginMember
     ) throws SqlException {
-        noticeService.createNotice(noticeDto, loginMember);
-        return noticeDto;
+        return noticeService.createNotice(noticeDto, loginMember);
     }
 
     @CheckAdmin
@@ -87,8 +88,7 @@ public class NoticeRestController implements NoticeRestControllerDocs {
             MemberEntity loginMember
     ) throws SqlException, NotFoundException {
         try {
-            noticeDto.setNseq(Integer.parseInt(nseq));
-            noticeService.updateNotice(noticeDto, loginMember);
+            noticeService.updateNotice(Integer.parseInt(nseq), noticeDto, loginMember);
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
@@ -109,7 +109,7 @@ public class NoticeRestController implements NoticeRestControllerDocs {
     }
 
     @GetMapping("recent")
-    public List<NoticeDto> getRecentList(
+    public List<NoticeEntity> getRecentList(
             @RequestParam(name = "count", defaultValue = "5")
             Integer count
     ) {
