@@ -43,8 +43,5 @@ VALUES ('one', '김나리', '1111', 'abc@naver.com', '2024-05-07 19:20:32', '010
        ('m040', '서현진', '1111', 'seohy@example.com', '2024-06-05 16:00:00', '010-1234-5678', '서울특별시 강남구 학동로 3737');
 
 -- 관리자 입력--
-INSERT INTO member(id, name, pwd, email, phone, address)
-VALUES ('admin', '관리자', '1111', 'def@naver.com', '010-5555-6666', '서울 종로구 인사동길 12 대일빌딩 7층');
-
-INSERT INTO member_entity_member_role_list(member_entity_id, member_role_list)
-VALUES ('admin', 1);
+INSERT INTO member(id, name, pwd, email, phone, address, adminyn)
+VALUES ('admin', '관리자', '1111', 'def@naver.com', '010-5555-6666', '서울 종로구 인사동길 12 대일빌딩 7층', 'Y');
