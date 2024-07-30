@@ -55,14 +55,15 @@ public class GalleryRestController implements GalleryRestControllerDocs {
     @CheckLogin
     @PostMapping(path = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(
+    @JsonView(Views.Identifier.class)
+    public GalleryEntity create(
             @Valid
             GalleryCreateDto galleryCreateDto,
 
             @LoginMember
             MemberEntity loginMember
     ) throws NotFoundException, SqlException, FileException {
-        galleryService.createGallery(galleryCreateDto, loginMember);
+        return galleryService.createGallery(galleryCreateDto, loginMember);
     }
 
     @CheckLogin

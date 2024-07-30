@@ -59,7 +59,7 @@ interface GalleryRestControllerDocs {
                     @ApiResponse(responseCode = "500", description = "파일 업로드 실패")
             }
     )
-    void create(
+    GalleryEntity create(
             @ParameterObject
             GalleryCreateDto galleryCreateDto,
 

@@ -45,8 +45,8 @@ public class GalleryService {
      * @throws SqlException  갤러리 정보 추가에 실패한 경우 예외 발생
      */
     @Transactional
-    public void createGallery(GalleryCreateDto galleryCreateDto, MemberEntity loginMember) throws FileException, SqlException {
-        galleryRepository.save(galleryCreateDto.toEntity(null, saveImage(galleryCreateDto.getImageFile()), loginMember));
+    public GalleryEntity createGallery(GalleryCreateDto galleryCreateDto, MemberEntity loginMember) throws FileException, SqlException {
+        return galleryRepository.save(galleryCreateDto.toEntity(null, saveImage(galleryCreateDto.getImageFile()), loginMember));
     }
 
     /**
