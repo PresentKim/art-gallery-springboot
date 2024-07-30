@@ -19,7 +19,7 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Intege
 
     @Modifying
     @Transactional
-    @Query(value = "SELECT * FROM favorite_artwork WHERE member_id = :memberId AND artwork_id = :artworkAseq", nativeQuery = true)
+    @Query(value = "INSERT INTO favorite_artwork (member_id, artwork_id) VALUES (:memberId, :artworkAseq)", nativeQuery = true)
     void createByMemberIdAndArtworkAseq(String memberId, int artworkAseq);
 
     @Modifying
