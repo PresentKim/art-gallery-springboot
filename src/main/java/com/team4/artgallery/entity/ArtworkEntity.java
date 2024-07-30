@@ -49,10 +49,6 @@ public record ArtworkEntity(
         @Comment("크기")
         String size,
 
-        @Column(name = "display", length = 1, nullable = false)
-        @Comment("전시여부")
-        Boolean display,
-
         @Column(name = "content", nullable = false)
         @Comment("설명")
         String content,
@@ -60,6 +56,11 @@ public record ArtworkEntity(
         @Column(name = "image", length = 200, nullable = false)
         @Comment("저장된 파일명")
         String imageFileName,
+
+        @Column(name = "display", length = 1, nullable = false)
+        @Comment("전시여부")
+        @ColumnDefault("1")
+        Boolean display,
 
         @Column(name = "indate", nullable = false)
         @ColumnDefault("NOW()")
