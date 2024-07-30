@@ -20,7 +20,7 @@ public class QnaFilter implements IFilter {
      * 문의글 답변 여부
      */
     @FilterField
-    private String replyyn;
+    private Character replyyn;
 
     public String getKeyword() {
         return this.keyword;
@@ -31,11 +31,11 @@ public class QnaFilter implements IFilter {
         return this;
     }
 
-    public String getReplyyn() {
+    public Character getReplyyn() {
         return this.replyyn;
     }
 
-    public QnaFilter setReplyyn(String replyyn) {
+    public QnaFilter setReplyyn(Character replyyn) {
         this.replyyn = replyyn;
         return this;
     }
@@ -45,8 +45,7 @@ public class QnaFilter implements IFilter {
             List<Predicate> predicates = new ArrayList<>();
 
             if (replyyn != null) {
-                boolean category = "Y".equals(replyyn);
-                predicates.add(cb.equal(root.get("reply"), category));
+                predicates.add(cb.equal(root.get("reply"), replyyn == 'Y'));
             }
 
             if (keyword != null) {
