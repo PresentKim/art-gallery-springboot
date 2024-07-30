@@ -18,7 +18,7 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
     List<ArtworkEntity> findRandomArtworks(@Param("count") int count);
 
     /**
-     * 예술품의 공개 여부(char displayyn) 만 업데이트하는 메서드
+     * 예술품의 공개 여부(display) 만 업데이트하는 메서드
      */
     @Modifying
     @Transactional
