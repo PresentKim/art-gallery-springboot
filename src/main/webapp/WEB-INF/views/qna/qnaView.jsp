@@ -29,8 +29,7 @@
         <div class="qna-view_info">
             <h1>${qnaEntity.title}</h1>
             <p>
-                <strong>작성일</strong>:
-                <fmt:formatDate value="${qnaEntity.indate}" pattern="yyyy-MM-dd"/>
+                <strong>작성일</strong>: <t:localdate value="${qnaEntity.indate}"/>
             </p>
             <p>
                 <strong>작성자</strong>:

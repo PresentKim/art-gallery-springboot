@@ -36,9 +36,7 @@
         </div>
         <div class="noticeView_field">
             <div class="noticeView_label">작성일</div>
-            <div class="noticeView_text">
-                <fmt:formatDate value="${noticeEntity.indate}"/>
-            </div>
+            <div class="noticeView_text"><t:localdate value="${noticeEntity.indate}"/></div>
         </div>
         <div class="noticeView-button">
             <c:if test="${loginMember.admin}">

@@ -36,9 +36,7 @@
             <div class="notice_title_col col_category">분류</div>
         </div>
         <c:forEach items="${noticeList}" var="noticeEntity">
-            <%--@elvariable id="noticeEntity" type="com.team4.artgallery.entity.NoticeEntity"--%>
             <div class="row">
-                    <%-- <div class="col col_number">${noticeList.nseq}</div> --%>
                 <div class="col col_number">
                     <a href="<c:url value="/notice/${noticeEntity.nseq}"/>"> ${noticeEntity.nseq} </a>
                     &nbsp;
@@ -51,10 +49,7 @@
                     <a href="<c:url value="/notice/${noticeEntity.nseq}"/>"> ${noticeEntity.content} </a>
                     &nbsp;
                 </div>
-                    <%-- <div class="col col_content">${noticeList.content}</div> --%>
-                <div class="col col_date">
-                    <fmt:formatDate value="${noticeEntity.indate}" pattern="yyyy-MM-dd"/>
-                </div>
+                <div class="col col_date"><t:localdate value="${noticeEntity.indate}"/></div>
                 <div class="col col_author">${noticeEntity.author.name}</div>
                 <div class="col col_views">${noticeEntity.readCount}</div>
                 <div class="col col_category">${noticeEntity.category}</div>

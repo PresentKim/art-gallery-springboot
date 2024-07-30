@@ -61,7 +61,7 @@
                             <span> ${qnaEntity.title}</span>
                         </div>
                     </td>
-                    <td data-title="날짜"><fmt:formatDate value="${qnaEntity.indate}" pattern="yyyy-MM-dd"/></td>
+                    <td data-title="날짜"><t:localdate value="${qnaEntity.indate}"/></td>
                     <td data-title="상태"><c:choose>
                         <c:when test="${empty qnaEntity.reply}">대기중</c:when>
                         <c:otherwise>완료</c:otherwise>
