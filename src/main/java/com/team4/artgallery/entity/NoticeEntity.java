@@ -30,7 +30,7 @@ public record NoticeEntity(
         @Comment("제목")
         String title,
 
-        @Column(name = "content", nullable = false)
+        @Column(name = "content", length = 9999, nullable = false)
         @Comment("내용")
         String content,
 

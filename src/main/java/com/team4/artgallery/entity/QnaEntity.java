@@ -29,7 +29,7 @@ public record QnaEntity(
         @Comment("내용")
         String content,
 
-        @Column(name = "reply", nullable = false)
+        @Column(name = "reply", length = 9999, nullable = false)
         @Comment("답변")
         String reply,
 

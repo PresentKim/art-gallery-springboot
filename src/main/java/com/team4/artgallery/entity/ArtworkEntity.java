@@ -49,7 +49,7 @@ public record ArtworkEntity(
         @Comment("크기")
         String size,
 
-        @Column(name = "content", nullable = false)
+        @Column(name = "content", length = 9999, nullable = false)
         @Comment("설명")
         String content,
 
