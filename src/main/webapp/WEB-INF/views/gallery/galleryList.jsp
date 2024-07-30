@@ -29,7 +29,6 @@
         </div>
         <div class="gallery-list-main-content">
             <c:forEach items="${galleryList}" var="galleryEntity">
-                <%--@elvariable id="galleryEntity" type="com.team4.artgallery.entity.GalleryEntity"--%>
                 <a href="<c:url value="/gallery/${galleryEntity.gseq}"/>">
                     <img src="<c:url value="${galleryEntity.imageSrc}"/>"
                          alt="gallery_image"/>

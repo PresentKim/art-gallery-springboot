@@ -29,7 +29,10 @@ public class QnaViewController {
 
             Model model
     ) {
-        model.addAttribute("qnaList", qnaService.getInquiries(new QnaFilter(), pagination));
+        model.addAttribute(
+                "qnaList",
+                qnaService.getInquiries(new QnaFilter(), pagination).toList()
+        );
         return "qna/qnaList";
     }
 

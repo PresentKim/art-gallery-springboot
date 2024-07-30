@@ -34,7 +34,10 @@ public class GalleryViewController {
 
             Model model
     ) {
-        model.addAttribute("galleryList", galleryService.getGalleries(filter, pagination));
+        model.addAttribute(
+                "galleryList",
+                galleryService.getGalleries(filter, pagination).toList()
+        );
         return "gallery/galleryList";
     }
 

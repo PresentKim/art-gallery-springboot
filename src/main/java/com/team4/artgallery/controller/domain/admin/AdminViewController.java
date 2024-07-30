@@ -57,7 +57,7 @@ public class AdminViewController {
 
             Model model
     ) {
-        model.addAttribute("artworkList", artworkService.getArtworks(filter, pagination));
+        model.addAttribute("artworkList", artworkService.getArtworks(filter, pagination).toList());
         return "admin/adminArtworkList";
     }
 
@@ -72,7 +72,7 @@ public class AdminViewController {
 
             Model model
     ) {
-        model.addAttribute("galleryList", galleryService.getGalleries(filter, pagination));
+        model.addAttribute("galleryList", galleryService.getGalleries(filter, pagination).toList());
         return "admin/adminGalleryList";
     }
 
@@ -87,12 +87,11 @@ public class AdminViewController {
 
             Model model
     ) {
-        model.addAttribute("memberList", memberService.getMembers(
-                filter,
-                pagination
-                        .setUrlTemplateFromFilter(filter)
-                        .setItemCount(memberService.countMembers(filter))
-        ));
+        pagination
+                .setUrlTemplateFromFilter(filter)
+                .setItemCount(memberService.countMembers(filter));
+
+        model.addAttribute("memberList", memberService.getMembers(filter, pagination).toList());
         return "admin/adminMemberList";
     }
 
@@ -107,7 +106,7 @@ public class AdminViewController {
 
             Model model
     ) {
-        model.addAttribute("noticeList", noticeService.getNotices(filter, pagination));
+        model.addAttribute("noticeList", noticeService.getNotices(filter, pagination).toList());
         return "admin/adminNoticeList";
     }
 
@@ -122,7 +121,7 @@ public class AdminViewController {
 
             Model model
     ) throws SqlException {
-        model.addAttribute("qnaList", qnaService.getInquiries(filter, pagination));
+        model.addAttribute("qnaList", qnaService.getInquiries(filter, pagination).toList());
         return "admin/adminQnaList";
     }
 

@@ -39,7 +39,6 @@
             </thead>
             <tbody>
             <c:forEach items="${qnaList}" var="qnaEntity">
-                <%--@elvariable id="qnaEntity" type="com.team4.artgallery.entity.QnaEntity"--%>
                 <c:set var="qnaPassKey" value="qnaHash${qnaEntity.qseq}"/>
                 <tr onclick="qnaAuth(${qnaEntity.qseq}, 'view')">
                     <td data-title="번호">${qnaEntity.qseq}</td>

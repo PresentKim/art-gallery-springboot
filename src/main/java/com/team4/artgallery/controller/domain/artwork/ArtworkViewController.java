@@ -33,10 +33,10 @@ public class ArtworkViewController {
 
             Model model
     ) {
-        model.addAttribute("artworkList", artworkService.getArtworks(
-                filter.setDisplayyn('Y').setIncludeDisplay(false),
-                pagination
-        ));
+        model.addAttribute(
+                "artworkList",
+                artworkService.getArtworks(filter.setDisplayyn('Y').setIncludeDisplay(false), pagination).toList()
+        );
         return "artwork/artworkList";
     }
 

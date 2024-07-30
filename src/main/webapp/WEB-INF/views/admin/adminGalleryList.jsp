@@ -42,7 +42,6 @@
             <li>미리보기</li>
         </ul>
         <c:forEach items="${galleryList}" var="galleryEntity" varStatus="status">
-            <%--@elvariable id="galleryEntity" type="com.team4.artgallery.entity.GalleryEntity"--%>
             <ul
                     class="admin-list-main admin-artwork-list"
                     onclick="checkChildCheckbox(this)"

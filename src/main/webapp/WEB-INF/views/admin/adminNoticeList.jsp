@@ -52,7 +52,6 @@
             <li>조회수</li>
         </ul>
         <c:forEach items="${noticeList}" var="noticeEntity">
-            <%--@elvariable id="noticeEntity" type="com.team4.artgallery.entity.NoticeEntity"--%>
             <ul
                     class="admin-list-main admin-notice-list"
                     onclick="checkChildCheckbox(this)"

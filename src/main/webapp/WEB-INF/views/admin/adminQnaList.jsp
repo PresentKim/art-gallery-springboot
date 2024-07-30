@@ -44,7 +44,6 @@
             <li>작성일</li>
         </ul>
         <c:forEach items="${qnaList}" var="qnaEntity">
-            <%--@elvariable id="qnaEntity" type="com.team4.artgallery.entity.QnaEntity"--%>
             <ul
                     class="admin-list-main admin-qna-list"
                     onclick="checkChildCheckbox(this)"
