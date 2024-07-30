@@ -16,6 +16,7 @@ import com.team4.artgallery.util.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -130,6 +131,7 @@ public class MemberService {
         return "/member/login?returnUrl=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8);
     }
 
+    @Transactional
     public void createMember(MemberCreateDto memberCreateDto) throws com.team4.artgallery.controller.exception.SqlException {
         Assert.isFalse(isMember(memberCreateDto.id()), "이미 사용중인 아이디입니다.", ConflictException::new);
 
@@ -143,8 +145,15 @@ public class MemberService {
         return result;
     }
 
-    public MemberEntity getMember(String id) {
-        return memberRepository.findById(id).orElse(null);
+    /**
+     * 회원 정보를 반환한다.
+     *
+     * @param id 회원 ID
+     * @return 회원 정보
+     * @throws NotFoundException 회원 정보를 찾을 수 없는 경우 예외 발생
+     */
+    public MemberEntity getMember(String id) throws NotFoundException {
+        return memberRepository.findById(id).orElseThrow(() -> new NotFoundException("회원 정보를 찾을 수 없습니다."));
     }
 
     public int countMembers(KeywordFilter filter) {
@@ -152,18 +161,34 @@ public class MemberService {
         return (int) memberRepository.count((Specification<MemberEntity>) filter.toSpec("name", "id"));
     }
 
+    @Transactional
     public void updateMember(String id, MemberUpdateDto memberUpdateDto) throws com.team4.artgallery.controller.exception.SqlException {
-        memberRepository.save(memberUpdateDto.toEntity(id));
+        MemberEntity memberEntity = getMember(id);
+        memberEntity.setName(memberUpdateDto.name());
+        memberEntity.setEmail(memberUpdateDto.email());
+        memberEntity.setPhone(memberUpdateDto.phone());
+        memberEntity.setAddress(memberUpdateDto.address());
+
+        // 비밀번호는 선택적으로 업데이트
+        String pwd = memberUpdateDto.pwd();
+        if (pwd != null && !pwd.isEmpty()) {
+            memberEntity.setPwd(pwd);
+        }
     }
 
+    @Transactional
     public void grantAdmin(String id) throws NotFoundException {
-        memberRepository.updateAdminynById(id, 'Y');
+        MemberEntity memberEntity = getMember(id);
+        memberEntity.setAdminyn('Y');
     }
 
+    @Transactional
     public void revokeAdmin(String id) throws NotFoundException {
-        memberRepository.updateAdminynById(id, 'N');
+        MemberEntity memberEntity = getMember(id);
+        memberEntity.setAdminyn('N');
     }
 
+    @Transactional
     public void deleteMember(String id) throws NotFoundException {
         memberRepository.deleteById(id);
     }
