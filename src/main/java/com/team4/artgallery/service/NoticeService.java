@@ -83,7 +83,11 @@ public class NoticeService {
      */
     @Transactional
     public void updateNotice(int nseq, NoticeDto noticeDto, MemberEntity loginMember) throws NotFoundException {
-        noticeRepository.save(noticeDto.toEntity(nseq, loginMember));
+        NoticeEntity noticeEntity = getNotice(nseq);
+        noticeEntity.setAuthor(loginMember);
+        noticeEntity.setCategory(noticeDto.getCategory());
+        noticeEntity.setTitle(noticeDto.getTitle());
+        noticeEntity.setContent(noticeDto.getContent());
     }
 
     /**

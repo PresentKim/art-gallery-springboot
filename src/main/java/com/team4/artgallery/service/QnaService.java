@@ -86,7 +86,14 @@ public class QnaService {
     @Transactional
     public void updateInquiry(int qseq, QnaUpdateDto qnaDto) throws NotFoundException, UnauthorizedException {
         Assert.trueOrUnauthorized(authorizeForPersonal(qseq), "접근 권한이 없습니다.");
-        qnaRepository.save(qnaDto.toEntity(qseq));
+
+        QnaEntity qnaEntity = getInquiry(qseq);
+        qnaEntity.setTitle(qnaDto.getTitle());
+        qnaEntity.setContent(qnaDto.getContent());
+        qnaEntity.setEmail(qnaDto.getEmail());
+        qnaEntity.setPhone(qnaDto.getPhone());
+        qnaEntity.setPwd(qnaDto.getPwd());
+        qnaEntity.setDisplay(qnaDto.getDisplayyn() == 'Y');
     }
 
     /**

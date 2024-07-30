@@ -86,14 +86,21 @@ public class ArtworkService {
      */
     @Transactional
     public void updateArtwork(int aseq, ArtworkUpdateDto artworkUpdateDto) throws NotFoundException {
+        ArtworkEntity artworkEntity = getArtwork(aseq);
+
+        artworkEntity.setName(artworkUpdateDto.getName());
+        artworkEntity.setArtist(artworkUpdateDto.getArtist());
+        artworkEntity.setCategory(artworkUpdateDto.getCategory());
+        artworkEntity.setMaterial(artworkUpdateDto.getMaterial());
+        artworkEntity.setYear(artworkUpdateDto.getYear());
+        artworkEntity.setSize(artworkUpdateDto.getSize());
+        artworkEntity.setDisplay(artworkUpdateDto.getDisplayyn() == 'Y');
+        artworkEntity.setContent(artworkUpdateDto.getContent());
+
         MultipartFile imageFile = artworkUpdateDto.getImageFile();
-        String fileName;
         if (imageFile != null && !imageFile.isEmpty()) {
-            fileName = saveImage(imageFile);
-        } else {
-            fileName = getArtwork(aseq).getImageFileName();
+            artworkEntity.setImageFileName(saveImage(imageFile));
         }
-        artworkRepository.save(artworkUpdateDto.toEntity(aseq, fileName));
     }
 
     /**
