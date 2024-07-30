@@ -5,13 +5,13 @@ import com.team4.artgallery.aspect.annotation.CheckLogin;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.view.Views;
 import com.team4.artgallery.entity.ArtworkEntity;
 import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.FavoriteService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +30,14 @@ public class FavoriteRestController implements FavoriteRestControllerDocs {
     @CheckLogin
     @GetMapping("")
     @JsonView(Views.Summary.class)
-    public Page<ArtworkEntity> getList(
+    public PageResponse<ArtworkEntity> getList(
             @Valid
             Pagination pagination,
 
             @LoginMember
             MemberEntity loginMember
     ) {
-        return favoriteService.getFavoriteArtworks(loginMember.getId(), pagination);
+        return new PageResponse<>(favoriteService.getFavoriteArtworks(loginMember.getId(), pagination));
     }
 
     @CheckLogin

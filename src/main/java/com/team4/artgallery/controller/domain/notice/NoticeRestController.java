@@ -6,6 +6,7 @@ import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.enums.NoticeCategory;
 import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.dto.notice.NoticeDto;
@@ -16,7 +17,6 @@ import com.team4.artgallery.service.NoticeService;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class NoticeRestController implements NoticeRestControllerDocs {
 
     @GetMapping("")
     @JsonView(Views.Summary.class)
-    public Page<NoticeEntity> getList(
+    public PageResponse<NoticeEntity> getList(
             @Valid
             NoticeFilter filter,
             @Valid
@@ -45,7 +45,7 @@ public class NoticeRestController implements NoticeRestControllerDocs {
         Assert.isFalse(NoticeCategory.MAGAZINE.isEquals(category), "잘못된 카테고리입니다.", BadRequestException::new);
         Assert.isFalse(NoticeCategory.NEWSPAPER.isEquals(category), "잘못된 카테고리입니다.", BadRequestException::new);
 
-        return noticeService.getNotices(filter, pagination);
+        return new PageResponse<>(noticeService.getNotices(filter, pagination));
     }
 
     @GetMapping("{nseq}")

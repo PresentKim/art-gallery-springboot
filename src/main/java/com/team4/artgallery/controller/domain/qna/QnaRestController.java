@@ -6,6 +6,7 @@ import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.dto.qna.QnaUpdateDto;
 import com.team4.artgallery.dto.view.Views;
@@ -14,7 +15,6 @@ import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +33,13 @@ public class QnaRestController implements QnaRestControllerDocs {
 
     @GetMapping
     @JsonView(Views.Summary.class)
-    public Page<QnaEntity> getList(
+    public PageResponse<QnaEntity> getList(
             @ParameterObject
             QnaFilter filter,
             @Valid
             Pagination pagination
     ) {
-        return qnaService.getInquiries(filter, pagination);
+        return new PageResponse<>(qnaService.getInquiries(filter, pagination));
     }
 
     @GetMapping("{qseq}")

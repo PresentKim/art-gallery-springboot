@@ -1,5 +1,6 @@
 package com.team4.artgallery.controller.domain.favorite;
 
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.entity.ArtworkEntity;
 import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.util.Pagination;
@@ -9,7 +10,6 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 interface FavoriteRestControllerDocs {
@@ -47,7 +47,7 @@ interface FavoriteRestControllerDocs {
                     @ApiResponse(responseCode = "404", description = "리소스를 찾을 수 없음")
             }
     )
-    Page<ArtworkEntity> getList(
+    PageResponse<ArtworkEntity> getList(
             @ParameterObject
             Pagination pagination,
 

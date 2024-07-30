@@ -1,5 +1,6 @@
 package com.team4.artgallery.controller.domain.artwork;
 
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.artwork.ArtworkCreateDto;
 import com.team4.artgallery.dto.artwork.ArtworkUpdateDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
@@ -12,7 +13,6 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ interface ArtworkRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    Page<ArtworkEntity> getList(
+    PageResponse<ArtworkEntity> getList(
             @ParameterObject
             ArtworkFilter filter,
             @ParameterObject

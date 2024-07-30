@@ -1,5 +1,6 @@
 package com.team4.artgallery.controller.domain.qna;
 
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.filter.QnaFilter;
 import com.team4.artgallery.dto.qna.QnaUpdateDto;
 import com.team4.artgallery.entity.QnaEntity;
@@ -10,7 +11,6 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 
 interface QnaRestControllerDocs {
 
@@ -39,7 +39,7 @@ interface QnaRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    Page<QnaEntity> getList(
+    PageResponse<QnaEntity> getList(
             @ParameterObject
             QnaFilter filter,
             @ParameterObject

@@ -5,6 +5,7 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.exception.FileException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.artwork.ArtworkCreateDto;
 import com.team4.artgallery.dto.artwork.ArtworkUpdateDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
@@ -14,7 +15,6 @@ import com.team4.artgallery.entity.ArtworkEntity;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -34,16 +34,16 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
 
     @GetMapping(path = "")
     @JsonView(Views.Summary.class)
-    public Page<ArtworkEntity> getList(
+    public PageResponse<ArtworkEntity> getList(
             @Validated(ArtworkFilter.ExcludeDisplay.class)
             ArtworkFilter filter,
             @Valid
             Pagination pagination
     ) {
-        return artworkService.getArtworks(
-                filter.setDisplayyn("Y").setIncludeDisplay(false),
+        return new PageResponse<>(artworkService.getArtworks(
+                filter.setDisplayyn('Y').setIncludeDisplay(false),
                 pagination
-        );
+        ));
     }
 
     @CheckAdmin

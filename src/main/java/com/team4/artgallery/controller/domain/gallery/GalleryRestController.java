@@ -7,6 +7,7 @@ import com.team4.artgallery.controller.exception.ForbiddenException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.resolver.annotation.LoginMember;
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.dto.gallery.GalleryCreateDto;
 import com.team4.artgallery.dto.gallery.GalleryUpdateDto;
@@ -16,7 +17,6 @@ import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.GalleryService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +33,13 @@ public class GalleryRestController implements GalleryRestControllerDocs {
 
     @GetMapping(path = "")
     @JsonView(Views.Summary.class)
-    public Page<GalleryEntity> getList(
+    public PageResponse<GalleryEntity> getList(
             @Valid
             KeywordFilter filter,
             @Valid
             Pagination pagination
     ) {
-        return galleryService.getGalleries(filter, pagination);
+        return new PageResponse<>(galleryService.getGalleries(filter, pagination));
     }
 
     @GetMapping("{gseq}")

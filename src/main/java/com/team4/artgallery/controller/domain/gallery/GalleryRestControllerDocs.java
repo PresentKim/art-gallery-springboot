@@ -1,5 +1,6 @@
 package com.team4.artgallery.controller.domain.gallery;
 
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.filter.KeywordFilter;
 import com.team4.artgallery.dto.gallery.GalleryCreateDto;
 import com.team4.artgallery.dto.gallery.GalleryUpdateDto;
@@ -12,7 +13,6 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 
 interface GalleryRestControllerDocs {
 
@@ -41,7 +41,7 @@ interface GalleryRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    Page<GalleryEntity> getList(
+    PageResponse<GalleryEntity> getList(
             @ParameterObject
             KeywordFilter filter,
             @ParameterObject

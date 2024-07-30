@@ -1,5 +1,6 @@
 package com.team4.artgallery.controller.domain.notice;
 
+import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.filter.NoticeFilter;
 import com.team4.artgallery.dto.notice.NoticeDto;
 import com.team4.artgallery.entity.MemberEntity;
@@ -11,7 +12,6 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ interface NoticeRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    Page<NoticeEntity> getList(
+    PageResponse<NoticeEntity> getList(
             @ParameterObject
             NoticeFilter filter,
             @ParameterObject
