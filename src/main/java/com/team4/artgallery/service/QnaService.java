@@ -54,7 +54,9 @@ public class QnaService {
             filter = new QnaFilter();
         }
 
-        return qnaRepository.findAll(filter.toSpec(), pagination.toPageable());
+        Page<QnaEntity> result = qnaRepository.findAll(filter.toSpec(), pagination.toPageable());
+        pagination.setItemCount((int) result.getTotalElements());
+        return result;
     }
 
     /**

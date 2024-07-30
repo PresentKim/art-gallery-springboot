@@ -25,7 +25,9 @@ public class FavoriteService {
      * @return 관심 예술품 목록
      */
     public Page<ArtworkEntity> getFavoriteArtworks(String memberId, Pagination pagination) {
-        return favoriteRepository.findAllByMemberId(memberId, pagination.toPageable()).map(FavoriteEntity::getArtwork);
+        Page<ArtworkEntity> result = favoriteRepository.findAllByMemberId(memberId, pagination.toPageable()).map(FavoriteEntity::getArtwork);
+        pagination.setItemCount((int) result.getTotalElements());
+        return result;
     }
 
     /**

@@ -138,7 +138,9 @@ public class MemberService {
 
     public Page<MemberEntity> getMembers(KeywordFilter filter, Pagination pagination) {
         //noinspection unchecked
-        return memberRepository.findAll((Specification<MemberEntity>) filter.toSpec("name", "id"), pagination.toPageable());
+        Page<MemberEntity> result = memberRepository.findAll((Specification<MemberEntity>) filter.toSpec("name", "id"), pagination.toPageable());
+        pagination.setItemCount((int) result.getTotalElements());
+        return result;
     }
 
     public MemberEntity getMember(String id) {

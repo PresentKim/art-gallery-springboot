@@ -176,7 +176,7 @@ public class Pagination {
     }
 
     public Pageable toPageable() {
-        return PageRequest.of(getPage() - 1, displayCount);
+        return PageRequest.of(page - 1, displayCount);
     }
 
     /**

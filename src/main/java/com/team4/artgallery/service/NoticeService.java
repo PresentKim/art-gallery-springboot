@@ -46,7 +46,9 @@ public class NoticeService {
      * @return 소식지 목록
      */
     public Page<NoticeEntity> getNotices(NoticeFilter filter, Pagination pagination) {
-        return noticeRepository.findAll(filter.toSpec(), pagination.toPageable());
+        Page<NoticeEntity> result = noticeRepository.findAll(filter.toSpec(), pagination.toPageable());
+        pagination.setItemCount((int) result.getTotalElements());
+        return result;
     }
 
     /**

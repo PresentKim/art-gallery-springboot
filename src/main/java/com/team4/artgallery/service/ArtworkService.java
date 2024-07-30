@@ -48,7 +48,9 @@ public class ArtworkService {
      * @return 예술품 목록
      */
     public Page<ArtworkEntity> getArtworks(ArtworkFilter filter, Pagination pagination) {
-        return artworkRepository.findAll(filter.toSpec(), pagination.toPageable());
+        Page<ArtworkEntity> result = artworkRepository.findAll(filter.toSpec(), pagination.toPageable());
+        pagination.setItemCount((int) result.getTotalElements());
+        return result;
     }
 
     /**
