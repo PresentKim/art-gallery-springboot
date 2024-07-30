@@ -54,11 +54,6 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
             @NonNull NativeWebRequest webRequest,
             WebDataBinderFactory binderFactory
     ) throws NotLoginException {
-        // 로그인하지 않은 경우 NotLoginException 예외 발생
-        if (!memberService.isLogin()) {
-            throw new NotLoginException("");
-        }
-
         // 로그인한 회원 정보를 반환합니다.
         return memberService.getLoginMember();
     }

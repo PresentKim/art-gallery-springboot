@@ -39,7 +39,11 @@ public class MemberService {
      * @return 세션에 저장된 회원 정보, 없으면 null
      */
     public MemberEntity getLoginMember() {
-        return (MemberEntity) sessionProvider.getSession().getAttribute("loginMember");
+        Object loginMember = sessionProvider.getSession().getAttribute("loginMember");
+        if (loginMember == null) {
+            return null;
+        }
+        return (MemberEntity) loginMember;
     }
 
     /**
