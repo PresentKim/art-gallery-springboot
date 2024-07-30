@@ -6,6 +6,7 @@ import com.team4.artgallery.dto.artwork.ArtworkUpdateDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.dto.request.DisplayRequest;
 import com.team4.artgallery.entity.ArtworkEntity;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.util.Pagination;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,7 +31,10 @@ interface ArtworkRestControllerDocs {
     )
     ArtworkEntity getById(
             @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
-            int aseq
+            int aseq,
+
+            @Parameter(hidden = true)
+            MemberEntity loginMember
     );
 
     @Tag(name = "public", description = "사용자 메서드")
@@ -97,7 +101,10 @@ interface ArtworkRestControllerDocs {
             @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
             String aseq,
             @ParameterObject
-            ArtworkUpdateDto artworkUpdateDto
+            ArtworkUpdateDto artworkUpdateDto,
+
+            @Parameter(hidden = true)
+            MemberEntity loginMember
     );
 
 
@@ -131,7 +138,10 @@ interface ArtworkRestControllerDocs {
             @Parameter(name = "aseq", description = "예술품 번호", required = true, in = ParameterIn.PATH)
             String aseq,
             @ParameterObject
-            DisplayRequest request
+            DisplayRequest request,
+
+            @Parameter(hidden = true)
+            MemberEntity loginMember
     );
 
 }

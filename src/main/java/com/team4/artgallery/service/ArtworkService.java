@@ -7,6 +7,7 @@ import com.team4.artgallery.dto.artwork.ArtworkCreateDto;
 import com.team4.artgallery.dto.artwork.ArtworkUpdateDto;
 import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.entity.ArtworkEntity;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.repository.ArtworkRepository;
 import com.team4.artgallery.service.helper.MultipartFileService;
 import com.team4.artgallery.util.Pagination;
@@ -62,9 +63,14 @@ public class ArtworkService {
      * @return 예술품 정보
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      */
-    public ArtworkEntity getArtwork(int aseq) throws NotFoundException {
-        return artworkRepository.findById(aseq)
+    public ArtworkEntity getArtwork(int aseq, MemberEntity loginMember) throws NotFoundException {
+        ArtworkEntity artworkEntity = artworkRepository.findById(aseq)
                 .orElseThrow(() -> new NotFoundException("예술품 정보를 찾을 수 없습니다."));
+        if (!artworkEntity.getDisplay() && (loginMember == null || !loginMember.isAdmin())) {
+            throw new NotFoundException("예술품 정보를 찾을 수 없습니다.");
+        }
+
+        return artworkEntity;
     }
 
     /**
@@ -80,13 +86,15 @@ public class ArtworkService {
     /**
      * 예술품 정보를 수정합니다
      *
+     * @param aseq             예술품 번호
      * @param artworkUpdateDto 예술품 정보
+     * @param loginMember      로그인한 회원 정보
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      * @throws FileException     이미지 저장에 실패한 경우 예외 발생
      */
     @Transactional
-    public void updateArtwork(int aseq, ArtworkUpdateDto artworkUpdateDto) throws NotFoundException {
-        ArtworkEntity artworkEntity = getArtwork(aseq);
+    public void updateArtwork(int aseq, ArtworkUpdateDto artworkUpdateDto, MemberEntity loginMember) throws NotFoundException {
+        ArtworkEntity artworkEntity = getArtwork(aseq, loginMember);
 
         artworkEntity.setName(artworkUpdateDto.getName());
         artworkEntity.setArtist(artworkUpdateDto.getArtist());
@@ -106,13 +114,14 @@ public class ArtworkService {
     /**
      * 예술품 전시 여부를 수정합니다.
      *
-     * @param aseq    예술품 번호 (artwork sequence)
-     * @param display 전시 여부
+     * @param aseq        예술품 번호 (artwork sequence)
+     * @param display     전시 여부
+     * @param loginMember 로그인한 회원 정보
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      */
     @Transactional
-    public void updateDisplay(int aseq, boolean display) throws NotFoundException {
-        ArtworkEntity artworkEntity = getArtwork(aseq);
+    public void updateDisplay(int aseq, boolean display, MemberEntity loginMember) throws NotFoundException {
+        ArtworkEntity artworkEntity = getArtwork(aseq, loginMember);
         artworkEntity.setDisplay(display);
     }
 

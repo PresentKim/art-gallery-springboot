@@ -5,6 +5,7 @@ import com.team4.artgallery.aspect.annotation.CheckAdmin;
 import com.team4.artgallery.controller.exception.FileException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
+import com.team4.artgallery.controller.resolver.annotation.LoginMember;
 import com.team4.artgallery.dto.PageResponse;
 import com.team4.artgallery.dto.artwork.ArtworkCreateDto;
 import com.team4.artgallery.dto.artwork.ArtworkUpdateDto;
@@ -12,6 +13,7 @@ import com.team4.artgallery.dto.filter.ArtworkFilter;
 import com.team4.artgallery.dto.request.DisplayRequest;
 import com.team4.artgallery.dto.view.Views;
 import com.team4.artgallery.entity.ArtworkEntity;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.service.ArtworkService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
@@ -61,9 +63,12 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
     @JsonView(Views.Detail.class)
     public ArtworkEntity getById(
             @PathVariable("aseq")
-            int aseq
+            int aseq,
+
+            @LoginMember
+            MemberEntity loginMember
     ) throws NotFoundException {
-        return artworkService.getArtwork(aseq);
+        return artworkService.getArtwork(aseq, loginMember);
     }
 
     @CheckAdmin
@@ -73,10 +78,13 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
             @PathVariable("aseq")
             String aseq,
             @Valid
-            ArtworkUpdateDto artworkUpdateDto
+            ArtworkUpdateDto artworkUpdateDto,
+
+            @LoginMember
+            MemberEntity loginMember
     ) throws NotFoundException, SqlException, FileException {
         try {
-            artworkService.updateArtwork(Integer.parseInt(aseq), artworkUpdateDto);
+            artworkService.updateArtwork(Integer.parseInt(aseq), artworkUpdateDto, loginMember);
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
@@ -103,10 +111,13 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
             @PathVariable("aseq")
             String aseq,
             @RequestBody
-            DisplayRequest request
+            DisplayRequest request,
+
+            @LoginMember
+            MemberEntity loginMember
     ) throws SqlException {
         try {
-            artworkService.updateDisplay(Integer.parseInt(aseq), request.display());
+            artworkService.updateDisplay(Integer.parseInt(aseq), request.display(), loginMember);
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }
