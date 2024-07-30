@@ -46,7 +46,7 @@ public class GalleryViewController {
             Model model
     ) {
         galleryService.increaseReadCountIfNew(gseq);
-        model.addAttribute("galleryDto", galleryService.getGallery(gseq));
+        model.addAttribute("galleryEntity", galleryService.getGallery(gseq));
         return "gallery/galleryView";
     }
 
@@ -61,7 +61,7 @@ public class GalleryViewController {
             Model model
     ) throws NotFoundException {
         if (gseq != null) {
-            model.addAttribute("galleryDto", galleryService.getGalleryOnlyAuthor(gseq, loginMember));
+            model.addAttribute("galleryEntity", galleryService.getGalleryOnlyAuthor(gseq, loginMember));
         }
         return "gallery/galleryWrite";
     }

@@ -28,14 +28,15 @@
             </c:if>
         </div>
         <div class="gallery-list-main-content">
-            <c:forEach items="${galleryList}" var="galleryDto">
-                <a href="<c:url value="/gallery/${galleryDto.gseq}"/>">
-                    <img src="<c:url value="${galleryDto.imageSrc}"/>"
+            <c:forEach items="${galleryList}" var="galleryEntity">
+                <%--@elvariable id="galleryEntity" type="com.team4.artgallery.entity.GalleryEntity"--%>
+                <a href="<c:url value="/gallery/${galleryEntity.gseq}"/>">
+                    <img src="<c:url value="${galleryEntity.imageSrc}"/>"
                          alt="gallery_image"/>
                     <div class="gallery-list-main-content_info">
-                        <h1 class="glmc_info-title">${galleryDto.title}</h1>
-                        <p class="glmc_info-name">${galleryDto.authorName}님의갤러리</p>
-                        <span>조회수 : ${galleryDto.readcount}</span>
+                        <h1 class="glmc_info-title">${galleryEntity.title}</h1>
+                        <p class="glmc_info-name">${galleryEntity.author.name}님의갤러리</p>
+                        <span>조회수 : ${galleryEntity.readCount}</span>
                     </div>
                 </a>
             </c:forEach>

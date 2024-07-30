@@ -41,25 +41,27 @@
             <li>조회수</li>
             <li>미리보기</li>
         </ul>
-        <c:forEach items="${galleryList}" var="galleryDto" varStatus="status">
+        <c:forEach items="${galleryList}" var="galleryEntity" varStatus="status">
+            <%--@elvariable id="galleryEntity" type="com.team4.artgallery.entity.GalleryEntity"--%>
             <ul
                     class="admin-list-main admin-artwork-list"
                     onclick="checkChildCheckbox(this)"
-                    data-seq="${galleryDto.gseq}"
+                    data-seq="${galleryEntity.gseq}"
             >
                 <li>
                     <label><input type="checkbox"></label>
                 </li>
-                <li>${galleryDto.gseq}</li>
-                <li>${galleryDto.authorId}</li>
-                <li>${galleryDto.authorName}</li>
-                <li class="view-link"><a href="<c:url value="/gallery/${galleryDto.gseq}"/>">${galleryDto.title}</a>
+                <li>${galleryEntity.gseq}</li>
+                <li>${galleryEntity.author.id}</li>
+                <li>${galleryEntity.author.name}</li>
+                <li class="view-link"><a
+                        href="<c:url value="/gallery/${galleryEntity.gseq}"/>">${galleryEntity.title}</a>
                 </li>
-                <li>${galleryDto.content}</li>
-                <li>${galleryDto.writedate}</li>
-                <li>${galleryDto.readcount}</li>
+                <li>${galleryEntity.content}</li>
+                <li>${galleryEntity.indate}</li>
+                <li>${galleryEntity.readCount}</li>
                 <li>
-                    <img alt="artwork-img" src="${galleryDto.imageSrc}" onclick="previewImage(this)">
+                    <img alt="artwork-img" src="${galleryEntity.imageSrc}" onclick="previewImage(this)">
                 </li>
             </ul>
         </c:forEach>

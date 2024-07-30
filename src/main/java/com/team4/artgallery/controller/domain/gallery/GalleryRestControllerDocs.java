@@ -1,21 +1,18 @@
 package com.team4.artgallery.controller.domain.gallery;
 
-import com.team4.artgallery.dto.GalleryDto;
-import com.team4.artgallery.dto.NoticeDto;
-import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.KeywordFilter;
+import com.team4.artgallery.dto.gallery.GalleryCreateDto;
+import com.team4.artgallery.dto.gallery.GalleryUpdateDto;
+import com.team4.artgallery.entity.GalleryEntity;
+import com.team4.artgallery.entity.MemberEntity;
 import com.team4.artgallery.util.Pagination;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 interface GalleryRestControllerDocs {
 
@@ -29,7 +26,7 @@ interface GalleryRestControllerDocs {
                     @ApiResponse(responseCode = "404", description = "리소스를 찾을 수 없음")
             }
     )
-    GalleryDto getById(
+    GalleryEntity getById(
             @Parameter(name = "gseq", description = "갤러리 번호", required = true, in = ParameterIn.PATH)
             Integer gseq
     );
@@ -44,7 +41,7 @@ interface GalleryRestControllerDocs {
                     @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
-    List<GalleryDto> getList(
+    Page<GalleryEntity> getList(
             @ParameterObject
             KeywordFilter filter,
             @ParameterObject
@@ -57,37 +54,17 @@ interface GalleryRestControllerDocs {
             description = "갤러리를 등록합니다.",
             method = "POST",
             responses = {
-                    @ApiResponse(
-                            responseCode = "201",
-                            description = "성공",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = NoticeDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "잘못된 요청",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
-                    ),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "파일 업로드 실패",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
-                    )
+                    @ApiResponse(responseCode = "201", description = "성공"),
+                    @ApiResponse(responseCode = "400", description = "잘못된 요청"),
+                    @ApiResponse(responseCode = "500", description = "파일 업로드 실패")
             }
     )
-    GalleryDto create(
+    void create(
             @ParameterObject
-            GalleryDto galleryDto,
-            @Parameter(name = "imageFile", description = "이미지 파일", required = true)
-            MultipartFile imageFile
+            GalleryCreateDto galleryCreateDto,
+
+            @Parameter(hidden = true)
+            MemberEntity loginMember
     );
 
     @Tag(name = "member", description = "회원 메서드")
@@ -96,27 +73,18 @@ interface GalleryRestControllerDocs {
             description = "갤러리를 수정합니다.",
             method = "PUT",
             responses = {
-                    @ApiResponse(
-                            responseCode = "201",
-                            description = "갤러리 수정 성공"
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "잘못된 요청",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
-                    )
+                    @ApiResponse(responseCode = "201", description = "갤러리 수정 성공"),
+                    @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
     void update(
             @Parameter(name = "gseq", description = "갤러리 번호", required = true, in = ParameterIn.PATH)
             String gseq,
             @ParameterObject
-            GalleryDto galleryDto,
-            @Parameter(name = "imageFile", description = "이미지 파일")
-            MultipartFile imageFile
+            GalleryUpdateDto galleryUpdateDto,
+
+            @Parameter(hidden = true)
+            MemberEntity loginMember
     );
 
     @Tag(name = "admin", description = "관리자 메서드")
@@ -125,23 +93,16 @@ interface GalleryRestControllerDocs {
             description = "갤러리를 삭제합니다.",
             method = "DELETE",
             responses = {
-                    @ApiResponse(
-                            responseCode = "204",
-                            description = "갤러리 삭제 성공"
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "잘못된 요청",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class)),
-                                    @Content(mediaType = "text/html")
-                            }
-                    )
+                    @ApiResponse(responseCode = "204", description = "갤러리 삭제 성공"),
+                    @ApiResponse(responseCode = "400", description = "잘못된 요청")
             }
     )
     void delete(
             @Parameter(name = "gseq", description = "갤러리 번호", required = true, in = ParameterIn.PATH)
-            String gseq
+            String gseq,
+
+            @Parameter(hidden = true)
+            MemberEntity loginMember
     );
 
 }

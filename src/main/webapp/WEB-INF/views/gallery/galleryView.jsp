@@ -5,7 +5,7 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>갤러리 :: ${galleryDto.title}</title>
+        <title>갤러리 :: ${galleryEntity.title}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/gallery.css"/>">
         <script src="<c:url value="/static/script/gallery/gallery_view.js"/>"></script>
         <script type="text/javascript" src="https://ssl.pstatic.net/share/js/naver_sharebutton.js"></script>
@@ -15,13 +15,14 @@
 
 <section class="gallery-view">
     <ul class="gallery-header">
-        <h1>${galleryDto.title}</h1>
-        <li>${galleryDto.content}</li>
+        <h1>${galleryEntity.title}</h1>
+        <li>${galleryEntity.content}</li>
         <li>
-            <a href="<c:url value="/gallery?keyword=${galleryDto.authorName}"/>"> ${galleryDto.authorName}님의 갤러리 </a>
+            <a href="<c:url value="/gallery?keyword=${galleryEntity.author.name}"/>"> ${galleryEntity.author.name}님의
+                갤러리 </a>
         </li>
         <li>
-            <span>조회수 ${galleryDto.readcount}</span>
+            <span>조회수 ${galleryEntity.readCount}</span>
             <span>
 				<script type="text/javascript">
 					new ShareNaver.makeButton({
@@ -36,20 +37,20 @@
             </a>
         </li>
         <li class="gbtn">
-            <c:if test="${loginMember.id eq galleryDto.authorId}">
-                <a class="gbtn-update gallery-btn" href="<c:url value="/gallery/write?gseq=${galleryDto.gseq}"/>">
+            <c:if test="${loginMember.id eq galleryEntity.author.id}">
+                <a class="gbtn-update gallery-btn" href="<c:url value="/gallery/write?gseq=${galleryEntity.gseq}"/>">
                     수정
                 </a>
             </c:if>
-            <c:if test="${loginMember.id eq galleryDto.authorId or loginMember.admin}">
-                    <div class="gbtn-delete gallery-btn" onclick="deleteGallery(${galleryDto.gseq})">삭제</div>
+            <c:if test="${loginMember.id eq galleryEntity.author.id or loginMember.admin}">
+                    <div class="gbtn-delete gallery-btn" onclick="deleteGallery(${galleryEntity.gseq})">삭제</div>
             </c:if>
         </li>
 
     </ul>
     <ul class="gallery-main">
         <li>
-            <img alt="gallery-img" src="<c:url value="${galleryDto.imageSrc}"/>">
+            <img alt="gallery-img" src="<c:url value="${galleryEntity.imageSrc}"/>">
         </li>
     </ul>
 </section>
