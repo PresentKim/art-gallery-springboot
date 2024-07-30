@@ -14,6 +14,7 @@ import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
@@ -136,7 +137,8 @@ public class MemberService {
     }
 
     public Page<MemberEntity> getMembers(KeywordFilter filter, Pagination pagination) {
-        return memberRepository.findAll(filter.toSpec("name", "id"), pagination.toPageable());
+        //noinspection unchecked
+        return memberRepository.findAll((Specification<MemberEntity>) filter.toSpec("name", "id"), pagination.toPageable());
     }
 
     public MemberEntity getMember(String id) {
@@ -144,7 +146,8 @@ public class MemberService {
     }
 
     public int countMembers(KeywordFilter filter) {
-        return (int) memberRepository.count(filter.toSpec("name", "id"));
+        //noinspection unchecked
+        return (int) memberRepository.count((Specification<MemberEntity>) filter.toSpec("name", "id"));
     }
 
     public void updateMember(MemberUpdateDto memberUpdateDto) throws com.team4.artgallery.controller.exception.SqlException {

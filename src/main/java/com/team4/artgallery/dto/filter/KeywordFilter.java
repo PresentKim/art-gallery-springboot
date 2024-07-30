@@ -1,7 +1,6 @@
 package com.team4.artgallery.dto.filter;
 
 import com.team4.artgallery.dto.filter.annotation.FilterField;
-import com.team4.artgallery.entity.MemberEntity;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -26,7 +25,7 @@ public class KeywordFilter implements IFilter {
         return this;
     }
 
-    public Specification<MemberEntity> toSpec(String... filedNames) {
+    public Specification<?> toSpec(String... filedNames) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (keyword != null) {
