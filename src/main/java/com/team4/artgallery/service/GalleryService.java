@@ -56,7 +56,7 @@ public class GalleryService {
      */
     public Page<GalleryEntity> getGalleries(KeywordFilter filter, Pagination pagination) {
         //noinspection unchecked
-        return galleryRepository.findAll((Specification<GalleryEntity>) filter.toSpec(), pagination.toPageable());
+        return galleryRepository.findAll((Specification<GalleryEntity>) filter.toSpec("author", "title", "content"), pagination.toPageable());
     }
 
     /**
