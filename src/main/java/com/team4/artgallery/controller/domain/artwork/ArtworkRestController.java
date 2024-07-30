@@ -19,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -53,12 +52,9 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
     @JsonView(Views.Identifier.class)
     public ArtworkEntity create(
             @Valid
-            ArtworkCreateDto artworkCreateDto,
-            @Valid
-            @RequestPart(name = "imageFile")
-            MultipartFile imageFile
+            ArtworkCreateDto artworkCreateDto
     ) throws NotFoundException, SqlException, FileException {
-        return artworkService.createArtwork(artworkCreateDto, imageFile);
+        return artworkService.createArtwork(artworkCreateDto);
     }
 
     @GetMapping(path = "{aseq}")
@@ -77,13 +73,10 @@ public class ArtworkRestController implements ArtworkRestControllerDocs {
             @PathVariable("aseq")
             String aseq,
             @Valid
-            ArtworkUpdateDto artworkUpdateDto,
-            @Valid
-            @RequestPart(name = "imageFile", required = false)
-            MultipartFile imageFile
+            ArtworkUpdateDto artworkUpdateDto
     ) throws NotFoundException, SqlException, FileException {
         try {
-            artworkService.updateArtwork(Integer.parseInt(aseq), artworkUpdateDto, imageFile);
+            artworkService.updateArtwork(Integer.parseInt(aseq), artworkUpdateDto);
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }

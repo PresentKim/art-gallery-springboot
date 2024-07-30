@@ -36,8 +36,8 @@ public class ArtworkService {
      * @throws FileException 이미지 저장에 실패한 경우 예외 발생
      * @throws SqlException  예술품 정보 추가에 실패한 경우 예외 발생
      */
-    public ArtworkEntity createArtwork(ArtworkCreateDto artworkCreateDto, MultipartFile imageFile) throws SqlException {
-        return artworkRepository.save(artworkCreateDto.toEntity(null, saveImage(imageFile)));
+    public ArtworkEntity createArtwork(ArtworkCreateDto artworkCreateDto) throws SqlException {
+        return artworkRepository.save(artworkCreateDto.toEntity(null, saveImage(artworkCreateDto.getImageFile())));
     }
 
     /**
@@ -80,7 +80,8 @@ public class ArtworkService {
      * @throws NotFoundException 예술품 정보를 찾을 수 없는 경우 예외 발생
      * @throws FileException     이미지 저장에 실패한 경우 예외 발생
      */
-    public void updateArtwork(int aseq, ArtworkUpdateDto artworkUpdateDto, MultipartFile imageFile) throws NotFoundException {
+    public void updateArtwork(int aseq, ArtworkUpdateDto artworkUpdateDto) throws NotFoundException {
+        MultipartFile imageFile = artworkUpdateDto.getImageFile();
         String fileName;
         if (imageFile != null && !imageFile.isEmpty()) {
             fileName = saveImage(imageFile);
