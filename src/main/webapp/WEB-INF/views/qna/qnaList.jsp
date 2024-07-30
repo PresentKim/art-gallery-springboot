@@ -38,17 +38,18 @@
                 <th data-title="상태">상태</th>
             </thead>
             <tbody>
-            <c:forEach items="${qnaList}" var="qnaDto">
-                <c:set var="qnaPassKey" value="qnaHash${qnaDto.qseq}"/>
-                <tr onclick="qnaAuth(${qnaDto.qseq}, 'view')">
-                    <td data-title="번호">${qnaDto.qseq}</td>
+            <c:forEach items="${qnaList}" var="qnaEntity">
+                <%--@elvariable id="qnaEntity" type="com.team4.artgallery.entity.QnaEntity"--%>
+                <c:set var="qnaPassKey" value="qnaHash${qnaEntity.qseq}"/>
+                <tr onclick="qnaAuth(${qnaEntity.qseq}, 'view')">
+                    <td data-title="번호">${qnaEntity.qseq}</td>
                     <td data-title="제목">
                         <div>
                             <c:choose>
                                 <c:when test="${sessionScope[qnaPassKey]}">
                                     <i class="qna-icon owner"></i>
                                 </c:when>
-                                <c:when test="${qnaDto.display}">
+                                <c:when test="${qnaEntity.display}">
                                     <i class="qna-icon public"></i>
                                 </c:when>
                                 <c:when test="${loginMember.admin}">
@@ -58,12 +59,12 @@
                                     <i class="qna-icon private"></i>
                                 </c:otherwise>
                             </c:choose>
-                            <span> ${qnaDto.title}</span>
+                            <span> ${qnaEntity.title}</span>
                         </div>
                     </td>
-                    <td data-title="날짜"><fmt:formatDate value="${qnaDto.writedate}" pattern="yyyy-MM-dd"/></td>
+                    <td data-title="날짜"><fmt:formatDate value="${qnaEntity.indate}" pattern="yyyy-MM-dd"/></td>
                     <td data-title="상태"><c:choose>
-                        <c:when test="${empty qnaDto.reply}">대기중</c:when>
+                        <c:when test="${empty qnaEntity.reply}">대기중</c:when>
                         <c:otherwise>완료</c:otherwise>
                     </c:choose></td>
                 </tr>

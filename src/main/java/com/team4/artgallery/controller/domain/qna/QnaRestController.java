@@ -6,19 +6,20 @@ import com.team4.artgallery.controller.exception.BadRequestException;
 import com.team4.artgallery.controller.exception.NotFoundException;
 import com.team4.artgallery.controller.exception.SqlException;
 import com.team4.artgallery.controller.exception.UnauthorizedException;
-import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.dto.filter.QnaFilter;
+import com.team4.artgallery.dto.qna.QnaUpdateDto;
 import com.team4.artgallery.dto.view.Views;
+import com.team4.artgallery.entity.QnaEntity;
 import com.team4.artgallery.service.QnaService;
 import com.team4.artgallery.util.Pagination;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/qnas", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,7 +33,7 @@ public class QnaRestController implements QnaRestControllerDocs {
 
     @GetMapping
     @JsonView(Views.Summary.class)
-    public List<QnaDto> getList(
+    public Page<QnaEntity> getList(
             @ParameterObject
             QnaFilter filter,
             @Valid
@@ -43,7 +44,7 @@ public class QnaRestController implements QnaRestControllerDocs {
 
     @GetMapping("{qseq}")
     @JsonView(Views.Detail.class)
-    public QnaDto getById(
+    public QnaEntity getById(
             @PathVariable(name = "qseq")
             String qseq
     ) throws NotFoundException, UnauthorizedException {
@@ -57,12 +58,11 @@ public class QnaRestController implements QnaRestControllerDocs {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     @JsonView(Views.Detail.class)
-    public QnaDto create(
+    public QnaEntity create(
             @Valid
-            QnaDto qnaDto
+            QnaUpdateDto qnaDto
     ) throws NotFoundException, UnauthorizedException, SqlException {
-        qnaService.createInquiry(qnaDto);
-        return qnaDto;
+        return qnaService.createInquiry(qnaDto);
     }
 
     @PutMapping("{qseq}")
@@ -71,11 +71,10 @@ public class QnaRestController implements QnaRestControllerDocs {
             @PathVariable(name = "qseq")
             String qseq,
             @Valid
-            QnaDto qnaDto
+            QnaUpdateDto qnaDto
     ) throws NotFoundException, UnauthorizedException, SqlException {
         try {
-            qnaDto.setQseq(Integer.parseInt(qseq));
-            qnaService.updateInquiry(qnaDto);
+            qnaService.updateInquiry(Integer.parseInt(qseq), qnaDto);
         } catch (NumberFormatException e) {
             throw new NotFoundException("요청하신 리소스를 찾을 수 없습니다.");
         }

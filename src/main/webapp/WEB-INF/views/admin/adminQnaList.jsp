@@ -43,20 +43,21 @@
             <li>내용</li>
             <li>작성일</li>
         </ul>
-        <c:forEach items="${qnaList}" var="qnaDto">
+        <c:forEach items="${qnaList}" var="qnaEntity">
+            <%--@elvariable id="qnaEntity" type="com.team4.artgallery.entity.QnaEntity"--%>
             <ul
                     class="admin-list-main admin-qna-list"
                     onclick="checkChildCheckbox(this)"
-                    data-seq="${qnaDto.qseq}"
+                    data-seq="${qnaEntity.qseq}"
             >
                 <li>
                     <label><input type="checkbox"></label>
                 </li>
-                <li>${qnaDto.hasReply() ? '답변완료' : '대기중'}</li>
-                <li>${qnaDto.qseq}</li>
-                <li class="view-link"><a href="<c:url value="/qna/${qnaDto.qseq}"/>">${qnaDto.title}</a></li>
-                <li>${qnaDto.content}</li>
-                <li>${qnaDto.writedate}</li>
+                <li>${not empty qnaEntity.reply ? '답변완료' : '대기중'}</li>
+                <li>${qnaEntity.qseq}</li>
+                <li class="view-link"><a href="<c:url value="/qna/${qnaEntity.qseq}"/>">${qnaEntity.title}</a></li>
+                <li>${qnaEntity.content}</li>
+                <li>${qnaEntity.indate}</li>
             </ul>
         </c:forEach>
     </form>

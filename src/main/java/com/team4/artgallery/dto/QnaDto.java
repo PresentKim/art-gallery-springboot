@@ -49,7 +49,7 @@ public class QnaDto {
     @Setter
     @NotBlank(message = "공개여부를 입력해주세요.")
     @Pattern(regexp = "^[YN]$", message = "공개여부는 Y 또는 N으로 입력해주세요.")
-    private String publicyn;
+    private String displayyn;
 
     @Getter
     @Setter
@@ -70,11 +70,11 @@ public class QnaDto {
 
     @JsonView({Views.Detail.class})
     public boolean isDisplay() {
-        return publicyn.equals("Y");
+        return displayyn.equals("Y");
     }
 
     public void setDisplay(boolean display) {
-        publicyn = display ? "Y" : "N";
+        displayyn = display ? "Y" : "N";
     }
 
     @JsonView({Views.Summary.class, Views.Detail.class})

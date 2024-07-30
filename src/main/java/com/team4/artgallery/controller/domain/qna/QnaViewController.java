@@ -40,7 +40,7 @@ public class QnaViewController {
 
             Model model
     ) throws NotFoundException, UnauthorizedException {
-        model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
+        model.addAttribute("qnaEntity", qnaService.getInquiry(qseq));
         return "qna/qnaView";
     }
 
@@ -53,7 +53,7 @@ public class QnaViewController {
             Model model
     ) throws NotFoundException, UnauthorizedException {
         if (qseq != null) {
-            model.addAttribute("qnaDto", qnaService.getInquiry(qseq));
+            model.addAttribute("qnaEntity", qnaService.getInquiry(qseq));
         }
         return "qna/qnaWrite";
     }

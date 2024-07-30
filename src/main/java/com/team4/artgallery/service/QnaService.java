@@ -1,29 +1,30 @@
 package com.team4.artgallery.service;
 
 import com.team4.artgallery.controller.exception.*;
-import com.team4.artgallery.dao.IQnaDao;
-import com.team4.artgallery.dto.QnaDto;
 import com.team4.artgallery.dto.ResponseDto;
 import com.team4.artgallery.dto.filter.QnaFilter;
+import com.team4.artgallery.dto.qna.QnaUpdateDto;
 import com.team4.artgallery.entity.MemberEntity;
+import com.team4.artgallery.entity.QnaEntity;
+import com.team4.artgallery.repository.QnaRepository;
 import com.team4.artgallery.service.helper.SessionProvider;
 import com.team4.artgallery.util.Assert;
 import com.team4.artgallery.util.Pagination;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 @Service
 public class QnaService {
 
-    private final IQnaDao qnaDao;
+    private final QnaRepository qnaRepository;
     private final MemberService memberService;
     private final SessionProvider sessionProvider;
 
-    public QnaService(IQnaDao qnaDao, MemberService memberService, SessionProvider sessionProvider) {
-        this.qnaDao = qnaDao;
+    public QnaService(QnaRepository qnaRepository, MemberService memberService, SessionProvider sessionProvider) {
+        this.qnaRepository = qnaRepository;
         this.memberService = memberService;
         this.sessionProvider = sessionProvider;
     }
@@ -34,9 +35,10 @@ public class QnaService {
      * @param qnaDto 문의글 정보
      * @throws SqlException 문의글 정보 추가에 실패한 경우 예외 발생
      */
-    public void createInquiry(QnaDto qnaDto) throws SqlException {
-        qnaDao.createInquiry(qnaDto);
-        saveAuthorize(qnaDto.getQseq());
+    public QnaEntity createInquiry(QnaUpdateDto qnaDto) throws SqlException {
+        QnaEntity qnaEntity = qnaRepository.save(qnaDto.toEntity(null));
+        saveAuthorize(qnaEntity.qseq());
+        return qnaEntity;
     }
 
     /**
@@ -46,13 +48,13 @@ public class QnaService {
      * @param pagination 페이지 정보
      * @return 문의글 목록
      */
-    public List<QnaDto> getInquiries(QnaFilter filter, Pagination pagination) {
+    public Page<QnaEntity> getInquiries(QnaFilter filter, Pagination pagination) {
         MemberEntity loginMember = memberService.getLoginMember();
+        if (loginMember == null || !loginMember.isAdmin()) {
+            filter = new QnaFilter();
+        }
 
-        return qnaDao.getInquiries(
-                loginMember != null && loginMember.isAdmin() ? filter : new QnaFilter(),
-                pagination.setUrlTemplateFromFilter(filter).setItemCount(qnaDao.countInquiries(filter))
-        );
+        return qnaRepository.findAll(filter.toSpec(), pagination.toPageable());
     }
 
     /**
@@ -63,9 +65,11 @@ public class QnaService {
      * @throws NotFoundException     문의글 정보를 찾을 수 없는 경우 예외 발생
      * @throws UnauthorizedException 접근 권한이 없는 경우 예외 발생
      */
-    public QnaDto getInquiry(int qseq) throws NotFoundException, UnauthorizedException {
+    public QnaEntity getInquiry(int qseq) throws NotFoundException, UnauthorizedException {
         Assert.trueOrUnauthorized(authorizeForRestrict(qseq), "접근 권한이 없습니다.");
-        return qnaDao.getInquiry(qseq);
+
+        return qnaRepository.findById(qseq)
+                .orElseThrow(() -> new NotFoundException("문의글 정보를 찾을 수 없습니다."));
     }
 
     /**
@@ -75,9 +79,9 @@ public class QnaService {
      * @throws NotFoundException     문의글 정보를 찾을 수 없는 경우 예외 발생
      * @throws UnauthorizedException 접근 권한이 없는 경우 예외 발생
      */
-    public void updateInquiry(QnaDto qnaDto) throws NotFoundException, UnauthorizedException {
-        Assert.trueOrUnauthorized(authorizeForPersonal(qnaDto.getQseq()), "접근 권한이 없습니다.");
-        qnaDao.updateInquiry(qnaDto);
+    public void updateInquiry(int qseq, QnaUpdateDto qnaDto) throws NotFoundException, UnauthorizedException {
+        Assert.trueOrUnauthorized(authorizeForPersonal(qseq), "접근 권한이 없습니다.");
+        qnaRepository.save(qnaDto.toEntity(qseq));
     }
 
     /**
@@ -88,7 +92,8 @@ public class QnaService {
      * @throws NotFoundException 문의글 정보를 찾을 수 없는 경우 예외 발생
      */
     public void updateReply(int qseq, String reply) throws NotFoundException {
-        qnaDao.updateReply(qseq, reply);
+        qnaRepository.findById(qseq).orElseThrow(() -> new NotFoundException("문의글 정보를 찾을 수 없습니다."));
+        qnaRepository.updateReplyById(qseq, reply);
     }
 
     /**
@@ -98,7 +103,7 @@ public class QnaService {
      * @throws SqlException 문의글 삭제에 실패한 경우 예외 발생
      */
     public void deleteInquiry(int qseq) throws SqlException {
-        qnaDao.deleteInquiry(qseq);
+        qnaRepository.deleteById(qseq);
     }
 
     private String hashQseq(int qseq) {
@@ -176,8 +181,9 @@ public class QnaService {
             return true;
         }
 
-        QnaDto qnaDto = qnaDao.getInquiry(qseq);
-        if (!qnaDto.getPwd().equals(pwd)) {
+        QnaEntity qnaEntity = qnaRepository.findById(qseq)
+                .orElseThrow(() -> new NotFoundException("문의글 정보를 찾을 수 없습니다."));
+        if (!qnaEntity.pwd().equals(pwd)) {
             return false;
         }
 
@@ -209,7 +215,9 @@ public class QnaService {
      * RESTRICT(제한) : 공개글이거나 작성자 및 관리자만 접근 가능
      */
     public boolean authorizeForRestrict(int qseq) {
-        return authorizeForPrivilege(qseq) || qnaDao.getInquiry(qseq).isDisplay();
+        QnaEntity qnaEntity = qnaRepository.findById(qseq)
+                .orElseThrow(() -> new NotFoundException("문의글 정보를 찾을 수 없습니다."));
+        return authorizeForPrivilege(qseq) || qnaEntity.display();
     }
 
 }

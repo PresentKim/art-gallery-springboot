@@ -1,4 +1,5 @@
 <%--@elvariable id="loginMember" type="com.team4.artgallery.entity.MemberEntity"--%>
+<%--@elvariable id="qnaEntity" type="com.team4.artgallery.entity.QnaEntity"--%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -6,7 +7,7 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <title>고객센터 :: ${qnaDto.title}</title>
+        <title>고객센터 :: ${qnaEntity.title}</title>
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_icon.css"/>">
         <link rel="stylesheet" href="<c:url value="/static/stylesheet/qna/qna_view.css"/>">
         <script src="<c:url value="/static/script/qna.js"/>"></script>
@@ -20,29 +21,29 @@
             <h1>고객센터</h1>
         </div>
         <div class="qna-view_header_buttons">
-            <button class="qna-view_submit" onclick="qnaAuth(${qnaDto.qseq}, 'update')">수정하기</button>
-            <button class="qna-view_submit" onclick="qnaAuth(${qnaDto.qseq}, 'delete')">삭제하기</button>
+            <button class="qna-view_submit" onclick="qnaAuth(${qnaEntity.qseq}, 'update')">수정하기</button>
+            <button class="qna-view_submit" onclick="qnaAuth(${qnaEntity.qseq}, 'delete')">삭제하기</button>
         </div>
     </div>
     <div class="qna-view_body">
         <div class="qna-view_info">
-            <h1>${qnaDto.title}</h1>
+            <h1>${qnaEntity.title}</h1>
             <p>
                 <strong>작성일</strong>:
-                <fmt:formatDate value="${qnaDto.writedate}" pattern="yyyy-MM-dd"/>
+                <fmt:formatDate value="${qnaEntity.indate}" pattern="yyyy-MM-dd"/>
             </p>
             <p>
                 <strong>작성자</strong>:
                 <c:choose>
                     <c:when test="${loginMember.admin}">
-                        ${qnaDto.email} (${qnaDto.phone})
+                        ${qnaEntity.email} (${qnaEntity.phone})
                     </c:when>
-                    <c:otherwise>${qnaDto.email.substring(0, 3)}**** (010-****-****)</c:otherwise>
+                    <c:otherwise>${qnaEntity.email.substring(0, 3)}**** (010-****-****)</c:otherwise>
                 </c:choose>
             </p>
         </div>
         <div class="qna-view_content">
-            <c:out value="${qnaDto.content}"/>
+            <c:out value="${qnaEntity.content}"/>
         </div>
     </div>
     <div class="qna-view_reply">
@@ -50,20 +51,20 @@
         <c:choose>
             <c:when test="${loginMember.admin}">
                 <form action="<c:url value="/qna/reply"/>" method="post">
-                    <input type="hidden" name="qseq" value="${qnaDto.qseq}"/>
+                    <input type="hidden" name="qseq" value="${qnaEntity.qseq}"/>
                     <label>
-                        <textarea name="reply" placeholder="답변을 입력하세요"><c:out value="${qnaDto.reply}"/></textarea>
+                        <textarea name="reply" placeholder="답변을 입력하세요"><c:out value="${qnaEntity.reply}"/></textarea>
                     </label>
                     <input type="submit" value="답변 등록"/>
                 </form>
             </c:when>
             <c:otherwise>
                 <c:choose>
-                    <c:when test="${empty qnaDto.reply}">
+                    <c:when test="${empty qnaEntity.reply}">
                         <span class="qna-view_reply_no">답변이 아직 없습니다.</span>
                     </c:when>
                     <c:otherwise>
-                        <c:out value="${qnaDto.reply}"/>
+                        <c:out value="${qnaEntity.reply}"/>
                     </c:otherwise>
                 </c:choose>
             </c:otherwise>
